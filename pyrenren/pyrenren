@@ -5,7 +5,7 @@
 # presence subscriptions. This bot has basic Disco support (implemented in
 # pyxmpp.jabber.client.Client class) and jabber:iq:vesion.
 
-import sys
+import sys,os,time
 import logging
 import locale
 import codecs
@@ -15,6 +15,7 @@ try:
     has_pynotify=1
 except:
     pass
+import smtplib
 
 from pyxmpp import streamtls
 from pyxmpp.all import JID, Iq, Presence, Message, StreamError
@@ -22,6 +23,21 @@ from pyxmpp.jabber.client import JabberClient
 from pyxmpp.interface import implements
 from pyxmpp.interfaces import *
 
+my_id=''
+fromadd=''
+passwd=''
+toadd=''
+
+def renrennotify(title,body):
+    '''renren notify'''
+    pynotify.init("Some Application or Title")
+    img_path = os.getcwd()
+    img_path = os.path.join(img_path,"renren.jpg")
+    img_path = "file://"+img_path
+    notification = pynotify.Notification(title,body,img_path)
+    notification.set_urgency(pynotify.URGENCY_NORMAL)
+    notification.set_timeout(1)
+    notification.show()
 
 class EchoHandler(object):
     """提供一个机器人的回答功能
@@ -65,31 +81,33 @@ class EchoHandler(object):
         :returns: `True` to indicate, that the stanza should not be processed
         any further."""
         subject = stanza.get_subject()
+        #print "subject:",subject
         body = stanza.get_body()
+        #print "body:",body
         t = stanza.get_type()
-        #msg = u'收到'+unicode(stanza.get_from())+"的消息"
-        #print u'收到[%s]的信息。' % (unicode(stanza.get_from(),)),
+        #print "type:",t
+        #print "from:", stanza.get_from()
+        msg = ""
         if subject:
-            #print u'主题是: "%s"。' % (subject,),
-            msg = u'主题是'+subject
+            msg = subject+"一件~"
             if has_pynotify:
-                pynotify.init("Some Application or Title")
                 if subject =="新鲜事":
-                    self.notification = pynotify.Notification(subject,"你的好友有新鲜事一条~","file:///home/laputa/Downloads/renren.jpg")
+                    renrennotify(subject,"你的好友有新鲜事一条~")
+                    self.save_file(subject,"你的好友有新鲜事一条~")
                 elif subject =="reply":
-                    self.notification = pynotify.Notification(subject,"您有一则新回复","file:///home/laputa/Downloads/renren.jpg")
-                self.notification.set_urgency(pynotify.URGENCY_NORMAL)
-                self.notification.set_timeout(1)
-                self.notification.show()
+                    renrennotify(subject,"您有一则新回复~")
+                    self.save_file(subject,"您有一则新回复~")
+                    if fromadd!='':
+                        self.send_mail(fromadd,passwd,toadd)
         if body:
             #print u'正文是: "%s"。' % (body,),
             msg = msg + u'.正文是' + body
         if t:
             #print u'类型是: "%s"。' % (t,)
-            msg = msg + u'.类型是:' + t
+            mesg = msg + u'.类型是:' + t
         else:
             #print u'类型: "正常"。'
-            msg = msg + "类型：正常"
+            mesg = msg + "类型：正常"
         print msg
 
         if stanza.get_type() == 'headline':
@@ -109,35 +127,57 @@ class EchoHandler(object):
             return [m, p]
         return m
 
+    def send_mail(self,username,password,to):
+        print "Send mail from ",username,"to ",to
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        server.starttls()
+        server.login(username,password)
+        server.sendmail(username,to,"From: "+username+"\r\nTo: "+to+"\r\nSubject: new reply in renren\r\n\r\nYou have one new reply in http://www.renren.com/Home.do")
+        server.quit()
+
     def presence(self, stanza):
         """Handle 'available' (without 'type') and 'unavailable' <presence/ >."""
         renren_id = str(stanza.get_from()).split("@")[0]
-        if renren_id == '64306080':
+        if renren_id == my_id:
             return
-        buddy = self.client.buddies[renren_id][0]
-        #msg = u'%s has become ' % (stanza.get_from())
+        groups = self.client.buddies[renren_id][2]
+        group = ""
+        if len(groups)>0:
+            for i in range(len(groups)):
+                group = group + groups[i]
+        else:
+            group = "未分组好友"
+        buddy = group+":"+self.client.buddies[renren_id][0]
         msg = buddy
         show = stanza.get_show()
+        #print "show:",show
         if show:
             #msg += u'(%s)' % (show,)
             msg += show
         t = stanza.get_type()
         if t == 'unavailable':
-            msg += u'离线'
+            body = "离线"
+            msg += u' \033[31m离线\033[0m'
         else:
-            msg += u'上线'
+            body = "上线"
+            msg += u' \033[32m上线\033[0m'
 
 
         status = stanza.get_status()
         if status:
             msg += u': '+status
+            body += u"：" + status
         print msg
-        if has_pynotify:
-            pynotify.init("Some Application or Title")
-            self.notification = pynotify.Notification(buddy,msg ,"file:///home/laputa/Downloads/renren.jpg")
-            self.notification.set_urgency(pynotify.URGENCY_NORMAL)
-            self.notification.set_timeout(1)
-            self.notification.show()
+        renrennotify(buddy,body)
+        self.save_file(buddy,body)
+
+    def save_file(self,text,status):
+        file_path = os.path.join(os.getcwd(),"renren.log")
+        file = open(file_path,"a")
+        ISOTIMEFORMAT="%H:%M"
+        msg = text + time.strftime(ISOTIMEFORMAT)+status+"\n"
+        file.write(msg)
+        file.close()
 
     def presence_control(self, stanza):
         """Handle subscription control <presence /> stanzas -- acknowledge
@@ -155,11 +195,7 @@ class EchoHandler(object):
 
         print msg
         if has_pynotify:
-            pynotify.init("Some Application or Title")
-            self.notification = pynotify.Notification("人人网",msg ,"file:///home/laputa/Downloads/renren.jpg")
-            self.notification.set_urgency(pynotify.URGENCY_NORMAL)
-            self.notification.set_timeout(1)
-            self.notification.show()
+            renrennotify("人人网",msg)
 
         #Create "accept" response for the "subscribe"/"subscribed"/"unsubscribe"/"unsubscribed" presence stanza.
         return stanza.make_accept_response()
@@ -236,7 +272,7 @@ class Client(JabberClient):
         """This one is called when the state of stream connecting the component
         to a server changes. This will usually be used to let the user
         know what is going on."""
-        print "*** State changed: %s %r ***" % (state,arg)
+        #print "*** State changed: %s %r ***" % (state,arg)
 
     def print_roster_item(self,item):
         if item.name:
@@ -247,10 +283,11 @@ class Client(JabberClient):
         renren_id = str(item.jid).split("@")[0]
         self.buddies[renren_id] = ['']*5
         self.buddies[renren_id][0] = name
-        #buddies[renren_id][1] = 
+        #self.buddies[renren_id][1] = 
         self.buddies[renren_id][2] = item.groups
-        #buddies[renren_id][3] = 
+        #self.buddies[renren_id][3] = 
         self.buddies[renren_id][4] = item.subscription
+        print "add",renren_id,name,item.groups
 
     def roster_updated(self,item=None):
         if not item:
@@ -271,15 +308,25 @@ def main():
     sys.stdout = codecs.getwriter(encoding)(sys.stdout, errors = "replace")
     sys.stderr = codecs.getwriter(encoding)(sys.stderr, errors = "replace")
 
-    if len(sys.argv) < 3:
+    if len(sys.argv) !=3 and len(sys.argv) !=6:
         print u"Usage:"
-        print "\t%s renren_ID password" % (sys.argv[0],)
+        print "\t%s renren_ID password gmail_account passwd to_address" % (sys.argv[0],)
         print "example:"
-        print "\t%s 64306080 verysecret" % (sys.argv[0],)
+        print "\t%s 64306080 verysecret abcdefg@gmail.com secret 13425678910@139.com" % (sys.argv[0],)
         sys.exit(1)
 
+    #if has_pynotify:
+    #    renrennotify("pynotify","开始启动！")
+
     print u'创建客户端实例'
-    c = Client(JID(sys.argv[1]+"@talk.xiaonei.com"), sys.argv[2])
+    global my_id,fromadd,toadd,passwd
+    my_id = sys.argv[1]
+    c = Client(JID(my_id+"@talk.xiaonei.com"), sys.argv[2])
+
+    if len(sys.argv) == 6:
+        fromadd = sys.argv[3]
+        passwd = sys.argv[4]
+        toadd = sys.argv[5]
 
     print u'开始连接服务器'
     c.connect()
