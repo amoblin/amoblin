@@ -98,7 +98,7 @@ class EchoHandler(object):
                     renrennotify(subject,"您有一则新回复~")
                     self.save_file(subject,"您有一则新回复~")
                     if fromadd!='':
-                        self.send_mail(fromadd,passwd,toadd)
+                        self.send_mail("你有新回复！You have one new reply in http://www.renren.com/Home.do")
         if body:
             #print u'正文是: "%s"。' % (body,),
             msg = msg + u'.正文是' + body
@@ -127,32 +127,29 @@ class EchoHandler(object):
             return [m, p]
         return m
 
-    def send_mail(self,username,password,to):
-        print "Send mail from ",username,"to ",to
+    def send_mail(self,message):
+        print "Send mail from ",fromadd,"to ",toadd
         server = smtplib.SMTP('smtp.gmail.com:587')
         server.starttls()
-        server.login(username,password)
-        server.sendmail(username,to,"From: "+username+"\r\nTo: "+to+"\r\nSubject: new reply in renren\r\n\r\nYou have one new reply in http://www.renren.com/Home.do")
+        server.login(fromadd,passwd)
+        server.sendmail(fromadd,toadd,"From: renren <"+fromadd+">\r\nTo: "+toadd+"\r\nSubject: renren\r\n\r\n"+message)
         server.quit()
 
     def presence(self, stanza):
         """Handle 'available' (without 'type') and 'unavailable' <presence/ >."""
-        renren_id = str(stanza.get_from()).split("@")[0]
-        if renren_id == my_id:
-            return
-        groups = self.client.buddies[renren_id][2]
-        group = ""
-        if len(groups)>0:
-            for i in range(len(groups)):
-                group = group + groups[i]
-        else:
-            group = "未分组好友"
-        buddy = group+":"+self.client.buddies[renren_id][0]
-        msg = buddy
+        renren_id = stanza.get_from().as_utf8().split("@")[0]
+        try:
+            item = self.client.buddies[renren_id]
+            groups = item[2]
+            group = ",".join(groups)
+            if len(groups)>0:
+                group = group + ":"
+            title = group+item[0]
+        except:
+            title = renren_id
+        msg = title
         show = stanza.get_show()
-        #print "show:",show
         if show:
-            #msg += u'(%s)' % (show,)
             msg += show
         t = stanza.get_type()
         if t == 'unavailable':
@@ -162,14 +159,13 @@ class EchoHandler(object):
             body = "上线"
             msg += u' \033[32m上线\033[0m'
 
-
         status = stanza.get_status()
         if status:
             msg += u': '+status
             body += u"：" + status
         print msg
-        renrennotify(buddy,body)
-        self.save_file(buddy,body)
+        renrennotify(title,body)
+        self.save_file(title,body)
 
     def save_file(self,text,status):
         file_path = os.path.join(os.getcwd(),"renren.log")
@@ -280,14 +276,14 @@ class Client(JabberClient):
         else:
             name = u''
         #print (u'%s "%s" 订阅=%s 群组=%s' % (unicode(item.jid), name, item.subscription, u','.join(item.groups)) )
-        renren_id = str(item.jid).split("@")[0]
+        renren_id = item.jid.as_utf8().split("@")[0]
         self.buddies[renren_id] = ['']*5
         self.buddies[renren_id][0] = name
         #self.buddies[renren_id][1] = 
         self.buddies[renren_id][2] = item.groups
         #self.buddies[renren_id][3] = 
         self.buddies[renren_id][4] = item.subscription
-        print "add",renren_id,name,item.groups
+        print "add",renren_id,name,",".join(item.groups)
 
     def roster_updated(self,item=None):
         if not item:
