@@ -1,11 +1,12 @@
-#!/usr/bin/python -u
+#! /usr/bin/python -u
 #-*- coding: utf-8 -*-
 #
 # After connecting to a jabber server it will echo messages, and accept any
 # presence subscriptions. This bot has basic Disco support (implemented in
 # pyxmpp.jabber.client.Client class) and jabber:iq:vesion.
 
-import sys,os,time
+import sys,os,time,cmd,re
+from threading import Thread
 import logging
 import locale
 import codecs
@@ -15,7 +16,7 @@ try:
     has_pynotify=1
 except:
     pass
-import smtplib
+import smtplib,urllib,libxml2
 
 from pyxmpp import streamtls
 from pyxmpp.all import JID, Iq, Presence, Message, StreamError
@@ -28,16 +29,15 @@ fromadd=''
 passwd=''
 toadd=''
 
-def renrennotify(title,body):
-    '''renren notify'''
-    pynotify.init("Some Application or Title")
-    img_path = os.getcwd()
-    img_path = os.path.join(img_path,"renren.jpg")
-    img_path = "file://"+img_path
-    notification = pynotify.Notification(title,body,img_path)
-    notification.set_urgency(pynotify.URGENCY_NORMAL)
-    notification.set_timeout(1)
-    notification.show()
+userhome = os.path.expanduser('~')
+config_folder = os.path.join(userhome,'.pyrenren')
+if not os.path.isdir(config_folder):
+    os.mkdir(config_folder)
+chat_history= os.path.join(config_folder,'chat_history.txt')
+renren_log= os.path.join(config_folder,'renren.log')
+data_file = os.path.join(config_folder,'renren.dat')
+img_folder = os.path.join(config_folder,"img")
+renren_icon = os.path.join(img_folder,'renren.jpg')
 
 class EchoHandler(object):
     """提供一个机器人的回答功能
@@ -70,9 +70,25 @@ class EchoHandler(object):
             ('unsubscribe', self.presence_control),
             ('unsubscribed', self.presence_control)]
 
+    def get_content(self,tag_name,xmlstr):
+        reg = tag_name + ">(.+?)</.+?" + tag_name + ">"
+        raw_content = re.findall(reg,xmlstr)
+        if not len(raw_content):
+            return ""
+        xmldoc = "<?xml version='1.0' encoding='utf-8'?><xmpp>"+raw_content[0]+"</xmpp>"
+        xml = libxml2.parseDoc(xmldoc)
+        cont = re.findall("<(.+?)>",xml.content)
+        if len(cont):
+            xmldoc = "<?xml version='1.0' encoding='utf-8'?><xmpp>"+xml.content+"</xmpp>"
+            xml = libxml2.parseDoc(xmldoc)
+        return xml.content
+
+    def color(self,str):
+        '''涂上蓝色'''
+        return "\033[34m" + str + "\033[0m"
+
     def message(self, stanza):
         """Message handler for the component.
-
         Echoes the message back if its type is not 'error' or
         'headline', also sets own presence status to the message body. Please
         note that all message types but 'error' will be passed to the handler
@@ -80,42 +96,222 @@ class EchoHandler(object):
 
         :returns: `True` to indicate, that the stanza should not be processed
         any further."""
+
+
+        xml = str(stanza.get_node())
+
+        file_path = os.path.join(config_folder,"_new.xml")
+        file = open(file_path,"w")
+        temp = "<?xml version='1.0'?>" + xml
+        file.write(temp+"\n")
+        file.close()
+        #os.system("xmllint --format "+file_path)
+        file_path2 = os.path.join(config_folder,"new.xml")
+        os.system("xmllint --format "+file_path+">"+file_path2)
+        print ""
+        temp = stanza.get_node().content+"\n"
+        #print temp
+        file_path = os.path.join(config_folder,"renren_log.xml")
+        file_path2 = os.path.join(config_folder,"new.xml")
+        file = open(file_path,"a")
+        file2 = open(file_path2,"r")
+        for line in file2.readlines():
+            file.write(line)
+        file.write(temp)
+        file2.close()
+        file.close()
+        #os.system("gvim "+file_path)
+
+        renren_id = re.findall("actor>(.+?)</.+?actor>",xml)
+        if len(renren_id):
+            renren_id = renren_id[0]
+            if self.client.buddies.has_key(renren_id):
+                buddy = self.client.buddies[renren_id][0]
+            else:
+                buddy = ""
+        else:
+            buddy = "你"
+
         subject = stanza.get_subject()
-        #print "subject:",subject
-        body = stanza.get_body()
-        #print "body:",body
-        t = stanza.get_type()
-        #print "type:",t
-        #print "from:", stanza.get_from()
+        type = re.findall("stype>(.+?)</.+?stype>",xml)
+        if not len(type):
+            renren_id = stanza.get_from().as_utf8().split("@")[0]
+            if self.client.buddies.has_key(renren_id):
+                buddy = self.client.buddies[renren_id][0]
+            body = stanza.get_body()
+            print xml,"\n"
+            print buddy,"说：",self.color(body)
+            self.renrennotify(renren_id,body)
+            return
+        #print type
+        body = ""
+        if type[0] == "102":
+            '''分享日志'''
+            fID = re.findall("fID>(.+?)</.+?fID>",xml)[0]
+            uName = self.get_content("uName",xml)
+            blog_title = self.get_content("title",xml)
+            blog_digest = self.get_content("digest",xml)
+            college = self.get_content("net",xml)
+            blog_url = re.findall("url>(.+?)</.+?url>",xml)[0]
+            body = "分享来自 "+college + " 的 "+uName+" 的日志 "+blog_title
+            msg = "分享来自 " + self.color(college) + " 的"+self.color(uName)+" 的日志 "+self.color(blog_title)+"\n"+blog_digest
+            print buddy,msg
+        #elif type[0]=='':
+        elif type[0]=='-65549':
+            print "reply"
+        elif type[0]=='103':
+            '''分享照片'''
+            uName = self.get_content("uName",xml)
+            aName = self.get_content("aName",xml)
+            photo_title = self.get_content("title",xml)
+            body = "分享 "+uName+" 的照片 "+aName+""
+            msg = "分享 "+self.color(uName)+" 的照片 "+ self.color(aName) + "\n" + photo_title
+            print buddy,msg
+        elif type[0] == '-33':
+            '''上传照片？'''
+            title = self.get_content("title",xml)
+            body = "上传了1张照片至" + title
+            msg = "上传了1张照片至" + self.color(title)
+            print buddy,msg
+        elif type[0] == '-4':
+            '''程序截图回复了我'''
+            title = self.get_content("title",xml)
+            body = "在 "+title+"回复你"
+            msg = "在 "+self.color(title)+"回复你"
+            print buddy,msg
+        elif type[0] == "104":
+            ''''''
+            body = "正在"
+            print buddy,body
+        elif type[0] == "107":
+            ''''''
+            body = "正在"
+        elif type[0] == "110":
+            '''分享视频'''
+            title = self.get_content("title",xml)
+            body = "分享视频 " + title
+            msg = "分享视频 "+ self.color(title)
+            print buddy,msg
+        elif type[0] == "400":
+            '''拜年'''
+            print buddy,"正在给自己的好友拜年呢"
+        elif type[0] == "502":
+            '''新签名'''
+            fName = self.get_content("fName",xml)
+            title = self.get_content("title",xml)
+            body = "更新了签名:"+title
+            msg = "更新了签名:"+self.color(title)
+            print buddy,msg
+        elif type[0] == "507":
+            '''好友留言'''
+            un = self.get_content("un",xml)
+            con = self.get_content("con",xml)
+            body = buddy + " 的好友 " + un+" 在TA的留言板上回复了TA"
+            msg = buddy + " 的好友 " + self.color(un)+" 在TA的留言板上回复了TA"
+            print msg
+        elif type[0] == "601":
+            '''发表日志'''
+            blog_title = self.get_content("title",xml)
+            blog_brief = self.get_content("brief",xml)
+            body = "发表日志 " + blog_title
+            msg = "发表日志 " + self.color(blog_title)+"\n"+blog_brief
+            print buddy,msg
+        elif type[0] == '602':
+            '''冷笑话回复了粉丝'''
+            print ""
+        elif type[0] == '701':
+            '''上传照片'''
+            aName = self.get_content("aName",xml)
+            aName = self.get_content("aName",xml)
+            body = "上传了1张照片至" + aName
+            msg = "上传了1张照片至" + self.color(aName)
+            print buddy,msg
+        elif type[0] == '704':
+            '''好友的好友回复了好友?貌似可以删除，因为有507类型了'''
+            fName = self.get_content("fName",xml)
+            #body = "的好友 "+fName+" 回复了 "+buddy
+            msg = "的好友 "+self.color(fName)+" 回复了 "+buddy
+        elif type[0]=='705':
+            body = ""
+            msg = ""
+            print buddy,msg
+        elif type[0]=='708':
+            '''照片有新回复'''
+            un = self.get_content("un",xml)
+            desc = self.get_content("desc",xml)
+            body = "TA的好友 " + un + "在相册 " + desc + "中留言了"
+            msg = "的好友 " + self.color(un) + "在相册 " + self.color(desc) + "中留言了"
+        elif type[0]=='799':
+            '''上传照片'''
+            title = self.get_content("title",xml)
+            body = "上传了照片至" + title
+            msg = "上传了照片至" + self.color(title)
+            print buddy,msg
+        elif type[0] == "801":
+            '''收到礼物'''
+            body = "收到了"
+            print buddy,body
+        elif type[0] == "802":
+            '''收到礼物'''
+            title = self.get_content("title",xml)
+            uName = self.get_content("uName",xml)
+            body = "收到"+uName+"送的礼物"+title
+            msg = "收到"+self.color(uName)+"送的礼物"+self.color(title)
+            print buddy,msg
+        elif type[0] == '2401':
+            '''使用应用'''
+            title = self.get_content("title",xml)
+            body = "在使用应用 "+ title
+            msg = "在使用应用 "+ self.color(title)
+            print buddy,msg
+        elif type[0] == "8190":
+            title = self.get_content("title",xml)
+            body = "分享游戏 " + title
+            msg = "分享游戏 " + self.color(title)
+            print buddy,msg
+        elif type[0] == "45106":
+            body = "游戏邀请"
+            print buddy,body
+        elif type[0] == "2011":
+            blog_title = self.get_content("title",xml)
+            blog_brief = self.get_content("brief",xml)
+            buddy = self.get_content("fName",xml)
+            body = "发表日志 " + blog_title
+            msg = "发表日志 " + self.color(blog_title)+"\n"+blog_brief
+            print buddy,msg
+        elif type[0] == '26352':
+            app_body = self.get_content("body",xml)
+            body = "邀请你参加" + self.color(app_body)
+            msg = "邀请你参加" + app_body
+            print msg
+        else:
+            body = "不知道想干嘛，先存着再说"
+            print buddy,"\033[31m不知道想干嘛，先存着再说\033[0m"
+            file_path = os.path.join(config_folder,type[0]+".xml")
+            file = open(file_path,"w")
+            temp = "<?xml version='1.0'?>" + xml
+            file.write(temp+"\n")
+            os.system("xmllint --format "+file_path)
+            file.close()
+        print ""
+
+        self.renrennotify(renren_id,body)
         msg = ""
         if subject:
-            msg = subject+"一件~"
+            ISOTIMEFORMAT=" %H:%M "
+            msg = msg + time.strftime(ISOTIMEFORMAT)
+            msg = msg +" "+buddy+ subject+"一件~"
             if has_pynotify:
                 if subject =="新鲜事":
-                    renrennotify(subject,"你的好友有新鲜事一条~")
-                    self.save_file(subject,"你的好友有新鲜事一条~")
+                    self.save_file(msg)
                 elif subject =="reply":
-                    renrennotify(subject,"您有一则新回复~")
-                    self.save_file(subject,"您有一则新回复~")
+                    self.save_file(msg)
                     if fromadd!='':
-                        self.send_mail("你有新回复！You have one new reply in http://www.renren.com/Home.do")
-        if body:
-            #print u'正文是: "%s"。' % (body,),
-            msg = msg + u'.正文是' + body
-        if t:
-            #print u'类型是: "%s"。' % (t,)
-            mesg = msg + u'.类型是:' + t
-        else:
-            #print u'类型: "正常"。'
-            mesg = msg + "类型：正常"
-        print msg
-
-        if stanza.get_type() == 'headline':
-            # 'headline' messages should never be replied to
-            return True
+                        self.send_mail("You have one new reply in http://www.renren.com/Home.do")
 
         if subject:
             subject = u'Re: ' + subject
+        body = stanza.get_body()
         m = Message(
                 to_jid=stanza.get_from(),
                 from_jid=stanza.get_to(),
@@ -137,42 +333,59 @@ class EchoHandler(object):
 
     def presence(self, stanza):
         """Handle 'available' (without 'type') and 'unavailable' <presence/ >."""
+        xml = str(stanza.get_node())
         renren_id = stanza.get_from().as_utf8().split("@")[0]
-        try:
+        if self.client.buddies.has_key(renren_id):
             item = self.client.buddies[renren_id]
             groups = item[2]
             group = ",".join(groups)
             if len(groups)>0:
                 group = group + ":"
-            title = group+item[0]
-        except:
-            title = renren_id
-        msg = title
+        else:
+            self.client.buddies[renren_id] = ['']*5
+            self.client.buddies[renren_id][0] = renren_id
+
+        buddy = self.client.buddies[renren_id][0]
+
+        picture = re.findall("EXTVAL>(.+?)</.+?EXTVAL>",xml)
+        file_path = ""
+        if len(picture):
+            picture = picture[0]
+            file_path = os.path.join(img_folder,renren_id+"_"+buddy+".jpg")
+            urllib.urlretrieve(picture,file_path)
+        else:
+            file_path = renren_icon
+        msg = ""
         show = stanza.get_show()
         if show:
             msg += show
         t = stanza.get_type()
+        ISOTIMEFORMAT=" %H:%M "
+        msg = msg + time.strftime(ISOTIMEFORMAT)
         if t == 'unavailable':
             body = "离线"
             msg += u' \033[31m离线\033[0m'
+            self.client.buddies[renren_id][1] = 0
+            if renren_id=='230099057':
+                self.send_mail("lww is off~")
         else:
             body = "上线"
             msg += u' \033[32m上线\033[0m'
+            self.client.buddies[renren_id][1] = 1
+            if renren_id=='230099057':
+                self.send_mail("lww is online！")
 
         status = stanza.get_status()
         if status:
             msg += u': '+status
             body += u"：" + status
-        print msg
-        renrennotify(title,body)
-        self.save_file(title,body)
+        print buddy,msg,"\n"
+        self.renrennotify(renren_id,body)
+        self.save_file(buddy+time.strftime(ISOTIMEFORMAT)+body)
 
-    def save_file(self,text,status):
-        file_path = os.path.join(os.getcwd(),"renren.log")
-        file = open(file_path,"a")
-        ISOTIMEFORMAT="%H:%M"
-        msg = text + time.strftime(ISOTIMEFORMAT)+status+"\n"
-        file.write(msg)
+    def save_file(self,msg):
+        file = open(chat_history,"a")
+        file.write(time.strftime("%Y-%m-%d ")+msg+"\n")
         file.close()
 
     def presence_control(self, stanza):
@@ -191,10 +404,24 @@ class EchoHandler(object):
 
         print msg
         if has_pynotify:
-            renrennotify("人人网",msg)
+            self.renrennotify("-1",msg)
 
         #Create "accept" response for the "subscribe"/"subscribed"/"unsubscribe"/"unsubscribed" presence stanza.
         return stanza.make_accept_response()
+
+    def renrennotify(self,renren_id,body):
+        '''renren notify'''
+        if self.client.buddies.has_key(renren_id):
+            buddy = self.client.buddies[renren_id][0]
+            icon = os.path.join(img_folder,renren_id+"_"+buddy+".jpg")
+        else:
+            buddy = "人人网"
+            icon = renren_icon
+        pynotify.init("Some Application or Title")
+        notification = pynotify.Notification(buddy,body,icon)
+        notification.set_urgency(pynotify.URGENCY_NORMAL)
+        notification.set_timeout(1)
+        notification.show()
 
 class VersionHandler(object):
     """Provides handler for a version query.
@@ -277,32 +504,75 @@ class Client(JabberClient):
             name = u''
         #print (u'%s "%s" 订阅=%s 群组=%s' % (unicode(item.jid), name, item.subscription, u','.join(item.groups)) )
         renren_id = item.jid.as_utf8().split("@")[0]
-        self.buddies[renren_id] = ['']*5
+        if not self.buddies.has_key(renren_id):
+            self.buddies[renren_id] = ['']*5
         self.buddies[renren_id][0] = name
         #self.buddies[renren_id][1] = 
         self.buddies[renren_id][2] = item.groups
         #self.buddies[renren_id][3] = 
         self.buddies[renren_id][4] = item.subscription
-        print "add",renren_id,name,",".join(item.groups)
+        #print "add",renren_id,name,",".join(item.groups)
 
     def roster_updated(self,item=None):
         if not item:
-            print u'花名册'
             for item in self.roster.get_items():
                 self.print_roster_item(item)
+            print u'花名册更新完毕'
             return
         print u'花名册更新完毕'
         self.print_roster_item(item)
 
+class CLI(cmd.Cmd):
+    def __init__(self,client):
+        cmd.Cmd.__init__(self)
+        self.client = client
+        self.prompt="pyrenren>"
+
+    def default(self,line):
+        print "no such command!"
+
+    def do_exit(self,line):
+        print u'与服务器断开连接'
+        self.client.disconnect()
+        sys.exit()
+
+    def do_ls(self,line):
+        keys = self.client.buddies.keys()
+        for key in keys:
+            if self.client.buddies[key][1]:
+                print self.client.buddies[key][0]+"\t",
+        print ""
+    
+class Cline(Thread):
+    def __init__(self,client):
+        Thread.__init__(self)
+        self.client = client
+
+    def run(self):
+        CLI(self.client).cmdloop()
+
+class Renren(Thread):
+    def __init__(self,client):
+        Thread.__init__(self)
+        self.client = client
+
+    def run(self):
+        print u'开始监控'
+        self.client.loop(1)
+
+        print u'退出程序'
+
 def main():
-    # XMPP protocol is Unicode-based to properly display data received
+    """# XMPP protocol is Unicode-based to properly display data received
     # _must_ convert it to local encoding or UnicodeException may be raised
-    locale.setlocale(locale.LC_CTYPE, "")
-    encoding = locale.getlocale()[1]
-    if not encoding:
-        encoding = "us-ascii"
-    sys.stdout = codecs.getwriter(encoding)(sys.stdout, errors = "replace")
-    sys.stderr = codecs.getwriter(encoding)(sys.stderr, errors = "replace")
+
+    #locale.setlocale(locale.LC_CTYPE, "")
+    #encoding = locale.getlocale()[1]
+    #if not encoding:
+    #    encoding = "us-ascii"
+    #sys.stdout = codecs.getwriter(encoding)(sys.stdout, errors = "replace")
+    #sys.stderr = codecs.getwriter(encoding)(sys.stderr, errors = "replace")
+    """
 
     if len(sys.argv) !=3 and len(sys.argv) !=6:
         print u"Usage:"
@@ -311,30 +581,36 @@ def main():
         print "\t%s 64306080 verysecret abcdefg@gmail.com secret 13425678910@139.com" % (sys.argv[0],)
         sys.exit(1)
 
-    #if has_pynotify:
-    #    renrennotify("pynotify","开始启动！")
-
-    print u'创建客户端实例'
-    global my_id,fromadd,toadd,passwd
-    my_id = sys.argv[1]
-    c = Client(JID(my_id+"@talk.xiaonei.com"), sys.argv[2])
-
+    global fromadd,toadd,passwd
     if len(sys.argv) == 6:
         fromadd = sys.argv[3]
         passwd = sys.argv[4]
         toadd = sys.argv[5]
 
+    print u'创建客户端实例'
+    c = Client(JID(sys.argv[1]+"@talk.xiaonei.com"), sys.argv[2])
     print u'开始连接服务器'
     c.connect()
 
-    print u'开始监控'
+    threads = []
+    #threads.append(Cline(c))
+    threads.append(Renren(c))
+    for t in threads:
+        t.setDaemon(True)
+        t.start()
 
-    try:
-        c.loop(1)
-    except KeyboardInterrupt:
-        print u'与服务器断开连接'
-        c.disconnect()
+    while len(threads):
+        t = threads.pop()
+        if t.isAlive():
+            t.join()
+    #printl("人人退出")
 
-    print u'退出程序'
 if __name__ == '__main__':
+    logger = logging.getLogger()
+    #logger.addHandler( logging.StreamHandler() )
+    hdlr = logging.FileHandler(renren_log)
+    formatter = logging.Formatter('%(asctime)s%(levelname)s%(message)s')
+    hdlr.setFormatter(formatter)
+    logger.addHandler( hdlr )
+    logger.setLevel( logging.DEBUG )
     sys.exit(main())
