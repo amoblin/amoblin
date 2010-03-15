@@ -100,27 +100,15 @@ class EchoHandler(object):
 
         xml = str(stanza.get_node())
 
-        file_path = os.path.join(config_folder,"_new.xml")
-        file = open(file_path,"w")
-        temp = "<?xml version='1.0'?>" + xml
-        file.write(temp+"\n")
-        file.close()
-        #os.system("xmllint --format "+file_path)
-        file_path2 = os.path.join(config_folder,"new.xml")
-        os.system("xmllint --format "+file_path+">"+file_path2)
-        print ""
-        temp = stanza.get_node().content+"\n"
-        #print temp
-        file_path = os.path.join(config_folder,"renren_log.xml")
-        file_path2 = os.path.join(config_folder,"new.xml")
-        file = open(file_path,"a")
-        file2 = open(file_path2,"r")
-        for line in file2.readlines():
-            file.write(line)
-        file.write(temp)
-        file2.close()
-        file.close()
-        #os.system("gvim "+file_path)
+        if stanza.get_type() == "chat":
+            renren_id = stanza.get_from().as_utf8().split("@")[0]
+            if self.client.buddies.has_key(renren_id):
+                buddy = self.client.buddies[renren_id][0]
+            body = stanza.get_body()
+            print buddy,"说：",self.color(body)
+            self.renrennotify(renren_id,body)
+            self.send_mail(buddy+"说："+body)
+            return
 
         renren_id = re.findall("actor>(.+?)</.+?actor>",xml)
         if len(renren_id):
@@ -135,17 +123,29 @@ class EchoHandler(object):
         subject = stanza.get_subject()
         type = re.findall("stype>(.+?)</.+?stype>",xml)
         if not len(type):
-            renren_id = stanza.get_from().as_utf8().split("@")[0]
-            if self.client.buddies.has_key(renren_id):
-                buddy = self.client.buddies[renren_id][0]
-            body = stanza.get_body()
-            print xml,"\n"
-            print buddy,"说：",self.color(body)
-            self.renrennotify(renren_id,body)
             return
-        #print type
+        stype = type[0]
         body = ""
-        if type[0] == "102":
+        if stype =='-65549':
+            print "reply"
+        #elif stype =='':
+        #elif stype =='-4':
+        elif stype == '-33':
+            '''上传照片？'''
+            title = self.get_content("title",xml)
+            body = "上传了1张照片至" + title
+            msg = "上传了1张照片至" + self.color(title)
+            print buddy,msg
+            print buddy,"回复了你的分享"
+        elif stype == '-34':
+            print buddy,"回复了你的分享"
+        elif stype == '-4':
+            '''程序截图回复了我'''
+            title = self.get_content("title",xml)
+            body = "在 "+title+"回复你"
+            msg = "在 "+self.color(title)+"回复你"
+            print buddy,msg
+        elif stype == "102":
             '''分享日志'''
             fID = re.findall("fID>(.+?)</.+?fID>",xml)[0]
             uName = self.get_content("uName",xml)
@@ -156,10 +156,7 @@ class EchoHandler(object):
             body = "分享来自 "+college + " 的 "+uName+" 的日志 "+blog_title
             msg = "分享来自 " + self.color(college) + " 的"+self.color(uName)+" 的日志 "+self.color(blog_title)+"\n"+blog_digest
             print buddy,msg
-        #elif type[0]=='':
-        elif type[0]=='-65549':
-            print "reply"
-        elif type[0]=='103':
+        elif stype=='103':
             '''分享照片'''
             uName = self.get_content("uName",xml)
             aName = self.get_content("aName",xml)
@@ -167,119 +164,141 @@ class EchoHandler(object):
             body = "分享 "+uName+" 的照片 "+aName+""
             msg = "分享 "+self.color(uName)+" 的照片 "+ self.color(aName) + "\n" + photo_title
             print buddy,msg
-        elif type[0] == '-33':
-            '''上传照片？'''
+        elif stype == "104":
+            '''分享相册'''
+            uName = self.get_content("uName",xml)
             title = self.get_content("title",xml)
-            body = "上传了1张照片至" + title
-            msg = "上传了1张照片至" + self.color(title)
+            count = self.get_content("count",xml)
+            body = "分享 "+uName+" 的相册 " + title+"\n共 "+count+" 张照片"
+            msg = "分享 "+self.color(uName)+" 的相册 " + self.color(title)+"\n共 "+self.color(count) + " 张照片"
             print buddy,msg
-        elif type[0] == '-4':
-            '''程序截图回复了我'''
-            title = self.get_content("title",xml)
-            body = "在 "+title+"回复你"
-            msg = "在 "+self.color(title)+"回复你"
-            print buddy,msg
-        elif type[0] == "104":
+        elif stype == "107":
             ''''''
             body = "正在"
-            print buddy,body
-        elif type[0] == "107":
-            ''''''
-            body = "正在"
-        elif type[0] == "110":
+        elif stype == "110":
             '''分享视频'''
             title = self.get_content("title",xml)
             body = "分享视频 " + title
             msg = "分享视频 "+ self.color(title)
             print buddy,msg
-        elif type[0] == "400":
+        elif stype == "400":
             '''拜年'''
             print buddy,"正在给自己的好友拜年呢"
-        elif type[0] == "502":
+        elif stype == "502":
             '''新签名'''
             fName = self.get_content("fName",xml)
             title = self.get_content("title",xml)
             body = "更新了签名:"+title
             msg = "更新了签名:"+self.color(title)
             print buddy,msg
-        elif type[0] == "507":
+            self.client.buddies[renren_id][3] = title
+        elif stype == "507":
             '''好友留言'''
             un = self.get_content("un",xml)
             con = self.get_content("con",xml)
-            body = buddy + " 的好友 " + un+" 在TA的留言板上回复了TA"
-            msg = buddy + " 的好友 " + self.color(un)+" 在TA的留言板上回复了TA"
+            rt = self.get_content("rt",xml)
+            body = un +" "+ rt + " " +con
+            msg = self.color(un)+" "+ rt + " " + self.color(con)
+            print buddy + "："+ self.client.buddies[renren_id][3]
             print msg
-        elif type[0] == "601":
+        elif stype == "601":
             '''发表日志'''
             blog_title = self.get_content("title",xml)
             blog_brief = self.get_content("brief",xml)
             body = "发表日志 " + blog_title
             msg = "发表日志 " + self.color(blog_title)+"\n"+blog_brief
             print buddy,msg
-        elif type[0] == '602':
+        elif stype == '602':
             '''冷笑话回复了粉丝'''
             print ""
-        elif type[0] == '701':
+        elif stype == '701':
             '''上传照片'''
             aName = self.get_content("aName",xml)
             aName = self.get_content("aName",xml)
             body = "上传了1张照片至" + aName
             msg = "上传了1张照片至" + self.color(aName)
             print buddy,msg
-        elif type[0] == '704':
+        elif stype == '704':
             '''好友的好友回复了好友?貌似可以删除，因为有507类型了'''
             fName = self.get_content("fName",xml)
-            #body = "的好友 "+fName+" 回复了 "+buddy
+            body = "的好友 "+fName+" 回复了 "+buddy
             msg = "的好友 "+self.color(fName)+" 回复了 "+buddy
-        elif type[0]=='705':
+        elif stype=='705':
             body = ""
             msg = ""
             print buddy,msg
-        elif type[0]=='708':
+        elif stype=='708':
             '''照片有新回复'''
             un = self.get_content("un",xml)
             desc = self.get_content("desc",xml)
             body = "TA的好友 " + un + "在相册 " + desc + "中留言了"
             msg = "的好友 " + self.color(un) + "在相册 " + self.color(desc) + "中留言了"
-        elif type[0]=='799':
+        elif stype=='799':
             '''上传照片'''
             title = self.get_content("title",xml)
             body = "上传了照片至" + title
             msg = "上传了照片至" + self.color(title)
             print buddy,msg
-        elif type[0] == "801":
+        elif stype == "801":
             '''收到礼物'''
             body = "收到了"
             print buddy,body
-        elif type[0] == "802":
+        elif stype == "802":
             '''收到礼物'''
             title = self.get_content("title",xml)
             uName = self.get_content("uName",xml)
             body = "收到"+uName+"送的礼物"+title
             msg = "收到"+self.color(uName)+"送的礼物"+self.color(title)
             print buddy,msg
-        elif type[0] == '2401':
+        elif stype == "2002":
+            '''加冷笑话为好友'''
+            title = self.get_content("title",xml)
+            uName = self.get_content("uName",xml)
+            brief = self.get_content("brief",xml)
+            body = "在人人成为了"+title+"的好友"
+            msg = "在人人成为了"+self.color(title)+"的好友"
+            print buddy,msg
+        elif stype == '2003':
+            '''分享日志'''
+            uName = self.get_content("uName",xml)
+            title = self.get_content("title",xml)
+            digest = self.get_content("digest",xml)
+            body = "分享"+uName+"的日志"+title
+            msg = "分享"+self.color(uName)+"的日志"+self.color(title)
+            print buddy,msg
+            print digest
+        elif stype == '2401':
             '''使用应用'''
             title = self.get_content("title",xml)
             body = "在使用应用 "+ title
             msg = "在使用应用 "+ self.color(title)
+            desc = self.get_content("desc",xml)
             print buddy,msg
-        elif type[0] == "8190":
+            print desc
+        elif stype == "8190":
             title = self.get_content("title",xml)
             body = "分享游戏 " + title
             msg = "分享游戏 " + self.color(title)
             print buddy,msg
-        elif type[0] == "45106":
+        elif stype == "45106":
             body = "游戏邀请"
             print buddy,body
-        elif type[0] == "2011":
+        elif stype == "2011":
+            ''''''
             blog_title = self.get_content("title",xml)
             blog_brief = self.get_content("brief",xml)
             buddy = self.get_content("fName",xml)
             body = "发表日志 " + blog_title
             msg = "发表日志 " + self.color(blog_title)+"\n"+blog_brief
             print buddy,msg
-        elif type[0] == '26352':
+        elif stype == "2016":
+            '''生活大爆炸'''
+            comm = self.get_content("comm",xml)
+            buddy = self.get_content("fName",xml)
+            body = comm
+            msg = self.color(comm)
+            print buddy,msg
+        elif stype == '26352':
             app_body = self.get_content("body",xml)
             body = "邀请你参加" + self.color(app_body)
             msg = "邀请你参加" + app_body
@@ -291,23 +310,44 @@ class EchoHandler(object):
             file = open(file_path,"w")
             temp = "<?xml version='1.0'?>" + xml
             file.write(temp+"\n")
+            file.close()
             os.system("xmllint --format "+file_path)
+            file = open(file_path,"a")
+            temp = stanza.get_node().content+"\n"
+            file.write(temp)
             file.close()
         print ""
+        if type[0] != "502" or type[0] != "507" or type!='601':
+            file_path = os.path.join(config_folder,"_new.xml")
+            file = open(file_path,"w")
+            temp = "<?xml version='1.0'?>" + xml
+            file.write(temp+"\n")
+            file.close()
+            #os.system("xmllint --format "+file_path)
+            file_path2 = os.path.join(config_folder,"new.xml")
+            os.system("xmllint --format "+file_path+">"+file_path2)
+            print ""
+            temp = stanza.get_node().content+"\n"
+            #print temp
+            file_path = os.path.join(config_folder,"renren.xml")
+            file_path2 = os.path.join(config_folder,"new.xml")
+            file = open(file_path,"a")
+            file2 = open(file_path2,"r")
+            for line in file2.readlines():
+                file.write(line)
+            file.write(temp)
+            file2.close()
+            file.close()
+            #os.system("gvim "+file_path)
 
-        self.renrennotify(renren_id,body)
-        msg = ""
-        if subject:
-            ISOTIMEFORMAT=" %H:%M "
-            msg = msg + time.strftime(ISOTIMEFORMAT)
-            msg = msg +" "+buddy+ subject+"一件~"
-            if has_pynotify:
-                if subject =="新鲜事":
-                    self.save_file(msg)
-                elif subject =="reply":
-                    self.save_file(msg)
-                    if fromadd!='':
-                        self.send_mail("You have one new reply in http://www.renren.com/Home.do")
+        ISOTIMEFORMAT=" %H:%M "
+        body = time.strftime(ISOTIMEFORMAT) + body
+        self.save_file(buddy+body)
+        if has_pynotify:
+            self.renrennotify(renren_id,body)
+        if subject =="reply":
+            if fromadd!='':
+                self.send_mail("You have one new reply in http://www.renren.com/Home.do")
 
         if subject:
             subject = u'Re: ' + subject
@@ -379,6 +419,7 @@ class EchoHandler(object):
         if status:
             msg += u': '+status
             body += u"：" + status
+            self.client.buddies[renren_id][3]=status
         print buddy,msg,"\n"
         self.renrennotify(renren_id,body)
         self.save_file(buddy+time.strftime(ISOTIMEFORMAT)+body)
@@ -506,6 +547,7 @@ class Client(JabberClient):
         renren_id = item.jid.as_utf8().split("@")[0]
         if not self.buddies.has_key(renren_id):
             self.buddies[renren_id] = ['']*5
+        '''name, on/offline, groups, personal_sign'''
         self.buddies[renren_id][0] = name
         #self.buddies[renren_id][1] = 
         self.buddies[renren_id][2] = item.groups
