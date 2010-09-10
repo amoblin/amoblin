@@ -26,7 +26,7 @@ INT_PTR CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 switch(wParam) {
                 //case IDOK:
                 //case VK_RETURN:
-                case 1: { //Return
+                case 1: {
                         //WinExec("notepad.exe",SW_SHOW);
                         char command[20]="notepad.exe";
                         ShellExecute(hwnd,"open",command,"","", SW_SHOW );
