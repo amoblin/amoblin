@@ -4,6 +4,39 @@
 #include <windows.h>
 #include "resource.h"
 
+#define MAXLENGTH 1024
+
+int GetCommandPath(char *cmd, char *abspath)
+{
+    printf("%s\n",cmd);
+    FILE *fp;
+    fp = fopen("quickrun.ini","r");
+    if (fp == NULL) {
+        printf("Cannot open this file.\n");
+        return;
+    }
+    char buf[MAXLENGTH];
+    char command[100];
+    while(fgets(buf,MAXLENGTH,fp)) {
+        char *ptr = strchr(buf,'=');
+        if(ptr) {
+            memset(command,0,strlen(command));
+            strncpy(command,buf,ptr-buf);
+            printf("compare with %s:",command);
+            if(!strcmp(command,cmd)) {
+                strcpy(abspath,ptr+sizeof(char));
+                char *ptr = strchr(abspath,'\n');
+                if(ptr) {
+                    *ptr = 0;
+                }
+                return 1;
+            }
+        }
+    }
+    fclose(fp);
+    return 0;
+}
+
 INT_PTR CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
         switch(uMsg) {
@@ -12,29 +45,30 @@ INT_PTR CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 break;
 
         case WM_CLOSE:
-                // 要求系统关闭这个程序
                 PostQuitMessage(0);
                 break;
         case WM_COMMAND: {
         //case WM_KEYUP: {
-                //MessageBox(NULL, wParam, "From MSYS", 0);
-                //char buf[5];
-                //itoa(wParam,buf,10);
-                printf("%d\n",wParam);
-                //MessageBox(NULL,buf,"消息提示",MB_OK|MB_ICONEXCLAMATION); 
-                //MessageBox(NULL,wParam,"消息提示",MB_OK|MB_ICONEXCLAMATION); 
-                switch(wParam) {
-                //case IDOK:
+                //printf("%d\n",wParam);
+                switch(LOWORD(wParam)) {
+                case IDOK: {
                 //case VK_RETURN:
-                case 1: {
+                //case 1: {
                         //WinExec("notepad.exe",SW_SHOW);
-                        char command[20]="notepad.exe";
-                        ShellExecute(hwnd,"open",command,"","", SW_SHOW );
+                        char command[32];
+                        GetDlgItemText(hwnd, INPUT_AREA, command, 32);
+                        char abspath[256];
+                        if(GetCommandPath(command,abspath)) {
+                            //MessageBox(NULL,abspath,"消息提示",MB_OK|MB_ICONEXCLAMATION); 
+                            ShellExecute(hwnd,"open",abspath,"","", SW_SHOW );
+                        } else {
+                            ShellExecute(hwnd,"open",command,"","", SW_SHOW );
+                        }
                         EndDialog(hwnd,0);
                         break;
                 }
                 //case VK_ESCAPE:
-                case 2: //Escape
+                case IDCANCEL: //Escape
                         PostQuitMessage(0);
                         break;
                 }
@@ -44,12 +78,8 @@ INT_PTR CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         return 0;
 }
 
-// Windows系统的主函数
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR lpCmd, int nCmd)
 {
-        // 用这个系统函数创建我们刚刚绘制好的窗体IDD_DIALOG1，设置回叫函数为DlgProc
-        //DialogBox(hInst, MAKEINTRESOURCE("CHAT_WINDOW"), 0, DlgProc);
-        //DialogBox(hInst, MAKEINTRESOURCE(100), 0, DlgProc);
         DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG1), 0, DlgProc);
         return 0;
 }

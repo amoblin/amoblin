@@ -8,11 +8,11 @@ LD=gcc     # 链接器
 ASFLAGS=-g
 CCFLAGS=-g
 RCFLAGS=
-LDFLAGS=
+LDFLAGS=-mwindows
 
 # 我们目标，可用'\'换行
 OBJECT=main.o resource.o
-TARGET=winrun.exe
+TARGET=quickrun.exe
 
 #OBJECT=geturl.o
 #TARGET=geturl.exe
