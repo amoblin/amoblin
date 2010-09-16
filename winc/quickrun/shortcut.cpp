@@ -48,6 +48,17 @@ LRESULT CALLBACK kb_proc (int code, WPARAM w, LPARAM l)
 
 int main (void)
 {
+        static char subkey[] = "Software\\Microsoft\\Windows\\CurrentVersion\\Run";
+        static char vname[] = "ShortCut";
+        static char exefile[] = "D:\\MSYS\\home\\Administrator\\Projects\\amoblin\\winc\\quickrun\\shortcut.exe";
+        ULONG dType = REG_SZ, len = 0;
+        HKEY hKey;
+        RegOpenKeyEx(HKEY_LOCAL_MACHINE,subkey,0,KEY_SET_VALUE|KEY_QUERY_VALUE,&hKey);//打开。
+        if (RegQueryValueEx(hKey, vname, 0, &dType, NULL, &len)) { //如果没有RunMyProg，
+            RegSetValueEx(hKey, vname, 0, REG_SZ, (LPBYTE)exefile, strlen(exefile)+1); //就加上。
+        }
+        RegCloseKey(hKey); //关闭。 
+
         g_main_tid = GetCurrentThreadId ();
         SetConsoleCtrlHandler (&con_handler, TRUE);
         g_kb_hook = SetWindowsHookEx ( WH_KEYBOARD_LL, &kb_proc, GetModuleHandle (NULL), 0);
