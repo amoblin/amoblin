@@ -29,6 +29,11 @@ LRESULT CALLBACK kb_proc (int code, WPARAM w, LPARAM l)
             case WM_SYSKEYDOWN:
                 if ( (p->vkCode == 0x00de) && ((p->flags & LLKHF_ALTDOWN)!=0) ) {
                     ShellExecute(NULL,"open","D:\\MSYs\\mintty.bat","","", SW_SHOW );
+                } else if ( (p->vkCode == 0x00ba) && ((p->flags & LLKHF_ALTDOWN)!=0) ) {    //;
+                    ShellExecute(NULL,"open","C:\\Documents and Settings\\Administrator\\Local Settings\\Application Data\\Google\\Chrome\\Application\\chrome.exe","","", SW_SHOWMAXIMIZED );
+                } else if ( (p->vkCode == 0x00bc) && ((p->flags & LLKHF_ALTDOWN)!=0) ) {    //,
+                    ShellExecute(NULL,"open","explorer.exe","D:\\MSYS\\home\\Administrator\\received","", SW_SHOW );
+                } else if ( (p->vkCode == 0x00be) && ((p->flags & LLKHF_ALTDOWN)!=0) ) {    //.
                 }
                     break;
             case WM_KEYUP:
