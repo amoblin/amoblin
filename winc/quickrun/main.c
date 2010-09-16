@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+//#include <stdbool.h>
 #include <string.h>
 #include <time.h>
 
 #include <windows.h>
 #include "resource.h"
+
+#define bool BOOL
 
 #define MAX 1000
 int level = 0;
@@ -104,83 +106,6 @@ int GetCommandPath(char *cmd, char *abspath)
     return 0;
 }
 
-
-
-LRESULT CALLBACK hook_proc( int code, WPARAM wParam, LPARAM lParam )
-{
-  static long ctrl_cnt = 0;
-  static bool mmode = false;
-  static DWORD time;
-
-  KBDLLHOOKSTRUCT*  kbd = (KBDLLHOOKSTRUCT*)lParam;
-
-  //if (  code < 0 ||   (kbd->flags & 0x10) // ignore injected events
-   //  ) return CallNextHookEx( thehook, code, wParam, lParam );
-
-  long ret = 1; // by default I swallow the keys
-  if (  mmode  ) { // macro mode is ON
-    if (  WM_KEYDOWN == wParam  )
-      PostMessage(mainwnd, WM_MCR_ACCUM, kbd->vkCode, 0);
-
-    if (  WM_KEYUP == wParam  )
-      switch (kbd->vkCode) {
-        case VK_ESCAPE:
-          mmode = false;
-          keys.removeall();
-          PostMessage(mainwnd, WM_MCR_HIDE, 0, 0);
-          break;
-
-        case VK_RETURN:
-          PostMessage(mainwnd, WM_MCR_EXEC, 0, 0);
-          break;
-
-        case VK_LCONTROL:
-          mmode = false;
-          PostMessage(mainwnd, WM_MCR_HIDE, 0, 0);
-          PostMessage(mainwnd, WM_MCR_EXEC, 0, 0);
-          break;
-      }
-
-    /* Which non printable keys allow passing? */
-    switch( kbd->vkCode ) {
-      case VK_LCONTROL:
-      case VK_CAPITAL:
-      case VK_LSHIFT:
-      case VK_RSHIFT:
-        //ret = CallNextHookEx( thehook, code, wParam, lParam );
-    }
-  }
-  else { // macro mode is OFF
-    /* Ctrl pressed */
-    if (  kbd->vkCode == VK_LCONTROL && WM_KEYDOWN == wParam  ) {
-      ctrl_cnt = 1;
-      time = kbd->time;
-    }
-
-    /* Prevent ctrl combinations to activate macro mode */
-    if (  kbd->vkCode != VK_LCONTROL  )
-      ctrl_cnt = 0;
-
-    /* Ctrl released */
-    if (  ctrl_cnt == 1 && WM_KEYUP == wParam  ) {
-      if (  kbd->time - time > 40  ) {
-        mmode = true;
-        PostMessage(mainwnd, WM_MCR_SHOW, 0, 0);
-      }
-    }
-
-    //ret = CallNextHookEx( thehook, code, wParam, lParam ); // let it pass
-  }
-
-  return ret;
-}
-
-int KeyboardMonitor()
-{
-    HHOOK thehook = SetWindowsHookEx( WH_KEYBOARD_LL, hook_proc, hwnd, 0 );
-
-}
-
 INT_PTR CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
         switch(uMsg) {
@@ -212,14 +137,14 @@ INT_PTR CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                         } else {
                             ShellExecute(hwnd,"open",command,"","", SW_SHOW );
                         }
-                        KeyboardMonitor();
-                        //EndDialog(hwnd,0);
+                        //KeyboardMonitor();
+                        EndDialog(hwnd,0);
                         break;
                 }
                 //case VK_ESCAPE:
                 case IDCANCEL: //Escape
-                        KeyboardMonitor();
-                        //PostQuitMessage(0);
+                        //KeyboardMonitor();
+                        PostQuitMessage(0);
                         break;
                 }
                 break;
@@ -230,7 +155,7 @@ INT_PTR CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR lpCmd, int nCmd)
 {
-        KeyboardMonitor();
-        //DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG1), 0, DlgProc);
+        //KeyboardMonitor();
+        DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG1), 0, DlgProc);
         return 0;
 }

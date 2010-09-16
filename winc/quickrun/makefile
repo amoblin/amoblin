@@ -14,6 +14,9 @@ LDFLAGS=-mwindows
 OBJECT=main.o resource.o
 TARGET=quickrun.exe
 
+#OBJECT=shortcut.o
+#TARGET=shortcut.exe
+
 #OBJECT=geturl.o
 #TARGET=geturl.exe
 
