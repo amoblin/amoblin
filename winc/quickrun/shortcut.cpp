@@ -79,10 +79,10 @@ int GetAction(PKBDLLHOOKSTRUCT p)
         if(ptr) {
             memset(KeyboardCode,0,strlen(KeyboardCode));
             strncpy(KeyboardCode,buf,ptr-buf);
-            printf("compare with %s:",KeyboardCode);
+            //printf("compare with %s:\n",KeyboardCode);
             char *token = strtok(KeyboardCode,"+");
             while(token != NULL) {
-                printf("the key is: %s\n",token);
+                //printf("the key is: %s\n",token);
                 if(!strcmp(token,"ALT")) {
                     flag = 0;
                     if ((p->flags & LLKHF_ALTDOWN)!=0)
@@ -108,13 +108,29 @@ LRESULT CALLBACK kb_proc (int code, WPARAM w, LPARAM l)
 {
         PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT)l;
         //const char *info = NULL;
+        bool flag = 0;
         if (code == HC_ACTION) {
             switch(w) {
             case WM_KEYDOWN:
-            case WM_SYSKEYDOWN:
+                    if(p->vkCode == VK_CONTROL) {
+                        printf("control pressed.\n");
+                        flag = 1;
+                    }
+                    else if((p->vkCode == 0x004c) && flag) {
+                        printf("alt+l");
+                        keybd_event(VK_F4,0,0,0);
+                        keybd_event(VK_F4,0,KEYEVENTF_KEYUP,0);
+                    }
                     GetAction(p);
                     break;
+            case WM_SYSKEYDOWN:
+                    break;
             case WM_KEYUP:
+                    if(p->vkCode == VK_CONTROL) {
+                        printf("control released.\n");
+                        flag = 0;
+                    }
+                    break;
             case WM_SYSKEYUP:
                     break;
             }
