@@ -14,6 +14,8 @@
 DWORD   g_main_tid = 0;
 HHOOK   g_kb_hook   = 0;
 
+bool control_key=0;
+
 bool CALLBACK con_handler (DWORD)
 {
         PostThreadMessage (g_main_tid, WM_QUIT, 0, 0);
@@ -69,6 +71,8 @@ int GetAction(PKBDLLHOOKSTRUCT p)
     if (fp == NULL) {
         printf("Cannot open this file.\n");
         return 0;
+    } else {
+        printf("read shortcut.ini.\n");
     }
     char buf[MAXLENGTH];
     char KeyboardCode[100];
@@ -107,28 +111,23 @@ int GetAction(PKBDLLHOOKSTRUCT p)
 LRESULT CALLBACK kb_proc (int code, WPARAM w, LPARAM l)
 {
         PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT)l;
-        //const char *info = NULL;
-        bool flag = 0;
+        printf ("code is %d, vkCode [%04x], scanCode [%04x]\n", code, p->vkCode, p->scanCode);
         if (code == HC_ACTION) {
             switch(w) {
             case WM_KEYDOWN:
-                    if(p->vkCode == VK_CONTROL) {
-                        printf("control pressed.\n");
-                        flag = 1;
-                    }
-                    else if((p->vkCode == 0x004c) && flag) {
-                        printf("alt+l");
+            case WM_SYSKEYDOWN:
+                    if(p->vkCode == 0x00a2) {
+                        control_key= 1;
+                    } else if((p->vkCode == 76) && control_key) {
                         keybd_event(VK_F4,0,0,0);
                         keybd_event(VK_F4,0,KEYEVENTF_KEYUP,0);
                     }
+                    printf("Get Action.\n");
                     GetAction(p);
                     break;
-            case WM_SYSKEYDOWN:
-                    break;
             case WM_KEYUP:
-                    if(p->vkCode == VK_CONTROL) {
-                        printf("control released.\n");
-                        flag = 0;
+                    if(p->vkCode == 0x00a2) {
+                        control_key= 0;
                     }
                     break;
             case WM_SYSKEYUP:

@@ -27,7 +27,7 @@ LRESULT CALLBACK kb_proc (int code, WPARAM w, LPARAM l)
             printf ("pressed enter key.");
             break;
         }
-        printf ("vkCode [%04x], scanCode [%04x]\n", info, p->vkCode, p->scanCode);
+        printf ("vkCode [%04x], scanCode [%04x]\n", p->vkCode, p->scanCode);
         /*
         if (w == WM_KEYDOWN)
             info = "key dn";
