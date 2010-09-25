@@ -1,3 +1,28 @@
+"let &termencoding=&encoding
+set enc=utf-8
+set fenc=utf-8
+set fencs=utf-8,cp936,egbk,ucs-bom,gb18030,nu-cs
+set nu
+set statusline=%<%f\ %h%m%r%=%k%{&ff}\ [%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",BOM\":\"\")}]\ %-14.(%l,%c%V%)\ %P
+set laststatus=2
+
+" User definitions ==========================================================
+set nocompatible
+source $VIMRUNTIME/vimrc_example.vim
+set nobackup
+set tags+=~/.tags
+
+map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+let OmniCpp_MayCompleteScope = 1
+let OmniCpp_ShowPrototypeInAbbr = 1
+set completeopt=menu
+
+map  <Esc>[7~ <Home>
+map  <Esc>[8~ <End>
+imap <Esc>[7~ <Home>
+imap <Esc>[8~ <End>
+
+
 "命令集
 "设置自动折行 set wrap/set wrap!
 set wrap
@@ -54,13 +79,9 @@ function MyFoldfun(lineNum)
 		return 'a1'
 	elseif getline(a:lineNum)=~'^}'
 		return 's1'
-	"elseif getline(a:lineNum+1)=~'.\+{.\+}.\+'
-	"	return '='
-    "elseif getline(a:lineNum)=~'.\+}.\+{.\+'
-	"	return 's2'
-    "elseif getline(a:lineNum-1)=~'.\+}.\+{.\+'
-	"	return 'a1'
-	elseif getline(a:lineNum+1)=~'.\+}'
+	elseif getline(a:lineNum)=~'.\+{.\+}'
+		return '='
+	elseif getline(a:lineNum)=~'.\+}'
 		return 's1'
 	elseif getline(a:lineNum)=~'.\+{'
 		return 'a1'
@@ -75,14 +96,15 @@ if has("autocmd")
 	augroup END
 else
 	set foldcolumn=4
-	set foldmethod=expr
+	"set foldmethod=expr
 	set foldexpr=MyFoldfun(v:lnum)
 endif
 
 
 
 "设置xml文档依缩进折叠
-autocmd FileType xml,html,xsl,xhtml,htm,xhtm,svg,xsd,php,vimrc,python set foldmethod=indent
+"autocmd FileType xml,html,xsl,xhtml,htm,xhtm,svg,xsd,php,vimrc,python set foldmethod=indent
+set foldmethod=marker
 "python设置
 autocmd FileType python setlocal makeprg=xterm\ -e\ ./%
 autocmd FileType sh setlocal makeprg=xterm\ -e\ ./%
