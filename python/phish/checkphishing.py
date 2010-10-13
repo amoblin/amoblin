@@ -228,7 +228,7 @@ class AntiPhishing():
         Sheet = Doc.ActiveSheet
         rows_count = Sheet.UsedRange.Rows.Count
         columns_count = Sheet.UsedRange.Rows.Count
-        self.app.Range("A1:H" + str(rows_count)).Sort(Key1=self.app.Range("D1"),Order1=1)
+        self.app.Range("A1:M" + str(rows_count)).Sort(Key1=self.app.Range("D1"),Order1=1)
         Doc.SaveAs(filename,6)	#save the sort result.
         print "All urls:",rows_count
 
@@ -246,7 +246,7 @@ class AntiPhishing():
         
 
         delete_id = open("delete.txt","w")
-        self.app.Range("A1:H" + str(i-1)).Sort(Key1=self.app.Range("D1"),Order1=1)
+        self.app.Range("A1:M" + str(i-1)).Sort(Key1=self.app.Range("D1"),Order1=1)
         Doc.SaveAs(filename,6)	#save the sort result.
 
         i = 1
@@ -278,7 +278,7 @@ class AntiPhishing():
         rows_count = Sheet.UsedRange.Rows.Count
         columns_count = Sheet.UsedRange.Rows.Count
         print "All urls:",rows_count
-        self.app.Range("A1:H" + str(rows_count)).Sort(Key1=self.app.Range("D1"),Order1=1)
+        self.app.Range("A1:M" + str(rows_count)).Sort(Key1=self.app.Range("D1"),Order1=1)
 
         self.sort(Sheet,rows_count)
 
@@ -347,7 +347,7 @@ class AntiPhishing():
         Sheet = Doc.ActiveSheet
         rows_count = Sheet.UsedRange.Rows.Count
         columns_count = Sheet.UsedRange.Rows.Count
-        self.app.Range("A1:H" + str(rows_count)).Sort(Key1=self.app.Range("D1"),Order1=1)
+        self.app.Range("A1:M" + str(rows_count)).Sort(Key1=self.app.Range("D1"),Order1=1)
         Doc.SaveAs(filename,6)	#save the sort result.
 
         print "All urls:",rows_count

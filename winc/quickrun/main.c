@@ -78,8 +78,7 @@ void Findfile(char * filepath)
 int GetCommandPath(char *cmd, char *abspath)
 {
     printf("%s\n",cmd);
-    FILE *fp;
-    fp = fopen("quickrun.ini","r");
+    FILE *fp = fopen("quickrun.ini","r");
     if (fp == NULL) {
         printf("Cannot open this file.\n");
         return;
