@@ -27,7 +27,8 @@ options={'py2exe':
 setup(
     options = options,
     zipfile = None,
-    console=[{"script":"checkphishing.py","icon_resources":[(1,"icon_antiPhishing.ico")]}],
+    #console=[{"script":"checkphishing.py","icon_resources":[(1,"icon_antiPhishing.ico")]}],
+    console=[{"script":"precheck.py","icon_resources":[(1,"icon_antiPhishing.ico")]}],
     #console=[{"script":"get_trusted.py","icon_resources":[(1,"icon_antiPhishing.ico")]}],
     #console=[{"script":"test.py","icon_resources":[(1,"wireshark.ico")]}]
     #windows=[{"script":"sk.py","icon_resources":[(1,"autokey.ico")]}]

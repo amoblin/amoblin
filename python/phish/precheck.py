@@ -10,6 +10,7 @@
 
 import os,sys,threading,re
 from win32com import client
+import csv
 import webbrowser
 from cmdloop import *
 
@@ -77,15 +78,14 @@ class Excel:
 
 class CLI(CommandLoop):
     PS1='Anti Phishing>'
-    def __init__(self,Doc,start,end):
+    def __init__(self,Doc,domains):
         self.aliasdict = {}
         self.Doc = Doc
-        self.start = start
-        self.end = end
         self.count = 0
+        self.domains = domains
 
     def _postCommand(self):
-        if (self.count -1) == (self.end - self.start):
+        if (self.count -1) == (len(self.domains.keys())):
             self.gCmd(None,None)
 
     @aliases('g')
@@ -107,9 +107,9 @@ class CLI(CommandLoop):
     @shorthelp('search the url with regular express.')
     def seCmd(self,flags,args):
         Sheet = self.Doc.ActiveSheet
-        for j in range(self.start,self.end+1):
+        for j in range(self.start,self.end):
             if re.search(args[0],Sheet.Cells(j,1).Value):
-                print j," ",Sheet.Cells(j,1).value.encode('gbk')," ",Sheet.Cells(j,2).Value," ",Sheet.Cells(j,3).Value
+                print j," ",Sheet.Cells(j,1)," ",Sheet.Cells(j,2).Value," ",Sheet.Cells(j,3).Value
 
     @aliases('google')
     @shorthelp('use google search.')
@@ -157,19 +157,22 @@ class CLI(CommandLoop):
         for arg in args:
             start= int(arg.split("-")[0])
             end = int(arg.split("-")[-1])
-            if start < self.start:
-                print "start:",start," is Out of Range [",self.start,",",self.end,"]"
-            if end > self.end:
-                print "end:",end," is Out of Range [",self.start,",",self.end,"]"
-            else:
-                Sheet = self.Doc.ActiveSheet
-                for j in range(start,end+1):
-                    url = Sheet.Cells(j,1).Value.encode("utf-8")
-                    print url," ",Sheet.Cells(j,2).Value," ",Sheet.Cells(j,3).Value
-                    Sheet.Cells(j,6).Value = 0    #mark none phishing.
+
+            Sheet = self.Doc.ActiveSheet
+            for j in range(start,end+1):
+                url = Sheet.Cells(j,1).Value
+                if self.domains.has_key(url):
+                    group_start,group_end = self.domains[url]
+                else:
+                    print "Error! This key does not exist."
+                    return
+
+
+                for k in range(group_start,group_end+1):
+                    Sheet.Cells(k,6).Value = 0    #mark none phishing.
                     if flag == 1:
-                        Sheet.Cells(j,7).Value = 1    #mark none phishing.
-                    self.count += 1
+                        Sheet.Cells(k,7).Value = 1    #mark none phishing.
+                self.count += 1
 
 class AntiPhishing():
     def __init__(self):
@@ -278,52 +281,79 @@ class AntiPhishing():
         rows_count = Sheet.UsedRange.Rows.Count
         columns_count = Sheet.UsedRange.Rows.Count
         print "All urls:",rows_count
-        self.app.Range("A1:M" + str(rows_count)).Sort(Key1=self.app.Range("D1"),Order1=1)
+        #self.app.Range("A1:M" + str(rows_count)).Sort(Key1=self.app.Range("D1"),Order1=1)
 
-        self.sort(Sheet,rows_count)
+        #self.sort(Sheet,rows_count)
 
-        Doc.SaveAs(filename,6)	#save the sort result.
-        raw_input("Press Enter Key to continue...")
+        #Doc.SaveAs(filename,6)	#save the sort result.
+        #raw_input("Press Enter Key to continue...")
         begin = 1
         while Sheet.Cells(begin,6).Value is not None:
             begin+=1
 
+        if begin > rows_count:
+            print "finish this file."
+            return
+        
         i = begin
-        pw_id = Sheet.Cells(i,4).Value
-        while i <= rows_count+1:
-            if pw_id is None:
-                i = i + 1
-                continue
-            if pw_id == Sheet.Cells(i,4).Value:
-                url = Sheet.Cells(i,1).Value.encode("utf-8")
-                try:
-                    print i," ",url," ",Sheet.Cells(i,2).Value," ",Sheet.Cells(i,3).Value
-                except:
-                    pass
+        domain = Sheet.Cells(i,1).Value.split("/")[0]
+        domains={}
 
-                Sheet.Cells(i,6).Value = 1  #mark phishing in default.
-                Sheet.Cells(i,7).Value = 0  #mark untrusted in default.
-                self.urls.append(url)
-                if i - begin ==49:
-                    pw_id = -1
-                i=i+1
-            else:
+        while i <= rows_count+1:
+            if Sheet.Cells(i,1).Value is None:
+                print begin," ",Sheet.Cells(begin,1).Value.encode("gbk")," ",Sheet.Cells(begin,2).Value," ",Sheet.Cells(begin,3).Value
+
+                domains[Sheet.Cells(begin,1).Value] = (begin,i-1)
+
                 try:
                     """use os.system to call chrome"""
-                    commd = self.cmd + ' " "'.join(self.urls) + ' "'
+                    commd = self.cmd + '" "'.join(domains.keys()) + '"'
                     th = threading.Thread(target=os.system,args=(commd,))
                     th.start()
                 except:
                     """use webbrowser"""
                     for url in self.urls:
                         webbrowser.open_new_tab("http://" + url)
-                print "opened",i-begin,"tabs",":",begin,"-",i-1,"with PW ID:",int(pw_id)
-                CLI(Doc,begin,i-1).runLoop()
+
+                #print "opened",len(domains.keys()),"tabs",":",begin,"-",i-1,"with PW ID:",int(pw_id)
+                CLI(Doc,domains).runLoop()
                 Doc.SaveAs(filename,6)	#saved
                 print "finished: ",i-1," / ",rows_count,"\n"
+
+                i = i + 1
+                continue
+            if domain == Sheet.Cells(i,1).Value.split("/")[0]:  #same domain
+                Sheet.Cells(i,6).Value = 1  #mark phishing in default.
+                Sheet.Cells(i,7).Value = 0  #mark untrusted in default.
+                i=i+1
+            else:
+                print begin," ",Sheet.Cells(begin,1).Value.encode("gbk")," ",Sheet.Cells(begin,2).Value," ",Sheet.Cells(begin,3).Value
+
+                domains[Sheet.Cells(begin,1).Value.encode('gbk')] = (begin,i-1)
+
+                domain = Sheet.Cells(i,1).Value.split("/")[0]
+
+                if len(domains.keys()) < 5:
+                    begin = i
+                    continue
+
+                try:
+                    """use os.system to call chrome"""
+                    commd = self.cmd + '" "'.join(domains.keys()) + '"'
+                    th = threading.Thread(target=os.system,args=(commd,))
+                    th.start()
+                except:
+                    """use webbrowser"""
+                    for url in self.urls:
+                        webbrowser.open_new_tab("http://" + url)
+
+                #print "opened",len(domains.keys()),"tabs",":",begin,"-",i-1,"with PW ID:",int(pw_id)
+                CLI(Doc,domains).runLoop()
+                Doc.SaveAs(filename,6)	#saved
+                print "finished: ",i-1," / ",rows_count,"\n"
+
                 begin = i
-                self.urls = []
-                pw_id = Sheet.Cells(i,4).Value
+                domains.clear()
         Doc.Close(True)
         result = ""
         deleted = 0
