@@ -1,0 +1,200 @@
+#欧洲官源
+# deb http://archive.ubuntu.com/ubuntu/ maverick main restricted universe multiverse
+# deb http://archive.ubuntu.com/ubuntu/ maverick-security main restricted universe multiverse
+# deb http://archive.ubuntu.com/ubuntu/ maverick-updates main restricted universe multiverse
+# deb http://archive.ubuntu.com/ubuntu/ maverick-proposed main restricted universe multiverse
+# deb http://archive.ubuntu.com/ubuntu/ maverick-backports main restricted universe multiverse
+
+#bones74
+deb http://ubuntu.srt.cn/ubuntu/ maverick main restricted universe multiverse
+deb http://ubuntu.srt.cn/ubuntu/ maverick-security main restricted universe multiverse
+deb http://ubuntu.srt.cn/ubuntu/ maverick-updates main restricted universe multiverse
+deb http://ubuntu.srt.cn/ubuntu/ maverick-proposed main restricted universe multiverse
+deb http://ubuntu.srt.cn/ubuntu/ maverick-backports main restricted universe multiverse
+# deb-src http://ubuntu.srt.cn/ubuntu/ lucid main restricted universe multiverse
+# deb-src http://ubuntu.srt.cn/ubuntu/ lucid-security main restricted universe multiverse
+# deb-src http://ubuntu.srt.cn/ubuntu/ lucid-updates main restricted universe multiverse
+# deb-src http://ubuntu.srt.cn/ubuntu/ lucid-proposed main restricted universe multiverse
+# deb-src http://ubuntu.srt.cn/ubuntu/ lucid-backports main restricted universe multiverse
+
+#
+# deb http://ubuntu.uestc.edu.cn/ubuntu karmic main restricted universe multiverse
+# deb http://ubuntu.uestc.edu.cn/ubuntu karmic-backports main restricted universe multiverse
+# deb http://ubuntu.uestc.edu.cn/ubuntu karmic-proposed main restricted universe multiverse
+# deb http://ubuntu.uestc.edu.cn/ubuntu karmic-security main restricted universe multiverse
+# deb http://ubuntu.uestc.edu.cn/ubuntu karmic-updates main restricted universe multiverse
+# deb-src http://ubuntu.uestc.edu.cn/ubuntu jaunty main restricted universe multiverse
+# deb-src http://ubuntu.uestc.edu.cn/ubuntu jaunty-backports main restricted universe multiverse
+# deb-src http://ubuntu.uestc.edu.cn/ubuntu jaunty-proposed main restricted universe multiverse
+# deb-src http://ubuntu.uestc.edu.cn/ubuntu jaunty-security main restricted universe multiverse
+# deb-src http://ubuntu.uestc.edu.cn/ubuntu jaunty-updates main restricted universe multiverse
+
+#新加坡国立大学理学院 ubuntu 更新源(所有用户通用）：
+# deb http://ftp.science.nus.edu.sg/ubuntu/ karmic main restricted universe multiverse
+# deb http://ftp.science.nus.edu.sg/ubuntu/ karmic-security main restricted universe multiverse
+# deb http://ftp.science.nus.edu.sg/ubuntu/ karmic-updates main restricted universe multiverse
+# deb http://ftp.science.nus.edu.sg/ubuntu/ karmic-proposed main restricted universe multiverse
+# deb http://ftp.science.nus.edu.sg/ubuntu/ karmic-backports main restricted universe multiverse
+# deb-src http://ftp.science.nus.edu.sg/ubuntu/ karmic main restricted universe multiverse
+# deb-src http://ftp.science.nus.edu.sg/ubuntu/ karmic-security main restricted universe multiverse
+# deb-src http://ftp.science.nus.edu.sg/ubuntu/ karmic-updates main restricted universe multiverse
+# deb-src http://ftp.science.nus.edu.sg/ubuntu/ karmic-proposed main restricted universe multiverse
+# deb-src http://ftp.science.nus.edu.sg/ubuntu/ karmic-backports main restricted universe multiverse
+
+#来自澳大利亚 optus.net 的ubuntu 更新服务器 （全国通用，经测试速度挺快）：
+# deb http://mirror.optus.net/ubuntu/ karmic main restricted universe multiverse
+# deb http://mirror.optus.net/ubuntu/ karmic-security main restricted universe multiverse
+# deb http://mirror.optus.net/ubuntu/ karmic-updates main restricted universe multiverse
+# deb http://mirror.optus.net/ubuntu/ karmic-proposed main restricted universe multiverse
+# deb http://mirror.optus.net/ubuntu/ karmic-backports main restricted universe multiverse
+# deb-src http://mirror.optus.net/ubuntu/ karmic main restricted universe multiverse
+# deb-src http://mirror.optus.net/ubuntu/ karmic-security main restricted universe multiverse
+# deb-src http://mirror.optus.net/ubuntu/ karmic-updates main restricted universe multiverse
+# deb-src http://mirror.optus.net/ubuntu/ karmic-proposed main restricted universe multiverse
+# deb-src http://mirror.optus.net/ubuntu/ karmic-backports main restricted universe multiverse
+#
+
+#ubuntu-tweak
+deb http://ppa.launchpad.net/tualatrix/ubuntu lucid main
+
+#ofetion
+deb http://ppa.launchpad.net/happyaron/ppa/ubuntu maverick main
+
+#i3
+# deb http://debian.sur5r.net/i3/ lucid universe
+
+#osd-lyrics
+deb http://ppa.launchpad.net/osd-lyrics/ppa/ubuntu maverick main
+
+#awesome wicked
+# deb http://ppa.launchpad.net/antage/ubuntu maverick main
+
+#elementarydesktop:
+# deb http://ppa.launchpad.net/elementaryart/elementarydesktop/ubuntu lucid main
+
+#bilbo blog client
+
+#blueman
+#deb https://launchpad.net/~blueman/+archive/ppa
+deb http://ppa.launchpad.net/blueman/ppa/ubuntu lucid main
+
+
+#arora
+
+
+
+#conky
+
+#exaile
+
+#zeitgeist
+
+#dropbox
+deb http://linux.getdropbox.com/ubuntu maverick main
+
+#ppa
+#shutter
+#ibus
+#openoffice 3.1
+
+#epiphany-browser
+
+#VirtualBox
+deb http://download.virtualbox.org/virtualbox/debian maverick non-free
+
+#oracle-xe
+# deb http://oss.oracle.com/debian unstable main non-free
+
+#webilder
+# deb http://debian.websterwood.com/ karmic main
+# deb-src http://debian.websterwood.com/ hardy main
+
+#chromium-browser
+deb http://ppa.launchpad.net/fta/ppa/ubuntu maverick main
+deb http://ppa.launchpad.net/chromium-daily/ppa/ubuntu maverick main #chromium-browser
+
+#chrome
+deb http://dl.google.com/linux/deb/ stable non-free #google
+
+#game
+#spring游戏
+#urbanterror
+
+#google gadgets
+
+#wine
+# deb http://wine.budgetdedicated.com/apt karmic main
+
+#ubuntu live usb
+
+
+# deb cdrom:[Ubuntu 9.04 _Jaunty Jackalope_ - Alpha i386 (20090225.1)]/ jaunty main restricted
+# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+# newer versions of the distribution.
+
+# deb http://cn.archive.ubuntu.com/ubuntu/ jaunty main restricted
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ jaunty main restricted
+
+## Major bug fix updates produced after the final release of the
+## distribution.
+# deb http://cn.archive.ubuntu.com/ubuntu/ jaunty-updates main restricted
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ jaunty-updates main restricted
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team. Also, please note that software in universe WILL NOT receive any
+## review or updates from the Ubuntu security team.
+# deb http://cn.archive.ubuntu.com/ubuntu/ jaunty universe
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ jaunty universe
+# deb http://cn.archive.ubuntu.com/ubuntu/ jaunty-updates universe
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ jaunty-updates universe
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu 
+## team, and may not be under a free licence. Please satisfy yourself as to 
+## your rights to use the software. Also, please note that software in 
+## multiverse WILL NOT receive any review or updates from the Ubuntu
+## security team.
+# deb http://cn.archive.ubuntu.com/ubuntu/ jaunty multiverse
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ jaunty multiverse
+# deb http://cn.archive.ubuntu.com/ubuntu/ jaunty-updates multiverse
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ jaunty-updates multiverse
+
+## Uncomment the following two lines to add software from the 'backports'
+## repository.
+## N.B. software from this repository may not have been tested as
+## extensively as that contained in the main release, although it includes
+## newer versions of some applications which may provide useful features.
+## Also, please note that software in backports WILL NOT receive any review
+## or updates from the Ubuntu security team.
+# deb http://cn.archive.ubuntu.com/ubuntu/ jaunty-backports main restricted universe multiverse
+# deb-src http://cn.archive.ubuntu.com/ubuntu/ jaunty-backports main restricted universe multiverse
+
+## Uncomment the following two lines to add software from Canonical's
+## 'partner' repository. This software is not part of Ubuntu, but is
+## offered by Canonical and the respective vendors as a service to Ubuntu
+## users.
+# deb http://archive.canonical.com/ubuntu jaunty partner
+# deb-src http://archive.canonical.com/ubuntu jaunty partner
+
+# deb http://security.ubuntu.com/ubuntu jaunty-security main restricted
+# deb-src http://security.ubuntu.com/ubuntu jaunty-security main restricted
+# deb http://security.ubuntu.com/ubuntu jaunty-security universe
+# deb-src http://security.ubuntu.com/ubuntu jaunty-security universe
+# deb http://security.ubuntu.com/ubuntu jaunty-security multiverse
+# deb-src http://security.ubuntu.com/ubuntu jaunty-security multiverse
+
+#Natty Narwhal	11.04
+#Maverick Meerkat 10.10
+#lucid lynx		10.04
+#karmic koala	9.10
+#jaunty jackalope 9.04
+#intrepid ibex 8.10
+#hardy heron 8.04
+#gutsy gibbon 7.10
+#feisty fawn 7.04
+#edgy eft 6.10
+#dapper drake 6.06
+#breezy badger 5.10
+#hoary hedgehog 5.04
+#warty warthog 4.10
+## Depôt MultiBoot-v3
+# deb http://liveusb.info/MultiBoot-v3/depot/ ./
