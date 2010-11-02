@@ -1,0 +1,799 @@
+#!/bin/bash
+#######################################################################
+#   Author: amoblin
+#   E-Mail: amoblin@gmail.com
+#   Create Time: god knows.
+#   Last Modify:2009-03-05
+#   Modify Time:2009-11-14 19:08
+#   Description: A script to build a wonderful system.
+#   ChangeLog:
+#   2009-12-6 23:02 found gnofract4f, a good fractal software.
+#######################################################################
+
+#verify the networking
+echo "看看能不能上网。。。\n"
+#ping -c 3 203.208.39.104	#first ping g.cn
+#ping -c 2 g.cn 		#看能否解析域名
+#ping -c 1 216.239.59.99 #www.google.com
+##ping -c 3 202.108.22.5   #ping 百度ip 3次
+##ping -c 2 119.75.213.32
+#ping -c 1 www.baidu.com #echo "OK!"
+#pause
+
+#begin setting
+echo "设置软件源..."
+#wget http://dl.dropbox.com/u/676608/config/sources.list
+#sudo cp sources.list /etc/apt/sources.list
+#sudo apt-get update
+##sudo apt-get upgrade -y --force-yes 
+##exit
+
+#"install google chrome browser."
+sudo apt-get install google-chrome linux-fetion
+
+
+#echo "console software installing...."
+sudo apt-get install w3m sl zhcon sdcv feh grun openbox tint2 conky trayer mpd mpc mutt getmail4 msmtp dvtm rrdtool fcitx mpg123 mplayer-nogui
+#gpick 
+
+##flash no sound
+#sudo apt-get install flashplugin-nonfree -y
+#echo "Now you can listen to music at google"
+
+
+#echo "安装音视频播放器和解码器"
+#sudo apt-get install smplayer gstreamer0.10-ffmpeg gstreamer0.10-plugins-ugly gnome-media banshee
+#suod apt-get install mpg123 mplayer-nogui  mencoder 
+#echo "安装rm解码器"
+#sudo dpkg -i ./deb/w32codecs_20071007-0.0_i386.deb
+#如果mplayer不能播放试试下面
+#sudo aptitude install libstdc++5
+#echo "Now you can listen mp3 musics and watch all kinds of movies."
+
+#sudo apt-get install vim g++ gcc
+
+
+echo "中英文支持..."
+#sudo apt-get install language-support-zh language-pack-zh language-support-en language-pack-en #ibus ibus-table
+
+
+
+
+##Math software
+sudo apt-get install octave3.2
+#gnofract4d 
+
+#ls
+##绿色 可执行 深蓝色 文件夹 
+##链接文件或文件夹，必含x属性   浅蓝色
+
+
+##depth      640×480      800×600      1024×768      1280×1024
+
+##8bit        769          771           773            775
+##15bit       784          787           790            793
+##16bit       785          788           791            794
+##24bit       786          789           792            795
+
+##sudo vi /boot/grub/menu.lst
+##kernel后添加vga=791
+
+##修改开机启动画面usplash
+#sudo ln -sf /usr/local/usplash/usplash-theme-ubuntu.so /etc/alternatives/usplash-artwork.so
+#sudo dpkg-reconfigure usplash-theme-ubuntu
+
+##framebuffer
+#sudo sed -e '$a\fbcon' /etc/modules
+#sudo sed -e '/vesafb/s/^/#/g' /etc/modprobe.d/blacklist-framebuffer.conf
+#sudo sed -e '$a\fbcon' /etc/initraamfs-tools/modules
+#sudo update-initramfs -k `uname-r` -u
+
+#automount
+#sudo apt-get install ivman libnotify-bin zenity
+
+#system notify:notify-send zenity
+
+#check files
+#[ -d config_file ] && echo "directory config_file is existed..."
+#[ -d deb ] && echo "directory deb is existed..."
+#[ -d Mac_OSX ] && echo "directory Mac_OSX is existed..."
+#[ -d binary ] && echo "directory binary is existed..."
+
+#echo "设置网络..."
+#use ifconfig
+#sudo cp ./config_file/interfaces /etc/network/interfaces
+#sudo /etc/init.d/networking restart
+#echo "OK!"
+
+
+#echo "设置..."
+#echo "OK!"
+
+#use NetworkManager
+
+
+
+
+
+#wireless drive setting
+#lspci -v|grep wireless
+#dmesg -v|grep ndiswrapper
+
+#if network is unreachable添加路由表
+#route add default gw 192.168.1.1
+
+#echo "添加本地密钥，用于virtualbox和oracle的apt验证..."
+#add apt key
+#sudo apt-key add ./key/RPM-GPG-KEY-oracle
+#sudo apt-key add ./key/sun_vbox.asc
+#sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com FE85409EEAB40ECCB65740816AF0E1940624A220
+#echo "OK!"
+
+#*****************************************编译安装ibus******************************
+#sudo apt-get install python-enchant python-gtk2-dev libgtk2.0-dev libdbus-1-dev libdbus-glib-1-dev automake
+#sudo apt-get install libtool libgconf2-dev cvs
+
+#wget http://dbus.freedesktop.org/releases/dbus-python/dbus-python-0.83.0.tar.gz
+#tar -xvf dbus-python-0.83.0.tar.gz
+#cd dbus-python-0.83.0/
+# ./configure
+# make
+# sudo make install
+#wget http://ibus.googlecode.com/files/ibus-0.1.1.20081023.tar.gz
+#wget http://ibus.googlecode.com/files/ibus-pinyin-0.1.1.20081004.tar.gz
+#wget http://ibus.googlecode.com/files/ibus-table-0.1.2.20090104.tar.gz
+#wget http://ibus.googlecode.com/files/ibus-table-wubi-0.1.2.20090101.tar.gz
+
+#tar xvf ibus-0.1.1.20081023.tar.gz
+#cd ibus-0.1.1.20081023/
+#./autogen.sh --prefix=/usr --enable-pygconf
+#make
+#sudo make install
+#update-gtk-immodules `uname -i`
+
+#tar xvf ibus-pinyin-0.1.1.20081004.tar.gz ibus-table-0.1.2.20090104.tar.gz ibus-table-wubi-0.1.2.20090101.tar.gz
+#cd ibus-pinyin-0.1.1.20081004/
+#./autogen.sh --prefix=/usr
+#make
+#sudo make install
+
+#cd ibus-table-0.1.1.20090104
+#./autogen.sh --prefix=/usr
+#make
+#sudo make install
+
+#cd ibus-table-wubi-0.1.2.20090101
+#./autogen.sh --prefix=/usr
+#make
+#sudo make install
+
+
+#sudo vi /usr/lib/gtk-2.0/2.10.0/immodule-files.d/libgtk2.0-0.immodules
+#添加两行：
+#"/usr/lib/gtk-2.0/2.10.0/immodules/im-ibus.so"
+#"ibus" "X Input Method" "gtk20" "/usr/share/locale" "en:zh"
+
+#添加以下两行至.bashrc
+#export XMODIFIERS=@im=ibus
+#export QT_IM_MODULE=ibus
+
+#************************ibus finished!***************************
+
+
+
+#英文local中文输入法配置
+#	
+#sudo vi /etc/X11/xinit/xinput.d/all_ALL
+#改为以下内容：
+#
+#XIM=SCIM
+#XIM_PROGRAM=/usr/bin/scim
+#XIM_ARGS="-d"
+#GTK_IM_MODULE="scim"
+#QT_IM_MODULE="scim"
+#DEPENDS="scim,scim-pinyin"
+#
+#保存并重启X
+
+#sudo dpkg -i ./deb/linuxqq_v1.0.2-beta1_i386.deb
+
+#echo "安装qq..."
+#sudo dpkg -i ./deb/linuxqq_v1.0.2-beta1_i386.deb
+
+
+##mencoder usage
+#mencoder -idx input.ogv -ovc lavc -oac mp3lame -o output.avi
+#mencoder input.flv -oac mp3lame -lameopts aq=7:cbr:br=192:q=6 -srate 44100 -ovc frameno -of rawaudio -o output.mp3 
+#mencoder -of lavf -lavfopts
+
+#mencoder -ss 00:00:00 -oac copy -ovc copy -endpos 00:00:05 input -o output
+
+#echo "installing develop environment(C/C++,PHP,JAVA,JSP,VSFTP,APACHE,GTKMM...)....."
+sudo apt-get install vim-full ctags cscope gcc g++ apache2 sun-java6-jdk dia glade-3 oracle-xe vsftpd subversion vnc4server
+sudo apt-get install libnet1-dev libpcap0.8-dev libgtkmm-2.4-dev  libglademm-2.4-dev libglade2-dev libboost-dev  libxqilla-dev libxerces-c2-dev  libncurses5-dev
+ #mediawiki bugzilla3
+
+sudo apt-get install cjk-latex latex-cjk-chinese
+
+#sudo pear install HTML_Table
+
+###############cscope: c scope################
+## -R: 在生成索引文件时，搜索子目录树中的代码
+## -b: 只生成索引文件，不进入cscope的界面
+## -q: 生成cscope.in.out和cscope.po.out文件，加快cscope的索引速度
+## -k: 在生成索引文件时，不搜索/usr/include目录
+## -i: 如果保存文件列表的文件名不是cscope.files时，需要加此选项告诉cscope到哪儿去找源文件列表。可以使用“-”，表示由标准输入获得文件列表。
+## -I dir: 在-I选项指出的目录中查找头文件
+## -u: 扫描所有文件，重新生成交叉索引文件
+## -C: 在搜索时忽略大小写
+## -P path: 在以相对路径表示的文件前加上的path，这样，你不用切换到你数据库文件所在的目录也可以使用它了。
+
+## s: 查找C语言符号，即查找函数名、宏、枚举值等出现的地方
+## g: 查找函数、宏、枚举等定义的位置，类似ctags所提供的功能
+## d: 查找本函数调用的函数
+## c: 查找调用本函数的函数
+## t: 查找指定的字符串
+## e: 查找egrep模式，相当于egrep功能，但查找速度快多了
+## f: 查找并打开文件，类似vim的find功能
+## i: 查找包含本文件的文件
+
+##cscope -bqk
+##cscope show
+##cscope add cscope.out
+
+
+#############################gcc##################################
+## -c 生成目标模块，等待以后连接
+## -o 指定生成可执行文件名称
+##连接加载器ld
+##归档程序ar，也可叫做库管理器
+
+
+
+###############LAMP: linux, apache, mysql, php##########################
+#
+###############apache2: a http server######################
+#	/etc/apache2/apache2.conf 主配置文件
+#	/etc/apache2/httpd.conf    用户配置文件 空文件
+#	新的 Apache 配置方式已改过，是在 /etc/apache2/sites-enabled 和 /etc/apache2/sites-available 中设置的
+#	/var/log/apache2/error.log		错误日志
+#
+#	几个概念（以下文件默认路径为 /etc/apache2/）：
+#
+#	2.虚拟目录在 httpd.conf 中
+#
+#	DocumentRoot “路径”
+#
+#	ServerName 名称
+#
+#	allow from all Options +Indexes
+#
+#	3.根设置（默认主目录）在 /etc/apache2/sites-available/default
+
+#apache2.conf
+#sudo vi httpd.conf  #添加ServerName laputa-laptop
+#sudo vi /etc/apache2/conf.d/charset    #添加AddDefaultCharset UTF-8
+#sudo vi sites-available/default         #配置虚拟主机
+##default-character-set=utf8
+
+
+###############mysql：########################################
+#	/var/www/（主目录位置）
+
+###############php：########################################
+#	/etc/php5/apache2/php.ini （配置 php.ini）
+
+##############phpmyadmin###########################################
+#	phpmyadmin配置文件：
+##	/usr/share/phpmyadmin/config.inc.php
+#	/etc/phpmyadmin/config.inc.php
+#	/var/lib/phpmyadmin/config.inc.php
+
+######################mediawiki: a wiki server#########################
+#sudo vi /etc/mediawiki/apache.conf
+#uncomment #Alias /mediawiki /var/lib/mediawiki
+#sudo /etc/init.d/apache2 restart
+#firefox http://localhost/mediawiki/
+#coinfig and setting and install
+#sudo mv /var/lib/mediawiki/config/LocalSettings.php /etc/mediawiki/
+#firefox http://localhost/mediawiki
+#OK!
+
+###############################vsftpd: a ftp server####################
+##10.04开始启动服务从/etc/init.d/vsftpd start改为start vsftpd了！
+##sudo vi /etc/vsftpd/vsftpd.conf
+##保留下面几行，就可实现匿名下载：
+#
+#listen=YES
+#
+#anonymous_enable=YES
+#
+#download_enable=YES
+#
+#dirlist_enable=YES
+#
+#anon_world_readable_only=YES
+#
+#想实现匿名上传，只要加入下面几行就OK：
+#
+#write_enable=YES
+#
+#anon_upload_enable=YES
+#
+#anon_mkdir_write_enable=YES             //匿名可以创建新目录并上传文件！
+#
+#anon_other_write_enable=YES
+#
+#到此，基本上可实现匿名用户上传下传的服务。
+#
+#(注：另外要运行两行命令
+#
+##chmod 777 /var/ftp/pub/
+#
+##chown root:root /var/ftp/pub
+
+##500 OOPS: vsftpd: refusing to run with writable anonymous root
+##其实只要把anon_root目录本身的 w权限去掉就可以了
+
+##################subversion: svn, better than cvs*****************
+#sudo apt-get install subversion libapache2-svn
+##config
+#sudo vi /etc/apache2/mods-available/dav_svn.conf
+##去注释以下几行
+##<Location /svn>
+##DAV svn
+##SVNPath /var/lib/svn
+##AuthType Basic
+##AuthName "Subversion repository"
+##AuthUserFile /etc/subversion/passwd
+##Require valid-user 
+##</Location>
+
+#sudo svnadmin create /var/lib/svn
+#sudo chown -R www-data:www-data /var/lib/svn
+#sudo chmod -R g+ws /var/lib/svn
+
+#svn update
+##A add, D delete, U update, C conflict, G 合并
+
+##验证?
+#sudo htpasswd -c /etc/subversion/passwd <username>
+##http 验证
+#sudo htpasswd -c /etc/apache2/dav_svn.passwd guest
+
+##usage
+#svn import -m "commit" <local_project> http://localhost/svn/<project_name>
+#svn checkout http://localhost/svn/<project_name>
+##（进入到工程目录）
+##1.在本机察看修改：
+#svn status
+##2.在本机下载更新本机服务器上的最新版
+#svn update
+##3.本机提交修改：
+#svn commit
+##4.提示有冲突，解决冲突（修改<<<< and >>>>>之间的内容），然后
+#svn resolved 
+####################**********************END*****************
+
+#sudo apt-get install git
+##########git best version control system#########
+##cd ~
+##mkdir .git
+##git config user.name laputa
+##git config user.email amoblin@gmail.com
+##git coinfig --list
+##cd myProjectDir
+##git init
+##git add file
+##git commit -m "" file
+##git push
+
+
+
+
+############wordpress: a blog system**********************************
+#sudo apt-get install wordpress
+##config
+#sudo cp -r /usr/share/wordpress /var/www/wordpress
+#sudo sh /usr/share/doc/wordpress/examples/setup-mysql -n (your mysql user) localhost
+#sudo /etc/init.d/apache2 restart
+#sudo mv /var/www/wordpress/wp-cofig-sample.php /var/www/wordpress/wp-config.php
+##建立wordpress数据库
+#mysql -u root -p
+#>create database wordpress;
+#>grant all privileges on wordpress.* to laputa@localhost identified by "";
+#sudo vi /var/www/wordpress/wp-config.php
+##define('DB_NAME','wordpress');
+##define('DB_USER','laputa');
+##define("DB_PASSWORD','');
+##define('DB_HOST','localhost');
+#firefox http://localhost/wordpress
+####################**********************END*****************
+#echo "安装电子辞典，虚拟机，chm阅读器，超级计算器 强大的文本编辑器，壁纸自动换，右键终端,rar解压, 微博客户端,IM,irc"
+#sudo apt-get install stardict virtualbox-3.1 kchmviewer qalculate scribes webilder nautilus-open-terminal rar unrar ubuntu-tweak gwibber empathy irssi ubuntu-tweak nautilus-dropbox
+
+#bum:boot up manager(start or forbid service when login)
+#startupmangager
+##在这里可以设置开机自动启动mpd,关闭自动启动的apache2,ssh,vsftp等
+#sudo apt-get install compizconfig-settings-manager gparted startupmanager bum
+#桌面美化
+#gconf-editor的命令行使用
+#隐藏挂载分区的桌面图标
+#gconftool-2 -t bool -s /apps/nautilus/desktop/volumes_visible false
+
+#把关闭、最大化、最小化三个按钮放到左边
+#gconftool-2 /apps/metacity/general/button_layout "close,minimize,maximize:menu"
+
+#MAC theme
+
+#kde software
+#sudo apt-get install amarok
+
+#不要装KDE，会出意外！
+#
+#	我用Ubuntu许久，深感好用。但仍有些许不足，需要自己处理。特整理出来，以免后者绕路，如有幸将bug补上，则幸哉。
+#	装系统，无异，但在如今系统多样化的时代，国际化，本土化，都要考虑。所以，20G系统盘，绰绰有余，以前因做试验而割这么多，大装软件，仍未满，此次精兵简政，何其多也。何况home又单分。home割8G。又有文档分区几十G，装各种文档。/为最本土化，固定为某个OS，home次之，重装用之？
+#	安装很快，
+#
+#	几点感悟：
+#		1.用英文操作系统，利于键盘操作。
+#		2.只增删不改动。
+#		3.坚决不用wine，要用就用虚拟机VB。
+#		4.不用交换分区,除非安装oracle或需要休眠。
+#		5.全用UTF8,ext3,ext4.
+#		6.电子书：pdf,xchm。      exe，用VB.
+#		9.工具栏隐藏。
+#		10.虚拟机只用VB,装winxp中文版(使用)，
+#		11.音乐以前用RB.现在用mpd,客户端用mpc和ncmpc,现在用amarok
+#		12.KDE,VB下用。
+#		13.好软件：Qalculate! Scribes,axel
+#		14:好游戏：epiphany	TuxKart,SuperTux,
+#		15:chm电子书也可以看，用xchm, kchmviewer
+#		16:上网用ff，w3m,epiphany,flock,opera,morido.firefox我用的扩展有mpd客户端minion,vim操作vimperator等。
+#		
+#		vim系列:evince,w3m,vimperator,mutt,vifm,ncmpc
+#
+#	sudo aptitude install libstdc++6
+#	sudo aptitude install libqt3-mt
+#	sudo apt-get install bash-completion	终端自动补全
+#	删.mozilla
+#	sudo apt-get install gstream-tools
+#	sudo aptitude install linux-image-2.6.24-12-generic
+#	sudo aptitude install linux-image-2.6
+#	sudo apt-get install b43-fwcutter
+#	sudo im-switch -z en_US -s scim
+#	sudo -k				timestamp
+#
+##
+#
+
+#####virtualbox###########
+#原因是由于当前帐户无法识别USB设备，虽然在UBUNTU下是好的，解决方法：
+#
+#1.增加用户组usbfs
+#
+#$ sudo groupadd usbfs
+#
+#2. 查看usbfs用户组的gid
+#
+#$ cat /etc/group | grep usbfs
+
+#usbfs:x:1002:
+#
+#把当前用户增加到usbfs组
+#
+#$ sudo gedit /etc/group
+#
+#把
+#
+#usbfs:x:1002:
+#
+#修改为
+#
+#usbfs:x:1002:zhouyun(这里改成你的帐户名）
+#
+#4. 为USB设备重新设置权限编辑/etc/fstab文件，添加下面两行，注意你的gid可能不是1002
+##
+#$ sudo gedit /etc/fstab
+#
+#在末尾加上
+#
+## 1002 is the USB group IDI
+#
+#none /proc/bus/usb usbfs devgid=1002,devmode=664 0 0
+#
+#重新启动后，应该就可以在客户机中使用USB设备了。 
+###reference:   http://www.oceanboo.cn/read.php/55.htm 
+
+
+#####################apt: advantage package tool#######################
+#apt-cache stats    #查询
+#apt-cache search poppler-glib  #
+#apt-key add *.asc  #
+#apt-key adv
+#apt-cache show stardict
+
+
+
+#snownews is not available.
+
+#####screen (byodu)####
+##
+##Ctrl-a c 新建 bash screen 终端
+##Ctrl-a " 列出
+##Ctrl-a A 重命名
+##Ctrl-a n 在当前窗口中切换到下一个 screen 终端
+##Ctrl-a p 在当前窗口中切换到上一个 screen 终端	
+
+##Ctrl-a d 断开所有 screen 终端，返回 screen 执行前状态，但 screen 内所有终端的任务都在执行
+##screen -ls 列出当前用户的所有 screen 实例，包括联接和断开的
+##screen -R <pid>	重新联接到已断开的 screen 实例，如果有多个已断开的 screen 实例，则用 <pid> 区分
+##
+##Ctrl-a S 新建水平分割窗口
+##Ctrl-a Tab 切换窗口
+##Ctrl-a X 关闭当前窗口
+##Ctrl-a + 扩大当前窗口，默认增加3行
+##Ctrl-a - 缩小当前窗口，默认减小3行
+
+##Ctrl-a :screen <command>	新建 screen 终端，并运行命令<command>
+##Ctrl-a :resize <height>	改变当前窗口高度为<height>
+##Ctrl-a :quit 退出 screen，将关闭所有 screen 终端，结束其中所有任务
+##
+##Ctrl-a <Esc>	 进入选择模式
+##<PageUp> 或 Ctrl-u 光标上移一页
+##<PageDown> 或 Ctrl-d	光标下移一页	
+##<Left> 或 h	 光标左移一格
+##<Down> 或 j 光标下移一行
+##<Up> 或 k 光标上移一行
+##<Right> 或 l	 光标右移一格
+##<Space> 选择开始，选择结束
+##<Esc> 退出选择模式
+
+##Ctrl-a ] 粘贴选择的内容
+
+
+#rrdtool   better than mtr?
+#gpick is better than gcolor2
+#dvtm is 平铺式终端
+
+##1.Ubuntu关闭蜂鸣 key:beep     2009-03-19
+##Preference->Sound Effect->System
+#sudo rmmod pcspkr
+#sudo modprobe pcspkr
+
+##2.登录详解 key:PAM plug authen module 插件式鉴别模块 2009-03-19
+##login
+#sudo vi /etc/pam.d/login 
+##account  required       pam_access.so 在access deny时用相关文件为/etc/security/access.conf
+#sudo vi /etc/security/access
+##
+
+##Linux启动过程
+##run level 0:halt 1:single 2-5:user 6:reboot 
+#对#应/etc/rc0.d到/etc/rc6.d目录
+#K#开头的不启动，S开头的启动
+#
+##启动过程
+#s#tartup     ->  /etc/event.d/   ->  /etc/rc2.d/
+#
+#/#etc/X11/xinit/xinput.d/
+#
+#startx：读~/.xinitrc,而.xinitrc读~/.Xresources
+
+#rcconf
+
+#windows manager list
+#BLACKBOX是Linux下一个轻量级窗口管理器，简洁，方便，启动后背景什么都没有，一切从右键或中键的快捷菜单开始(个人体验)，很符合某人的口味。
+#display manager: gdm,kdm,xdm,slim   
+#panel manager: gnome-panel,pypanel,fbpanel,lxpanel,tint2,bmpanel
+#tray: trayer,stalonetray
+#file manager:nautilus,dolphi,thunar,pcman,rox
+#window manager:metacity,kwm,openbox,blackbox,fluxbox,fvwm
+#monitor: gnome-system-monitor,conky
+#desktop environment:gnome,kde,xfce,cde,lxde,enlight
+#LXDE = openbox + lxpanel
+#software manager: apt,yum,pacman
+#linux release edition:Ubuntu,Kubuntu,Xubuntu,Fedora,Arch,
+#wbar   dock?
+
+##run: grun, gmrun, gnome-do
+##terminal: gnome-terminal, konsole, rxvt, urxvt, rxvt-unicode, xterm, tilda, terminator
+
+##zcat /usr/share/doc/conky/example/conkyrc.sample.gz > ~/.conkyrc
+##vi ~/.conkyrc
+##sudo cp Weather.ttf Arrows.ttf /usr/share/fonts/truetype
+##sudo chmod 755 /usr/share/fonts/truetype/*.ttf
+##sudo fc-cache -f -v
+
+
+##xcompmgr   special effect
+##xcompmgr -Ss -n -Cc -fF -I-10 -O-10 -D1 -t-3 -l-4 -r4 &
+##feh    wallerpaper
+
+##sudo apt-geyt install openbox conky rox rxvt-unicode feh xcompmgr grun slim transset
+
+##配置autostart.sh
+
+##openbox theme
+##cd /usr/share/doc/openbox/xbm
+
+###############fcitx
+###vi ~/.fcitx/config   以前的配置文件
+##vi ~/.config/fcitx/config    3.6.3以后的配置文件
+##############
+##中文
+##上一页=,
+##下一页=.
+##############
+##发灰
+#sudo vi /ext/X11/Xsession.d/95xinput
+##内容为:
+######################
+##export XMODIFIERS=@im=fcitx
+##export XIM=fcitx
+##export XIM_PROGRAM=fcitx
+##export GTK_IM_MODULE=fcitx
+##export QT_IM_MODULE=XIM
+##fcitx
+######################
+
+#font
+##/usr/share/fonts/
+
+##eog *.jpg
+####evince:pdf
+####acroread: adobe pdf reader
+
+##pdf 
+#sudo apt-get install xpdf-chinese-simplified xpdf-chinese-traditional msttcorefonts
+
+#pdf不显示中文
+#sudo apt-get install poppler-data
+
+##mpd 用mpd命令直接读~/.mpdconf,而用/etc/init.d/mpd 则读/etc/mpd.conf
+##建议用/etc/init.d/mpd不要自己写.mpdconf文件了，没必要。
+
+#sudo vi /etc/group  #添加到audio,video组
+
+########################irssi: irc client##############################
+#添加网络
+##/network add -autosendcmd "/^msg nickserv identify passwd;wait 2000" OFTC
+##/server add -auto -network OFTC irc.oftc.net 6667
+#自动连接频道
+##/channel add -auto #arch-cn  OFTC
+#注册
+##/msg nickserv register password E-mail
+
+##  /server freenode.net
+##  /join #vim
+##  /quit
+
+#gdm
+#/usr/share/xsessions/
+
+########mutt: a mail manager center#####################################
+##我对Mutt体系的理解
+##先收信，新邮件都放一个文件，就叫new吧，然后交给mutt显示，mutt处理，也可以脚本交给分拣程序处理，这时显示的就是分拣后的分类了。
+#1.getmail4
+##mkdir .Mail/inbox/cur .Mail/inbox/new .Mail/inbox/tmp
+
+##/var/mail作为邮件目录
+##用getmail接收邮件, procmail分捡 mutt管理 msmtp发送
+
+##getmail在.getmail/getmailrc中配置关联procmail
+##procmail在.procmailrc中设置存放路径
+##mutt在.muttrc中设置读取路径,要和procmail的一致,关联msmtp发送
+##msmstp在msmtprc中设置发信配置
+
+##MAT:Mail Transfer Agent 邮件传输代理
+##MAT有：Exim, QMail, Postfix
+
+##sendmail兼有收发功能
+##  mutt快捷键
+##   =   到首封
+###reference:    http://dreamland.blog.51cto.com/417830/87510
+
+##tsclient: 远程登录windows
+
+#############opera: a fast web browser#########
+#sudo sed -i '2iexport LANG=en_US.UTF-8' /usr/bin/opera
+##工具－>首选项－>高级－>字体,浏览器菜单、工具栏、对话框、面板 进行配置
+
+#######midori: a light web browser with webkit#######
+
+
+##############################kernel config###################################################
+##first change to root
+#cd /usr/src
+#wget http://www.kernel.org/linux-2.6.29.tar.bz2
+#tar jxvf linux-2.6.29.tar.bz2
+#ln -s linux-2.6.29 linux
+#rm -f /bin/sh
+#ln -s /bin/bash /bin/sh
+#cd linux
+#cp /boot/`uname -r ` ./config
+##make menuconfig
+#make config
+
+
+
+############Unix Center######
+##T1000/Solaris系统：
+##硬件环境：1 颗UltraSPARC T1芯片，CPU 主频为1.0 GHz，八核四线程配置8 GB内存
+##软件环境：Solaris 10 Update 3 for SPARC
+##机器域名：t1000.unix-center.net（公网），t1000-edu.unix-center.net（教育网）
+##
+##X4100/Solaris系统：
+##硬件环境：2 颗双核单线程的AMD Opteron 280芯片，CPU 主频为2.4 GHz，配置4 GB内存
+##软件环境：Solaris 10 Update 3 for x86/x64
+##机器域名：x4100.unix-center.net（公网），x4100-edu.unix-center.net（教育网）
+
+##PE860/Solaris系统：
+##硬件环境：1 颗双核单线程的Intel Xeon 3050芯片，CPU 主频为2.13 GHz，配置2 GB内存
+##软件环境：Solaris 10 Update 3 for x86/x64
+##机器域名：solaris.unix-center.net（公网），solaris-edu.unix-center.net（教育网）
+##
+##PE860/Fedora系统：
+##硬件环境：1 颗双核单线程的Intel Xeon 3050芯片，CPU 主频为2.13 GHz，配置2 GB内存
+##软件环境：Fedora Core 6
+##机器域名：fedora.unix-center.net（公网），fedora-edu.unix-center.net（教育网）
+
+##PE860/Ubuntu系统：
+##硬件环境：1 颗双核单线程的Intel Xeon 3050芯片，CPU 主频为2.13 GHz，配置2 GB内存
+##软件环境：Ubuntu 6.10
+##机器域名：ubuntu.unix-center.net（公网），ubuntu-edu.unix-center.net（教育网）
+
+##PE860/FreeBSD系统：
+##硬件环境：1 颗双核单线程的Intel Xeon 3050芯片，CPU 主频为2.13 GHz，配置2 GB内存
+##软件环境：FreeBSD 6.2
+##机器域名：freebsd.unix-center.net（公网），freebsd-edu.unix-center.net（教育网）
+
+##P510/AIX系统：
+##硬件环境：2 颗双核单线程的Power 5芯片，CPU 主频为2.0 GHz，配置2 GB内存
+##软件环境：AIX 5 Release 3
+##机器域名：aix.unix-center.net（公网），aix-edu.unix-center.net（教育网）
+
+##龙芯福珑系统：
+##硬件环境： 3 台配置龙芯2E处理器的龙芯福珑计算机，CPU 主频为666 MHz，配置256 MB内存
+##软件环境：Debian Linux for MIPS
+##机器域名：仅限内网连接
+
+##PE860/MySQL系统：
+##硬件环境：1 颗双核单线程的Intel Xeon 3050芯片，CPU 主频为2.13 GHz，配置4 GB内存
+##软件环境：Solaris 10 Update 3 for x86/x64, MySQL 6
+##机器域名：mysql （内网）
+
+##flash乱码
+##sudo mv /etc/fonts/conf.d/49-sansserif.conf /etc/fonts/conf.d/49-sansserif.conf_backup
+##restart firefox
+#解决firefox不能启动的问题
+#http://blog.mymediasystem.net/uncategorized/solved-firefox-could-not-find-compatible-gre-after-ubuntu-810-upgrade/
+
+##game
+##模拟经营类lincity
+#sudo apt-get install lincity pacman pingus xfishtank xsnow xgalaga maelstrom abuse xsok
+#xeyes
+
+
+#blog client
+#bleezer    java
+#drivel
+#blogtk
+
+##dd if=<IMG文件路径> of=<U盘盘符>
+
+
+##umask
+##可读 ， 可以被打开读取数据 
+##可写 ， 可以被写入数据 ，[如果不可读而可写，那就是不能被打开 但是可以直接写入数据] ，也可以删除数据 
+##可执行 ， 可以运行，二进制代码就直接运行了，失败则报错， 文本文件先交给shell处理，如果无法解析便报错，如果是脚本类型的文本，shell解析后交给相应的解释器来执行 
+##
+##3, 这个牵涉到掩码问题， 一个用户拥有缺省的unmask ,假如你以aaa用户登陆 把另一个地方的pdf 属性为－rwx－－r－－r的文件复制到aaa文件夹下面， 哪么新的pdf文件的属性根据你的用户掩码也就是unmask来设置，具体掩码是什么呢 ，看下面 
+
+##unmask制定了新文件创建时的权限，unmask是个8进制的数字。 
+##root的缺省unmask是022，一般用户是002。 
+##例如：unmask为022的用户创建了一个新文件，那么新文件的权限644，而目录则为755。如果用户的umask为000，则创建的文件权限为666，目录权限为777， 
+##运行umask命令可以查看用户自己的umask值。 
+
+#At last, upgrade once again, if you want.
+sudo apt-get upgrade -y --force-yes 
