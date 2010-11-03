@@ -1,0 +1,91 @@
+# Phoenix Shell Version 1.0
+# Copyright (C) 2008, Martin Tang
+#
+# Last Revision: 2008.08.26
+
+# Setup basic environments
+export MSYSTEM=MINGW32
+export PS1='\[\033]0;$MSYSTEM:\w\007\n\033[32m\]\u@\h \[\033[33m\w\033[0m\n$ '
+export PATH="/bin:/mingw/bin:/resedit:/insight/bin:$PATH"
+export HOME="/home/`id -un`"
+export PATH="$PATH:/c/MinGW/bin:$HOME/bin"
+
+export INFOPATH="/share/info:/mingw/info"
+export HISTFILE="$HOME/.bash_history"
+export MAKE_MODE=unix
+export TERM=cygwin
+export SHELL=bash
+#export LC_ALL=''
+
+# Initialize our extra package repository
+if [ ! -d /extra ]; then
+	mkdir -p /extra
+fi
+
+# Initialize our initizlization script directory
+if [ ! -d /etc/mpkg ]; then
+	mkdir -p /etc/mpkg
+fi
+
+# Initialize user configurations
+if [ ! -d "$HOME" ]; then
+	mkdir -p "$HOME"
+	cp -a /etc/std/.inputrc $HOME/.inputrc
+	cp -a /etc/std/.vimrc   $HOME/.vimrc
+	cp -a /etc/std/.vim     $HOME/.vim
+	cd $HOME
+	ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ../../mingw
+	mv tags .tags
+	echo -e "Copyright (C) 2009, Tang Huaxin\n"
+	echo -e "System Version 3 installed successfully !!!\n"
+fi
+
+# Initialize extra packages
+for i in /etc/mpkg/*.sh; do
+	if [ -f $i ]; then
+		. $i
+	fi
+done
+
+# Various shortcuts for usability
+alias df='df -h'
+alias du='du -h'
+alias clear=clsb
+alias less='less -r'                          # raw control characters
+alias whence='type -a'                        # where, of a sort
+alias ls='ls -hF --color=tty'                 # classify files in colour
+alias dir='ls --color=auto --format=vertical'
+alias vdir='ls --color=auto --format=long'
+alias ll='ls -l'                              # long list
+alias la='ls -A'                              # all but . and ..
+alias l='ls -CF'                              #
+
+alias ls='/bin/ls --color --show-control-chars'
+
+#alias vi='/d/Program_Files/Vim/vim73/gvim.exe'
+
+#alias svn='start svn'
+
+alias python25='start python'
+
+alias python='start c:\\python26\\python.exe'
+
+alias ssh72='ssh amoblin@10.0.0.72'
+
+alias halt='shutdown -s -t'
+alias reboot='shutdown -r -t 0'
+
+alias msexcel="/C/Program\ Files/Microsoft\ Office/Office12/EXCEL.EXE"
+
+#alias mpg123="/C/Program\ Files/Microsoft\ Office/Office12/EXCEL.EXE"
+
+# Setup shell color
+LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.flac=01;35:*.mp3=01;35:*.mpc=01;35:*.ogg=01;35:*.wav=01;35:';
+export LS_COLORS
+
+# Print startup info
+#echo "MSYS Shell Initialized - `date`"
+
+# Enter home dirctory
+cd "$HOME"
+

@@ -1,0 +1,22 @@
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=latex 2008.11.27)  28 NOV 2008 15:56
+entering extended mode
+ %&-line parsing enabled.
+**\nonstopmode \input{}^^M
+
+! Emergency stop.
+<read *> 
+         
+<*> \nonstopmode \input{}
+                         ^^M
+*** (cannot \read from terminal in nonstop modes)
+
+ 
+Here is how much of TeX's memory you used:
+ 2 strings out of 95081
+ 107 string characters out of 1183119
+ 45047 words of memory out of 1500000
+ 3279 multiletter control sequences out of 10000+50000
+ 3640 words of font info for 14 fonts, out of 1200000 for 2000
+ 28 hyphenation exceptions out of 8191
+ 4i,0n,3p,1b,8s stack positions out of 5000i,500n,6000p,200000b,5000s
+No pages of output.

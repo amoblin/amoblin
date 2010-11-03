@@ -1,0 +1,211 @@
+\documentclass[cjk]{beamer}
+%\usetheme{Warsaw} 
+\usepackage{CJKutf8}
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+	\frame{
+	\frametitle{数值分析}\pause
+	证明：由于
+	$r_k^T r_j = 0, j = 0, 1, \ldots , k-1,
+	r_k^T p_j = 0, j = 1, \ldots , k$
+	和
+	$span\{p_1 , \ldots, p_j \} = span\{r_0 , \ldots, r_{j-1}\}, j = 1, \ldots , k ,$
+	因此$ p_k$可用$ r0 ,\ldots , r_{k-1}$的线性组合表示
+	注意到关心$p_k$的方向而不是大小，因此可设
+	$p_k = r_{k-1} + \sum\limits_{i=0}^{k-2}\varepsilon_ir_i = r_{k-1} + β_k p_{k-1} + β_{k-1}p_{k-2} + \ldots + β_2p_1.$
+	由条件
+	$p_j^T Ap_k = 0, j = 1,\ldots, k-1,$
+	对上两端左乘$p_{j-1}^T A$,得
+	$0 = p_{j-1}^TAp_k = p_{j-1}^TAr_{k-1} + β_jp^T_{j-1}Ap_{j-1}, j = 2, \ldots, k
+	\Rightarrow \beta_j = -\frac{p_{j-1}^TAr_{k-1}}{p_{j-1}^TAp_{j-1}},j=2,\ldots,k.$
+	因为$p_{j−1} ∈ K(r_0 , A, j-1)$,所以$Ap_{j-1} \in \kappa(r_0,A,j).$
+	又因为当$j\leq k-1$时有$\kappa(r_0,A,j) = span\{r_0,\ldots,r_{j-1}\} = span\{p_1,\ldots,p_j\}$和$P_{k-1}^Tr_{k-1} =0,$所以$p_{j-1}^TA_{k-1}=0,j\leq k-1.$因此$\beta_j = -\frac{p_{j-1}^TAr_{k-1}}{p_{j-1}^TAp_{j-1}}=0,j\leq k-1
+	\Rightarrow p_k = r_{k-1} + \beta_kp_{k-1}, \beta_k = -\frac{p_{k-1}^TAr_{k-1}}{p_{k-1}^TAp_{k-1}}$
+	由$r_{k-1}=r_{k-2}-\alpha_{k-1}Ap_{k-1}$得\\
+	$-Ap_{k-1} = \frac{1}{\alpha_{k-1}}(r_{k-1}-r_{k-2})
+	\Rightarrow \beta_k = \frac{\alpha_{k-1}^{-1}(r_{k-1}-r_{k-2})^Tr_{k-1}}{p_{k-1}^TAp_{k-1}} = \frac{1}{\alpha_{k-1}}\frac{r_{k-1}^Tr_{k-1}}{p_{k-1}^TAp_{k-1}}.$
+	回忆	$\alpha_{k-1} = \frac{r_{k-2}^Tp_{k-1}}{p_{k-1}^TAp_{k-1}}.$
+	因此	$\beta_k = \frac{p_{k-1}^TAp_{k-1}}{r_{k-2}^Tp_{k-1}}\frac{r_{k-1}^Tr_{k-1}}{p_{k-1}^TAp_{k-1}}
+	= \frac{r_{k-1}^Tr_{k-1}}{r_{k-2}^T(r_{k-2}+\beta_{k-1}p_{k-2})}
+	= \frac{r_{k-1}^Tr_{k-1}}{r_{k-2}^Tr_{k-2}} > 0,
+	\alpha_k = \frac{r_{k-1}^Tp_k}{p_k^TAp_k} = \frac{r_{k-1}^T(r_{k-1}+\beta_kp_{k-1})}{p_k^TAp_k} = \frac{r_{k-1}^Tr_{k-1}}{p_k^TAp_k},
+	x_k = x_{k-1}+\alpha_kp_k.$
+	CG算法：\\
+	1)选$x_0 \in R^n$，计算$r_0=b-Ax_0,p_1=r_0$;\\
+	2)For k=1,2,$\ldots$until $||r_k|| \le \epsilon$\\
+	$\alpha_k = \frac { r_{k-1}^Tr_{k-1}}{p_k^TAp_k}$	4n flops + A乘向量\\
+	$x_k = x_{k-1} + \alpha_kp_k$	2n flops\\
+	$r_k = r_{k-1} - \alpha_kAp_k$	2n flops\\
+	$\beta_{k+1} = \frac{ r_k^Tr_k}{r_{k-1}^Tr_{k-1}}$ 2n flops\\
+	$p_{k+1} = r_k + \beta_{k+1}p_k$ 2n flops\\
+	Endfor\\
+	}
+%	\frame{
+%	算法中的$A=C^{-1}AC^{-1}$要显式形式，如何避免？\\
+%	定义$x_0=C_{x_0},r_0=C^{-1}_{r_0}$\\
+%	$p_1 = C^{-1}_{r_0} = C^{-1}_{p_1}$\\
+%	$x_k = C_{x_k},r_k = C^{-1}_{r_k}$\\
+%	$p_0 = C_{p_0}, \alpha_k = {\alpha}_k, \beta_{k+1}={\beta}_{k+1}$\\
+%	}
+	\frame{
+	注：CG至多n步即可计算$x^*$(在精确运算下)因方法可能“幸运中断”即$p_k=0$或$r_{k-1}=0$.\\
+	$r_{k-1}=0\Leftrightarrow x_{k-1}=x^*$\\
+	$p_k = 0 \Leftrightarrow p_k^TAp_k = 0$\\
+	$r_{k-1}^Tr_{k-1}=r_{k-1}^T(r_{k-1}+\beta_kp_{k-1)}||r_{k-1}||^2 = r_{k-1}^Tp_k=0$\\
+	$\Rightarrow r_{k-1}=0$\\
+	计算量：对每个k，需要一个A乘向量+12n flops.设A为一个稠密阵，执行到n步，则需$2n^3+12n flops \approx 2n^3 flops$\\
+	Cholesky分解:$A=LL^T,\frac{1}{3}n^3flops,CG=6$倍的Cholesky.\\
+	如果A稀疏，即只有少量的非零元。常见的情况A只有O(n)个非零元。假设A每行的平均非零元为$n_\alpha(\ll n)$此时Ax只需$2n_\alpha n flops.$所以执行n步的代价为$2n_\alpha n^2+12n^2 flops \ll \frac{1}{3}n^3.$\\
+	如果只进行k步，($k\ll n$,通常$k\ll n$),则需$2n_\alpha kn + 12kn \le O(n^2) flops$\\
+	}
+	\frame{
+	优点：\\
+	\begin{itemize}
+		\item 计算量小;
+		\item 存储量：$x_k,r_k,p_k,Ap_k,$4个向量;
+		\item 不对A做任何变换，它的唯一作用是形成和向量的乘积，可能只需存储A的非零元;
+		\item 不像SOR,CG不需估计任何参数。
+	\end{itemize}
+	定理2.2.3(收敛性结果) 令$A=A^T$正定，$\lambda_1$和$\lambda_n$为A的最大最小特征值，则$||x_k-x^*||_A \le 2(\frac{\sqrt{k}-1}{\sqrt{k}+1})^k||x_0-x^*||_A$，其中$\kappa=\frac{\lambda_1}{\lambda_n}$为A的条件数。$\kappa$越接近于1,CG收敛越快，比最速下降法快！当$k\gg1$时，CG可能收敛很慢。\\
+	理论上算法很漂亮，但在有限精度下计算结果和理论论结果差别往往很大。计算$r_j^Tr_j \neq O(\epsilon)$ 甚至近似线性相关。同样的问题对$p_k$也成立。$\Rightarrow $CG不稳定！$\Rightarrow$1952~1970方法被抛弃！\\
+	1970:首先发现CG应该作为一种迭代法使用，即可对$k\ll n$可能有$||r_k||$很小！\\
+	结论：CG的不稳定性并不影响其收敛性！只是延误了收敛性。\\
+	两者结合$\Rightarrow$ CG实用!\\
+	}
+	\frame{
+	%书31页，例n=5,得到一些结论。\\
+	%原理：要得到一个算法数值性质的一般结论，比如对CG，需对大量的实验，并且对大规模$n\gg1$。\\
+	%如果要找一个算法的缺点，则可对特定的问题实验，n大小不管。\\
+	CG的一般性数值性质：\\
+	1) A的中间特征值分布对CG的收敛速度影响巨大！\\
+	典型的情形：$\lambda_1 \gg \lambda_2 \ge \cdots \ge \lambda_n$\\
+	则经过几步后，CG的收敛因子将是$\frac{\sqrt{\frac{\lambda_2}{\lambda_{n-1}}-1}}{\sqrt{\frac{\lambda_2}{\lambda_{n-1}}}+1}$.而非$\frac{\sqrt{\frac{\lambda_1}{\lambda_n}-1}}{\sqrt{\frac{\lambda_1}{\lambda_n}}+1}$\\
+	比如$\lambda_1=10^4,\lambda_n=1,\lambda_2=\cdots=\lambda_{n-1}=2$\\
+	此时实际上只需k=3,即得$x_3=x^*.$\\
+	2) A的特征向量对CG的收敛性影响很大。如果$r_0$只由m个特征向量的组合生成，则CG的m步必然收敛$x_m=x^*.$
+	}
+	\frame{
+	\frametitle{预处理的CG法(PCG)}
+	回忆
+	$||x_k-x^*||_A \le 2(\frac{\sqrt{\kappa}-1}{\sqrt{\kappa}+1})^k||x_0-x^*||_A,$\\
+	其中$\kappa =\frac{\lambda_1}{\lambda_n}(\ge 1)$\\
+	当$\kappa$越接近于1,则CG收敛越快！\\
+	当$\kappa \gg 1$时,CG可能收敛很慢！\\
+	$\Rightarrow$ CG可能不实用。\\
+	怎么办？\\
+	$Ax=b\Leftrightarrow \tilde{A}\tilde{x}=\tilde{b}$\\
+	用$\kappa(A)$和$kappa(\tilde{A})$表示A和$\tilde{A}$的条件数，若$k(\tilde{A})\ll k(A),则对\tilde{A}\hat{x}=\tilde{b}$应用CG，则收敛一定很快。\\
+	此称为预处理(条件)(preconditioning)技术.\\
+	现状：
+	\begin{itemize}
+		\item 没有通用的有效的预处理技术.
+		\item 一般很难证明一种具体的预处理为何好.
+		\item 好的预处理技术+迭代法，可能产生非常有效的算法。\\
+	\end{itemize}
+	常用的三种形式：\\
+	\begin{enumerate}
+		\item 左预处理技术 $M^{-1}Ax=M^{-1}b$
+		\item 右预处理技术 $AM^{-1}y=b,x=M^{-1}y$
+		\item 分裂预处理技术 $M_1^{-1}AM_2^{-1}y=M_1^{-1}b,x=M_2^{-1}y$
+	\end{enumerate}
+	当$A=A^T>0$时，只讨论第三种技术：\\
+	}
+	\frame{
+	要求$M=M_1M_2=M^T>0$\\
+	$M_1=M_2=m^{\frac{1}{2}}=C=C^T$\\
+	$\Rightarrow C^{-1}AC^{-1}y=C^{-1}b$\\
+	据第一章中的定理1.1.2可知$C^{-1}AC^{-1}$对称正定矩阵！\\
+	希望：
+	\begin{enumerate}
+		\item $\kappa(C^{-1}AC^{-1})<kappa(A).$
+		\item 不显示形式$C^{-1}AC^{-1}$，因代价可能很大.
+		\item $M=C^2$比A“简单”，即解$Mz=r$比$Ax=b$要容易,即能很快地高精度地计算出z。\\
+	\end{enumerate}
+	对$C^{-1}AC^{-1}\tilde{x}=C^{-1}b$应用CG
+
+	CG算法：\\
+	1)选取$\tilde{x}_0 \in R^n$，计算$\tilde{r}_0=\tilde{b}-\tilde{A}\tilde{x}_0,\tilde{p}_1=\tilde{r}_0$;\\
+	2)对k=1,2,$\ldots$直到$||\tilde{r}_k|| \le \tilde{\epsilon}$\\
+	$\tilde{\alpha}_k = \frac {\tilde{r}_{k-1}^T\tilde{r}_{k-1}}{\tilde{p}_k^TA\tilde{p}_k}$	\\
+	$\tilde{x}_k = \tilde{x}_{k-1} + \tilde{\alpha}_k\tilde{p}_k$	\\
+	$\tilde{r}_k = \tilde{r}_{k-1} - \tilde{\alpha}_k\tilde{A}\tilde{p}_k$	\\
+	$\tilde{\beta}_{k+1} = \frac{ \tilde{r}_k^T\tilde{r}_k}{\tilde{r}_{k-1}^T\tilde{r}_{k-1}}$ \\
+	$\tilde{p}_{k+1} = \tidle{r}_k + \tidle{\beta}_{k+1}\tilde{p}_k$ \\
+	算法中的$\tilde{A} = C^{-1}AC^{-1}$显式形成不可取！\\
+	如何避免？\\
+	定义$\tilde{x}_k = Cx_k, \tilde{r}_k = C^{-1}r_k, \tilde{p}_k = Cp_k,\tilde{\alpha}_k = \alpha_k, \tilde{\beta}_{k+1} = \beta_{k+1}$<++>
+	则得到实用的PCG算法：\\
+	1)选择$x_0 \in R^n, r_0 = b - Ax_0, $，解$Mz_0 = r_0$，取$p_1 = z_0.$\\
+	2)对$k=1,2,\ldots$,直到$||r_k|| \le \epsilon$\\
+	${\alpha}_k = \frac{r_{k-1}^Tz_{k-1}}{p_k^TAp_k}$\\
+	$x_k = x_{k-1} + {\alpha}_kp_k$\\
+	$r_k = r_{k-1} - {\alpha}_kp_k$\\
+	解$Mz_k = r_k$\\
+	${\beta}_{k+1} = \frac{r_k^Tz_k}{r_{k-1}^Tz_{k-1}}$\\
+	$p_{k+1} = z_k + {\beta}_{k+1}p_k$\\
+	注：若M=I，PCG化为CG\\
+	$\kappa(C^{-1}AC^{-1})<\kappa(A)$\\
+	Mz=r要比Ax=b容易求解得多。希望1)和3)是矛盾的。\\
+	}
+	\frame{
+	当M=I时,$z_k=r_k;$当M=A则CG一步即收敛，但$Mz=r \Leftrightarrow Ax=b$\\
+	如何选择M？对$A=A^T\g 0,$下面给出几种常用的M.\\
+	等价形式：\\
+	$Ax=b \Leftrightarrow x=Bx+f$\\
+	构造迭代法\\
+	$x_{k+1} = Bx_k + f, k=0,1,\ldots$\\
+	如果谱半径$\rho(B)=max_{1\le i \le n}|\lambda_i(B)| \l 1$,则$\lim_{k \rightarrow \infty}x_k=x^*$.实际上，有
+	$\rho(B)<1 \Leftrightarrow lim_{k \rightarrow \infty}x_k=x^*$\\
+	且$\rho(B)$越小，收敛一般越快。\\
+	注意到B越趋于0,则$\rho(B)$<++>越小，因此收敛一般越快.\\
+	分裂A为$A=M-N\Rightarrow I - M^{-1}A = M^{-1}N$\\
+	由$(M-N)x = b \Leftrikgtharrow Mx = Nx + b$可构造迭代法\\
+	$x_{k+1}=M^{-1}Nx_k + M^{-1}b = Bx_k + f, k=0,1,\ldots$\\
+	$m^{-1}N \approx 0 \Leftrightarrow I - M^{-1}n = M^{-1}A \approx I \Leftrightarrow M \approx A$\\
+	具体地，取$M=D=diag(a_{11},a_{22},\ldots,a_{nn})>0, N = L + L^T$\\
+	L:A的严格下三角部分（变号），得到Jacobi迭代法$M=D=D^{\frac{1}{2}}D^{\frac{1}{2}}$\\
+	取$C=D^{\frac{1}{2}}$得到用方法预处理CG的算法。\\
+	取$M = D - L, N = L^T$得到Gauss-Seidel(G-S)方法.\\
+	}
+	\frame{
+	$B = M^{-1}N = (D-L)^{-1}L^T$\\
+	当$A=A^T>0$，M和B都不对称，此时$x_{k+1}=Bx_k + f$,依次计算$x_{k+1,1},\ldots,x_{k+1,n}$\\
+	使用一次以后，现在反序计算$x_{k+1,n},\ldots,x_{k+1,1}$。合并得到一个新的迭代法，称为对称SG-S。此时$M=(D-L)D^{-1}(D-L^T)=M^T>0$。记$M=CC^T$.对$C^{-1}AC^{-T}$，可类似推出PCG。另有SSOR($\omega$<++>)\\
+	第二类预处理技术：\\
+	$A=LL^T$（Cholesky分解）\\
+	注意：对大型稀疏A进行$LL^T$分解，计算代价$\frac{1}{3n^3}$flops,太大,L:满的下三角阵,存储量太大\\
+	设想（不完全的分解）：要求L保持给定的稀疏结构。如和A的结构相同，得$A=\tilde{L}\tilde{L}^T+E$\\
+	不完全的Cholesky分解$ILL^T$<++>.\\
+	$ILL^T$分解算法：\\
+	%$\tau_{11}=a_{11}^{\frac{1}{2}}$\\
+	For $j=1,2,\ldots,n \tilde{l}_{jj}=(a_{jj}-\sum\limits_{k=1}^{j-1}\tilde{l}_{jk}^2)^{\frac{1}{2}}$;\\
+	For $i = j+1,\ldots,n$\\
+	if $a_ij = 0 then \tilde{l}_{ij} = 0$;\\
+	$\tilde{l}_{ij} = (a_{ij} - \sum\limits_{k=1}^{j-1}\tilde{l}_{ik}\tilde{l}_{jk})/\tilde{l}_{jj}$;
+	else\\
+	end\\
+	end\\
+	}
+	\frame{
+	注：分解可能不存在！有多种变形，效果有差别。
+	对一般的Ax=b常用左，右预处理\\
+	$M^{-1}Ax = M^{-1}b$\\
+	Jacob: M=D\\
+	G-S:令$A=D-L-U,M=(D-L)^{-1}U$\\
+	SOR:$M=(D-\omega L)^{-1}((1-\omega)I-\omega U)$\\
+	不完全LU：LU(ILU):A=LU + E, M=LU\\
+	}
+	\frame{
+	\frametitle{2.4 解对称不定Ax=b的Lanczos方法}
+	设$A=A^T$，但A不定，即A有正、
+	}
+	\frame{
+	}
+	\frame{
+	}
+	\frame{
+	}
+	\frame{
+	}
+\end{CJK*}
+\end{document}

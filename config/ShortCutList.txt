@@ -1,0 +1,43 @@
+F100     |                    |Computer                      |我的电脑                      |::{20D04FE0-3AEA-1069-A2D8-08002B30309D}
+F0       |                    |Explorer                      |资源管理器                    |explorer.exe /e,::{20D04FE0-3AEA-1069-A2D8-08002B30309D}
+F0       |                    |MyDocument                    |我的文档                      |explorer.exe
+F8       |                    |ie                            |IE浏览器                      |iexplore.exe
+F7       |                    |notepad                       |记事本                        |notepad
+F0       |                    |mspaint                       |画图                          |mspaint
+F6       |No_Encoding         |cmd                           |Dos窗口                       |cmd /k %p
+F5       |                    |Calc                          |计算器                        |calc
+F0       |                    |Desktop                       |显示桌面                      |@.\WinCtl.exe MinAll
+F0       |                    |msconfig                      |系统配置                      |msconfig
+F4       |                    |Reg                           |注册表编辑器                  |regedt32
+F0       |                    |myip                          |我的IP地址                    |nslookup
+F0       |                    |dev                           |设备管理器                    |devmgmt.msc
+F0       |                    |Taskmgr                       |任务管理器                    |taskmgr
+F0       |                    |ShutDown                      |立即关机                      |shutdown /s /t 5
+F0       |                    |Reboot                        |立即重启                      |shutdown /r /t 5
+
+F0       |                    |Windows                       |Windows 目录                  |%WINDIR%
+F0       |                    |System32                      |System32 目录                 |%WINDIR%\System32
+F0       |                    |ProgramFiles                  |Program Files 目录            |%PROGRAMFILES%
+F10      |                    |Recent                        |最近打开文件 目录             |%USERPROFILE%\Recent
+
+F12      |URL_Query           |b                             |百度 搜索引擎                 |http://www.baidu.com/s?wd=
+F14      |UTF8_Query          |g                             |Google 搜索引擎               |http://www.google.com/search?q=
+F0       |URL_Query           |s                             |搜狗MP3 搜索引擎              |http://mp3.sogou.com/music.so?query=
+F9       |URL_Query           |zd                            |百度知道 搜索引擎             |http://zhidao.baidu.com/q?ct=17&pn=0&tn=ikaslist&rn=10&word=
+F0       |UTF8_Query          |v                             |VeryCD 搜索引擎               |http://www.verycd.com/search/folders?kw=
+F0       |UTF8_Query          |y                             |Yahoo 搜索引擎                |http://search.yahoo.com/search?p=
+
+F15      |                    |Upgrade                       |前往 ALTRun 升级网址          |http://journeyboy.blog.sohu.com/112820379.html
+F0       |                    |Config                        |编辑 ALTRun 配置              |.\ALTRun.ini
+
+F0       |                    |AddRemoveProgram              |添加/删除程序                 |appwiz.cpl
+F0       |                    |ControlPanel                  |控制面板                      |control.exe
+F0       |                    |InternetConnection            |Internet控制                  |control.exe Inetcpl.cpl ,4
+F0       |                    |SystemProperty                |系统属性                      |Sysdm.cpl
+F100     |No_Encoding         |r                             |运行                          |{%p}
+F12      |URL_Query           |cb                            |百度 搜索剪贴板               |http://www.baidu.com/s?wd={%c}
+F24      |UTF8_Query          |cg                            |Google 搜索剪贴板             |http://www.google.com/search?q={%c}
+F15      |No_Encoding         |ShowOnly                      |只显示本窗口                  |@.\WinCtl.exe ShowOnly {%wd}
+F20      |No_Encoding         |Hide                          |隐藏本窗口                    |@.\WinCtl.exe Hide {%wd}
+F20      |                    |UnHide                        |恢复窗口                      |@.\WinCtl.exe UnHide
+F0       |                    |firefox                       |firefox                       |D:\Program_Files\Mozilla Firefox\firefox.exe

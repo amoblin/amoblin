@@ -1,0 +1,16 @@
+1. 自动升级ip域名库   72:/home/amoblin/ip_update.sh
+2. apwg数据更新 72:/home/amoblin/apwg_update.sh
+3. 增加白名单
+    把白名单域名文件放到/opt/trusted_dhr下，执行 /home/amoblin/add_trusted.sh
+
+将前两个综合起来，放在一个脚本中执行，为daily_workd.sh
+
+4. 每天的URL数据
+
+
+5.自动删除是phish的白名单,但alexa排名1w的排除。（coding）
+    /home/amoblin/phish_update.c
+
+6.apac数据
+不定期有apac数据到邵军义邮箱，有的话老马或关海南会告知，将数据放到216服务器上/phish/new_phish/apac目录下，文件格式为apac_yyyy_mm_dd.txt
+

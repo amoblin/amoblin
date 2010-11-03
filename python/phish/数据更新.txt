@@ -1,0 +1,21 @@
+0.下载统计数据：
+    在69.28.58.31服务器/root/csv目录下，下载升级完毕的数据报表 yyyy-mm-dd_output.csv，更新本地phish检测结果报告。
+    phish检测结果报告每天发到老马邮箱，抄送郭辉，并给关海南发一下，每周一发到市场部杨凯notes一份。
+1.生成数据：
+    SSH登陆72,进入/home/wangqian 执行./client生成URL数据
+2.数据排序，分割并下载到本地
+    假设生出数据为2010-10-26.csv，下面执行
+    ./prepare_csv.py 2010-10-26.csv
+    会生成2010-10-26文件夹，里面有main.csv和pre.csv，和说明文件。其中pre.csv为重复域名大于5个的，main.csv为重复域名不超过5个的。说明文件为main.csv的行数和pre.csv的不同域名数。下载文件夹到本地。
+4.预处理：
+    将pre.csv放到apl文件夹下，执行precheck.py，进行预处理操作。按5个一组打开进行识别。
+5.主处理：
+    将main.csv分成几份。（使用文本编辑器打开即可）
+    每一份放入apl目录下，执行王骞的程序或checkphishing.exe。按模板号分组打开，进行判断。
+6.合并数据，提取信息：
+    做完后合并处理，得到delete url，delete.txt，白名单。
+7.上传数据并升级
+    把合并数据只保留phishing列以后以csv格式保存，文件名为yyyy-mm-dd，上传至69.28.58.31服务器的/root/csv目录下
+    修改update.sh的内容为将要升级的文件
+    执行 nohup ./update.sh &进行升级
+    此时在后台升级，可以退出ssh.

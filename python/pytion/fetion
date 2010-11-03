@@ -1,0 +1,737 @@
+R fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 1 
+Q: 1 R
+CN: ab47be433bb3ec5ec9700557917a1f8c
+CL: type="pc",version="4.0.3390"
+
+SIP-C/4.0 401 Unauthoried
+F: 856882346
+I: 1
+Q: 1 R
+W: Digest algorithm="SHA1-sess-v4",nonce="454339E72098E06A1A103AF54A22C882",key="BE8AAEFB6BC85C0E242026DFA83E70D1E9365E01D6BC27313EE09B1B8964431AD403C18CCF16ED920AF6E23EDBC8D3A46CA06B09C5C6F637D31961F9D38F90891544BC6BAA44210A759EF3E4F0460E083FF8C40A6803A01DB48B472AA591CEC4051E0657C4874D34F4EAFD280BC88F755B98086E36D34EA1B42EDB03FEAE7F5F010001",signature="376CB0D49931132FD29B0C44B908F40173134A9DD1C710D7EF968FA10DD2C7F2E4AED19199F16405C8916659D6004BC466160D4488DA07EF5FBE84A450400217336060758A9BF394B382B40840F0B7D78D04F37CFDD8A026277EC70F67187ECB877076EBDDA71C88C0BBB762A5A54CBC50EF97AF5FCB4DD5BB034A82A87B67ED"
+
+R fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 1 
+Q: 2 R
+A: Digest algorithm="SHA1-sess-v4",response="222d56668b33270fea13fda9bd83edca5e701d063b0c95f8a05659e1f20131d8290cbaaff8c3177efa0f53afcc2666f6021d0f26acc4ed0f2cbc6402750474659d9e72bac9ec41990f7f8c32af33de4ce59efc6e9fd8eaab3e91e250a6d7901d9ff450ac91efc8b88fe2e8effc8914991df31517a6b7e544a7e71b2624c4d69b"
+L: 578
+
+<args><device accept-language="default" machine-code="2F23704EB198CDFCB9C7C10D3EB1AE25" /><caps value="1FFF" /><events value="7F" /><user-info mobile-no="15901049672" user-id="606783687"><personal version="0" attributes="v4default;alv2-version;alv2-warn;dynamic-version" /><custom-config version="333824664" /><contact-list version="333761155" buddy-attributes="v4default" /></user-info><credentials domains="fetion.com.cn;m161.com.cn;www.ikuwa.cn;games.fetion.com.cn;turn.fetion.com.cn;pos.fetion.com.cn" /><presence><basic value="400" desc="" /><extendeds /></presence></args>SIP-C/4.0 200 OK
+I: 1
+Q: 2 R
+X: 600
+L: 3947
+
+<results><client public-ip="112.95.147.149" login-place="" last-login-ip="112.95.147.149" last-login-place="" last-login-time="7/30/2010 5:02:48 PM"/><user-info><personal version="333824664" register-email="amoblin@gmail.com" user-id="606783687" sid="856882346" mobile-no="15901049672" uri="sip:856882346@fetion.com.cn;p=5911" name="崔贵林" nickname="amoblin" gender="1" impresa="极客打印，低碳生活 geekprint@gmail.com 飞信号：492134395" portrait-crc="-990024828" birth-date="1988-06-28" birthday-valid="1" carrier="CMCC" carrier-status="0" carrier-region="CN.bj.10." user-region="" profile="" blood-type="4" occupation="" hobby="" job-title="" home-phone="15901049672" work-phone="" other-phone="" personal-email="amoblin@gmail.com" work-email="amoblin@gmail.com" other-email="amoblin@gmail.com" primary-email="0" company="" company-website="" global-permission="identity=0;phone=0;email=1;birthday=1;business=0;presence=1;contact=0;location=3;buddy=2;ivr=3;buddy-ex=0;show=0;" sms-online-status="0.0:0:0" save-xeno-msg="0" email-binding-status="1" email-binding-alias="" set-pwd-question="0" alv2-version="332807101" alv2-warn="0" dynamic-version="11685369"/><configs><config name="weather-city">-1</config><config name="directsms-rec">0</config><config name="weather-region"></config><config name="addbuddy-app-sms">0</config><config name="private-presence"></config><config name="alv2-setwarn">0</config></configs><custom-config version="333824664"></custom-config><contact-list version="333761155"/><score value="12850" level="14" level-score="12023"/><services><service id="7"/><service id="5"/></services><quotas><quota-limit><limit name="max-buddies" value="300"/><limit name="max-groupadmin-count" value="2"/><limit name="max-joingroup-count" value="10"/></quota-limit><quota-frequency><frequency name="send-sms" day-limit="600" day-count="0" month-limit="10000" month-count="191"/></quota-frequency></quotas><capability-list basic-caps="1ffff" contact-caps="ffffff" extended-caps="1201fff"><contact carrier="CMCC" contact-caps="ffffff" /><contact carrier="CMHK" contact-caps="9ffc9f" /><contact carrier="CMPAK" contact-caps="857c08" /><contact carrier="HK.OTHER" contact-caps="0" /><contact carrier="" contact-caps="a57008" /><contact carrier="SGSH" contact-caps="857c08" /><contact carrier="SGST" contact-caps="857c08" /></capability-list></user-info><credentials kernel="qvA+CgjXIBObxShRg3pudN72zBaQOtqhnlI1Tdu3asaFnAk3oDwfBOErog3LPS99pybEnDSoy99Yv6a2fxd2L0jq8TfJzGc5g+dg18kyzTKi7lEuHabKA4cDqzDk0tUGTKHx0T34uxi9oUz70VA6LxdpaFud1lMHJbU/yVmqPc0iR9T9SIu5OCF5+lhybL7C"><credential domain="fetion.com.cn" c="GXT8NnWtN12xGwpwJd3uSRXbOteBXJVn+zvl21J4cGKZ4ot/4SfsPsaKPQCQCrDtjMw9LBkLgUD1VWSoKRvDN3cJHDfQ323xQorwX607T6K63IfPFurToaSAhxFVCkWw+j92vRI3ISDbnD4epZIz51W45UqQpZFbkOPcUZeKnl5INx7Xm+uSg9qxFev0W0Cj"/><credential domain="m161.com.cn" c="wFhz8AiP0P2LepzfYvZkPqThdtZWq6Sg6aY9ZnE3GSdknKvkkc51W93xnFoB1PQmeq+maTqV9USGaKpuyINB9O+HtK229oMlx+bfeqnHt1NM9Jtcx9yckcd26pUOkdb1YqwXJrBQtOHoz2GeeMVIC0+8QLHjpOwCAjWpxwXGCSs="/><credential domain="www.ikuwa.cn" c="o1QUhf5J93EYIruQMER2gCl/MeRZSZ6Pf3u+s25tKpbauP+7yV7woWpoORWaBMYmOTjgg9whYL73R1lVxLUbxgL/p4SUbs4zB2/7Cqkb+miD/xZmexFI8vasF7rCEnwYQpmjk1ge9bpg6CRAK/6YV3EcykaF7Jg9BMWPGSSlp6E="/><credential domain="games.fetion.com.cn" c="b+0S9r+0tvjlnKq+FveTDrk3iAo5mp/sIG4ZRby+ZgW277hxIfcFXsbjUId04IC+BT2gQj+4KM1tdkW6cX4wjOqAW/SAhZ1s4wCLKDE2UR5j1Xwg03Yyi8dBXlN8e60wbHmKNq/KVBj2hUjEFP7f6QnyO3Ws5nRiGq7BDp+cxWj49tZj8E1hptRl8uS+VCut"/><credential domain="turn.fetion.com.cn" c="IgLEXkCTV3/YEsosZXUsxOWUoksTvC/Wd1NER+s6yDOVsEyo+pcnyj09ftQHKtGzeFCLh6zqpaV4huD28lxgke3D+NFGRSlJO8vD9MB81uKS0JdEhXzk8h+RzJBrAFg7AEBg87kme+nG0z7QUf0Myc0zvjPuMhVMZvsx+dCWjzQ="/><credential domain="pos.fetion.com.cn" c="1RvNcgLvCfj9RSt2FHwZq5ydU+f/dhMskgSjLNPOMwSdwmCswryga82nsqRGKi2QOHRJCV9cU+1RuduOlbQ6cC2tEUCTDsv6tG/hSPElA9k/m3rwEN0+LM2R/yWCkgx4d5IndLUGUG+Udu4Ob7EmEeR1x7rh9NIlobxPdFSJJsY="/></credentials></results>S fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 2 
+Q: 1 S
+N: PGGetGroupList
+L: 40
+
+<args><group-list version="25" /></args>SIP-C/4.0 200 OK
+I: 2
+Q: 1 S
+L: 60
+
+<results><group-list  version ="25" ></group-list></results>S fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 3 
+Q: 1 S
+N: PGGetGroupInfo
+L: 647
+
+<args><groups attributes="all"><group uri="sip:PG3443558@fetion.com.cn;p=3811" attributes-version="265" /><group uri="sip:PG3992239@fetion.com.cn;p=2507" attributes-version="336" /><group uri="sip:PG4762318@fetion.com.cn;p=1867" attributes-version="356" /><group uri="sip:PG5446658@fetion.com.cn;p=2132" attributes-version="228" /><group uri="sip:PG7823907@fetion.com.cn;p=4539" attributes-version="522" /><group uri="sip:PG7860431@fetion.com.cn;p=2670" attributes-version="190" /><group uri="sip:PG7863875@fetion.com.cn;p=1582" attributes-version="485" /><group uri="sip:PG9356584@fetion.com.cn;p=1716" attributes-version="213" /></groups></args>S fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 4 
+Q: 1 S
+N: PGGetPersonalInfo
+L: 617
+
+<args><personal-properties attributes="all"><personal-property group-uri="sip:PG3443558@fetion.com.cn;p=3811" /><personal-property group-uri="sip:PG3992239@fetion.com.cn;p=2507" /><personal-property group-uri="sip:PG4762318@fetion.com.cn;p=1867" /><personal-property group-uri="sip:PG5446658@fetion.com.cn;p=2132" /><personal-property group-uri="sip:PG7823907@fetion.com.cn;p=4539" /><personal-property group-uri="sip:PG7860431@fetion.com.cn;p=2670" /><personal-property group-uri="sip:PG7863875@fetion.com.cn;p=1582" /><personal-property group-uri="sip:PG9356584@fetion.com.cn;p=1716" /></personal-properties></args>SUB fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 5 
+Q: 1 SUB
+N: PGPresence
+L: 569
+
+<args><subscription><groups><group uri="sip:PG3443558@fetion.com.cn;p=3811" /><group uri="sip:PG3992239@fetion.com.cn;p=2507" /><group uri="sip:PG4762318@fetion.com.cn;p=1867" /><group uri="sip:PG5446658@fetion.com.cn;p=2132" /><group uri="sip:PG7823907@fetion.com.cn;p=4539" /><group uri="sip:PG7860431@fetion.com.cn;p=2670" /><group uri="sip:PG7863875@fetion.com.cn;p=1582" /><group uri="sip:PG9356584@fetion.com.cn;p=1716" /></groups><presence><basic attributes="all" /><member attributes="identity" /><management attributes="all" /></presence></subscription></args>S fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 6 
+Q: 1 S
+N: PGGetGroupTopic
+L: 41
+
+<args><topic-list version="245" /></args>S fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 7 
+Q: 1 S
+N: PGGetRecommendGroup
+
+I fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 8 
+Q: 1 I
+T: sip:PG3443558@fetion.com.cn;p=3811
+K: text/html-fragment
+K: multiparty
+K: nudge
+K: share-background
+K: fetion-show
+L: 21
+
+ s=session m=message I fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 9 
+Q: 1 I
+T: sip:PG3992239@fetion.com.cn;p=2507
+K: text/html-fragment
+K: multiparty
+K: nudge
+K: share-background
+K: fetion-show
+L: 21
+
+ s=session m=message I fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 10 
+Q: 1 I
+T: sip:PG4762318@fetion.com.cn;p=1867
+K: text/html-fragment
+K: multiparty
+K: nudge
+K: share-background
+K: fetion-show
+L: 21
+
+ s=session m=message I fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 11 
+Q: 1 I
+T: sip:PG5446658@fetion.com.cn;p=2132
+K: text/html-fragment
+K: multiparty
+K: nudge
+K: share-background
+K: fetion-show
+L: 21
+
+ s=session m=message I fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 12 
+Q: 1 I
+T: sip:PG7823907@fetion.com.cn;p=4539
+K: text/html-fragment
+K: multiparty
+K: nudge
+K: share-background
+K: fetion-show
+L: 21
+
+ s=session m=message I fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 13 
+Q: 1 I
+T: sip:PG7860431@fetion.com.cn;p=2670
+K: text/html-fragment
+K: multiparty
+K: nudge
+K: share-background
+K: fetion-show
+L: 21
+
+ s=session m=message I fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 14 
+Q: 1 I
+T: sip:PG7863875@fetion.com.cn;p=1582
+K: text/html-fragment
+K: multiparty
+K: nudge
+K: share-background
+K: fetion-show
+L: 21
+
+ s=session m=message I fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 15 
+Q: 1 I
+T: sip:PG9356584@fetion.com.cn;p=1716
+K: text/html-fragment
+K: multiparty
+K: nudge
+K: share-background
+K: fetion-show
+L: 21
+
+ s=session m=message SIP-C/4.0 100 Trying
+T: sip:PG3443558@fetion.com.cn;p=3811
+I: 8
+Q: 1 I
+
+SIP-C/4.0 100 Trying
+T: sip:PG3992239@fetion.com.cn;p=2507
+I: 9
+Q: 1 I
+
+SIP-C/4.0 100 Trying
+T: sip:PG4762318@fetion.com.cn;p=1867
+I: 10
+Q: 1 I
+
+SIP-C/4.0 100 Trying
+T: sip:PG5446658@fetion.com.cn;p=2132
+I: 11
+Q: 1 I
+
+SIP-C/4.0 100 Trying
+T: sip:PG7823907@fetion.com.cn;p=4539
+I: 12
+Q: 1 I
+
+SIP-C/4.0 100 Trying
+T: sip:PG7860431@fetion.com.cn;p=2670
+I: 13
+Q: 1 I
+
+SIP-C/4.0 200 OK
+T: sip:PG3443558@fetion.com.cn;p=3811
+I: 8
+Q: 1 I
+
+SIP-C/4.0 100 Trying
+T: sip:PG7863875@fetion.com.cn;p=1582
+I: 14
+Q: 1 I
+
+SIP-C/4.0 200 OK
+T: sip:PG4762318@fetion.com.cn;p=1867
+I: 10
+Q: 1 I
+
+SIP-C/4.0 200 OK
+T: sip:PG3992239@fetion.com.cn;p=2507
+I: 9
+Q: 1 I
+
+SIP-C/4.0 200 OK
+T: sip:PG5446658@fetion.com.cn;p=2132
+I: 11
+Q: 1 I
+
+SIP-C/4.0 200 OK
+T: sip:PG7823907@fetion.com.cn;p=4539
+I: 12
+Q: 1 I
+
+SIP-C/4.0 200 OK
+I: 6
+Q: 1 S
+L: 835
+
+<results><topic-list event="RecommendGroupTopic" version="245" max-count="5"><topic title="黛琴携手 笑傲红楼" url="http://group.feixin.10086.cn/topic/common/31446245/218861?c=[c:m161.com.cn]" create-date="2010-7-27 10:50:52" id="245" topic-type="1"  /><topic title="被已婚领导偷吻怎么办" url="http://group.feixin.10086.cn/topic/common/31583291/218987?c=[c:m161.com.cn]" create-date="2010-7-27 10:49:42" id="244" topic-type="1"  /><topic title="最适合女装的男星" url="http://group.feixin.10086.cn/topic/common/31245424/219020?c=[c:m161.com.cn]" create-date="2010-7-27 10:37:26" id="243" topic-type="1"  /><topic title="飞信Beta3.0正式发布" url="http://group.feixin.10086.cn/topic/common/30773913/214522?c=[c:m161.com.cn]" create-date="2010-7-8 17:12:57" id="242" topic-type="1"  /></topic-list></results>SIP-C/4.0 200 OK
+T: sip:PG7860431@fetion.com.cn;p=2670
+I: 13
+Q: 1 I
+
+SIP-C/4.0 200 OK
+T: sip:PG7863875@fetion.com.cn;p=1582
+I: 14
+Q: 1 I
+
+SIP-C/4.0 200 OK
+I: 7
+Q: 1 S
+L: 1229
+
+<results><group-list><group uri="sip:PG30275216@fetion.com.cn;p=10796" introduce="朋友" portrait-crc="1583207177" name="29" current-member-count="41" limit-member-count="150" /><group uri="sip:PG30275217@fetion.com.cn;p=10796" introduce="麻将" portrait-crc="1583207177" name="30" current-member-count="41" limit-member-count="150" /><group uri="sip:PG30275225@fetion.com.cn;p=6428" introduce="" portrait-crc="-1245198120" name="车辆0601" current-member-count="36" limit-member-count="150" /><group uri="sip:PG30275243@fetion.com.cn;p=5852" introduce="" portrait-crc="0" name="彭阳分公司业务通知" current-member-count="21" limit-member-count="150" /><group uri="sip:PG30275275@fetion.com.cn;p=6720" introduce="这里心灵的港湾。心累了 ，烦了就回来吧，" portrait-crc="1039105297" name="开心茵特拉根花园社区" current-member-count="22" limit-member-count="150" /><group uri="sip:PG30275280@fetion.com.cn;p=5052" introduce="" portrait-crc="1583207177" name="哈哈" current-member-count="29" limit-member-count="150" /><group uri="sip:PG30275281@fetion.com.cn;p=6428" introduce="" portrait-crc="0" name="机械0601" current-member-count="29" limit-member-count="150" /></group-list></results>SIP-C/4.0 200 OK
+I: 3
+Q: 1 S
+L: 36
+
+<results><groups></groups></results>A fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 8 
+Q: 1 A
+T: sip:PG3443558@fetion.com.cn;p=3811
+
+A fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 10 
+Q: 1 A
+T: sip:PG4762318@fetion.com.cn;p=1867
+
+A fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 9 
+Q: 1 A
+T: sip:PG3992239@fetion.com.cn;p=2507
+
+A fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 11 
+Q: 1 A
+T: sip:PG5446658@fetion.com.cn;p=2132
+
+A fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 12 
+Q: 1 A
+T: sip:PG7823907@fetion.com.cn;p=4539
+
+A fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 13 
+Q: 1 A
+T: sip:PG7860431@fetion.com.cn;p=2670
+
+A fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 14 
+Q: 1 A
+T: sip:PG7863875@fetion.com.cn;p=1582
+
+SIP-C/4.0 200 OK
+I: 5
+Q: 1 SUB
+L: 86
+
+<results><subscription><groups></groups><presence></presence></subscription></results>BN 856882346 SIP-C/4.0
+N: PGGroup
+I: 3
+Q: 8 BN
+L: 90
+
+<events><event type="PGGetGroupInfo"><results><groups></groups></results></event></events>SIP-C/4.0 200 OK
+I: 4
+Q: 1 S
+L: 247
+
+<results><personal-properties><personal-property  group-uri="sip:PG7823907@fetion.com.cn;p=4539"  group-nickname=""  sms-recv-policy="1"  msg-recv-policy="1" status-code="200" iic-nickname="amoblin" client-data=""/></personal-properties></results>BN 856882346 SIP-C/4.0
+N: PGGroup
+I: 3
+Q: 9 BN
+L: 90
+
+<events><event type="PGGetGroupInfo"><results><groups></groups></results></event></events>BN 856882346 SIP-C/4.0
+N: PGGroup
+I: 3
+Q: 10 BN
+L: 90
+
+<events><event type="PGGetGroupInfo"><results><groups></groups></results></event></events>BN 856882346 SIP-C/4.0
+N: PGGroup
+I: 3
+Q: 11 BN
+L: 90
+
+<events><event type="PGGetGroupInfo"><results><groups></groups></results></event></events>BN 856882346 SIP-C/4.0
+N: PGGroup
+I: 3
+Q: 12 BN
+L: 90
+
+<events><event type="PGGetGroupInfo"><results><groups></groups></results></event></events>BN 856882346 SIP-C/4.0
+N: PGGroup
+I: 4
+Q: 13 BN
+L: 304
+
+<events><event type="PGGetPersonalInfo"><results><personal-properties><personal-property  group-uri="sip:PG3443558@fetion.com.cn;p=3811"  group-nickname=""  sms-recv-policy="1"  msg-recv-policy="1" status-code="200" iic-nickname="amoblin" client-data=""/></personal-properties></results></event></events>BN 856882346 SIP-C/4.0
+N: PGGroup
+I: 3
+Q: 14 BN
+L: 90
+
+<events><event type="PGGetGroupInfo"><results><groups></groups></results></event></events>BN 856882346 SIP-C/4.0
+N: PGGroup
+I: 4
+Q: 15 BN
+L: 304
+
+<events><event type="PGGetPersonalInfo"><results><personal-properties><personal-property  group-uri="sip:PG4762318@fetion.com.cn;p=1867"  group-nickname=""  sms-recv-policy="1"  msg-recv-policy="1" status-code="200" iic-nickname="amoblin" client-data=""/></personal-properties></results></event></events>BN 856882346 SIP-C/4.0
+N: PGGroup
+I: 4
+Q: 16 BN
+L: 304
+
+<events><event type="PGGetPersonalInfo"><results><personal-properties><personal-property  group-uri="sip:PG3992239@fetion.com.cn;p=2507"  group-nickname=""  sms-recv-policy="1"  msg-recv-policy="1" status-code="200" iic-nickname="amoblin" client-data=""/></personal-properties></results></event></events>BN 856882346 SIP-C/4.0
+N: PGGroup
+I: 3
+Q: 17 BN
+L: 90
+
+<events><event type="PGGetGroupInfo"><results><groups></groups></results></event></events>BN 856882346 SIP-C/4.0
+N: PGGroup
+I: 3
+Q: 18 BN
+L: 90
+
+<events><event type="PGGetGroupInfo"><results><groups></groups></results></event></events>BN 856882346 SIP-C/4.0
+N: PGGroup
+I: 4
+Q: 19 BN
+L: 304
+
+<events><event type="PGGetPersonalInfo"><results><personal-properties><personal-property  group-uri="sip:PG5446658@fetion.com.cn;p=2132"  group-nickname=""  sms-recv-policy="1"  msg-recv-policy="1" status-code="200" iic-nickname="amoblin" client-data=""/></personal-properties></results></event></events>BN 856882346 SIP-C/4.0
+I: 5
+Q: 20 BN
+N: PGGroup
+X: 25200
+L: 2687
+
+<events><event type="PresenceChanged"><group uri="sip:PG5446658@fetion.com.cn;p=2132" group-attributes-version="228" name="python" category="271" introduce="python 爱好者" bulletin="python+django" portrait-crc="-478240578"><member uri="sip:627192033@fetion.com.cn;p=4911" identity="3" state="0" nickname="" client-type="" /><member uri="sip:785350014@fetion.com.cn;p=4911" identity="3" state="0" nickname="" client-type="" /><member uri="sip:755885416@fetion.com.cn;p=9029" identity="3" state="0" nickname="" client-type="" /><member uri="sip:660619857@fetion.com.cn;p=2132" identity="1" state="400" nickname="" client-type="PC" /><member uri="sip:595419601@fetion.com.cn;p=6282" identity="3" state="0" nickname="" client-type="" /><member uri="sip:697368921@fetion.com.cn;p=3826" identity="3" state="0" nickname="" client-type="" /><member uri="sip:757920709@fetion.com.cn;p=9442" identity="3" state="0" nickname="" client-type="" /><member uri="sip:693414638@fetion.com.cn;p=704" identity="3" state="0" nickname="" client-type="" /><member uri="sip:686901960@fetion.com.cn;p=7319" identity="3" state="0" nickname="" client-type="" /><member uri="sip:566927775@fetion.com.cn;p=6701" identity="3" state="0" nickname="" client-type="" /><member uri="sip:600003027@fetion.com.cn;p=6930" identity="3" state="0" nickname="" client-type="" /><member uri="sip:640325743@fetion.com.cn;p=7198" identity="3" state="0" nickname="" client-type="" /><member uri="sip:653255242@fetion.com.cn;p=887" identity="3" state="0" nickname="" client-type="" /><member uri="sip:748005417@fetion.com.cn;p=9007" identity="3" state="0" nickname="" client-type="" /><member uri="sip:835641611@fetion.com.cn;p=5798" identity="3" state="0" nickname="" client-type="" /><member uri="sip:824104110@fetion.com.cn;p=12487" identity="3" state="0" nickname="" client-type="" /><member uri="sip:851746858@fetion.com.cn;p=7169" identity="3" state="0" nickname="" client-type="" /><member uri="sip:856882346@fetion.com.cn;p=5911" identity="3" state="400" nickname="" client-type="" /><member uri="sip:911439073@fetion.com.cn;p=9193" identity="3" state="0" nickname="" client-type="" /><member uri="sip:912686698@fetion.com.cn;p=3753" identity="3" state="0" nickname="" client-type="" /><member uri="sip:914557528@fetion.com.cn;p=10702" identity="3" state="0" nickname="" client-type="" /><member uri="sip:973830258@fetion.com.cn;p=12105" identity="3" state="400" nickname="" client-type="PC" /><member uri="sip:982487525@fetion.com.cn;p=8968" identity="3" state="0" nickname="" client-type="" /><member uri="sip:552549568@fetion.com.cn;p=16101" identity="3" state="0" nickname="" client-type="" /></group></event></events>BN 856882346 SIP-C/4.0
+I: 5
+Q: 21 BN
+N: PGGroup
+X: 25200
+L: 2054
+
+<events><event type="PresenceChanged"><group uri="sip:PG7860431@fetion.com.cn;p=2670" group-attributes-version="190" name="山地车" category="157" introduce="" bulletin="" portrait-crc="-1217364335"><member uri="sip:668363702@fetion.com.cn;p=2934" identity="3" state="0" nickname="" client-type="" /><member uri="sip:786374291@fetion.com.cn;p=5937" identity="3" state="0" nickname="" client-type="" /><member uri="sip:794854448@fetion.com.cn;p=6288" identity="3" state="0" nickname="" client-type="" /><member uri="sip:770714642@fetion.com.cn;p=7272" identity="3" state="0" nickname="" client-type="" /><member uri="sip:794077178@fetion.com.cn;p=7281" identity="3" state="0" nickname="" client-type="" /><member uri="sip:781829283@fetion.com.cn;p=9262" identity="3" state="400" nickname="" client-type="PC" /><member uri="sip:717728579@fetion.com.cn;p=9288" identity="3" state="0" nickname="" client-type="" /><member uri="sip:770073554@fetion.com.cn;p=9833" identity="3" state="0" nickname="" client-type="" /><member uri="sip:697914165@fetion.com.cn;p=1761" identity="3" state="0" nickname="" client-type="" /><member uri="sip:567804685@fetion.com.cn;p=3504" identity="3" state="0" nickname="" client-type="" /><member uri="sip:778807945@fetion.com.cn;p=4706" identity="3" state="0" nickname="" client-type="" /><member uri="sip:778583706@fetion.com.cn;p=10274" identity="3" state="0" nickname="" client-type="" /><member uri="sip:766293724@fetion.com.cn;p=10280" identity="3" state="0" nickname="" client-type="" /><member uri="sip:768640916@fetion.com.cn;p=6113" identity="3" state="0" nickname="" client-type="" /><member uri="sip:765920384@fetion.com.cn;p=10285" identity="3" state="0" nickname="" client-type="" /><member uri="sip:823829308@fetion.com.cn;p=2670" identity="1" state="0" nickname="" client-type="" /><member uri="sip:856882346@fetion.com.cn;p=5911" identity="3" state="400" nickname="" client-type="" /><member uri="sip:937039886@fetion.com.cn;p=10783" identity="3" state="0" nickname="" client-type="" /></group></event></events>BN 856882346 SIP-C/4.0
+I: 5
+Q: 22 BN
+N: PGGroup
+X: 25200
+L: 1826
+
+<events><event type="PresenceChanged"><group uri="sip:PG9356584@fetion.com.cn;p=1716" group-attributes-version="213" name="05143" category="142" introduce="北信科大05143班同学" bulletin="工作与学习！" portrait-crc="417933863"><member uri="sip:747934206@fetion.com.cn;p=3101" identity="2" state="0" nickname="李博" client-type="" /><member uri="sip:688719529@fetion.com.cn;p=4005" identity="3" state="400" nickname="" client-type="Symbian" /><member uri="sip:604942776@fetion.com.cn;p=1716" identity="1" state="0" nickname="魏美圣" client-type="" /><member uri="sip:755668898@fetion.com.cn;p=1719" identity="3" state="0" nickname="孙爽" client-type="" /><member uri="sip:770495664@fetion.com.cn;p=1719" identity="3" state="0" nickname="" client-type="" /><member uri="sip:741006012@fetion.com.cn;p=7007" identity="2" state="0" nickname="田磊" client-type="" /><member uri="sip:784634023@fetion.com.cn;p=10101" identity="3" state="0" nickname="" client-type="" /><member uri="sip:762528249@fetion.com.cn;p=263" identity="3" state="400" nickname="" client-type="PC" /><member uri="sip:763580449@fetion.com.cn;p=263" identity="3" state="0" nickname="" client-type="" /><member uri="sip:633512442@fetion.com.cn;p=664" identity="2" state="0" nickname="" client-type="" /><member uri="sip:724546643@fetion.com.cn;p=666" identity="3" state="0" nickname="" client-type="" /><member uri="sip:674737604@fetion.com.cn;p=887" identity="3" state="0" nickname="" client-type="" /><member uri="sip:873740833@fetion.com.cn;p=263" identity="3" state="0" nickname="" client-type="" /><member uri="sip:856882346@fetion.com.cn;p=5911" identity="3" state="400" nickname="" client-type="" /><member uri="sip:918212762@fetion.com.cn;p=12710" identity="3" state="0" nickname="黄俊毓" client-type="" /></group></event></events>BN 856882346 SIP-C/4.0
+I: 5
+Q: 23 BN
+N: PGGroup
+X: 25200
+L: 9586
+
+<events><event type="PresenceChanged"><group uri="sip:PG7823907@fetion.com.cn;p=4539" group-attributes-version="522" name="轮滑俱乐部" category="137" introduce="轮滑爱好者的天地！！" bulletin="轮滑爱好者的天地，轮滑产品销售商的乐园！" portrait-crc="-1245198120"><member uri="sip:587069362@fetion.com.cn;p=1719" identity="3" state="0" nickname="" client-type="" /><member uri="sip:776117985@fetion.com.cn;p=3077" identity="3" state="0" nickname="" client-type="" /><member uri="sip:777090841@fetion.com.cn;p=10439" identity="3" state="0" nickname="" client-type="" /><member uri="sip:589886150@fetion.com.cn;p=2209" identity="3" state="0" nickname="" client-type="" /><member uri="sip:578132239@fetion.com.cn;p=2334" identity="3" state="0" nickname="" client-type="" /><member uri="sip:764959274@fetion.com.cn;p=2918" identity="3" state="0" nickname="" client-type="" /><member uri="sip:623313614@fetion.com.cn;p=6234" identity="3" state="0" nickname="" client-type="" /><member uri="sip:799085831@fetion.com.cn;p=2004" identity="3" state="0" nickname="ぎ翊あ翎" client-type="" /><member uri="sip:665122783@fetion.com.cn;p=6164" identity="3" state="0" nickname="" client-type="" /><member uri="sip:787308436@fetion.com.cn;p=9615" identity="3" state="0" nickname="" client-type="" /><member uri="sip:620032823@fetion.com.cn;p=954" identity="3" state="400" nickname="" client-type="PocketPC" /><member uri="sip:136056386@fetion.com.cn;p=1633" identity="3" state="0" nickname="" client-type="" /><member uri="sip:291016202@fetion.com.cn;p=1007" identity="3" state="0" nickname="" client-type="" /><member uri="sip:591488956@fetion.com.cn;p=1799" identity="3" state="0" nickname="" client-type="" /><member uri="sip:612970689@fetion.com.cn;p=2555" identity="3" state="0" nickname="水芳香" client-type="" /><member uri="sip:749734960@fetion.com.cn;p=2879" identity="3" state="0" nickname="" client-type="" /><member uri="sip:784104854@fetion.com.cn;p=3051" identity="3" state="0" nickname="" client-type="" /><member uri="sip:790798186@fetion.com.cn;p=3836" identity="3" state="0" nickname="" client-type="" /><member uri="sip:854154666@fetion.com.cn;p=4539" identity="1" state="400" nickname="" client-type="PC" /><member uri="sip:718065929@fetion.com.cn;p=9041" identity="3" state="0" nickname="" client-type="" /><member uri="sip:825001470@fetion.com.cn;p=9085" identity="3" state="0" nickname="" client-type="" /><member uri="sip:614104654@fetion.com.cn;p=6436" identity="3" state="0" nickname="" client-type="" /><member uri="sip:746330850@fetion.com.cn;p=6437" identity="3" state="0" nickname="" client-type="" /><member uri="sip:775010003@fetion.com.cn;p=6536" identity="3" state="0" nickname="" client-type="" /><member uri="sip:630887492@fetion.com.cn;p=2335" identity="3" state="0" nickname="" client-type="" /><member uri="sip:682809920@fetion.com.cn;p=6565" identity="3" state="0" nickname="" client-type="" /><member uri="sip:767278736@fetion.com.cn;p=9539" identity="3" state="0" nickname="" client-type="" /><member uri="sip:854052226@fetion.com.cn;p=9558" identity="3" state="0" nickname="" client-type="" /><member uri="sip:692092077@fetion.com.cn;p=9558" identity="3" state="0" nickname="" client-type="" /><member uri="sip:708765675@fetion.com.cn;p=9558" identity="3" state="0" nickname="" client-type="" /><member uri="sip:606009754@fetion.com.cn;p=6725" identity="3" state="0" nickname="" client-type="" /><member uri="sip:574220348@fetion.com.cn;p=952" identity="3" state="0" nickname="" client-type="" /><member uri="sip:748110509@fetion.com.cn;p=1743" identity="3" state="0" nickname="" client-type="" /><member uri="sip:615817503@fetion.com.cn;p=3619" identity="3" state="0" nickname="" client-type="" /><member uri="sip:875080089@fetion.com.cn;p=6519" identity="3" state="0" nickname="" client-type="" /><member uri="sip:749064872@fetion.com.cn;p=10515" identity="3" state="0" nickname="" client-type="" /><member uri="sip:770439325@fetion.com.cn;p=10532" identity="3" state="0" nickname="" client-type="" /><member uri="sip:779014326@fetion.com.cn;p=10590" identity="3" state="0" nickname="" client-type="" /><member uSUB fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 16 
+Q: 1 SUB
+N: PresenceV4
+L: 112
+
+<args><subscription self="v4default;mail-count;impresa;sms-online-status" buddy="v4default" version="" /></args>ri="sip:686720806@fetion.com.cn;p=1180" identity="3" state="0" nickname="" client-type="" /><member uri="sip:750481465@fetion.com.cn;p=2202" identity="3" state="0" nickname="" client-type="" /><member uri="sip:592832626@fetion.com.cn;p=2015" identity="3" state="0" nickname="" client-type="" /><member uri="sip:764901167@fetion.com.cn;p=3509" identity="3" state="0" nickname="" client-type="" /><member uri="sip:954878860@fetion.com.cn;p=5219" identity="3" state="400" nickname="" client-type="PC" /><member uri="sip:978009486@fetion.com.cn;p=1794" identity="3" state="0" nickname="" client-type="" /><member uri="sip:837361142@fetion.com.cn;p=2061" identity="3" state="0" nickname="" client-type="" /><member uri="sip:865286554@fetion.com.cn;p=889" identity="3" state="0" nickname="" client-type="" /><member uri="sip:797973546@fetion.com.cn;p=319" identity="3" state="0" nickname="" client-type="" /><member uri="sip:812941723@fetion.com.cn;p=197" identity="3" state="0" nickname="" client-type="" /><member uri="sip:856392023@fetion.com.cn;p=3001" identity="3" state="0" nickname="" client-type="" /><member uri="sip:819282859@fetion.com.cn;p=3539" identity="3" state="0" nickname="" client-type="" /><member uri="sip:820319569@fetion.com.cn;p=2721" identity="3" state="0" nickname="" client-type="" /><member uri="sip:826776854@fetion.com.cn;p=2481" identity="3" state="0" nickname="" client-type="" /><member uri="sip:828897014@fetion.com.cn;p=6171" identity="3" state="0" nickname="" client-type="" /><member uri="sip:829631260@fetion.com.cn;p=7630" identity="3" state="0" nickname="" client-type="" /><member uri="sip:835977397@fetion.com.cn;p=7666" identity="3" state="0" nickname="" client-type="" /><member uri="sip:835868987@fetion.com.cn;p=9547" identity="3" state="0" nickname="" client-type="" /><member uri="sip:892813629@fetion.com.cn;p=325" identity="3" state="0" nickname="" client-type="" /><member uri="sip:852519271@fetion.com.cn;p=7091" identity="3" state="0" nickname="" client-type="" /><member uri="sip:856882346@fetion.com.cn;p=5911" identity="3" state="400" nickname="" client-type="" /><member uri="sip:857712266@fetion.com.cn;p=9925" identity="3" state="0" nickname="" client-type="" /><member uri="sip:858748291@fetion.com.cn;p=1900" identity="3" state="0" nickname="" client-type="" /><member uri="sip:873531948@fetion.com.cn;p=12345" identity="3" state="0" nickname="" client-type="" /><member uri="sip:875787842@fetion.com.cn;p=6536" identity="3" state="0" nickname="" client-type="" /><member uri="sip:878272217@fetion.com.cn;p=86" identity="3" state="0" nickname="" client-type="" /><member uri="sip:895705476@fetion.com.cn;p=13052" identity="3" state="0" nickname="" client-type="" /><member uri="sip:660538099@fetion.com.cn;p=9959" identity="3" state="0" nickname="" client-type="" /><member uri="sip:901506718@fetion.com.cn;p=13044" identity="3" state="400" nickname="" client-type="Symbian" /><member uri="sip:904996012@fetion.com.cn;p=12743" identity="3" state="0" nickname="" client-type="" /><member uri="sip:961277646@fetion.com.cn;p=12315" identity="3" state="0" nickname="" client-type="" /><member uri="sip:906687631@fetion.com.cn;p=12727" identity="3" state="0" nickname="" client-type="" /><member uri="sip:906693411@fetion.com.cn;p=2611" identity="3" state="0" nickname="" client-type="" /><member uri="sip:907646519@fetion.com.cn;p=10790" identity="3" state="0" nickname="" client-type="" /><member uri="sip:922492383@fetion.com.cn;p=6102" identity="3" state="0" nickname="" client-type="" /><member uri="sip:912769846@fetion.com.cn;p=5884" identity="3" state="0" nickname="" client-type="" /><member uri="sip:916023624@fetion.com.cn;p=12352" identity="3" state="400" nickname="" client-type="Symbian" /><member uri="sip:920233032@fetion.com.cn;p=12856" identity="3" state="0" nickname="" client-type="" /><member uri="sip:947241844@fetion.com.cn;p=3259" identity="3" state="0" nickname="" client-type="" /><member uri="sip:928112079@fetion.com.cn;p=9572" identity="3" state="0" nickname="" client-type="" /><member uri="sip:932122983@fetion.com.cn;p=9527" identity="3" state="0" nickname="" client-type="" /><member uri="sip:939522691@fetion.com.cn;p=10026" identity="3" state="0" nickname="" client-type="" /><member uri="sip:880056510@fetion.com.cn;p=12163" identity="3" state="0" nickname="" client-type="" /><member uri="sip:881721056@fetion.com.cn;p=1379" identity="3" state="0" nickname="" client-type="" /><member uri="sip:889155928@fetion.com.cn;p=15472" identity="3" state="0" nickname="" client-type="" /><member uri="sip:974291575@fetion.com.cn;p=15428" identity="3" state="0" nickname="" client-type="" /><member uri="sip:977090896@fetion.com.cn;p=12541" identity="3" state="0" nickname="" client-type="" /><member uri="sip:984990576@fetion.com.cn;p=4455" identity="3" state="0" nickname="" client-type="" /><member uri="sip:989667414@fetion.com.cn;p=15692" identity="3" state="0" nickname="" client-type="" /><member uri="sip:528487949@fetion.com.cn;p=1430" identity="3" state="0" nickname="" client-type="" /><member uri="sip:528976096@fetion.com.cn;p=12827" identity="3" state="0" nickname="" client-type="" /><member uri="sip:532747614@fetion.com.cn;p=16041" identity="3" state="0" nickname="" client-type="" /><member uri="sip:450063713@fetion.com.cn;p=15874" identity="3" state="0" nickname="" client-type="" /></group></event></events>BN 856882346 SIP-C/4.0
+I: 5
+Q: 24 BN
+N: PGGroup
+X: 25200
+L: 9487
+
+<events><event type="PresenceChanged"><group uri="sip:PG3443558@fetion.com.cn;p=3811" group-attributes-version="265" name="ubuntu-linux" category="271" introduce="" bulletin="" portrait-crc="-62062888"><member uri="sip:650592064@fetion.com.cn;p=2911" identity="3" state="0" nickname="" client-type="" /><member uri="sip:715329497@fetion.com.cn;p=4911" identity="3" state="0" nickname="" client-type="" /><member uri="sip:671818069@fetion.com.cn;p=1717" identity="3" state="0" nickname="" client-type="" /><member uri="sip:692297503@fetion.com.cn;p=1911" identity="3" state="0" nickname="" client-type="" /><member uri="sip:740785851@fetion.com.cn;p=5092" identity="3" state="0" nickname="" client-type="" /><member uri="sip:775258186@fetion.com.cn;p=9379" identity="3" state="0" nickname="" client-type="" /><member uri="sip:779071025@fetion.com.cn;p=9854" identity="3" state="0" nickname="" client-type="" /><member uri="sip:760000592@fetion.com.cn;p=2233" identity="3" state="0" nickname="" client-type="" /><member uri="sip:624783270@fetion.com.cn;p=4061" identity="3" state="0" nickname="" client-type="" /><member uri="sip:698570873@fetion.com.cn;p=4212" identity="3" state="0" nickname="" client-type="" /><member uri="sip:671407542@fetion.com.cn;p=6212" identity="3" state="0" nickname="" client-type="" /><member uri="sip:575801818@fetion.com.cn;p=6223" identity="3" state="0" nickname="" client-type="" /><member uri="sip:654897880@fetion.com.cn;p=7232" identity="3" state="0" nickname="" client-type="" /><member uri="sip:858333276@fetion.com.cn;p=9236" identity="3" state="0" nickname="Libra-xuan" client-type="" /><member uri="sip:677830962@fetion.com.cn;p=1298" identity="3" state="0" nickname="" client-type="" /><member uri="sip:695915031@fetion.com.cn;p=1642" identity="3" state="0" nickname="oldUbuntuer" client-type="" /><member uri="sip:699076676@fetion.com.cn;p=1646" identity="3" state="0" nickname="" client-type="" /><member uri="sip:670592877@fetion.com.cn;p=6917" identity="3" state="0" nickname="" client-type="" /><member uri="sip:858222462@fetion.com.cn;p=7003" identity="3" state="0" nickname="" client-type="" /><member uri="sip:689163027@fetion.com.cn;p=7008" identity="3" state="0" nickname="" client-type="" /><member uri="sip:634824857@fetion.com.cn;p=7642" identity="3" state="0" nickname="" client-type="" /><member uri="sip:569570064@fetion.com.cn;p=1973" identity="3" state="0" nickname="" client-type="" /><member uri="sip:575847292@fetion.com.cn;p=3115" identity="3" state="0" nickname="" client-type="" /><member uri="sip:575304708@fetion.com.cn;p=6280" identity="3" state="0" nickname="" client-type="" /><member uri="sip:772075407@fetion.com.cn;p=6875" identity="3" state="0" nickname="" client-type="" /><member uri="sip:643635511@fetion.com.cn;p=7839" identity="3" state="0" nickname="" client-type="" /><member uri="sip:783051714@fetion.com.cn;p=9832" identity="3" state="0" nickname="" client-type="" /><member uri="sip:568051285@fetion.com.cn;p=2819" identity="3" state="0" nickname="" client-type="" /><member uri="sip:684078290@fetion.com.cn;p=3811" identity="1" state="0" nickname="ubuntu" client-type="" /><member uri="sip:733274080@fetion.com.cn;p=3954" identity="3" state="0" nickname="" client-type="" /><member uri="sip:702211446@fetion.com.cn;p=4540" identity="3" state="0" nickname="" client-type="" /><member uri="sip:782661265@fetion.com.cn;p=4546" identity="3" state="0" nickname="鱼爸爸" client-type="" /><member uri="sip:677184629@fetion.com.cn;p=4593" identity="3" state="0" nickname="" client-type="" /><member uri="sip:635883258@fetion.com.cn;p=7146" identity="3" state="0" nickname="" client-type="" /><member uri="sip:638648179@fetion.com.cn;p=7585" identity="3" state="0" nickname="" client-type="" /><member uri="sip:677204040@fetion.com.cn;p=5709" identity="3" state="0" nickname="" client-type="" /><member uri="sip:742488106@fetion.com.cn;p=9145" identity="3" state="0" nickname="" client-type="" /><member uri="sip:610451368@fetion.com.cn;p=6181" identity="3" state="0" nickname="" client-type="" /><member uri="sip:592570917@fetion.com.cn;p=58" identity="3" state="0" nickname="" client-type="" /><member uri="sip:764976006@fetion.com.cn;p=10137" identity="3" state="0" nickname="" client-type="" /><member uri="sip:668441874@fetion.com.cn;p=1030" identity="3" state="0" nickname="" client-type="" /><member uri="sip:730474361@fetion.com.cn;p=2422" identity="3" state="0" nickname="" client-type="" /><member uri="sip:637666450@fetion.com.cn;p=5030" identity="3" state="0" nickname="" client-type="" /><member uri="sip:656764133@fetion.com.cn;p=4101" identity="3" state="0" nickname="" client-type="" /><member uri="sip:574275898@fetion.com.cn;p=4470" identity="2" state="0" nickname="" client-type="" /><member uri="sip:876098893@fetion.com.cn;p=4680" identity="3" state="0" nickname="" client-type="" /><member uri="sip:604930027@fetion.com.cn;p=3861" identity="3" state="0" nickname="" client-type="" /><member uri="sip:565950360@fetion.com.cn;p=5551" identity="3" state="0" nickname="" client-type="" /><member uri="sip:764097059@fetion.com.cn;p=7115" identity="3" state="0" nickname="" client-type="" /><member uri="sip:570313551@fetion.com.cn;p=5267" identity="3" state="0" nickname="" client-type="" /><member uri="sip:658261158@fetion.com.cn;p=5303" identity="3" state="0" nickname="" client-type="" /><member uri="sip:703060553@fetion.com.cn;p=9406" identity="3" state="0" nickname="" client-type="" /><member uri="sip:572950793@fetion.com.cn;p=5354" identity="3" state="0" nickname="" client-type="" /><member uri="sip:606306102@fetion.com.cn;p=6318" identity="3" state="0" nickname="" client-type="" /><member uri="sip:785828134@fetion.com.cn;p=6324" identity="3" state="0" nickname="" client-type="" /><member uri="sip:609772622@fetion.com.cn;p=6329" identity="3" state="0" nickname="" client-type="" /><member uri="sip:951536390@fetion.com.cn;p=885" identity="3" state="0" nickname="" client-type="" /><member uri="sip:568973569@fetion.com.cn;p=1895" identity="3" state="0" nickname="" client-type="" /><member uri="sip:750718011@fetion.com.cn;p=2693" identity="3" state="0" nickname="" client-type="" /><member uri="sip:737918562@fetion.com.cn;p=3106" identity="3" state="0" nickname="" client-type="" /><member uri="sip:741942785@fetion.com.cn;p=10428" identity="3" state="0" nickname="" client-type="" /><member uri="sip:746881138@fetion.com.cn;p=10553" identity="3" state="0" nickname="" client-type="" /><member uri="sip:770652750@fetion.com.cn;p=5813" identity="3" state="0" nickname="" client-type="" /><member uri="sip:583032484@fetion.com.cn;p=6703" identity="3" state="0" nickname="" client-type="" /><member uri="sip:852888580@fetion.com.cn;p=6759" identity="3" state="0" nickname="" client-type="" /><member uri="sip:692529058@fetion.com.cn;p=6961" identity="3" state="0" nickname="半杯可乐" client-type="" /><member uri="sip:632684731@fetion.com.cn;p=7194" identity="3" state="0" nickname="" client-type="" /><member uri="sip:764608456@fetion.com.cn;p=9993" identity="3" state="0" nickname="" client-type="" /><member uri="sip:678572316@fetion.com.cn;p=1498" identity="3" state="0" nickname="" client-type="" /><member uri="sip:802941083@fetion.com.cn;p=7051" identity="3" state="0" nickname="" client-type="" /><member uri="sip:809775613@fetion.com.cn;p=4615" identity="3" state="0" nickname="" client-type="" /><member uri="sip:810393018@fetion.com.cn;p=9134" identity="3" state="0" nickname="" client-type="" /><member uri="sip:815339551@fetion.com.cn;p=10730" identity="3" state="0" nickname="" client-type="" /><member uri="sip:814356685@fetion.com.cn;p=771" identity="3" state="0" nickname="" client-type="" /><member uri="sip:822552979@fetion.com.cn;p=12658" identity="3" state="0" nickname="" client-type="" /><member uri="sip:850033444@fetion.com.cn;p=10335" identity="3" state="0" nickname="" client-type="" /><member uri="sip:835796364@fetion.com.cn;p=6464" identity="3" state="0" nickname="" client-type="" /><member uri="sip:841855822@fetion.com.cn;p=10093" identity="3" state="0" nickname="" client-type="" /><member uri="sip:851164891@fetion.com.cn;p=6010" identity="3" state="0" nickname="ubuntu9.04" client-type="" /><member uri="sip:856882346@fetion.com.cn;p=5911" identity="3" state="400" nickname="" client-type="" /><member uri="sip:912556602@fetion.com.cn;p=3666" identity="3" state="0" nickname="" client-type="" /><member uri="sip:916509198@fetion.com.cn;p=12104" identity="3" state="0" nickname="" client-type="" /><member uri="sip:916941630@fetion.com.cn;p=304" identity="3" state="0" nickname="" client-type="" /><member uri="sip:949771002@fetion.com.cn;p=9572" identity="3" state="0" nickname="" client-type="" /><member uri="sip:935347912@fetion.com.cn;p=12109" identity="3" state="0" nickname="" client-type="" /><member uri="sip:932437185@fetion.com.cn;p=2445" identity="3" state="0" nickname="" client-type="" /><member uri="sip:933481363@fetion.com.cn;p=1848" identity="3" state="0" nickname="" client-type="" /><member uri="sip:942735135@fetion.com.cn;p=6598" identity="3" state="0" nickname="" client-type="" /><member uri="sip:947927764@fetion.com.cn;p=12821" identity="3" state="400" nickname="" client-type="PC" /><member uri="sip:950334352@fetion.com.cn;p=4611" identity="3" state="0" nickname="" client-type="" /><member uri="sip:954299442@fetion.com.cn;p=9127" identity="3" state="0" nickname="" client-type="" /></group></event></events>BN 856882346 SIP-C/4.0
+I: 5
+Q: 25 BN
+N: PGGroup
+X: 25200
+L: 12159
+
+<events><event type="PresenceChanged"><group uri="sip:PG4762318@fetion.com.cn;p=1867" group-attributes-version="356" name="塞班S60V3" category="34" introduce="塞班S60V3系统机子交流－UCWEB浏览器、论坛－手机上网资费卡" bulletin="欢迎大家交流塞班S60V3系统&#xD;&#xA;" portrait-crc="-934821052"><member uri="sip:728465356@fetion.com.cn;p=5011" identity="3" state="0" nickname="nokia(mp)小杨" client-type="" /><member uri="sip:811063628@fetion.com.cn;p=5014" identity="3" state="0" nickname="" client-type="" /><member uri="sip:707140010@fetion.com.cn;p=4835" identity="3" state="0" nickname="" client-type="" /><member uri="sip:696329413@fetion.com.cn;p=3212" identity="3" state="0" nickname="" client-type="" /><member uri="sip:756187050@fetion.com.cn;p=974" identity="3" state="0" nickname="" client-type="" /><member uri="sip:610023990@fetion.com.cn;p=1341" identity="3" state="0" nickname="" client-type="" /><member uri="sip:737738508@fetion.com.cn;p=3176" identity="3" state="0" nickname="" client-type="" /><member uri="sip:787716778@fetion.com.cn;p=6653" identity="3" state="0" nickname="" client-type="" /><member uri="sip:783167489@fetion.com.cn;p=6915" identity="3" state="0" nickname="" client-type="" /><member uri="sip:772252764@fetion.com.cn;p=7008" identity="3" state="0" nickname="" client-type="" /><member uri="sip:629509423@fetion.com.cn;p=3715" identity="3" state="0" nickname="" client-type="" /><member uri="sip:602846180@fetion.com.cn;p=3940" identity="3" state="0" nickname="" client-type="" /><member uri="sip:778811383@fetion.com.cn;p=4279" identity="3" state="0" nickname="" client-type="" /><member uri="sip:728817331@fetion.com.cn;p=654" identity="3" state="0" nickname="杨阳" client-type="" /><member uri="sip:739223023@fetion.com.cn;p=2359" identity="3" state="0" nickname="" client-type="" /><member uri="sip:745460863@fetion.com.cn;p=3476" identity="3" state="0" nickname="" client-type="" /><member uri="sip:432781637@fetion.com.cn;p=5550" identity="3" state="0" nickname="" client-type="" /><member uri="sip:730796185@fetion.com.cn;p=1409" identity="3" state="0" nickname="" client-type="" /><member uri="sip:668253533@fetion.com.cn;p=2381" identity="3" state="0" nickname="" client-type="" /><member uri="sip:634480744@fetion.com.cn;p=2781" identity="3" state="0" nickname="" client-type="" /><member uri="sip:588560063@fetion.com.cn;p=5701" identity="3" state="0" nickname="" client-type="" /><member uri="sip:813364718@fetion.com.cn;p=5843" identity="3" state="0" nickname="" client-type="" /><member uri="sip:785926592@fetion.com.cn;p=6730" identity="3" state="0" nickname="" client-type="" /><member uri="sip:788672913@fetion.com.cn;p=6747" identity="3" state="0" nickname="" client-type="" /><member uri="sip:773365357@fetion.com.cn;p=7140" identity="3" state="0" nickname="" client-type="" /><member uri="sip:751825064@fetion.com.cn;p=9890" identity="3" state="0" nickname="" client-type="" /><member uri="sip:626856410@fetion.com.cn;p=3639" identity="3" state="0" nickname="" client-type="" /><member uri="sip:245320438@fetion.com.cn;p=4525" identity="3" state="400" nickname="" client-type="Symbian" /><member uri="sip:441183702@fetion.com.cn;p=5113" identity="3" state="0" nickname="" client-type="" /><member uri="sip:585570932@fetion.com.cn;p=6403" identity="3" state="0" nickname="" client-type="" /><member uri="sip:565445620@fetion.com.cn;p=4751" identity="3" state="0" nickname="" client-type="" /><member uri="sip:577657344@fetion.com.cn;p=5685" identity="3" state="0" nickname="" client-type="" /><member uri="sip:749216837@fetion.com.cn;p=8923" identity="3" state="0" nickname="" client-type="" /><member uri="sip:768922799@fetion.com.cn;p=10107" identity="3" state="0" nickname="" client-type="" /><member uri="sip:856511816@fetion.com.cn;p=10459" identity="3" state="0" nickname="" client-type="" /><member uri="sip:773599455@fetion.com.cn;p=6390" identity="3" state="0" nickname="" client-type="" /><member uri="sip:671289510@fetion.com.cn;p=7361" identity="3" state="0" nickname="" client-type="" /><member uri="sip:699816864@fetion.com.cn;p=1900" identity="3" state="0" nickname="" client-type="" /><member uri="sip:784217042@fetion.com.cn;p=2451" identity="1" state="0" nickname="" client-type="" /><member uri="sip:742510103@fetion.com.cn;p=10551" identity="3" state="0" nickname="" client-type="" /><member uri="sip:788563211@fetion.com.cn;p=10832" identity="3" state="0" nickname="" client-type="" /><member uri="sip:583041084@fetion.com.cn;p=7493" identity="3" state="0" nickname="" client-type="" /><member uri="sip:797686880@fetion.com.cn;p=7704" identity="3" state="0" nickname="" client-type="" /><member uri="sip:756772242@fetion.com.cn;p=10819" identity="3" state="0" nickname="nanzyN81 Symbian S60 3rd FP1" client-type="" /><member uri="sip:736331816@fetion.com.cn;p=821" identity="3" state="0" nickname="" client-type="" /><member uri="sip:701783866@fetion.com.cn;p=1828" identity="3" state="0" nickname="" client-type="" /><member uri="sip:723336148@fetion.com.cn;p=9053" identity="3" state="0" nickname="" client-type="" /><member uri="sip:565841519@fetion.com.cn;p=12" identity="3" state="0" nickname="" client-type="" /><member uri="sip:915043578@fetion.com.cn;p=6792" identity="3" state="0" nickname="" client-type="" /><member uri="sip:880952479@fetion.com.cn;p=3170" identity="3" state="0" nickname="" client-type="" /><member uri="sip:787477651@fetion.com.cn;p=6838" identity="3" state="0" nickname="" client-type="" /><member uri="sip:814512171@fetion.com.cn;p=3991" identity="3" state="0" nickname="" client-type="" /><member uri="sip:610022720@fetion.com.cn;p=1264" identity="3" state="0" nickname="" client-type="" /><member uri="sip:806826047@fetion.com.cn;p=6535" identity="3" state="0" nickname="" client-type="" /><member uri="sip:809704073@fetion.com.cn;p=2510" identity="3" state="0" nickname="" client-type="" /><member uri="sip:811921722@fetion.com.cn;p=12622" identity="3" state="0" nickname="" client-type="" /><member uri="sip:812448397@fetion.com.cn;p=12920" identity="3" state="0" nickname="" client-type="" /><member uri="sip:814947671@fetion.com.cn;p=10493" identity="3" state="0" nickname="" client-type="" /><member uri="sip:815639869@fetion.com.cn;p=3756" identity="3" state="400" nickname="" client-type="PC" /><member uri="sip:827706646@fetion.com.cn;p=6617" identity="3" state="0" nickname="" client-type="" /><member uri="sip:818923795@fetion.com.cn;p=2033" identity="3" state="0" nickname="" client-type="" /><member uri="sip:819828495@fetion.com.cn;p=5771" identity="3" state="0" nickname="" client-type="" /><member uri="sip:825526725@fetion.com.cn;p=4699" identity="3" state="0" nickname="" client-type="" /><member uri="sip:830261193@fetion.com.cn;p=10592" identity="3" state="0" nickname="" client-type="" /><member uri="sip:830472495@fetion.com.cn;p=12612" identity="3" state="0" nickname="" client-type="" /><member uri="sip:833925893@fetion.com.cn;p=2701" identity="3" state="0" nickname="" client-type="" /><member uri="sip:834843253@fetion.com.cn;p=3464" identity="3" state="0" nickname="" client-type="" /><member uri="sip:835514805@fetion.com.cn;p=9143" identity="3" state="0" nickname="" client-type="" /><member uri="sip:839005048@fetion.com.cn;p=12742" identity="3" state="0" nickname="" client-type="" /><member uri="sip:889193547@fetion.com.cn;p=6622" identity="3" state="0" nickname="" client-type="" /><member uri="sip:846326494@fetion.com.cn;p=4737" identity="3" state="0" nickname="" client-type="" /><member uri="sip:487290878@fetion.com.cn;p=9360" identity="3" state="400" nickname="" client-type="PC" /><member uri="sip:853976721@fetion.com.cn;p=9310" identity="3" state="0" nickname="" client-type="" /><member uri="sip:928529655@fetion.com.cn;p=12639" identity="3" state="0" nickname="" client-type="" /><member uri="sip:856882346@fetion.com.cn;p=5911" identity="3" state="400" nickname="" client-type="" /><member uri="sip:861048997@fetion.com.cn;p=9303" identity="3" state="0" nickname="" client-type="" /><member uri="sip:867691582@fetion.com.cn;p=12133" identity="3" state="0" nickname="" client-type="" /><member uri="sip:872426289@fetion.com.cn;p=7719" identity="3" state="0" nickname="" client-type="PC" /><member uri="sip:874213131@fetion.com.cn;p=5596" identity="3" state="0" nickname="" client-type="" /><member uri="sip:875541385@fetion.com.cn;p=12565" identity="3" state="0" nickname="" client-type="" /><member uri="sip:876472988@fetion.com.cn;p=4448" identity="3" state="0" nickname="" client-type="" /><member uri="sip:876733428@fetion.com.cn;p=9440" identity="3" state="0" nickname="" client-type="" /><member uri="sip:892866145@fetion.com.cn;p=6992" identity="3" state="0" nickname="" client-type="" /><member uri="sip:892945860@fetion.com.cn;p=2514" identity="3" state="0" nickname="" client-type="" /><member uri="sip:894277138@fetion.com.cn;p=12755" identity="3" state="0" nickname="" client-type="" /><member uri="sip:896734492@fetion.com.cn;p=2579" identity="3" state="0" nickname="" client-type="" /><member uri="sip:898795143@fetion.com.cn;p=12361" identity="3" state="0" nickname="" client-type="" /><member uri="sip:899450430@fetion.com.cn;p=6052" identity="3" state="0" nickname="" client-type="" /><member uri="sip:902401467@fetion.com.cn;p=12857" identity="3" state="0" nickname="" client-type="" /><member uri="sip:850913488@fetion.com.cn;p=6911" identity="3" state="0" nickname="" client-type="" /><member uri="sip:909695145@fetion.com.cn;p=6613" identity="3" state="0" nickname="" client-type="" /><member uri="sip:912490529@fetion.com.cn;p=10521" identity="3" state="0" nickname="" client-type="" /><member uri="sip:912665191@fetion.com.cn;p=10288" identity="3" state="0" nickname="" client-type="" /><member uri="sip:916622771@fetion.com.cn;p=9579" identity="3" state="0" nickname="" client-type="" /><member uri="sip:937886618@fetion.com.cn;p=6620" identity="3" state="0" nickname="" client-type="" /><member uri="sip:956691338@fetion.com.cn;p=12918" identity="3" state="0" nickname="" client-type="" /><member uri="sip:979402450@fetion.com.cn;p=2542" identity="3" state="0" nickname="" client-type="" /><member uri="sip:995352381@fetion.com.cn;p=12540" identity="3" state="0" nickname="" client-type="" /><member uri="sip:995682096@fetion.com.cn;p=10052" identity="3" state="0" nickname="" client-type="" /><member uri="sip:483061554@fetion.com.cn;p=15642" identity="3" state="0" nickname="" client-type="" /><member uri="sip:483149324@fetion.com.cn;p=6475" identity="3" state="0" nickname="" client-type="" /><member uri="sip:486374796@fetion.com.cn;p=9956" identity="3" state="0" nickname="" client-type="" /><member uri="sip:487030154@fetion.com.cn;p=15739" identity="3" state="0" nickname="" client-type="" /><member uri="sip:487099127@fetion.com.cn;p=797" identity="3" state="0" nickname="" client-type="" /><member uri="sip:497192687@fetion.com.cn;p=9776" identity="3" state="0" nickname="" client-type="" /><member uri="sip:504421075@fetion.com.cn;p=15222" identity="3" state="0" nickname="" client-type="" /><member uri="sip:505377871@fetion.com.cn;p=12611" identity="3" state="0" nickname="" client-type="" /><member uri="sip:512374457@fetion.com.cn;p=7194" identity="3" state="0" nickname="" client-type="" /><member uri="sip:514387972@fetion.com.cn;p=3448" identity="3" state="0" nickname="" client-type="" /><member uri="sip:517397483@fetion.com.cn;p=6785" identity="3" state="0" nickname="" client-type="" /><member uri="sip:518420798@fetion.com.cn;p=10127" identity="3" state="0" nickname="" client-type="" /><member uri="sip:539120797@fetion.com.cn;p=2356" identity="3" state="0" nickname="" client-type="" /><member uri="sip:545350365@fetion.com.cn;p=9287" identity="3" state="0" nickname="" client-type="" /><member uri="sip:548868495@fetion.com.cn;p=15870" identity="3" state="0" nickname="" client-type="" /><member uri="sip:550067141@fetion.com.cn;p=4710" identity="3" state="0" nickname="" client-type="" /><member uri="sip:559258647@fetion.com.cn;p=12735" identity="3" state="0" nickname="" client-type="" /></group></event></events>BN 856882346 SIP-C/4.0
+N: PGGroup
+I: 4
+Q: 26 BN
+L: 304
+
+<events><event type="PGGetPersonalInfo"><results><personal-properties><personal-property  group-uri="sip:PG7860431@fetion.com.cn;p=2670"  group-nickname=""  sms-recv-policy="1"  msg-recv-policy="1" status-code="200" iic-nickname="amoblin" client-data=""/></personal-properties></results></event></events>BN 856882346 SIP-C/4.0
+N: PGGroup
+I: 4
+Q: 27 BN
+L: 304
+
+<events><event type="PGGetPersonalInfo"><results><personal-properties><personal-property  group-uri="sip:PG7863875@fetion.com.cn;p=1582"  group-nickname=""  sms-recv-policy="1"  msg-recv-policy="1" status-code="200" iic-nickname="amoblin" client-data=""/></personal-properties></results></event></events>BN 856882346 SIP-C/4.0
+I: 5
+Q: 28 BN
+N: PGGroup
+X: 25200
+L: 15502
+
+<events><event type="PresenceChanged"><group uri="sip:PG3992239@fetion.com.cn;p=2507" group-attributes-version="336" name="轮滑6友" category="140" introduce="我为轮滑狂,喜欢这种像飞一样的感觉..." bulletin="轮滑爱好者交流群" portrait-crc="-1003729904"><member uri="sip:582046163@fetion.com.cn;p=913" identity="3" state="0" nickname="" client-type="" /><member uri="sip:751611128@fetion.com.cn;p=1428" identity="3" state="0" nickname="" client-type="" /><member uri="sip:693466882@fetion.com.cn;p=1717" identity="3" state="0" nickname="" client-type="" /><member uri="sip:562811368@fetion.com.cn;p=2892" identity="3" state="0" nickname="" client-type="" /><member uri="sip:675277504@fetion.com.cn;p=5091" identity="3" state="400" nickname="" client-type="Symbian" /><member uri="sip:788021548@fetion.com.cn;p=7666" identity="3" state="0" nickname="" client-type="" /><member uri="sip:794860194@fetion.com.cn;p=9854" identity="3" state="0" nickname="" client-type="" /><member uri="sip:762234364@fetion.com.cn;p=10442" identity="3" state="0" nickname="" client-type="" /><member uri="sip:736969345@fetion.com.cn;p=10442" identity="3" state="0" nickname="" client-type="" /><member uri="sip:777498881@fetion.com.cn;p=2419" identity="3" state="400" nickname="" client-type="PC" /><member uri="sip:691260720@fetion.com.cn;p=3123" identity="3" state="0" nickname="" client-type="" /><member uri="sip:758677107@fetion.com.cn;p=3744" identity="3" state="0" nickname="" client-type="" /><member uri="sip:662259021@fetion.com.cn;p=5238" identity="3" state="0" nickname="" client-type="" /><member uri="sip:755032084@fetion.com.cn;p=6219" identity="3" state="0" nickname="" client-type="" /><member uri="sip:795522133@fetion.com.cn;p=7227" identity="3" state="0" nickname="" client-type="" /><member uri="sip:672516728@fetion.com.cn;p=9715" identity="3" state="0" nickname="" client-type="" /><member uri="sip:776388636@fetion.com.cn;p=378" identity="3" state="0" nickname="" client-type="" /><member uri="sip:294059038@fetion.com.cn;p=1604" identity="3" state="0" nickname="" client-type="" /><member uri="sip:747342486@fetion.com.cn;p=6007" identity="3" state="0" nickname="" client-type="" /><member uri="sip:859799949@fetion.com.cn;p=4282" identity="3" state="0" nickname="" client-type="" /><member uri="sip:786109171@fetion.com.cn;p=4613" identity="3" state="0" nickname="" client-type="" /><member uri="sip:765627294@fetion.com.cn;p=6263" identity="3" state="0" nickname="" client-type="" /><member uri="sip:659098981@fetion.com.cn;p=7147" identity="3" state="0" nickname="" client-type="" /><member uri="sip:934751055@fetion.com.cn;p=7180" identity="3" state="0" nickname="" client-type="" /><member uri="sip:687894025@fetion.com.cn;p=7801" identity="3" state="0" nickname="" client-type="" /><member uri="sip:720659785@fetion.com.cn;p=7810" identity="3" state="0" nickname="" client-type="" /><member uri="sip:777330324@fetion.com.cn;p=9292" identity="3" state="0" nickname="" client-type="" /><member uri="sip:441460993@fetion.com.cn;p=808" identity="3" state="0" nickname="" client-type="" /><member uri="sip:664384142@fetion.com.cn;p=1003" identity="3" state="0" nickname="" client-type="" /><member uri="sip:604739566@fetion.com.cn;p=1005" identity="3" state="0" nickname="" client-type="" /><member uri="sip:771617986@fetion.com.cn;p=1711" identity="3" state="0" nickname="" client-type="" /><member uri="sip:789184836@fetion.com.cn;p=2430" identity="3" state="0" nickname="" client-type="" /><member uri="sip:565477149@fetion.com.cn;p=2527" identity="3" state="0" nickname="" client-type="" /><member uri="sip:709274042@fetion.com.cn;p=3054" identity="3" state="0" nickname="" client-type="" /><member uri="sip:779092417@fetion.com.cn;p=3478" identity="3" state="0" nickname="" client-type="" /><member uri="sip:720047841@fetion.com.cn;p=5146" identity="3" state="0" nickname="先行体育" client-type="" /><member uri="sip:685193463@fetion.com.cn;p=6042" identity="3" state="0" nickname="" client-type="" /><member uri="sip:830362797@fetion.com.cn;p=6100" identity="3" state="0" nickname="" client-type="" /><member uri="sip:672196353@fetion.com.cn;p=7796" identity="3" state="0" nickname="" client-type="" /><member uri="sip:767188443@fetion.com.cn;p=9085" identity="3" state="0" nickname="" client-type="" /><member uri="sip:698319335@fetion.com.cn;p=5439" identity="3" state="0" nickname="" client-type="PC" /><member uri="sip:588078739@fetion.com.cn;p=5490" identity="3" state="0" nickname="" client-type="" /><member uri="sip:719072275@fetion.com.cn;p=673" identity="3" state="0" nickname="" client-type="" /><member uri="sip:687889348@fetion.com.cn;p=854" identity="3" state="0" nickname="" client-type="" /><member uri="sip:788753759@fetion.com.cn;p=5591" identity="3" state="0" nickname="" client-type="" /><member uri="sip:569705325@fetion.com.cn;p=1488" identity="3" state="0" nickname="" client-type="" /><member uri="sip:874357354@fetion.com.cn;p=6965" identity="3" state="0" nickname="" client-type="" /><member uri="sip:631507601@fetion.com.cn;p=6968" identity="3" state="0" nickname="" client-type="" /><member uri="sip:766703531@fetion.com.cn;p=7546" identity="3" state="0" nickname="" client-type="" /><member uri="sip:673039792@fetion.com.cn;p=5707" identity="3" state="0" nickname="" client-type="" /><member uri="sip:727185164@fetion.com.cn;p=9531" identity="3" state="0" nickname="" client-type="" /><member uri="sip:696754230@fetion.com.cn;p=9540" identity="3" state="0" nickname="" client-type="" /><member uri="sip:633099961@fetion.com.cn;p=6252" identity="3" state="0" nickname="" client-type="" /><member uri="sip:685544624@fetion.com.cn;p=9569" identity="3" state="0" nickname="" client-type="" /><member uri="sip:757560530@fetion.com.cn;p=9571" identity="3" state="0" nickname="" client-type="" /><member uri="sip:686399952@fetion.com.cn;p=9592" identity="3" state="0" nickname="" client-type="" /><member uri="sip:716569956@fetion.com.cn;p=9887" identity="3" state="0" nickname="" client-type="" /><member uri="sip:708733564@fetion.com.cn;p=9889" identity="3" state="0" nickname="" client-type="" /><member uri="sip:697654986@fetion.com.cn;p=26" identity="3" state="0" nickname="" client-type="" /><member uri="sip:678192914@fetion.com.cn;p=1053" identity="3" state="0" nickname="" client-type="" /><member uri="sip:293928451@fetion.com.cn;p=3651" identity="3" state="0" nickname="" client-type="" /><member uri="sip:576669953@fetion.com.cn;p=4034" identity="3" state="0" nickname="" client-type="" /><member uri="sip:804318242@fetion.com.cn;p=948" identity="3" state="0" nickname="" client-type="" /><member uri="sip:578158930@fetion.com.cn;p=6418" identity="3" state="0" nickname="FSK" client-type="" /><member uri="sip:771522644@fetion.com.cn;p=4692" identity="3" state="0" nickname="" client-type="" /><member uri="sip:758739524@fetion.com.cn;p=6863" identity="3" state="0" nickname="" client-type="" /><member uri="sip:661494647@fetion.com.cn;p=5108" identity="3" state="0" nickname="" client-type="" /><member uri="sip:714943648@fetion.com.cn;p=7406" identity="3" state="0" nickname="" client-type="" /><member uri="sip:671026402@fetion.com.cn;p=7407" identity="3" state="0" nickname="" client-type="" /><member uri="sip:708759556@fetion.com.cn;p=9117" identity="3" state="0" nickname="" client-type="" /><member uri="sip:763409803@fetion.com.cn;p=6306" identity="3" state="0" nickname="" client-type="" /><member uri="sip:687199556@fetion.com.cn;p=593" identity="3" state="0" nickname="" client-type="" /><member uri="sip:573103577@fetion.com.cn;p=597" identity="3" state="0" nickname="" client-type="" /><member uri="sip:766192655@fetion.com.cn;p=1993" identity="3" state="0" nickname="" client-type="" /><member uri="sip:820085620@fetion.com.cn;p=2253" identity="3" state="0" nickname="" client-type="" /><member uri="sip:777916237@fetion.com.cn;p=9902" identity="3" state="0" nickname="" client-type="" /><member uri="sip:785732334@fetion.com.cn;p=9912" identity="3" state="0" nickname="" client-type="" /><member uri="sip:765220951@fetion.com.cn;p=10101" identity="3" state="0" nickname="" client-type="" /><member uri="sip:768463579@fetion.com.cn;p=10222" identity="3" state="0" nickname="" client-type="" /><member uri="sip:758251795@fetion.com.cn;p=10240" identity="3" state="0" nickname="" client-type="" /><member uri="sip:745093816@fetion.com.cn;p=10419" identity="3" state="0" nickname="" client-type="" /><member uri="sip:763110052@fetion.com.cn;p=10482" identity="3" state="0" nickname="" client-type="" /><member uri="sip:769984857@fetion.com.cn;p=10552" identity="3" state="0" nickname="" client-type="" /><member uri="sip:746211633@fetion.com.cn;p=10859" identity="3" state="0" nickname="" client-type="" /><member uri="sip:758737281@fetion.com.cn;p=10859" identity="3" state="0" nickname="" client-type="" /><member uri="sip:771245307@fetion.com.cn;p=3970" identity="3" state="0" nickname="" client-type="" /><member uri="sip:699457373@fetion.com.cn;p=5820" identity="3" state="0" nickname="" client-type="" /><member uri="sip:661996645@fetion.com.cn;p=6961" identity="3" state="0" nickname="" client-type="" /><member uri="sip:705803567@fetion.com.cn;p=7491" identity="3" state="0" nickname="" client-type="" /><member uri="sip:764938730@fetion.com.cn;p=7708" identity="3" state="0" nickname="" client-type="" /><member uri="sip:717719415@fetion.com.cn;p=170" identity="3" state="0" nickname="" client-type="" /><member uri="sip:707665389@fetion.com.cn;p=332" identity="3" state="0" nickname="" client-type="" /><member uri="sip:848733414@fetion.com.cn;p=2510" identity="3" state="0" nickname="" client-type="" /><member uri="sip:695440987@fetion.com.cn;p=7107" identity="3" state="0" nickname="" client-type="" /><member uri="sip:734961865@fetion.com.cn;p=9053" identity="3" state="0" nickname="" client-type="" /><member uri="sip:664228242@fetion.com.cn;p=1231" identity="3" state="0" nickname="" client-type="" /><member uri="sip:671733707@fetion.com.cn;p=2507" identity="1" state="0" nickname="" client-type="" /><member uri="sip:565835383@fetion.com.cn;p=4165" identity="3" state="0" nickname="" client-type="" /><member uri="sip:796429630@fetion.com.cn;p=7859" identity="3" state="0" nickname="" client-type="" /><member uri="sip:876631338@fetion.com.cn;p=6851" identity="3" state="0" nickname="" client-type="" /><member uri="sip:796769331@fetion.com.cn;p=7205" identity="3" state="0" nickname="" client-type="" /><member uri="sip:839590547@fetion.com.cn;p=511" identity="3" state="0" nickname="" client-type="" /><member uri="sip:802072922@fetion.com.cn;p=10806" identity="3" state="0" nickname="" client-type="" /><member uri="sip:890979984@fetion.com.cn;p=9150" identity="3" state="0" nickname="" client-type="" /><member uri="sip:802830601@fetion.com.cn;p=4882" identity="3" state="0" nickname="" client-type="" /><member uri="sip:861895305@fetion.com.cn;p=108" identity="3" state="0" nickname="" client-type="" /><member uri="sip:815037740@fetion.com.cn;p=9058" identity="3" state="0" nickname="" client-type="" /><member uri="sip:866120394@fetion.com.cn;p=7283" identity="3" state="0" nickname="" client-type="" /><member uri="sip:819327596@fetion.com.cn;p=12620" identity="3" state="0" nickname="" client-type="" /><member uri="sip:840827358@fetion.com.cn;p=7121" identity="3" state="0" nickname="" client-type="" /><member uri="sip:821707967@fetion.com.cn;p=6708" identity="3" state="0" nickname="" client-type="" /><member uri="sip:820306427@fetion.com.cn;p=9809" identity="3" state="0" nickname="" client-type="" /><member uri="sip:827162632@fetion.com.cn;p=12660" identity="3" state="0" nickname="" client-type="" /><member uri="sip:837035069@fetion.com.cn;p=9794" identity="3" state="0" nickname="" client-type="" /><member uri="sip:849069142@fetion.com.cn;p=7807" identity="3" state="0" nickname="" client-type="" /><member uri="sip:856882346@fetion.com.cn;p=5911" identity="3" state="400" nickname="" client-type="" /><member uri="sip:856914177@fetion.com.cn;p=9272" identity="3" state="0" nickname="" client-type="" /><member uri="sip:863084164@fetion.com.cn;p=12783" identity="3" state="0" nickname="" client-type="" /><member uri="sip:865539804@fetion.com.cn;p=12787" identity="3" state="0" nickname="" client-type="" /><member uri="sip:871723251@fetion.com.cn;p=13058" identity="3" state="0" nickname="" client-type="" /><member uri="sip:872316003@fetion.com.cn;p=4511" identity="3" state="0" nickname="" client-type="" /><member uri="sip:876920854@fetion.com.cn;p=5915" identity="3" state="0" nickname="" client-type="" /><member uri="sip:875951842@fetion.com.cn;p=1892" identity="3" state="0" nickname="" client-type="" /><member uri="sip:907484206@fetion.com.cn;p=7079" identity="3" state="0" nickname="" client-type="" /><member uri="sip:877970098@fetion.com.cn;p=4585" identity="3" state="0" nickname="" client-type="" /><member uri="sip:893081149@fetion.com.cn;p=7512" identity="3" state="0" nickname="" client-type="" /><member uri="sip:895441282@fetion.com.cn;p=13054" identity="3" state="400" nickname="" client-type="PC" /><member uri="sip:601837466@fetion.com.cn;p=2203" identity="3" state="0" nickname="" client-type="" /><member uri="sip:898377206@fetion.com.cn;p=10888" identity="3" state="0" nickname="" client-type="" /><member uri="sip:922492383@fetion.com.cn;p=6102" identity="3" state="0" nickname="" client-type="" /><member uri="sip:693759425@fetion.com.cn;p=2219" identity="3" state="0" nickname="" client-type="" /><member uri="sip:909948537@fetion.com.cn;p=7589" identity="3" state="0" nickname="" client-type="" /><member uri="sip:910583328@fetion.com.cn;p=9341" identity="3" state="0" nickname="" client-type="" /><member uri="sip:911673431@fetion.com.cn;p=5361" identity="3" state="0" nickname="" client-type="" /><member uri="sip:914239962@fetion.com.cn;p=10252" identity="3" state="0" nickname="" client-type="" /><member uri="sip:914517587@fetion.com.cn;p=9716" identity="3" state="0" nickname="" client-type="" /><member uri="sip:917601175@fetion.com.cn;p=12207" identity="3" state="0" nickname="" client-type="" /><member uri="sip:924392447@fetion.com.cn;p=12183" identity="3" state="0" nickname="" client-type="" /><member uri="sip:922892106@fetion.com.cn;p=162" identity="3" state="0" nickname="" client-type="" /><member uri="sip:939126736@fetion.com.cn;p=13085" identity="3" state="0" nickname="" client-type="" /><member uri="sip:926380675@fetion.com.cn;p=13042" identity="3" state="0" nickname="" client-type="" /><member uri="sip:957180581@fetion.com.cn;p=15741" identity="3" state="0" nickname="" client-type="" /><member uri="sip:881721056@fetion.com.cn;p=1379" identity="3" state="0" nickname="" client-type="" /><member uri="sip:959241633@fetion.com.cn;p=10176" identity="3" state="0" nickname="" client-type="" /><member uri="sip:961705420@fetion.com.cn;p=12207" identity="3" state="0" nickname="" client-type="" /><member uri="sip:966177690@fetion.com.cn;p=15114" identity="3" state="0" nickname="" client-type="" /><member uri="sip:996914617@fetion.com.cn;p=4732" identity="3" state="0" nickname="" client-type="" /><member uri="sip:522704927@fetion.com.cn;p=12434" identity="3" state="0" nickname="" client-type="" /><member uri="sip:514668735@fetion.com.cn;p=12162" identity="3" state="0" nickname="" client-type="" /><member uri="sip:531846578@fetion.com.cn;p=325" identity="3" state="0" nickname="" client-type="" /></group></event></events>BN 856882346 SIP-C/4.0
+I: 5
+Q: 29 BN
+N: PGGroup
+X: 25200
+L: 8148
+
+<events><event type="PresenceChanged"><group uri="sip:PG7863875@fetion.com.cn;p=1582" group-attributes-version="485" name="山地车爱好者" category="271" introduce="" bulletin="祝TNT兄弟西藏之行一路顺利！" portrait-crc="-305215441"><member uri="sip:970400981@fetion.com.cn;p=5012" identity="3" state="0" nickname="" client-type="" /><member uri="sip:634523798@fetion.com.cn;p=1717" identity="3" state="0" nickname="" client-type="" /><member uri="sip:434342074@fetion.com.cn;p=2511" identity="3" state="0" nickname="" client-type="" /><member uri="sip:595127796@fetion.com.cn;p=1759" identity="3" state="0" nickname="" client-type="" /><member uri="sip:777563445@fetion.com.cn;p=2933" identity="3" state="0" nickname="一帆风顺" client-type="" /><member uri="sip:568245247@fetion.com.cn;p=3218" identity="3" state="0" nickname="" client-type="" /><member uri="sip:566478321@fetion.com.cn;p=4066" identity="3" state="400" nickname="" client-type="Symbian" /><member uri="sip:807967602@fetion.com.cn;p=4219" identity="3" state="0" nickname="" client-type="" /><member uri="sip:635518962@fetion.com.cn;p=5222" identity="3" state="0" nickname="" client-type="" /><member uri="sip:708330882@fetion.com.cn;p=6202" identity="3" state="0" nickname="" client-type="" /><member uri="sip:796087114@fetion.com.cn;p=6217" identity="3" state="0" nickname="" client-type="" /><member uri="sip:711717155@fetion.com.cn;p=7240" identity="3" state="0" nickname="" client-type="" /><member uri="sip:741655581@fetion.com.cn;p=9719" identity="3" state="0" nickname="" client-type="" /><member uri="sip:780351091@fetion.com.cn;p=140" identity="3" state="0" nickname="" client-type="" /><member uri="sip:853269994@fetion.com.cn;p=5912" identity="3" state="0" nickname="" client-type="" /><member uri="sip:659859095@fetion.com.cn;p=3255" identity="3" state="0" nickname="" client-type="" /><member uri="sip:606386028@fetion.com.cn;p=3834" identity="3" state="0" nickname="" client-type="" /><member uri="sip:725000860@fetion.com.cn;p=7027" identity="3" state="0" nickname="" client-type="" /><member uri="sip:772046904@fetion.com.cn;p=4533" identity="3" state="0" nickname="" client-type="" /><member uri="sip:594436572@fetion.com.cn;p=4593" identity="3" state="0" nickname="" client-type="" /><member uri="sip:740414272@fetion.com.cn;p=5536" identity="3" state="0" nickname="" client-type="" /><member uri="sip:659590717@fetion.com.cn;p=1368" identity="3" state="0" nickname="" client-type="" /><member uri="sip:610194930@fetion.com.cn;p=1582" identity="1" state="0" nickname="夜未央" client-type="" /><member uri="sip:565718763@fetion.com.cn;p=2563" identity="3" state="0" nickname="" client-type="" /><member uri="sip:705652553@fetion.com.cn;p=2681" identity="3" state="0" nickname="" client-type="" /><member uri="sip:570126266@fetion.com.cn;p=6257" identity="3" state="0" nickname="" client-type="" /><member uri="sip:609102972@fetion.com.cn;p=1952" identity="3" state="0" nickname="" client-type="" /><member uri="sip:798253231@fetion.com.cn;p=577" identity="3" state="0" nickname="" client-type="" /><member uri="sip:742819231@fetion.com.cn;p=1471" identity="3" state="0" nickname="" client-type="" /><member uri="sip:668285004@fetion.com.cn;p=4031" identity="3" state="0" nickname="" client-type="" /><member uri="sip:704132597@fetion.com.cn;p=2346" identity="3" state="400" nickname="" client-type="PC" /><member uri="sip:592960100@fetion.com.cn;p=6862" identity="3" state="0" nickname="" client-type="" /><member uri="sip:684541479@fetion.com.cn;p=3995" identity="3" state="0" nickname="" client-type="" /><member uri="sip:702374256@fetion.com.cn;p=7513" identity="3" state="0" nickname="" client-type="" /><member uri="sip:443445321@fetion.com.cn;p=5979" identity="3" state="0" nickname="" client-type="" /><member uri="sip:243574917@fetion.com.cn;p=5316" identity="3" state="0" nickname="! 飞长山地初哥" client-type="" /><member uri="sip:677138986@fetion.com.cn;p=9409" identity="3" state="0" nickname="" client-type="" /><member uri="sip:582819013@fetion.com.cn;p=5333" identity="3" state="0" nickname="有多远骑多远" client-type="" /><member uri="sip:766293724@fetion.com.cn;p=10280" identity="3" state="0" nickname="" client-type="" /><member uri="sip:786456253@fetion.com.cn;p=10461" identity="3" state="0" nickname="" client-type="" /><member uri="sip:615711246@fetion.com.cn;p=3960" identity="3" state="0" nickname="" client-type="" /><member uri="sip:782133937@fetion.com.cn;p=9865" identity="3" state="0" nickname="" client-type="" /><member uri="sip:440245698@fetion.com.cn;p=888" identity="3" state="0" nickname="" client-type="" /><member uri="sip:753644495@fetion.com.cn;p=1251" identity="3" state="0" nickname="" client-type="" /><member uri="sip:853322287@fetion.com.cn;p=2875" identity="3" state="0" nickname="" client-type="" /><member uri="sip:753865459@fetion.com.cn;p=9009" identity="3" state="0" nickname="" client-type="" /><member uri="sip:739720988@fetion.com.cn;p=9014" identity="3" state="0" nickname="" client-type="" /><member uri="sip:778198820@fetion.com.cn;p=262" identity="3" state="0" nickname="" client-type="" /><member uri="sip:796077205@fetion.com.cn;p=4237" identity="3" state="0" nickname="" client-type="" /><member uri="sip:797347142@fetion.com.cn;p=4811" identity="3" state="0" nickname="" client-type="" /><member uri="sip:815287238@fetion.com.cn;p=666" identity="3" state="400" nickname="" client-type="PC" /><member uri="sip:880246138@fetion.com.cn;p=2812" identity="3" state="0" nickname="" client-type="" /><member uri="sip:862216336@fetion.com.cn;p=10592" identity="3" state="0" nickname="" client-type="" /><member uri="sip:841703412@fetion.com.cn;p=2378" identity="3" state="0" nickname="" client-type="" /><member uri="sip:856882346@fetion.com.cn;p=5911" identity="3" state="400" nickname="" client-type="" /><member uri="sip:860028551@fetion.com.cn;p=9748" identity="3" state="0" nickname="" client-type="" /><member uri="sip:862938257@fetion.com.cn;p=12408" identity="3" state="0" nickname="" client-type="" /><member uri="sip:868630638@fetion.com.cn;p=2735" identity="3" state="0" nickname="" client-type="" /><member uri="sip:871890301@fetion.com.cn;p=10419" identity="3" state="400" nickname="" client-type="Symbian" /><member uri="sip:872784771@fetion.com.cn;p=10321" identity="3" state="0" nickname="" client-type="" /><member uri="sip:547495491@fetion.com.cn;p=6621" identity="3" state="400" nickname="" client-type="PC" /><member uri="sip:898207929@fetion.com.cn;p=9508" identity="3" state="0" nickname="" client-type="" /><member uri="sip:902306248@fetion.com.cn;p=6939" identity="3" state="0" nickname="" client-type="" /><member uri="sip:902533895@fetion.com.cn;p=12743" identity="3" state="0" nickname="" client-type="" /><member uri="sip:935761438@fetion.com.cn;p=9614" identity="3" state="0" nickname="" client-type="" /><member uri="sip:934462339@fetion.com.cn;p=9726" identity="3" state="0" nickname="" client-type="" /><member uri="sip:937039886@fetion.com.cn;p=10783" identity="3" state="0" nickname="" client-type="" /><member uri="sip:949536212@fetion.com.cn;p=10436" identity="3" state="0" nickname="" client-type="" /><member uri="sip:885157293@fetion.com.cn;p=3889" identity="3" state="0" nickname="" client-type="" /><member uri="sip:962060793@fetion.com.cn;p=3482" identity="3" state="0" nickname="" client-type="" /><member uri="sip:990169133@fetion.com.cn;p=7898" identity="3" state="0" nickname="" client-type="" /><member uri="sip:484128129@fetion.com.cn;p=1352" identity="3" state="0" nickname="" client-type="" /><member uri="sip:487748243@fetion.com.cn;p=15982" identity="3" state="0" nickname="" client-type="" /><member uri="sip:493286386@fetion.com.cn;p=16018" identity="3" state="0" nickname="" client-type="" /><member uri="sip:515992116@fetion.com.cn;p=8988" identity="3" state="0" nickname="" client-type="" /><member uri="sip:529161344@fetion.com.cn;p=12402" identity="3" state="0" nickname="" client-type="" /><member uri="sip:558843309@fetion.com.cn;p=6266" identity="3" state="0" nickname="" client-type="" /></group></event></events>SIP-C/4.0 100 Trying
+T: sip:PG9356584@fetion.com.cn;p=1716
+I: 15
+Q: 1 I
+
+SIP-C/4.0 200 OK
+T: sip:PG9356584@fetion.com.cn;p=1716
+I: 15
+Q: 1 I
+
+BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 304
+Q: 31 BN
+
+<events><event type="PresenceChanged"><contacts><c id="441093042"><p v="0" sid="789109400" su="sip:789109400@fetion.com.cn;p=6817" m="15991690272" c="CMCC" cs="0" s="1" l="1" svc="" n="小兵" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>SIP-C/4.0 200 OK
+I: 16
+Q: 1 SUB
+
+BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1721
+Q: 32 BN
+
+<events><event type="PresenceChanged"><contacts><c id="205052966"><p v="0" sid="787432864" su="sip:787432864@fetion.com.cn;p=5020" m="13911995836" c="CMCC" cs="0" s="1" l="9" svc="" n="英树志" i="复杂并不意味严谨，严谨也不代表科学，科学也不见得合适，合适才最有效，最快乐" p="-719936310" sms="0.0:0:0" sp="322741438" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="254482741"><p v="0" sid="648846953" su="sip:648846953@fetion.com.cn;p=6914" m="15801373538" c="CMCC" cs="0" s="1" l="11" svc="" n="东丽" i="。。。" p="1814112005" sms="0.0:0:0" sp="0" sh="0"/><pr di="PCCL040045232300" b="400" d="" dt="PC" dc="1fff"></pr></c><c id="260971760"><p v="0" sid="617206792" su="sip:617206792@fetion.com.cn;p=1038" m="13513718758" c="CMCC" cs="0" s="1" l="15" svc="" n="侯雷" i="达则兼济天下 穷则独善其身" p="-485924903" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="202159172"><p v="0" sid="295430188" su="sip:295430188@fetion.com.cn;p=4005" m="13810405841" c="CMCC" cs="0" s="1" l="7" svc="" n="郝黎" i="面對它；接受它；處理它；放下它" p="-2137497632" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="738356360"><p v="0" sid="488643473" su="sip:488643473@fetion.com.cn;p=12417" m="15231624286" c="CMCC" cs="0" s="1" l="0" svc="" n="" i="" p="0" sms="0.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="463079930"><p v="0" sid="628831601" su="sip:628831601@fetion.com.cn;p=12" m="13401119084" c="CMCC" cs="0" s="1" l="0" svc="" n="颜颜" i="" p="-864381993" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 247
+Q: 33 BN
+
+<events><event type="PresenceChanged"><contacts><c id="209443741"><p v="0" su="tel:13581655558" m="13581655558" c="CMCC" cs="0" s="0" l="0" svc="" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1030
+Q: 34 BN
+
+<events><event type="PresenceChanged"><contacts><c id="576115930"><p v="0" sid="580683931" su="sip:580683931@fetion.com.cn;p=5916" m="15901568301" c="CMCC" cs="0" s="1" l="4" svc="" n="孙哲" i="真想做个雨娃娃" p="-1513535970" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="465177142"><p v="0" sid="571071745" su="sip:571071745@fetion.com.cn;p=887" m="13488685222" c="CMCC" cs="0" s="1" l="17" svc="" n="王潇" i="Go go！" p="1968696365" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="269528570"><p v="0" sid="589944140" su="sip:589944140@fetion.com.cn;p=4398" m="13849799778" c="CMCC" cs="0" s="1" l="0" svc="" n="游客" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="A fetion.com.cn SIP-C/4.0
+F: 856882346
+I: 15 
+Q: 1 A
+T: sip:PG9356584@fetion.com.cn;p=1716
+
+0" d="" dt="" dc="0"></pr></c><c id="422072544"><p v="0" sid="711475071" su="sip:711475071@fetion.com.cn;p=7884" m="15898382506" c="CMCC" cs="0" s="1" l="0" svc="" n="" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 673
+Q: 35 BN
+
+<events><event type="PresenceChanged"><contacts><c id="224147713"><p v="0" sid="603190244" su="sip:603190244@fetion.com.cn;p=2434" m="13653363969" c="CMCC" cs="2" s="0" l="0" svc="" n="静静" i="心的开始" p="-160282957" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="274392389"><p v="0" su="tel:15938228854" m="15938228854" c="CMCC" cs="1" s="0" l="3" svc="" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="566926576"><p v="0" su="tel:13782032392" m="13782032392" c="CMCC" cs="1" s="0" l="0" svc="" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 612
+Q: 36 BN
+
+<events><event type="PresenceChanged"><contacts><c id="254415174"><p v="0" sid="635632892" su="sip:635632892@fetion.com.cn;p=6913" m="15801246441" c="CMCC" cs="0" s="1" l="8" svc="" n="建华" i="新一轮的任务又要开始了" p="-337398985" sms="0.0:0:0" sp="0" sh="1"/><pr di="PCCL030646125064" b="400" d="" dt="PC" dc="1ff"></pr></c><c id="472668165"><p v="0" sid="767597774" su="sip:767597774@fetion.com.cn;p=8914" m="15001388569" c="CMCC" cs="0" s="1" l="5" svc="" n="王冬" i="" p="926361138" sms="0.0:0:0" sp="328297025" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1089
+Q: 37 BN
+
+<events><event type="PresenceChanged"><contacts><c id="465221480"><p v="0" sid="568485592" su="sip:568485592@fetion.com.cn;p=889" m="" c="CMCC" cs="0" s="1" l="13" svc="" n="用心听雨" i="开始实习上班了:?" p="603146655" sms="0.0:0:0" sp="0" sh="0"/><pr di="PCCL030318402094" b="400" d="" dt="PC" dc="17"></pr></c><c id="650874055"><p v="0" sid="903732874" su="sip:903732874@fetion.com.cn;p=12209" m="15210848185" c="CMCC" cs="0" s="1" l="4" svc="" n="潘阳" i="" p="-921749496" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="254881219"><p v="0" sid="788641949" su="sip:788641949@fetion.com.cn;p=7006" m="15810581366" c="CMCC" cs="0" s="1" l="10" svc="" n="乐乐" i="" p="1766474905" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="266414461"><p v="0" sid="575847292" su="sip:575847292@fetion.com.cn;p=3115" m="" c="CMCC" cs="0" s="1" l="3" svc="" n="向魁" i="爱上爱，爱上每一天！！！" p="-609703340" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 598
+Q: 38 BN
+
+<events><event type="PresenceChanged"><contacts><c id="465077091"><p v="0" sid="628569813" su="sip:628569813@fetion.com.cn;p=668" m="13466762380" c="CMCC" cs="0" s="1" l="14" svc="" n="罗文甜" i="不管别人怎么说，我只做我自己" p="2084966796" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="202064676"><p v="0" sid="605943130" su="sip:605943130@fetion.com.cn;p=4003" m="13810261318" c="CMCC" cs="0" s="1" l="11" svc="" n="冰吉他" i="" p="489725980" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 771
+Q: 39 BN
+
+<events><event type="PresenceChanged"><contacts><c id="209608879"><p v="0" sid="633072318" su="sip:633072318@fetion.com.cn;p=1720" m="13581948734" c="CMCC" cs="0" s="1" l="8" svc="" n="Jane" i="" p="-395018127" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="559313419"><p v="0" sid="858110895" su="sip:858110895@fetion.com.cn;p=6010" m="15910908280" c="CMCC" cs="0" s="1" l="5" svc="" n="娟" i="" p="0" sms="0.0:0:0" sp="324549532" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="464931039"><p v="0" sid="748762300" su="sip:748762300@fetion.com.cn;p=664" m="" c="CMCC" cs="0" s="1" l="6" svc="" n="杨孔豪" i="" p="0" sms="0.0:0:0" sp="333300584" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 892
+Q: 40 BN
+
+<events><event type="PresenceChanged"><contacts><c id="496593495"><p v="0" sid="975100690" su="sip:975100690@fetion.com.cn;p=7288" m="15838770404" c="CMCC" cs="0" s="1" l="1" svc="" n="︶ㄣ遺』莣√" i="宁可笑着流泪，也不愿哭着说后悔。" p="-2024495758" sms="0.0:0:0" sp="330884977" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="654832626"><p v="0" sid="910679938" su="sip:910679938@fetion.com.cn;p=12225" m="15212416696" c="CMCC" cs="0" s="1" l="0" svc="" n="杨鸣雷" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="254980008"><p v="0" sid="728345007" su="sip:728345007@fetion.com.cn;p=7011" m="15811003525" c="CMCC" cs="0" s="1" l="12" svc="" n="孙振权" i="沧海何辽阔，龙性岂能驯？" p="-2104032298" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1424
+Q: 41 BN
+
+<events><event type="PresenceChanged"><contacts><c id="650883388"><p v="0" sid="903742690" su="sip:903742690@fetion.com.cn;p=12209" m="" c="CMCC" cs="0" s="1" l="8" svc="" n="翠柳" i="在舍友的悉心照顾下，我终于又活过来了，不容易……" p="-1448887380" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="252853568"><p v="0" sid="731766531" su="sip:731766531@fetion.com.cn;p=6007" m="15910669196" c="CMCC" cs="2" s="0" l="5" svc="" n="HJY" i="换号，15260953336" p="765793311" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="202865135"><p v="0" sid="627504177" su="sip:627504177@fetion.com.cn;p=4016" m="13811554245" c="CMCC" cs="0" s="1" l="3" svc="" n="李妮同学" i="" p="-1084387187" sms="0.0:0:0" sp="329593365" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="449291706"><p v="0" sid="764086979" su="sip:764086979@fetion.com.cn;p=1141" m="13524091053" c="CMCC" cs="0" s="1" l="8" svc="" n="侯永姣" i="如果要做什么事那就从现在开始吧，明天永远只是个借口。" p="-685472066" sms="0.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="209270119"><p v="0" sid="711987760" su="sip:711987760@fetion.com.cn;p=1428" m="" c="CMCC" cs="0" s="1" l="0" svc="" n="星" i="" p="1581125182" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1225
+Q: 42 BN
+
+<events><event type="PresenceChanged"><contacts><c id="451536583"><p v="0" sid="821074325" su="sip:821074325@fetion.com.cn;p=1807" m="13590626885" c="CMCC" cs="2" s="0" l="1" svc="" n="zhilang" i="不知道为什么，手机总是收不到飞信，所以等我上线了再用飞信跟我联系。" p="1215129735" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="654900578"><p v="0" sid="910788024" su="sip:910788024@fetion.com.cn;p=12207" m="15210693561" c="CMCC" cs="0" s="1" l="3" svc="" n="冉" i="You must maintain a positive attitude towards your choice..." p="991972832" sms="0.0:0:0" sp="333543213" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="211699754"><p v="0" sid="772779513" su="sip:772779513@fetion.com.cn;p=2731" m="13683024610" c="CMCC" cs="0" s="1" l="2" svc="" n="李艳平" i="" p="-323560043" sms="0.0:0:0" sp="324550390" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="207096560"><p v="0" sid="586813472" su="sip:586813472@fetion.com.cn;p=911" m="13501027908" c="CMCC" cs="0" s="1" l="12" svc="" n="蔡斌" i="" p="-709378836" sms="0.0:0:0" sp="0" sh="1"/><pr di="PCCL040036276056" b="400" d="" dt="PC" dc="1fff"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1250
+Q: 43 BN
+
+<events><event type="PresenceChanged"><contacts><c id="659275066"><p v="0" sid="922161085" su="sip:922161085@fetion.com.cn;p=12209" m="15210848202" c="CMCC" cs="0" s="1" l="7" svc="" n="封。。" i="无论是国王还是农夫，只要能在自己家里找到安宁，他就是最幸福的人。" p="256251201" sms="0.0:0:0" sp="333454000" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="650879271"><p v="0" sid="903738780" su="sip:903738780@fetion.com.cn;p=12209" m="" c="CMCC" cs="0" s="1" l="5" svc="" n="~~~" i="拥抱宁静沉默" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="627842239"><p v="0" sid="852226946" su="sip:852226946@fetion.com.cn;p=971" m="13507089362" c="CMCC" cs="0" s="1" l="4" svc="" n="风信子" i="为什么我总是被人误解，本来就已经很难受了！我的表达力这么差吗！？" p="-1540812257" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="279695849"><p v="0" sid="963035224" su="sip:963035224@fetion.com.cn;p=9288" m="15038715819" c="CMCC" cs="0" s="1" l="2" svc="" n="静雨" i="挣扎，彷徨，…，释然！" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 2127
+Q: 44 BN
+
+<events><event type="PresenceChanged"><contacts><c id="606783687"><p v="0" cs="0" n="amoblin" i="极客打印，低碳生活 geekprint@gmail.com 飞信号：492134395" sms="0.0:0:0" sp="0"/></c><c id="650925661"><p v="0" sid="903788293" su="sip:903788293@fetion.com.cn;p=12210" m="15210969620" c="CMCC" cs="0" s="1" l="2" svc="" n="风域～木叶" i="朝饮木兰之坠露兮，夕餐秋菊之落英" p="-2068423553" sms="0.0:0:0" sp="325187380" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="210278428"><p v="0" sid="489673275" su="sip:489673275@fetion.com.cn;p=2113" m="13621290031" c="CMCC" cs="0" s="1" l="0" svc="" n="" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="760327251"><p v="0" sid="528791751" su="sip:528791751@fetion.com.cn;p=12461" m="15236056563" c="CMCC" cs="1" s="1" l="0" svc="" n="" i="" p="0" sms="365.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="585678641"><p v="0" sid="978498313" su="sip:978498313@fetion.com.cn;p=2834" m="13693376835" c="CMCC" cs="0" s="1" l="3" svc="" n="秦景乡" i="" p="8668636" sms="0.0:0:0" sp="333500308" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="649623610"><p v="0" sid="901653964" su="sip:901653964@fetion.com.cn;p=12207" m="15210663587" c="CMCC" cs="0" s="1" l="8" svc="" n="马慧" i="" p="280802554" sms="0.0:0:0" sp="333497136" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="273921039"><p v="0" sid="632723336" su="sip:632723336@fetion.com.cn;p=6266" m="" c="CMCC" cs="0" s="1" l="10" svc="" n="赵辉" i="怎一个累字了得…" p="-544402535" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="576161446"><p v="0" sid="891535505" su="sip:891535505@fetion.com.cn;p=1120" m="13521930936" c="CMCC" cs="0" s="1" l="4" svc="" n="黄竣" i="" p="-1879415691" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="234390629"><p v="0" su="tel:15832129739" m="15832129739" c="CMCC" cs="1" s="0" l="4" svc="" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 509
+Q: 45 BN
+
+<events><event type="PresenceChanged"><contacts><c id="208184159"><p v="0" su="tel:13521606792" m="13521606792" c="CMCC" cs="0" s="0" l="0" svc="" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="472981525"><p v="0" sid="771554398" su="sip:771554398@fetion.com.cn;p=9016" m="15011502736" c="CMCC" cs="1" s="1" l="2" svc="" n="坏" i="回家喽，今年真惨。" p="658326445" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1442
+Q: 46 BN
+
+<events><event type="PresenceChanged"><contacts><c id="606799568"><p v="0" su="tel:15875457617" m="15875457617" c="CMCC" cs="0" s="0" l="0" svc="" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="649622714"><p v="0" sid="901653031" su="sip:901653031@fetion.com.cn;p=12207" m="" c="CMCC" cs="0" s="1" l="5" svc="" n=" 霓裳" i="" p="-1028243028" sms="0.0:0:0" sp="324426215" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="711543395"><p v="0" sid="480656179" su="sip:480656179@fetion.com.cn;p=15114" m="18701319096" c="CMCC" cs="0" s="1" l="0" svc="" n="" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="209487994"><p v="0" sid="587010682" su="sip:587010682@fetion.com.cn;p=1716" m="" c="CMCC" cs="0" s="1" l="13" svc="" n="陈庚" i="" p="2048487323" sms="365.0:0:0" sp="0" sh="1"/><pr di="SYMB030118061450" b="400" d="" dt="Symbian" dc="16"></pr></c><c id="203129170"><p v="0" sid="684033781" su="sip:684033781@fetion.com.cn;p=4020" m="13811994095" c="CMCC" cs="0" s="1" l="7" svc="" n="牙牙" i="" p="1953614137" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="606803721"><p v="0" sid="528584874" su="sip:528584874@fetion.com.cn;p=1137" m="13523658450" c="CMCC" cs="0" s="1" l="1" svc="" n="豌豆芽" i="开心就好" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 825
+Q: 47 BN
+
+<events><event type="PresenceChanged"><contacts><c id="254871982"><p v="0" sid="741006012" su="sip:741006012@fetion.com.cn;p=7007" m="15810661919" c="CMCC" cs="0" s="1" l="7" svc="" n="LeBron Tames" i="国安加油！永不放弃！" p="1865983980" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="570371789"><p v="0" sid="831862993" su="sip:831862993@fetion.com.cn;p=1423" m="13552289921" c="CMCC" cs="0" s="1" l="7" svc="" n="沈平" i="" p="-2029782085" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="209595951"><p v="0" sid="755668898" su="sip:755668898@fetion.com.cn;p=1719" m="13581877765" c="CMCC" cs="0" s="1" l="10" svc="" n="孙爽" i="" p="1191741541" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 2129
+Q: 48 BN
+
+<events><event type="PresenceChanged"><contacts><c id="465055941"><p v="0" sid="847270451" su="sip:847270451@fetion.com.cn;p=668" m="13466745414" c="CMCC" cs="2" s="0" l="3" svc="" n="蒲公英" i="I&apos;m Gauss!恨 绝心！要冷静理智！每一天，为明天。寂寞书斋里 终朝独而思。生命有明天！得之我幸 不得我命终不会是我的信条。我就是我!走自己的路输赢心甘我情愿,潇潇洒洒走红尘,一生能有几回搏?此时不搏更待何时!狂爱数学.I&apos;m the Maths king我最崇拜高斯,我要成为比他更伟大的数学家!" p="-180222742" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="203080952"><p v="0" sid="572490130" su="sip:572490130@fetion.com.cn;p=4020" m="13811939514" c="CMCC" cs="0" s="1" l="7" svc="" n="freefly" i="踏踏实实做好自己的工作" p="-1255251663" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="653077341"><p v="0" sid="916068772" su="sip:916068772@fetion.com.cn;p=12209" m="15210888824" c="CMCC" cs="0" s="1" l="8" svc="" n="庄申增" i="把不忙不闲的工作做的出色，把不咸不淡的生活过得精彩。" p="-2087963794" sms="0.0:0:0" sp="330552149" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="298307541"><p v="0" sid="744674440" su="sip:744674440@fetion.com.cn;p=2899" m="" c="CMCC" cs="0" s="1" l="0" svc="" n="." i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="327703388"><p v="0" sid="777983439" su="sip:777983439@fetion.com.cn;p=2535" m="13663495256" c="CMCC" cs="0" s="1" l="11" svc="" n="新江" i="公平正义比太阳的眼光温暖" p="649195468" sms="0.0:0:0" sp="333060084" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="537249762"><p v="0" sid="809293268" su="sip:809293268@fetion.com.cn;p=4013" m="13811217418" c="CMCC" cs="0" s="1" l="8" svc="" n="冰寒雪" i="We do many things to prove our love, but at last we don&apos;t dare to say it out!" p="-1556403988" sms="0.0:0:0" sp="323443744" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 2390
+Q: 49 BN
+
+<events><event type="PresenceChanged"><contacts><c id="265943337"><p v="0" su="tel:13698890340" m="13698890340" c="CMCC" cs="0" s="0" l="5" svc="" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="254872164"><p v="0" sid="847281228" su="sip:847281228@fetion.com.cn;p=7006" m="15810576489" c="CMCC" cs="0" s="1" l="7" svc="" n="王京晶" i="充实的生活，学会自娱自乐~~~" p="1122933829" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="429575359"><p v="0" sid="803879426" su="sip:803879426@fetion.com.cn;p=10287" m="15138677102" c="CMCC" cs="0" s="1" l="1" svc="" n="林明" i="我有利手机了" p="759205957" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="203023129"><p v="0" sid="949874143" su="sip:949874143@fetion.com.cn;p=4019" m="13811875955" c="CMCC" cs="0" s="1" l="5" svc="" n="王利芳" i="" p="-1421587953" sms="0.0:0:0" sp="322350702" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="749972329"><p v="0" sid="508007829" su="sip:508007829@fetion.com.cn;p=15114" m="18701359272" c="CMCC" cs="0" s="1" l="4" svc="" n="秦胜杰" i="破茧..." p="1215129735" sms="0.0:0:0" sp="330889431" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="209860719"><p v="0" sid="137610369" su="sip:137610369@fetion.com.cn;p=2011" m="13611013905" c="CMCC" cs="0" s="1" l="7" svc="" n="宝龙" i="" p="94529477" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="658487909"><p v="0" sid="916781597" su="sip:916781597@fetion.com.cn;p=9613" m="15071273825" c="CMCC" cs="0" s="1" l="0" svc="" n="国保" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="463859981"><p v="0" sid="762528249" su="sip:762528249@fetion.com.cn;p=263" m="13426285537" c="CMCC" cs="0" s="1" l="15" svc="" n="李芳芳" i="我们要学会珍惜生活的每一天，因为这每一天的开始，都将是我们余下生命之中的第一天" p="-1939347225" sms="0.0:0:0" sp="333451935" sh="0"/><pr di="PCCL040034519493" b="400" d="" dt="PC" dc="1fff"></pr></c><c id="465077972"><p v="0" sid="630014570" su="sip:630014570@fetion.com.cn;p=668" m="13466784802" c="CMCC" cs="0" s="1" l="12" svc="" n="阿杰" i="Bless" p="1664040576" sms="0.0:0:0" sp="333195164" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1904
+Q: 50 BN
+
+<events><event type="PresenceChanged"><contacts><c id="654888090"><p v="0" sid="910775620" su="sip:910775620@fetion.com.cn;p=6008" m="15910706992" c="CMCC" cs="0" s="1" l="4" svc="" n="Bofield(许瑞麟）" i="天涯海角" p="526824871" sms="0.0:0:0" sp="0" sh="0"/><pr di="PCCL030605331409" b="400" d="" dt="PC" dc="1ff"></pr></c><c id="202741248"><p v="0" sid="646089909" su="sip:646089909@fetion.com.cn;p=4013" m="13811228309" c="CMCC" cs="0" s="1" l="10" svc="" n="王海龙" i="" p="-963324512" sms="0.0:0:0" sp="332330340" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="295594872"><p v="0" sid="706058385" su="sip:706058385@fetion.com.cn;p=2230" m="" c="CMCC" cs="0" s="1" l="5" svc="" n="冯丽" i="" p="1018529621" sms="365.0:0:0" sp="324547994" sh="0"/><pr di="PCCL030628017356" b="400" d="" dt="PC" dc="1ff"></pr></c><c id="655484476"><p v="0" sid="977496459" su="sip:977496459@fetion.com.cn;p=12207" m="15210667609" c="CMCC" cs="0" s="1" l="0" svc="" n="" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="614870406"><p v="0" su="tel:13426285423" m="13426285423" c="CMCC" cs="0" s="0" l="0" svc="" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="650893894"><p v="0" sid="903754350" su="sip:903754350@fetion.com.cn;p=12209" m="15210848164" c="CMCC" cs="0" s="1" l="4" svc="" n="刘淼灵" i="" p="-969525781" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="261037229"><p v="0" su="tel:13513780877" m="13513780877" c="CMCC" cs="1" s="0" l="0" svc="" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="632329843"><p v="0" sid="879519764" su="sip:879519764@fetion.com.cn;p=10001" m="15110081030" c="CMCC" cs="0" s="1" l="0" svc="" n="小毅" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1579
+Q: 51 BN
+
+<events><event type="PresenceChanged"><contacts><c id="427346298"><p v="0" sid="766298851" su="sip:766298851@fetion.com.cn;p=9912" m="15101164308" c="CMCC" cs="0" s="1" l="5" svc="" n="辉南" i="从今天起，到下周四，宵禁。没有紧急的重要的事情的话，请不要在晚上11点之后给我打电话。谢谢。" p="1436990021" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="539574471"><p v="0" sid="930486010" su="sip:930486010@fetion.com.cn;p=10101" m="15120088696" c="CMCC" cs="0" s="1" l="5" svc="" n="白鹭" i="HORSEMAN PASS BY!" p="781321841" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="427333627"><p v="0" sid="753579485" su="sip:753579485@fetion.com.cn;p=9912" m="15101153301" c="CMCC" cs="0" s="1" l="10" svc="" n="王子嫩(摄影协会)" i="ほら あなたにとって大事な人ほど ただ　あなたにだけ届いて欲しい" p="901044328" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="202495068"><p v="0" sid="712662186" su="sip:712662186@fetion.com.cn;p=4010" m="13810984025" c="CMCC" cs="0" s="1" l="10" svc="" n="马洋洋" i="天天向上" p="478375480" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="463932499"><p v="0" sid="693316894" su="sip:693316894@fetion.com.cn;p=264" m="13426300165" c="CMCC" cs="0" s="1" l="7" svc="" n="冯凤" i="在现实中生活，就不要总是做梦！" p="762419124" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1081
+Q: 52 BN
+
+<events><event type="PresenceChanged"><contacts><c id="659668739"><p v="0" sid="918212762" su="sip:918212762@fetion.com.cn;p=12710" m="15260953336" c="CMCC" cs="0" s="1" l="8" svc="50" n="HJY" i="真实" p="1766907306" sms="0.0:0:0" sp="316771999" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="650894982"><p v="0" sid="903755388" su="sip:903755388@fetion.com.cn;p=12209" m="15210848110" c="CMCC" cs="0" s="1" l="7" svc="" n="周依莹" i="桑拿天什么时候才能过去呀！" p="-829830228" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="221965791"><p v="0" sid="771200593" su="sip:771200593@fetion.com.cn;p=1725" m="13582405964" c="CMCC" cs="0" s="1" l="0" svc="" n="罗" i="" p="1980910101" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="753106137"><p v="0" sid="514759396" su="sip:514759396@fetion.com.cn;p=12209" m="15210848257" c="CMCC" cs="0" s="1" l="2" svc="" n="胡亚洁" i="" p="0" sms="0.0:0:0" sp="325016920" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1441
+Q: 53 BN
+
+<events><event type="PresenceChanged"><contacts><c id="606804976"><p v="0" su="tel:15893589484" m="15893589484" c="CMCC" cs="0" s="0" l="0" svc="" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="463757117"><p v="0" sid="608961874" su="sip:608961874@fetion.com.cn;p=261" m="13426076976" c="CMCC" cs="0" s="1" l="7" svc="" n="北信科大V3轮滑社" i="life can be more beautiful！" p="-416161653" sms="10016.14:53:35" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="254907985"><p v="0" sid="732069608" su="sip:732069608@fetion.com.cn;p=7008" m="" c="CMCC" cs="0" s="1" l="13" svc="" n=".@_@.FCHola" i="小富儿现在代办情侣通话业务，限动感地带和全球通，180元三年、240元终生免费通话。业务不冲突，无月租。同时招收二级代理，高提成。有意联系！" p="1249821218" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="668528137"><p v="0" sid="929953419" su="sip:929953419@fetion.com.cn;p=12727" m="15262620904" c="CMCC" cs="0" s="1" l="0" svc="" n="张泽凤" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="203025389"><p v="0" sid="641921022" su="sip:641921022@fetion.com.cn;p=4019" m="13811823914" c="CMCC" cs="0" s="1" l="6" svc="" n="LCX" i="" p="-1221128848" sms="0.0:0:0" sp="324463881" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1274
+Q: 54 BN
+
+<events><event type="PresenceChanged"><contacts><c id="712460608"><p v="0" sid="972353745" su="sip:972353745@fetion.com.cn;p=2612" m="13671105261" c="CMCC" cs="0" s="1" l="1" svc="" n="Tiger" i="" p="669253664" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="207099872"><p v="0" sid="769061159" su="sip:769061159@fetion.com.cn;p=911" m="13501030713" c="CMCC" cs="0" s="1" l="12" svc="" n="庞欢" i="倒计时" p="2088172670" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="650548495"><p v="0" sid="903380996" su="sip:903380996@fetion.com.cn;p=12210" m="15210967439" c="CMCC" cs="0" s="1" l="8" svc="" n="E" i="好害怕" p="56418605" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="208313651"><p v="0" sid="243703481" su="sip:243703481@fetion.com.cn;p=1119" m="13521809642" c="CMCC" cs="0" s="1" l="0" svc="" n="yun" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="201732273"><p v="0" sid="783595642" su="sip:783595642@fetion.com.cn;p=3911" m="13801076251" c="CMCC" cs="0" s="1" l="6" svc="" n="邢振华" i="随心所欲不逾矩" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 2082
+Q: 55 BN
+
+<events><event type="PresenceChanged"><contacts><c id="465222215"><p v="0" sid="569343867" su="sip:569343867@fetion.com.cn;p=889" m="13488806508" c="CMCC" cs="0" s="1" l="12" svc="" n="张圣帅" i="" p="-1869356060" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="212936606"><p v="0" sid="562297465" su="sip:562297465@fetion.com.cn;p=3082" m="" c="CMCC" cs="0" s="1" l="13" svc="" n="家明" i="为什么都要变成过客" p="-2063792212" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="653907228"><p v="0" sid="915125447" su="sip:915125447@fetion.com.cn;p=12210" m="15210907442" c="CMCC" cs="0" s="1" l="0" svc="" n="" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="201970442"><p v="0" sid="587117057" su="sip:587117057@fetion.com.cn;p=4001" m="13810014216" c="CMCC" cs="0" s="1" l="0" svc="" n="松儿智商" i="" p="1916270125" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="739994615"><p v="0" sid="490775362" su="sip:490775362@fetion.com.cn;p=12417" m="15231625288" c="CMCC" cs="0" s="1" l="0" svc="" n="" i="" p="0" sms="0.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="550158841"><p v="0" sid="817369918" su="sip:817369918@fetion.com.cn;p=4279" m="13837802760" c="CMCC" cs="0" s="1" l="6" svc="" n="张钰莹" i="渡江而过，芙蓉千朵，诗也简单，心也简单。。" p="-1471523333" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="202579421"><p v="0" sid="294540600" su="sip:294540600@fetion.com.cn;p=4013" m="13811258446" c="CMCC" cs="0" s="1" l="6" svc="" n="李肖俊" i="做回自己" p="-512324996" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="630504849"><p v="0" sid="872254695" su="sip:872254695@fetion.com.cn;p=10278" m="15137771138" c="CMCC" cs="0" s="1" l="8" svc="" n="潘萌" i="路是自己选的" p="-1070189606" sms="0.0:0:0" sp="333552006" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1922
+Q: 56 BN
+
+<events><event type="PresenceChanged"><contacts><c id="464933255"><p v="0" sid="641692821" su="sip:641692821@fetion.com.cn;p=664" m="13466368965" c="CMCC" cs="0" s="1" l="6" svc="" n="文子" i="" p="1788344870" sms="0.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="207183435"><p v="0" sid="669751246" su="sip:669751246@fetion.com.cn;p=913" m="" c="CMCC" cs="0" s="1" l="12" svc="" n="李治" i="" p="-1391834857" sms="365.0:0:0" sp="332192939" sh="0"/><pr di="PCCL040002409198" b="400" d="" dt="PC" dc="1fff"></pr></c><c id="650493473"><p v="0" sid="903001640" su="sip:903001640@fetion.com.cn;p=12210" m="15210967815" c="CMCC" cs="1" s="1" l="0" svc="" n="公益团队" i="" p="1608526648" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="465235641"><p v="0" sid="658176213" su="sip:658176213@fetion.com.cn;p=888" m="13488797799" c="CMCC" cs="0" s="1" l="10" svc="" n="李征" i="想到就立即去做" p="260226328" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="650888223"><p v="0" sid="903748125" su="sip:903748125@fetion.com.cn;p=12209" m="15210848138" c="CMCC" cs="0" s="1" l="2" svc="" n="周红云" i="" p="-1590435949" sms="0.0:0:0" sp="331992445" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="427330634"><p v="0" sid="757090664" su="sip:757090664@fetion.com.cn;p=9912" m="15101113082" c="CMCC" cs="0" s="1" l="6" svc="" n="vivitue" i="-那些每一个@2009ˉ不曾起舞的日子都是对生命的辜负-" p="-354012412" sms="0.0:0:0" sp="326834911" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="465160059"><p v="0" sid="674737604" su="sip:674737604@fetion.com.cn;p=887" m="13488671529" c="CMCC" cs="0" s="1" l="7" svc="" n="fatjian" i="生活是一个十号接着下一个十号…" p="1896262109" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 728
+Q: 57 BN
+
+<events><event type="PresenceChanged"><contacts><c id="464928811"><p v="0" sid="634910739" su="sip:634910739@fetion.com.cn;p=664" m="13466317965" c="CMCC" cs="0" s="1" l="6" svc="" n="Slim.Yang" i="" p="1515351250" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="715316058"><p v="0" su="tel:15986964467" m="15986964467" c="CMCC" cs="0" s="0" l="0" svc="" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="252581020"><p v="0" sid="564942044" su="sip:564942044@fetion.com.cn;p=5911" m="15901093158" c="CMCC" cs="0" s="1" l="20" svc="" n="刘建涛" i="" p="-1979477919" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 2288
+Q: 58 BN
+
+<events><event type="PresenceChanged"><contacts><c id="463925482"><p v="0" sid="758093586" su="sip:758093586@fetion.com.cn;p=265" m="13426489635" c="CMCC" cs="0" s="1" l="9" svc="" n="仙儿" i="平静生活 平常心态 安静" p="-512324996" sms="0.0:0:0" sp="0" sh="0"/><pr di="PCCL040057492885" b="400" d="" dt="PC" dc="1fff"></pr></c><c id="731074845"><p v="0" sid="997424663" su="sip:997424663@fetion.com.cn;p=1523" m="13562215229" c="CMCC" cs="1" s="1" l="1" svc="" n="刘绍帅" i="好迷茫的生活。。" p="-869361270" sms="365.0:0:0" sp="324161562" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="202752694"><p v="0" sid="699247438" su="sip:699247438@fetion.com.cn;p=4015" m="13811444802" c="CMCC" cs="0" s="1" l="4" svc="" n="xx" i="" p="1018529621" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="536106616"><p v="0" sid="808526721" su="sip:808526721@fetion.com.cn;p=7798" m="15889706793" c="CMCC" cs="1" s="1" l="0" svc="" n="张森" i="" p="640696022" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="434206215"><p v="0" sid="201010968" su="sip:201010968@fetion.com.cn;p=10860" m="" c="CMCC" cs="0" s="1" l="18" svc="50" n="King" i="不论风暴将我带向何方，我都会以主人的身份上岸…" p="-1584305295" sms="365.0:0:0" sp="0" sh="0"/><pr di="SYMB020218096962" b="400" d="" dt="Symbian" dc="16"></pr></c><c id="463127410"><p v="0" sid="718684849" su="sip:718684849@fetion.com.cn;p=12" m="13401180435" c="CMCC" cs="0" s="1" l="7" svc="" n="邢晓丽" i="" p="1980910101" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="209838049"><p v="0" sid="627328576" su="sip:627328576@fetion.com.cn;p=1913" m="13601244102" c="CMCC" cs="0" s="1" l="0" svc="" n="王锴" i="I Love You Not For Who You Are ,But For Who I Am Before You" p="0" sms="0.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="643987820"><p v="0" sid="895009967" su="sip:895009967@fetion.com.cn;p=7140" m="" c="CMCC" cs="0" s="1" l="6" svc="" n="心中的角落" i="ю .人帅何必资料拽﹎ャоo- 老天搞不定命运o我ヤ自己ニ摆平 ~╲_" p="1031533596" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1727
+Q: 59 BN
+
+<events><event type="PresenceChanged"><contacts><c id="650889863"><p v="0" sid="903749829" su="sip:903749829@fetion.com.cn;p=12209" m="15210848133" c="CMCC" cs="0" s="1" l="5" svc="" n="丫头" i="黑雨" p="1122933829" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="254409807"><p v="0" sid="625907255" su="sip:625907255@fetion.com.cn;p=6914" m="15801360047" c="CMCC" cs="0" s="1" l="1" svc="" n="天使之翼" i="随缘" p="695754898" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="209411026"><p v="0" sid="604942776" su="sip:604942776@fetion.com.cn;p=1716" m="13581532140" c="CMCC" cs="0" s="1" l="7" svc="" n="美圣" i="考试结束" p="-1000074562" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="649638238"><p v="0" sid="901671621" su="sip:901671621@fetion.com.cn;p=12207" m="" c="CMCC" cs="0" s="1" l="0" svc="" n="余全刚" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="655249407"><p v="0" sid="911648394" su="sip:911648394@fetion.com.cn;p=12255" m="15215483001" c="CMCC" cs="0" s="1" l="3" svc="" n="胡开文" i="我很好" p="3491804" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="463086867"><p v="0" su="tel:13401113246" m="13401113246" c="CMCC" cs="0" s="0" l="0" svc="" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="254724888"><p v="0" sid="613063487" su="sip:613063487@fetion.com.cn;p=7001" m="15810024786" c="CMCC" cs="0" s="1" l="15" svc="" n="熊玮（鬼手）" i="晒成了熊猫....." p="-980780806" sms="0.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 843
+Q: 60 BN
+
+<events><event type="PresenceChanged"><contacts><c id="202358445"><p v="0" sid="645869860" su="sip:645869860@fetion.com.cn;p=4008" m="13810767860" c="CMCC" cs="0" s="1" l="0" svc="" n="小毛" i="天天快乐" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="654496813"><p v="0" sid="930093926" su="sip:930093926@fetion.com.cn;p=5319" m="13941844551" c="CMCC" cs="0" s="1" l="4" svc="" n="阿新" i="朋友们好啊" p="1948897450" sms="0.0:0:0" sp="0" sh="0"/><pr di="PCCL040036566568" b="400" d="" dt="PC" dc="1fff"></pr></c><c id="203055673"><p v="0" sid="671031420" su="sip:671031420@fetion.com.cn;p=4019" m="13811876383" c="CMCC" cs="1" s="1" l="3" svc="" n="高会敏" i="嘿嘿！" p="-2072582669" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 490
+Q: 61 BN
+
+<events><event type="PresenceChanged"><contacts><c id="708928165"><p v="0" su="tel:15248964810" m="15248964810" c="CMCC" cs="0" s="0" l="0" svc="" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="209606931"><p v="0" sid="770495664" su="sip:770495664@fetion.com.cn;p=1719" m="13581869019" c="CMCC" cs="0" s="1" l="7" svc="" n="可鑫" i="我能给你的" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1820
+Q: 62 BN
+
+<events><event type="PresenceChanged"><contacts><c id="465082097"><p v="0" sid="641722998" su="sip:641722998@fetion.com.cn;p=668" m="13466745435" c="CMCC" cs="0" s="1" l="1" svc="" n="" i="我懂了" p="1803801218" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="201876473"><p v="0" sid="136497250" su="sip:136497250@fetion.com.cn;p=4002" m="13810116251" c="CMCC" cs="0" s="1" l="11" svc="50" n="王熙峻-Winner~" i="回归" p="2122481316" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="725125009"><p v="0" sid="492134395" su="sip:492134395@fetion.com.cn;p=1593" m="13569209389" c="CMCC" cs="0" s="1" l="1" svc="" n="极客打印" i="极客打印，Immediately" p="0" sms="0.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="606685013"><p v="0" sid="856819172" su="sip:856819172@fetion.com.cn;p=6917" m="15801686723" c="CMCC" cs="0" s="1" l="0" svc="" n="" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="475384633"><p v="0" sid="783882514" su="sip:783882514@fetion.com.cn;p=10101" m="15120058685" c="CMCC" cs="0" s="1" l="4" svc="" n="许贺" i="Don&apos;t！" p="-116034766" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="650885898"><p v="0" sid="903745402" su="sip:903745402@fetion.com.cn;p=12209" m="15210848123" c="CMCC" cs="0" s="1" l="2" svc="" n="倩倩" i="life is going on!" p="0" sms="0.0:0:0" sp="326538259" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="202002402"><p v="0" sid="703084720" su="sip:703084720@fetion.com.cn;p=4003" m="13810289671" c="CMCC" cs="0" s="1" l="5" svc="" n="冰落" i="☆祝福我的家人☆" p="1349240003" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 315
+Q: 63 BN
+
+<events><event type="PresenceChanged"><contacts><c id="202455491"><p v="0" sid="768622842" su="sip:768622842@fetion.com.cn;p=4009" m="13810841890" c="CMCC" cs="1" s="1" l="1" svc="" n="小不" i="" p="1443130476" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1575
+Q: 64 BN
+
+<events><event type="PresenceChanged"><contacts><c id="204284072"><p v="0" sid="682650848" su="sip:682650848@fetion.com.cn;p=5002" m="13910187384" c="CMCC" cs="0" s="1" l="3" svc="" n="王荣欣" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="252600834"><p v="0" sid="563769823" su="sip:563769823@fetion.com.cn;p=5911" m="" c="CMCC" cs="0" s="1" l="8" svc="" n="赵九鑫" i="" p="1869855415" sms="365.0:0:0" sp="328569477" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="472727045"><p v="0" sid="773814304" su="sip:773814304@fetion.com.cn;p=9001" m="15010062461" c="CMCC" cs="0" s="1" l="4" svc="" n="李永伟" i="" p="-530240905" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="202129482"><p v="0" sid="688719529" su="sip:688719529@fetion.com.cn;p=4005" m="13810462137" c="CMCC" cs="0" s="1" l="7" svc="" n="雨田" i="豆豆…" p="1829354772" sms="0.0:0:0" sp="0" sh="1"/><pr di="SYMB020123259183" b="400" d="" dt="Symbian" dc="16"></pr></c><c id="202339429"><p v="0" sid="587428182" su="sip:587428182@fetion.com.cn;p=4008" m="" c="CMCC" cs="0" s="1" l="4" svc="" n="不不" i="" p="-1062263480" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="202751033"><p v="0" sid="684271167" su="sip:684271167@fetion.com.cn;p=4015" m="13811495947" c="CMCC" cs="0" s="1" l="6" svc="" n="胡敏" i="没有谁能够施舍给帝王蛾一双奋飞的翅膀" p="640696022" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 302
+Q: 65 BN
+
+<events><event type="PresenceChanged"><contacts><c id="637677335"><p v="0" sid="877629615" su="sip:877629615@fetion.com.cn;p=12203" m="15210250461" c="CMCC" cs="0" s="1" l="2" svc="" n="" i="热" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1550
+Q: 66 BN
+
+<events><event type="PresenceChanged"><contacts><c id="658033921"><p v="0" sid="926964656" su="sip:926964656@fetion.com.cn;p=10003" m="15110223613" c="CMCC" cs="0" s="1" l="4" svc="" n="吉儿" i="藿香真是个好物，这个夏天全靠它了。" p="-1511890696" sms="0.0:0:0" sp="332862298" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="202300366"><p v="0" sid="578884751" su="sip:578884751@fetion.com.cn;p=4007" m="13810655202" c="CMCC" cs="0" s="1" l="9" svc="" n="刘宁" i="什么也阻止不了我对英语得热爱，但事与愿违" p="-372576624" sms="0.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="254468546"><p v="0" sid="761948008" su="sip:761948008@fetion.com.cn;p=6915" m="15801427043" c="CMCC" cs="0" s="1" l="7" svc="" n="刘泽宪" i="调整！努力的提升自己和突破自己，不再原地踏步！" p="-1839936131" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="472734123"><p v="0" sid="769140048" su="sip:769140048@fetion.com.cn;p=9003" m="15010272242" c="CMCC" cs="0" s="1" l="6" svc="" n="潘钰" i="赐予我力量！！~中庸还是武装~到底是以柔克刚还是以钢制柔？" p="1454360611" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="649629736"><p v="0" sid="901660764" su="sip:901660764@fetion.com.cn;p=12207" m="15210663674" c="CMCC" cs="0" s="1" l="3" svc="" n="黄小林" i="" p="1652499920" sms="0.0:0:0" sp="317257986" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1027
+Q: 67 BN
+
+<events><event type="PresenceChanged"><contacts><c id="650895701"><p v="0" sid="903756255" su="sip:903756255@fetion.com.cn;p=12209" m="" c="CMCC" cs="0" s="1" l="2" svc="" n="龙腾飞于" i="和静清寂" p="3491804" sms="0.0:0:0" sp="323111110" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="463789971"><p v="0" sid="576966128" su="sip:576966128@fetion.com.cn;p=262" m="13426115120" c="CMCC" cs="0" s="1" l="3" svc="" n="谢野芳发" i="" p="976085866" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="690757969"><p v="0" sid="493851427" su="sip:493851427@fetion.com.cn;p=12209" m="15210848280" c="CMCC" cs="0" s="1" l="1" svc="" n="向阳" i="" p="0" sms="0.0:0:0" sp="326475533" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="755534586"><p v="0" sid="518226014" su="sip:518226014@fetion.com.cn;p=13004" m="15290310158" c="CMCC" cs="0" s="1" l="0" svc="" n="" i="" p="0" sms="0.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 380
+Q: 68 BN
+
+<events><event type="PresenceChanged"><contacts><c id="656759360"><p v="0" sid="915724877" su="sip:915724877@fetion.com.cn;p=12209" m="15210848258" c="CMCC" cs="0" s="1" l="5" svc="" n="舒赞辉-北京" i="选择爱情的同时就要选择生活一种生活方式" p="0" sms="0.0:0:0" sp="327322265" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 824
+Q: 69 BN
+
+<events><event type="PresenceChanged"><contacts><c id="428529787"><p v="0" sid="767661472" su="sip:767661472@fetion.com.cn;p=10101" m="15120059359" c="CMCC" cs="0" s="1" l="8" svc="" n="Rita" i="目标很明确，动力明显不够啊！！" p="-1342093219" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="652986144"><p v="0" sid="924039897" su="sip:924039897@fetion.com.cn;p=12201" m="15210098073" c="CMCC" cs="0" s="1" l="6" svc="" n="马驰" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="465065591"><p v="0" sid="629617396" su="sip:629617396@fetion.com.cn;p=666" m="13466578503" c="CMCC" cs="0" s="1" l="2" svc="" n="Ding..." i="" p="-259286461" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1173
+Q: 70 BN
+
+<events><event type="PresenceChanged"><contacts><c id="255065871"><p v="0" sid="765271652" su="sip:765271652@fetion.com.cn;p=7011" m="15811053453" c="CMCC" cs="0" s="1" l="8" svc="" n="刘泽政" i="切换到司考模式  充分利用每分每秒" p="1730997355" sms="0.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="741190643"><p v="0" sid="492723783" su="sip:492723783@fetion.com.cn;p=16101" m="" c="" cs="1" s="1" l="0" svc="" n="北信兔邮箱版" i="输入关键字发送给我，我告诉你有哪些书可以借！" p="-1637795971" sms="365.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="202452413"><p v="0" sid="762273039" su="sip:762273039@fetion.com.cn;p=4009" m="" c="CMCC" cs="0" s="1" l="10" svc="" n="小宇" i="来一杯拿铁不加糖！" p="208442694" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="463856245"><p v="0" sid="757022136" su="sip:757022136@fetion.com.cn;p=263" m="13426285719" c="CMCC" cs="0" s="1" l="11" svc="" n="大超" i="天天好状态" p="-2029429316" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 1649
+Q: 71 BN
+
+<events><event type="PresenceChanged"><contacts><c id="463860237"><p v="0" sid="762903340" su="sip:762903340@fetion.com.cn;p=263" m="13426249763" c="CMCC" cs="0" s="1" l="2" svc="" n="李晗" i="" p="-855159120" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="606819884"><p v="0" su="tel:15093002103" m="15093002103" c="CMCC" cs="0" s="0" l="0" svc="" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="745705437"><p v="0" su="tel:18701335746" m="18701335746" c="CMCC" cs="0" s="0" l="0" svc="" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="202485844"><p v="0" sid="627284484" su="sip:627284484@fetion.com.cn;p=4009" m="13810812650" c="CMCC" cs="0" s="1" l="13" svc="" n="雷蕾" i="" p="2075781940" sms="0.0:0:0" sp="324161096" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="606811461"><p v="0" sid="503484134" su="sip:503484134@fetion.com.cn;p=2238" m="13633774424" c="CMCC" cs="0" s="1" l="2" svc="" n="北信兔" i="北京信息科技大学图书查询系统" p="462552601" sms="0.0:0:0" sp="324547453" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="275502839"><p v="0" sid="580772425" su="sip:580772425@fetion.com.cn;p=6687" m="15978685091" c="CMCC" cs="1" s="1" l="2" svc="" n="杨肖" i="" p="-512324996" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="463961028"><p v="0" sid="641553600" su="sip:641553600@fetion.com.cn;p=264" m="13426390829" c="CMCC" cs="0" s="1" l="0" svc="" n="" i="" p="0" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 312
+Q: 72 BN
+
+<events><event type="PresenceChanged"><contacts><c id="464965843"><p v="0" sid="633512442" su="sip:633512442@fetion.com.cn;p=664" m="13466356966" c="CMCC" cs="0" s="1" l="9" svc="" n="肖山" i="" p="1955478017" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 4219
+Q: 73 BN
+
+<events><event type="PresenceChanged"><contacts><c id="209584273"><p v="0" sid="574014758" su="sip:574014758@fetion.com.cn;p=1719" m="" c="CMCC" cs="0" s="1" l="12" svc="" n="常学强" i="半年~难以置信~" p="-1604267268" sms="365.0:0:0" sp="331124258" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="672212906"><p v="0" c="CMCC" cs="0" s="0"/></c><c id="596343455"><p v="0" c="CMCC" cs="0" s="0"/></c><c id="204177277"><p v="0" c="CMCC" cs="0" s="1" p="807475701"/></c><c id="204345247"><p v="0" c="CMCC" cs="0" s="0"/></c><c id="263967665"><p v="0" c="CMCC" cs="0" s="1" p="0"/></c><c id="562174665"><p v="0" c="CMCC" cs="0" s="0"/></c><c id="606802280"><p v="0" c="CMCC" cs="0" s="1" p="0"/></c><c id="274495366"><p v="0" c="CMCC" cs="0" s="1" p="0"/></c><c id="202987326"><p v="0" sid="793469492" su="sip:793469492@fetion.com.cn;p=4019" m="13811890364" c="CMCC" cs="0" s="1" l="10" svc="" n="鸟儿飞飞" i="做一个勇敢的男孩子" p="-1204189044" sms="0.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="234554364"><p v="0" c="CMCC" cs="0" s="0"/></c><c id="438487601"><p v="0" c="CMCC" cs="0" s="1" p="0"/></c><c id="202663408"><p v="0" sid="293973608" su="sip:293973608@fetion.com.cn;p=4013" m="" c="CMCC" cs="0" s="1" l="8" svc="" n="姚小平" i="" p="0" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="606825663"><p v="0" c="CMCC" cs="0" s="0"/></c><c id="220980010"><p v="0" c="CMCC" cs="0" s="1" p="0"/></c><c id="244364717"><p v="0" sid="642671787" su="sip:642671787@fetion.com.cn;p=1643" m="" c="CMCC" cs="0" s="0" l="5" svc="" n="微博机器人" i="微博机器人离线状态可以进行正常更新！" p="0" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="737543687"><p v="0" sid="487473049" su="sip:487473049@fetion.com.cn;p=7882" m="" c="CMCC" cs="0" s="1" l="4" svc="" n="小Me" i="发送h可看帮助；发送k可打开飞信接收；发送g可关闭飞&#xa;信接收" p="0" sms="0.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="606822271"><p v="0" c="CMCC" cs="0" s="0"/></c><c id="449805248"><p v="0" sid="641501091" su="sip:641501091@fetion.com.cn;p=1214" m="" c="CMCC" cs="0" s="1" l="0" svc="" n="李圣健" i="明天更美好" p="0" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="465187710"><p v="0" sid="769196224" su="sip:769196224@fetion.com.cn;p=888" m="13488780440" c="CMCC" cs="0" s="1" l="10" svc="" n="安协汪秋云" i="嗯，很好！" p="-204325050" sms="0.0:0:0" sp="320598290" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="463856356"><p v="0" sid="757348541" su="sip:757348541@fetion.com.cn;p=263" m="" c="CMCC" cs="1" s="1" l="7" svc="" n="宁儿" i="没有你，我怎么办" p="-94433799" sms="365.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="465271728"><p v="0" sid="586812514" su="sip:586812514@fetion.com.cn;p=889" m="13488897028" c="CMCC" cs="0" s="1" l="1" svc="" n="雪峰" i="" p="-448961605" sms="0.0:0:0" sp="333557137" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="627956703"><p v="0" sid="872044177" su="sip:872044177@fetion.com.cn;p=12204" m="" c="CMCC" cs="0" s="1" l="6" svc="" n="张占磊" i="世人皆以为钱主，什么是快乐的生活，在我看来不能用钱来打点！" p="1471247215" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="773765492"><p v="0" c="CMCC" cs="0" s="0"/></c><c id="463829591"><p v="0" sid="641135186" su="sip:641135186@fetion.com.cn;p=262" m="13426197115" c="CMCC" cs="0" s="1" l="9" svc="" n="李铁英" i="休息休息，累死我了" p="-274907042" sms="0.0:0:0" sp="0" sh="1"/><pr di="" b="0" d="" dt="" dc="0"></pr></c><c id="506028388"><p v="0" c="CMCC" cs="1" s="1" p="0"/></c><c id="361935480"><p v="0" c="CMCC" cs="0" s="0"/></c><c id="213085853"><p v="0" c="CMCC" cs="0" s="1" p="0"/></c><c id="284156567"><p v="0" sid="666740575" su="sip:666740575@fetion.com.cn;p=174" m="" c="CMCC" cs="0" s="1" l="0" svc="" n="移动通信用户" i="结嬈天下友" p="0" sms="365.0:0:0" sp="0" sh="0"/><pr di="" b="0" d="" dt="" dc="0"></pr></c></contacts></event></events>BN 856882346 SIP-C/4.0
+N: PresenceV4
+I: 1
+L: 311
+Q: 74 BN
+
+<events><event type="PresenceChanged"><contacts><c id="653015010"><p v="0" c="CMCC" cs="0" s="0"/></c><c id="207487699"><p v="0" c="CMCC" cs="0" s="1" p="0"/></c><c id="202548454"><p v="0" c="CMCC" cs="0" s="1" p="-7749065"/></c><c id="606815654"><p v="0" c="CMCC" cs="0" s="0"/></c></contacts></event></events>

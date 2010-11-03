@@ -1,0 +1,46 @@
+\documentclass[a4paper,12pt]{article}				%为注释符。导言区开始。模板声明,这里是论文版式
+\usepackage{syntonly}								%debug用
+\usepackage{verbatim}								%宏集,原样显示
+\usepackage{CJKutf8}				%以下三段设置zh.CN_utf-8
+\usepackage[T1]{fontenc}
+\usepackage[unicode]{hyperref}
+\title{\LaTeX边学边用边总结}								%标题
+\author{CSiP}								%作者
+\date{\today}									%不写时自动加上系统时间
+\begin{document}					%导言区结束，文档开始
+\begin{CJK*}{UTF8}{gbsn}
+	\maketitle								%显示标题，作者，时间
+	\section{中文支持}
+	\subsection{一首词的例子}
+	\begin{center}
+	\Large{满江红}\\
+	\large岳飞\\
+\end{center}
+怒发冲冠，凭阑处、潇潇雨歇。抬望眼、仰天长啸，壮怀激烈。三十功名尘与土，八千里路云和月。莫等闲、白了少年头，空悲切。 \\							%\\为断行符
+	靖康耻，犹未雪；臣子恨，何时灭。驾长车踏破贺兰山缺。壮志饥餐胡虏肉,笑谈渴饮匈奴血。待从头、收拾旧山河。朝天阙。
+	\section{数学公式的显示}
+	\texttt{Hello},\textrm{world}! {\LaTeX}				%特殊符号的引用
+	can typeset equations like
+	\begin{equation}					%开始
+		\int^{2\pi}_0\sin^2\theta d\theta = \frac{1}{2}
+		% \int是积分符，^后跟右上角标，_后跟右下角标,
+	\end{equation}						%结束
+	\begin{equation}					%开始
+		\left[
+		{\bf X} + {\rm a} \ \geq\
+		\underline{\hat a} \sum_i^N \lim_{x \rightarrow k} \delta C
+		\right]
+	\end{equation}						%结束
+	\subsection{喜欢 \LaTeX +pdf的理由}
+	\begin{enumerate}
+		\item 全球通用，就像xml一样
+		\item 格式良好，长期有效
+		\item 显示与平台无关
+		\item 纯文本，可版本控制
+	\end{enumerate}
+	very cool!
+\section{图片加载}
+%\includegraphics{./csip_2005.png}
+\end{CJK*}
+\end{document}						%文档结束
+

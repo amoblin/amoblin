@@ -1,0 +1,53 @@
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2009.3.8)  8 MAR 2009 12:22
+entering extended mode
+ %&-line parsing enabled.
+**csip_bak.tex
+(./csip_bak.tex
+LaTeX2e <2005/12/01>
+Babel <v3.8h> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, pinyin, loaded.
+(./moderncvwutao.cls
+Document Class: moderncvwutao 2007/05/28 v0.6 modern curriculum vitae document 
+class
+(/usr/share/texmf-texlive/tex/latex/base/size11.clo
+File: size11.clo 2005/09/16 v1.4f Standard LaTeX file (size option)
+)
+(/usr/share/texmf/tex/latex/CJK/CJK.sty
+Package: CJK 2008/05/22 4.8.0
+
+(/usr/share/texmf/tex/latex/CJK/mule/MULEenc.sty
+Package: MULEenc 2008/05/22 4.8.0
+)
+(/usr/share/texmf/tex/latex/CJK/CJK.enc
+File: CJK.enc 2008/05/22 4.8.0
+)
+LaTeX Info: Redefining \selectfont on input line 748.
+\CJK@indent=\box26
+)
+(/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+
+! LaTeX Error: File `ifpdf.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+<read *> 
+         
+l.96 ^^M
+        
+End of file on the terminal!
+
+ 
+Here is how much of TeX's memory you used:
+ 989 strings out of 95080
+ 10118 string characters out of 1183098
+ 59240 words of memory out of 1500000
+ 4239 multiletter control sequences out of 10000+50000
+ 3940 words of font info for 15 fonts, out of 1200000 for 2000
+ 28 hyphenation exceptions out of 8191
+ 28i,0n,19p,253b,52s stack positions out of 5000i,500n,6000p,200000b,5000s
+!  ==> Fatal error occurred, no output PDF file produced!
