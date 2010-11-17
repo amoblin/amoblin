@@ -1,0 +1,41 @@
+html, body {
+ background-color:#444;
+ font:12pt "Arial";
+ color:#0000;
+}
+div#header {
+ text-align:center;
+}
+h1 {
+ font-size: 32px;
+ line-height: 48px;
+}
+div#mainWrapper {
+ text-align:center;
+}
+div#footer {
+ margin-top:40px;
+ text-align:center;
+}
+div.innerWrapper {
+ line-height: 150%;
+ width:80%;
+ margin-left: auto;
+ margin-right: auto;
+}
+div.innerWrapper div.item {
+ margin-top:20px;
+}
+div.innerWrapper div.item h4 {
+ border-bottom:3px double #555;
+ margin:0;
+ text-align:left;
+}
+div.innerWrapper div.item div.content {
+ background-color:#ddd;
+ border-width:0 1px 1px 1px;
+ border-style:solid;
+ border-color:black;
+ padding:10px;
+ text-align:left;
+}
