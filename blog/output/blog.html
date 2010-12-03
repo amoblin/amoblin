@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
+<title>群英汇博客</title>
+<link rel="stylesheet" href="/stylesheet/lightbox/nf.lightbox.css" type="text/css" />
+<link rel="stylesheet" href="/stylesheet/ossxp/doc.css" type="text/css" />
+<script src="/javascript/jquery/1.4.2.js" type="text/javascript"></script>
+<script src="/javascript/lightbox/nf.lightbox.js" type="text/javascript"></script>
+<script src="/javascript/lightbox/load-nf.lightbox.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="header">
+<a class="reference external" href="http://www.ossxp.com/doc/">群英汇博客</a>
+<hr class="header"/>
+</div>
+<div class="document" id="articletitle">
+<h1 class="title">群英汇博客</h1>
+<h2 class="subtitle" id="for-docbones">for Docbones</h2>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body"><a class="reference external" href="http://www.ossxp.com/">北京群英汇信息技术有限公司</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">网址:</th><td class="field-body"><a class="reference external" href="http://www.ossxp.com/">http://www.ossxp.com/</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">&#64;UnkownENV(DOC_REV)&#64;</td>
+</tr>
+<tr class="field"><th class="docinfo-name">日期:</th><td class="field-body">2010-12-01 15:19:39</td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权信息:</th><td class="field-body"><a class="reference external" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons" src="images/cc-icon.png" /></a></td>
+</tr>
+</tbody>
+</table>
+<div class="contents topic" id="id2">
+<p class="topic-title first">目录</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#id3" id="id58">1&nbsp;&nbsp;&nbsp;绑定变量</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id4" id="id59">1.1&nbsp;&nbsp;&nbsp;分段以及断行</a></li>
+<li><a class="reference internal" href="#python" id="id60">1.2&nbsp;&nbsp;&nbsp;缩进也是语法(类python)</a></li>
+<li><a class="reference internal" href="#literal-blocks" id="id61">1.3&nbsp;&nbsp;&nbsp;预格式化文本(literal blocks)</a></li>
+<li><a class="reference internal" href="#id5" id="id62">1.4&nbsp;&nbsp;&nbsp;引用块</a></li>
+<li><a class="reference internal" href="#id6" id="id63">1.5&nbsp;&nbsp;&nbsp;行块</a></li>
+<li><a class="reference internal" href="#id7" id="id64">1.6&nbsp;&nbsp;&nbsp;文字样式</a></li>
+<li><a class="reference internal" href="#id8" id="id65">1.7&nbsp;&nbsp;&nbsp;列表</a></li>
+<li><a class="reference internal" href="#id9" id="id66">1.8&nbsp;&nbsp;&nbsp;定义</a></li>
+<li><a class="reference internal" href="#id10" id="id67">1.9&nbsp;&nbsp;&nbsp;分隔线</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id11" id="id68">2&nbsp;&nbsp;&nbsp;高级格式说明</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id12" id="id69">2.1&nbsp;&nbsp;&nbsp;超链接</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id13" id="id70">2.1.1&nbsp;&nbsp;&nbsp;直接嵌入超链接</a></li>
+<li><a class="reference internal" href="#id14" id="id71">2.1.2&nbsp;&nbsp;&nbsp;直接嵌入具名超链接</a></li>
+<li><a class="reference internal" href="#id16" id="id72">2.1.3&nbsp;&nbsp;&nbsp;定义和引用具名超链接</a><ul class="auto-toc">
+<li><a class="reference internal" href="#anchor" id="id73">2.1.3.1&nbsp;&nbsp;&nbsp;内部anchor</a></li>
+<li><a class="reference internal" href="#uri" id="id74">2.1.3.2&nbsp;&nbsp;&nbsp;指向URI的超链接</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id20" id="id75">2.1.4&nbsp;&nbsp;&nbsp;匿名超链接</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22" id="id76">2.2&nbsp;&nbsp;&nbsp;脚注</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id23" id="id77">2.2.1&nbsp;&nbsp;&nbsp;手动编号的脚注</a></li>
+<li><a class="reference internal" href="#id31" id="id78">2.2.2&nbsp;&nbsp;&nbsp;自动编号的脚注</a></li>
+<li><a class="reference internal" href="#label" id="id79">2.2.3&nbsp;&nbsp;&nbsp;带 label 自动编号的脚注</a></li>
+<li><a class="reference internal" href="#id38" id="id80">2.2.4&nbsp;&nbsp;&nbsp;自动符号脚注</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id49" id="id81">2.3&nbsp;&nbsp;&nbsp;引证</a></li>
+<li><a class="reference internal" href="#id51" id="id82">2.4&nbsp;&nbsp;&nbsp;替换</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id52" id="id83">2.4.1&nbsp;&nbsp;&nbsp;文字替换</a></li>
+<li><a class="reference internal" href="#id53" id="id84">2.4.2&nbsp;&nbsp;&nbsp;图片替换</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id54" id="id85">2.5&nbsp;&nbsp;&nbsp;表格</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id55" id="id86">3&nbsp;&nbsp;&nbsp;指令扩展</a><ul class="auto-toc">
+<li><a class="reference internal" href="#id56" id="id87">3.1&nbsp;&nbsp;&nbsp;图片</a></li>
+<li><a class="reference internal" href="#id57" id="id88">3.2&nbsp;&nbsp;&nbsp;警告</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<!--  -->
+<div class="section" id="id3">
+<h1><a class="toc-backref" href="#id58">1&nbsp;&nbsp;&nbsp;绑定变量</a></h1>
+<p>当python脚本被调用的时候，会创建一组变量，这些变量用于在脚本里面访问其他的Zope对象和脚本，要查看和定义这些变量，可以到Binding标签视图里。其他Zope对象，像Perl脚本，DTML文档对象等，这些变量都无效。但ZPT里有相似的变量组。</p>
+<p>一般情况下，这些变量的设置都不需要更改。下面介绍这些变量分别如何工作，以及如何在脚本中使用。</p>
+<p>Context 默认绑定到context，指向调用本脚本的对象</p>
+<p>Container 默认绑定到container，脚本定义处</p>
+<p>Script 默认绑定到script，指向脚本自身</p>
+<p>Namespace 默认留空。</p>
+<p>如果使用ftp上传文件，那么就要在唉脚本的开头通过注释将上述内容列出，如下例：</p>
+<pre class="literal-block">
+## Script (Python) &quot;example&quot;
+##bind container=container
+##bind context=context
+##bind namespace=
+##bind script=script
+##bind subpath=traverse_subpath
+##parameters=name, age
+##title=
+</pre>
+<p>其中的parameters列是脚本的参数。注意这些注释不仅仅是注释，它们包含语义信息。所以不能随便写，比如在bind前不能有空格，在parameters前也不能有空格等等。</p>
+<p>如何使用呢？通过这些绑定，我们可以访问我们想要的对象。比如，通过context可以访问调用此脚本的对象。回到Zoo例子，下面这行：</p>
+<pre class="literal-block">
+animail_id = context.getId()
+</pre>
+<p>就可以得到id值&quot;hippo&quot;，因为hoppo是这里的context，它的id是&quot;hoppo&quot;。我们可以通过这个方法访问任何对象的id，因为这个方法几乎存在于任何一个对象里。</p>
+<hr class="docutils" />
+<p>在通过表单获取输入值时，我们会得到一个REQUEST对象，它代表一个Zope web请求，存在于context里。例如/zoo/hippo/feed?food_type=spam，我么可以通过context.REQUEST.food_type来访问foot_type的值。另外一种使用REQUEST的方法是作为脚本的参数。 如果REQUEST是脚本的一个参数的话，Zope会忽略HTTP请求，直接把请求分配给这个参数。这时可以通过REQUEST.food_type来获取值。</p>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id59">1.1&nbsp;&nbsp;&nbsp;分段以及断行</a></h2>
+<p>这是一个段落的开始，
+本行自动续行。下面用一个空行分隔两个段落。</p>
+<p>新的段落。</p>
+</div>
+<div class="section" id="python">
+<h2><a class="toc-backref" href="#id60">1.2&nbsp;&nbsp;&nbsp;缩进也是语法(类python)</a></h2>
+<p>这是一个段落。下面段落用空格缩进。</p>
+<blockquote>
+<p>缩进的段落
+等量缩进， <em>续行</em> 。</p>
+<blockquote>
+继续缩进的 <em>段落</em> 。</blockquote>
+</blockquote>
+<p>结束缩进，成为一个段落。</p>
+<ol class="arabic simple">
+<li>列表1</li>
+<li>列表2</li>
+</ol>
+<!--  -->
+<blockquote>
+为了显示为缩进,而非作为列表的内容解析，前面的段落用空注释结束列表</blockquote>
+<ol class="arabic simple">
+<li>列表2</li>
+</ol>
+</div>
+<div class="section" id="literal-blocks">
+<h2><a class="toc-backref" href="#id61">1.3&nbsp;&nbsp;&nbsp;预格式化文本(literal blocks)</a></h2>
+<p>这是一个段落。下面的双冒号的孤立段落，将会开启一个样式为 literal-block 的 PRE 块。
+在该块中，reST 语法不做解析。</p>
+<pre class="literal-block">
+双冒号的孤立行，开始 pre formatted text
+                __更上一层楼
+              _|
+            _|
+欲穷千里目-|
+
+缩进中，reST **不** 进行解析
+</pre>
+<p>缩进停止，则开始新的段落。</p>
+<hr class="docutils" />
+<p>段落结尾的两个冒号，下个段落也开始一个literal block:</p>
+<pre class="literal-block">
+缩进样式 *不解析*
+  缩进样式 *不解析*
+缩进样式 *不解析*
+</pre>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id62">1.4&nbsp;&nbsp;&nbsp;引用块</a></h2>
+<p>双冒号的孤立段落，也可以开启一个引用式的缩进，就像邮件引用一样。
+在该块中，reST 语法不做解析。</p>
+<pre class="literal-block">
+&gt; *something*
+&gt; xyz
+&gt;&gt; xyz
+&gt; xyz
+</pre>
+</div>
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id63">1.5&nbsp;&nbsp;&nbsp;行块</a></h2>
+<p>下面的段落中，以竖线 | 和一个空格做起始，维持换行的格式</p>
+<div class="line-block">
+<div class="line">开始一个line block</div>
+<div class="line">另外的一行,
+续行。</div>
+<div class="line">再一行</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">含有缩进的一行</div>
+</div>
+<div class="line">含有缩进的一行</div>
+<div class="line-block">
+<div class="line">含有缩进的一行</div>
+</div>
+</div>
+</div>
+<p>另外一个段落。</p>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id64">1.6&nbsp;&nbsp;&nbsp;文字样式</a></h2>
+<ul class="simple">
+<li><em>斜体</em></li>
+<li><strong>粗体</strong></li>
+<li>粗斜体如何显示？？？</li>
+<li>解析文本调用缺省解析器: <cite>子曰：“学而时习之不亦乐乎？”</cite></li>
+<li>以 tt 标签显示的: <tt class="docutils literal">import os</tt></li>
+<li>水的分子式是 H<sub>2</sub>O.</li>
+<li>相对论公式： E = mc<sup>2</sup>.</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id65">1.7&nbsp;&nbsp;&nbsp;列表</a></h2>
+<ul>
+<li><p class="first">子弹头列表</p>
+<blockquote>
+<ul class="simple">
+<li>子列表</li>
+<li>子列表</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first">子弹头列表2</p>
+<blockquote>
+<ol class="arabic simple">
+<li>自动编号列表1</li>
+<li>自动编号列表2</li>
+<li>自动编号列表3</li>
+</ol>
+</blockquote>
+</li>
+<li><p class="first">子弹头列表3</p>
+<blockquote>
+<ol class="arabic" start="2">
+<li><p class="first">从2开始编号</p>
+</li>
+<li><p class="first">编号顺序递增</p>
+<blockquote>
+<ol class="loweralpha simple">
+<li>Item 3a.</li>
+<li>Item 3b.</li>
+</ol>
+</blockquote>
+</li>
+<li><p class="first">列表4</p>
+<blockquote>
+<ol class="lowerroman simple">
+<li>Item 4i.</li>
+<li>Item 4ii.</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h2><a class="toc-backref" href="#id66">1.8&nbsp;&nbsp;&nbsp;定义</a></h2>
+<dl class="docutils">
+<dt>apple</dt>
+<dd><p class="first">一种水果</p>
+<p class="last">知名软件公司</p>
+</dd>
+<dt>term2 <span class="classifier-delimiter">:</span> <span class="classifier">名词</span></dt>
+<dd>定义</dd>
+</dl>
+</div>
+<div class="section" id="id10">
+<h2><a class="toc-backref" href="#id67">1.9&nbsp;&nbsp;&nbsp;分隔线</a></h2>
+<p>四个减号开始一个分隔线</p>
+<hr class="docutils" />
+<p>分隔线下内容。。。</p>
+</div>
+</div>
+<div class="section" id="id11">
+<h1><a class="toc-backref" href="#id68">2&nbsp;&nbsp;&nbsp;高级格式说明</a></h1>
+<div class="section" id="id12">
+<h2><a class="toc-backref" href="#id69">2.1&nbsp;&nbsp;&nbsp;超链接</a></h2>
+<div class="section" id="id13">
+<h3><a class="toc-backref" href="#id70">2.1.1&nbsp;&nbsp;&nbsp;直接嵌入超链接</a></h3>
+<p>群英汇的网址是: <a class="reference external" href="http://www.ossxp.com">http://www.ossxp.com</a>.</p>
+</div>
+<div class="section" id="id14">
+<h3><a class="toc-backref" href="#id71">2.1.2&nbsp;&nbsp;&nbsp;直接嵌入具名超链接</a></h3>
+<p>这个链接会自动创建一个具名链接，除了这里显示链接外，
+还可以在后面引用。如: <a class="reference external" href="http://www.ossxp.com">北京群英汇</a>
+是开源软件服务提供商。</p>
+<p>这里引用 <a class="reference external" href="http://www.ossxp.com">北京群英汇</a></p>
+</div>
+<div class="section" id="id16">
+<h3><a class="toc-backref" href="#id72">2.1.3&nbsp;&nbsp;&nbsp;定义和引用具名超链接</a></h3>
+<p>定义超链接格式： <tt class="docutils literal">.. <span class="pre">_hyperlink-name:</span> <span class="pre">link-block</span></tt></p>
+<div class="section" id="anchor">
+<h4><a class="toc-backref" href="#id73">2.1.3.1&nbsp;&nbsp;&nbsp;内部anchor</a></h4>
+<p>定位到 <a class="reference internal" href="#target">target</a></p>
+<p>在文内通过一个不包含 link-block 的具名链接定义，即定义此 anchor，用于文内跳转。</p>
+<p id="target">上面是一个名为 target 的文内anchor。</p>
+</div>
+<div class="section" id="uri">
+<h4><a class="toc-backref" href="#id74">2.1.3.2&nbsp;&nbsp;&nbsp;指向URI的超链接</a></h4>
+<p><a class="reference external" href="http://www.ossxp.com/">群英汇</a> <a class="footnote-reference" href="#id19" id="id17">[4]</a> 的主页: <a class="reference external" href="http://www.ossxp.com/">ossxp</a>, 发邮件给 <a class="reference external" href="mailto:worldhello.net&#64;gmail.com">Jiang Xin</a></p>
+<table class="docutils footnote" frame="void" id="id19" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id17">[4]</a></td><td>链接的定义可以指向另外一个链接的定义</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id20">
+<h3><a class="toc-backref" href="#id75">2.1.4&nbsp;&nbsp;&nbsp;匿名超链接</a></h3>
+<dl class="docutils">
+<dt>格式：</dt>
+<dd><ul class="first last simple">
+<li>引用时，后面是两个下划线，而不是一个</li>
+<li>定义时，以两个下划线为名称，不包含链接名字</li>
+</ul>
+</dd>
+</dl>
+<p>示例： See <a class="reference external" href="http://www.python.org">the web site of my favorite programming language</a>.</p>
+<p>一个文档可以包含多个匿名超链接，要求：</p>
+<blockquote>
+<ul class="simple">
+<li>引用的数量和定义的数量相同</li>
+<li>定义和引用一一对应</li>
+</ul>
+</blockquote>
+</div>
+</div>
+<div class="section" id="id22">
+<h2><a class="toc-backref" href="#id76">2.2&nbsp;&nbsp;&nbsp;脚注</a></h2>
+<p>脚注就是以顺序的数字显示链接，并指向脚注区域的相关注释。</p>
+<div class="section" id="id23">
+<h3><a class="toc-backref" href="#id77">2.2.1&nbsp;&nbsp;&nbsp;手动编号的脚注</a></h3>
+<p>方括号 <a class="footnote-reference" href="#id28" id="id24">[1]</a> 内手动编号 <a class="footnote-reference" href="#id28" id="id25">[1]</a> ，别忘了结尾的下划线 <a class="footnote-reference" href="#id30" id="id26">[3]</a>, 可以重复引用脚注 <a class="footnote-reference" href="#id30" id="id27">[3]</a></p>
+<table class="docutils footnote" frame="void" id="id28" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><em>(<a class="fn-backref" href="#id24">1</a>, <a class="fn-backref" href="#id25">2</a>)</em> 嵌入的脚注前后要有空格</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id29" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td>阿拉伯数字</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id30" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td><em>(<a class="fn-backref" href="#id26">1</a>, <a class="fn-backref" href="#id27">2</a>)</em> 下划线只在引用时需要提供，定义时，不需要</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id31">
+<h3><a class="toc-backref" href="#id78">2.2.2&nbsp;&nbsp;&nbsp;自动编号的脚注</a></h3>
+<p>自动编号的脚注是用井号 <a class="footnote-reference" href="#id34" id="id32">[5]</a> 作为 label 的脚注 <a class="footnote-reference" href="#id35" id="id33">[6]</a></p>
+<table class="docutils footnote" frame="void" id="id34" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id32">[5]</a></td><td>以 # 代替数字</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id35" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id33">[6]</a></td><td>自动增加编号。定义的时候也写成 #，而不要用数字</td></tr>
+</tbody>
+</table>
+<p>但是自动编号的局限性是：不能对一个脚注在多处引用。</p>
+<p>对于需要在多处引用自动编号的脚注，可以使用下面的带有 label 的自动编号脚注。</p>
+</div>
+<div class="section" id="label">
+<h3><a class="toc-backref" href="#id79">2.2.3&nbsp;&nbsp;&nbsp;带 label 自动编号的脚注</a></h3>
+<p>带有label 的自动脚注 <a class="footnote-reference" href="#note" id="id36">[7]</a> 会根据前面的脚注情况，自动编号。显示为
+&quot;[n]&quot;.  如果多此引用此脚注，可以多次出现同 label 的自动脚注 <a class="footnote-reference" href="#note" id="id37">[7]</a> 。
+如果向使用链接指向脚注，可以用 <em>简单链接</em> 语法做指向。如： <a class="reference internal" href="#note">note</a></p>
+<table class="docutils footnote" frame="void" id="note" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[7]</td><td><em>(<a class="fn-backref" href="#id36">1</a>, <a class="fn-backref" href="#id37">2</a>)</em> This is the footnote labeled &quot;note&quot;.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id38">
+<h3><a class="toc-backref" href="#id80">2.2.4&nbsp;&nbsp;&nbsp;自动符号脚注</a></h3>
+<p>可以用星号 * 作为脚注的label，会依次用不同的符号来显示。脚注 <a class="footnote-reference" href="#id44" id="id39">[*]</a>,脚注 <a class="footnote-reference" href="#id45" id="id40">[†]</a>,脚注 <a class="footnote-reference" href="#id46" id="id41">[‡]</a>,脚注 <a class="footnote-reference" href="#id47" id="id42">[§]</a>,脚注 <a class="footnote-reference" href="#id48" id="id43">[¶]</a> ...</p>
+<table class="docutils footnote" frame="void" id="id44" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id39">[*]</a></td><td>以符号的形式显示的脚注</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id45" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id40">[†]</a></td><td>以符号的形式显示的脚注</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id46" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id41">[‡]</a></td><td>以符号的形式显示的脚注</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id47" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id42">[§]</a></td><td>以符号的形式显示的脚注</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id48" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id43">[¶]</a></td><td>以符号的形式显示的脚注</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id49">
+<h2><a class="toc-backref" href="#id81">2.3&nbsp;&nbsp;&nbsp;引证</a></h2>
+<p>引证就是以有意义的单词或者规定的格式编码显示链接，并指向引证区域的相关注释。</p>
+<p>和脚注类似，不过是直接使用字母而非数字作为 label。 <a class="citation-reference" href="#cit2002" id="id50">[CIT2002]</a>.</p>
+<table class="docutils citation" frame="void" id="cit2002" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id50">[CIT2002]</a></td><td>This is the citation.  It's just like a footnote,
+except the label is textual.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id51">
+<h2><a class="toc-backref" href="#id82">2.4&nbsp;&nbsp;&nbsp;替换</a></h2>
+<p>用竖线中间夹着要替换的单词。定义替换采用两个点的类似注释的语法。</p>
+<div class="section" id="id52">
+<h3><a class="toc-backref" href="#id83">2.4.1&nbsp;&nbsp;&nbsp;文字替换</a></h3>
+<p><a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> is a little annoying to type over and over, especially
+when writing about reStructuredText itself, and spelling out the
+bicapitalized word reStructuredText every time isn't really necessary for
+reStructuredText source readability.</p>
+</div>
+<div class="section" id="id53">
+<h3><a class="toc-backref" href="#id84">2.4.2&nbsp;&nbsp;&nbsp;图片替换</a></h3>
+<ul class="simple">
+<li>嵌入 <img alt="CC" src="images/cc-icon.png" /> 授权协议图标。</li>
+<li>带有链接的 <a class="reference external" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="CC with link" src="images/cc-icon.png" /></a> 授权协议图标。</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id54">
+<h2><a class="toc-backref" href="#id85">2.5&nbsp;&nbsp;&nbsp;表格</a></h2>
+<ul>
+<li><p class="first">英文表格</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="34%" />
+<col width="31%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head"><p class="first last">Header 1</p>
+</th>
+<th class="head"><p class="first last">Header 2</p>
+</th>
+<th class="head"><p class="first last">Header 3</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><p class="first last">body row 1</p>
+</td>
+<td><p class="first last">column 2</p>
+</td>
+<td><p class="first last">column 3</p>
+</td>
+</tr>
+<tr><td><p class="first last">body row 2</p>
+</td>
+<td colspan="2"><p class="first last"><cite>ps -ef | grep py</cite></p>
+</td>
+</tr>
+<tr><td><p class="first last">body row 3</p>
+</td>
+<td rowspan="2"><p class="first last">Cells may
+span rows.</p>
+</td>
+<td rowspan="2"><ul class="first last simple">
+<li>Cells</li>
+<li>contain</li>
+<li>blocks.</li>
+</ul>
+</td>
+</tr>
+<tr><td><p class="first last">body row 4</p>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p class="first">中文表格</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="34%" />
+<col width="31%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head"><p class="first last">表头1</p>
+</th>
+<th class="head"><p class="first last">表头2</p>
+</th>
+<th class="head"><p class="first last">表头3</p>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><p class="first last">表格行1</p>
+</td>
+<td><p class="first last">列 2</p>
+</td>
+<td><p class="first last">列 3</p>
+</td>
+</tr>
+<tr><td><p class="first last">表格行2</p>
+</td>
+<td colspan="2"><p class="first last"><cite>ps -ef | grep py</cite></p>
+</td>
+</tr>
+<tr><td><p class="first last">表格行3</p>
+</td>
+<td rowspan="2"><p class="first last">单元格
+跨越多行。</p>
+</td>
+<td rowspan="2"><ul class="first last simple">
+<li>单元格</li>
+<li>包含</li>
+<li>块.</li>
+</ul>
+</td>
+</tr>
+<tr><td><p class="first last">表格行4</p>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p class="first">简单表格</p>
+</li>
+</ul>
+<p>Simple table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="31%" />
+<col width="38%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head" colspan="2">Inputs</th>
+<th class="head">Output</th>
+</tr>
+<tr><th class="head">A</th>
+<th class="head">B</th>
+<th class="head">A or B</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>False</td>
+<td>False</td>
+<td>False</td>
+</tr>
+<tr><td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr><td>False</td>
+<td>True</td>
+<td>True</td>
+</tr>
+<tr><td>True</td>
+<td>True</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id55">
+<h1><a class="toc-backref" href="#id86">3&nbsp;&nbsp;&nbsp;指令扩展</a></h1>
+<div class="section" id="id56">
+<h2><a class="toc-backref" href="#id87">3.1&nbsp;&nbsp;&nbsp;图片</a></h2>
+<blockquote>
+<ul>
+<li><p class="first">嵌入图片</p>
+<img alt="images/cc-icon.png" src="images/cc-icon.png" />
+</li>
+<li><p class="first">带标题的图片</p>
+<div class="figure">
+<img alt="images/cc-icon.png" src="images/cc-icon.png" />
+<p class="caption">Creative Commons 授权图标（by-sa）</p>
+</div>
+</li>
+<li><p class="first">图片缩放</p>
+<div class="figure">
+<img alt="images/cc-icon.png" src="images/cc-icon.png" style="width: 44.0px; height: 15.5px;" />
+<p class="caption">缩放了 50% 的图片</p>
+</div>
+</li>
+<li><p class="first">图片缩放</p>
+<div class="figure">
+<img alt="images/cc-icon.png" src="images/cc-icon.png" style="width: 11px; height: 11px;" />
+<p class="caption">设置了固定高和宽度的图片</p>
+</div>
+</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="id57">
+<h2><a class="toc-backref" href="#id88">3.2&nbsp;&nbsp;&nbsp;警告</a></h2>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p>This is a paragraph</p>
+<ul class="last simple">
+<li>Here is a bullet list.</li>
+</ul>
+</div>
+<div class="danger">
+<p class="first admonition-title">!DANGER!</p>
+<p class="last">modify at your own risk!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr class="footer" />
+<a class="reference external" href="http://www.ossxp.com/">北京群英汇信息技术有限公司</a> - <a class="reference external" href="http://www.ossxp.com/">http://www.ossxp.com/</a>
+</div>
+</body>
+</html>

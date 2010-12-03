@@ -1,0 +1,4 @@
+retr()  获取邮件正文 
+get_payload()   获取当前email的有效部分
+
+

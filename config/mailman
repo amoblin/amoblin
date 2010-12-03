@@ -1,0 +1,85 @@
+2.1添加用户和组
+Mailman需要一个单独的用户和组来运行进程。
+执行命令
+groupadd mailman
+useradd -c''GNU Mailman'' -s /no/shell -d /no/home -g mailman mailman
+2.2创建安装目录
+cd /usr/local
+sudo mkdir mailman
+cd mailman
+sudo chgrp mailman .
+sudo chmod a+rx,g+ws .
+
+3.编译，安装
+./configure
+make
+sudo make install
+
+4.检查安装情况
+bin/check_perms -f
+会自动修正权限，没有修正的会提示手动修改权限
+
+cd archives
+sudo chown www-data private
+sudo chmod o-x private
+
+5.配置web服务器
+vi /etc/apache2/sites-available/default
+增加
+ScriptAlias /mailman/   /usr/local/mailman/cgi-bin/
+Alias /pipermail/   /usr/local/mailman/archives/public/
+<Directory "/usr/local/mailman/archives/public/">
+    AddDefaultCharset Off
+</Directory>
+然后重启web服务器
+
+6.设置Mail服务器
+
+6.1使用Postfix服务器
+
+6.1.1 整合Postfix和Mailman
+1.设置MTA：
+vi mm_cfg.py
+    MTA = 'Postfix'
+    可选值在Mailman/MTA目录下
+2.查看Defaults.py中变亮POSTFIX_ALIAS_CMD 和POSTFIX_MAP_CMD，看是否是postalias和postmap，若不是的话，在mm_cfg.py中重置。
+
+3.运行bin/genaliases，初始化别名文件。
+必须保证data/aliases和data/aliases.db的拥有者是mailman。
+将输出内容保存到data/aliases，然后执行postaliases data/aliases以更新db文件
+
+4.修改Postfix的main.cf文件，使alias_maps变量包含下面的路径：
+/usr/local/mailman/data/aliases
+注意没有后缀.db。不要把这添加到alias_database变量里。因为不应该让Postfix的newaliases命令修改Mailman的aliases.db文件，我们只是让Postfix在寻找本地地址时查询aliases.db
+
+
+ossxp mailman
+1.use postfix's hostname in Default.py
+2.set url host = 'localhsot' and email host = 'localhost.localdomain'
+
+
+
+
+
+
+bin/arch: main
+    1.MailList
+
+
+Utils.websafe   转码html实体
+HyperArch.py    L1250   超链接
+
+Archive.py  getbasearchive -> getscripturl
+
+MailList.py def GetScriptURL
+
+pipermail.py    add_article
+    1.get_archives
+    2.fromat_article :write <PRE> ... </PRE>
+
+HyperArchive    format_html
+
+
+loadbody_fromHTML   将article部分刷新
+
+
