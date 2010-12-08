@@ -34,6 +34,365 @@ for Docbones
    Transition Dissolve 1
    PageBreak contentsPage
 
+
+.. ############
+.. ************
+.. ============
+.. ------------
+.. ^^^^^^^^^^^^
+.. """"""""""""
+
+Vim 复制粘贴探秘
+================
+
+Vim作为最好用的文本编辑器之一，使用vim来编文档，写代码实在是很惬意的事情。每当学会了vim的一个新功能，就会很大地提高工作效率。有人使用vim几十年，还没有完全掌握vim的功能，这也说明了vim的强大。而这样何尝不是一件好事呢，只要有的学习，就有的提高。
+
+最近使用Vim来写博客，发现在Vim中粘贴Python代码后，缩进就全乱了。仔细研究了以下，原来是自动缩进的缘故，于是做如下设置： ::
+
+    :set noai nosi
+
+取消了自动缩进和智能缩进，这样粘贴就不会错行了。但在有的vim中不行，还是排版错乱。
+
+后来发现了更好用的设置： ::
+
+    :set paste
+
+进入paste模式以后，可以在插入模式下粘贴内容，不会有任何变形。这个真是灰常好用，情不自禁看了一下帮助，发现它做了这么多事：
+
+- textwidth设置为0
+- wrapmargin设置为0
+- set noai
+- set nosi
+- softtabstop设置为0
+- revins重置
+- ruler重置
+- showmatch重置
+- formatoptions使用空值
+
+下面的选项值不变，但却被禁用：
+
+- lisp
+- indentexpr
+- cindent
+
+怪不得之前只设置noai和nosi不行，原来与这么多因素有关！
+
+但这样还是比较麻烦的，每次要粘贴的话，先set paste，然后粘贴，然后再set nopaste。有没有更方便的呢？你可能想到了，使用键盘映射呀，对。我们可以这样设置：::
+
+    :map <F10> :set paste<CR>
+    :map <F11> :set nopaste<CR>
+
+这样在粘贴前按F10键启动paste模式，粘贴后按F11取消paste模式即可。其实，paste有一个切换paste开关的选项，这就是pastetoggle。通过它可以绑定快捷键来激活/取消 paste模式。比如：::
+    
+    :set pastetoggle=<F11>
+
+这样减少了一个快捷键的占用，使用起来也更方便一些。
+
+但，这是最方便的吗？Vimer们对高效的追求永无止境。还有其他更好地方法吗？
+
+你可能想到了，vim寄存器。对，使用vim寄存器 "+p 粘贴即可。根本不用考虑是否自动缩进，是否paste模式，直接原文传递！::
+
+    "+p
+
+要说vim寄存器，就要从vim文件间的复制粘贴说起。
+
+Vim中，若要复制当前行，普通模式下按 yy 即可，在要粘贴的地方按 p 。这是vim将复制内容保存到了自己的器存器中的缘故。如果在其他地方执行yy，新的内容将覆盖掉原寄存器中内容。如果想保存原寄存器中内容而同时增加新的内容呢？这时就要在yy前增加标签了。标签以双引号开始，跟着的是标签名称，可以是数字0-9，也可以是26个字母，然后就是复制操作，这样就把复制内容保存到该标签寄存器里。通过下面命令显示所有寄存器内容：::
+    
+    :reg
+
+其中注意两个特殊的寄存器："* 和 "+。这两个寄存器是和系统相通的，前者关联系统选择缓冲区，后者关联系统剪切板。通过它们可以和其他程序进行数据交换。
+
+备注：
+    若寄存器列表里无"* 或 "+ 寄存器，则可能是由于没有安装vim的图形界面所致。Debian/Ubuntu下可以通过安装vim-gnome解决。 ::
+
+    $ sudo apt-get install vim-gnome
+
+选择缓冲区和系统剪切板啥子区别？让我们继续研究。
+
+选择缓冲区和剪切板
+------------------
+
+不同于Windows，Linux系统里存在两个剪切板：一个叫做选择缓冲区(X11 selection buffer)，另一个才是剪切板(clipboard)。
+
+选择缓冲区是实时的，当使用鼠标或键盘选择内容时，内容已经存在于选择缓冲区了，这或许就是选择缓冲区的由来吧。
+
+使用下面的命令查看选择缓冲区的内容：::
+
+    $ xclip -out
+
+如果没有xclip命令，Debian/Ubuntu下可以通过如下命令安装：::
+
+    $ sudo apt-get install xclip
+
+
+可以使用鼠标中键或键入Shift+Insert来粘贴选择缓冲区的内容。但对于有些GUI程序，比如gedit，只能通过鼠标中键调用选择缓冲区的内容，使用Shift+Insert的话，调用的是剪切板的内容。
+
+
+剪切板和Windows的剪切板类似，在选择文字内容后，执行Ctrl + c或在菜单里选择‘复制’的话，这时内容才存放到剪切板里。
+
+使用下面的命令查看剪切板的内容：::
+
+    $ xclip -out -sel clipboard
+
+而使用剪切板的内容，则是Ctrl+v。 但在有些情况下，比如gnome-terminal，不能直接使用Ctrl+c，Ctrl+v，这时就要用Shift+Ctrl+c，Shift+Ctrl+v代替。
+
+原格式粘贴
+----------
+
+好了，了解了选择缓冲区和剪切板，下面就是实现保留格式粘贴的完美解决方案：
+
+* 方案一：
+
+#. 选择文本内容
+#. vim普通模式下按 "* p 将选择缓冲区中内容粘贴进来
+
+* 方案二：
+
+#. 复制文件内容
+#. vim普通模式下按 "+ p 将剪切板内容粘贴进来
+
+这时，如果要复制的内容也是vim编辑器中的内容，那么如何复制才更方便呢？
+
+vim中的复制
+-----------
+vim有一个可视模式(Visual Mode)，在此模式下可以选择区域。可以在普通模式下键入v进入可视模式，也可以个性化一点，键入V进入行可视模式，或者键入Ctrl+v进入列可视模式。这时移动光标就可以选择内容了。注意这时被选内容已经实时保存于选择缓冲区了，当然你也可以键入"+y将此内容也保存到剪切板里，或者"ay将内容保存到标签为a的寄存器中。但要知道，只有前两个中的内容可以在其他程序中使用，而a寄存器中的内容只能在该vim编辑器内使用。
+
+也可以通过鼠标来复制。这里首先要打开鼠标模式。::
+
+    :set mouse=a
+
+这样在普通模式下可以直接使用鼠标选择区域复制到选择缓冲区。但这种情况下不能复制到剪切板。
+
+若要使用鼠标复制内容到剪切板，则需要做如下设置：::
+
+    :set mouse=v
+
+这种情况下，除了可以像上面一样直接使用鼠标选择区域复制到选择缓冲区以外，还可以在右键菜单中选择“复制”来保存到剪切板里。但新问题又出来了。若显示行号，也会将行号一并选择。你会想到，这好办呀，如果不需要行号的话，在复制前，先执行set nonu来取消行号显示呗。 
+
+其实没必要这样，如果不需要复制行号的话，用在可视模式下用键盘来选择不就可以吗？
+
+并且，从上面的讨论，我们不难得出，使用选择缓冲区比使用剪切板要方便的多，可以节省很多步骤。
+
+所以，最终我们得到了vim文件间复制粘贴的完美方案，文件传输的中转使用选择缓冲区。
+
+vim文件间复制粘贴完美方案
+-------------------------
+
+#. 在~/.vimrc中增加如下一行：::
+
+    set mouse=a
+
+#. 复制内容到选择缓冲区。
+
+- 带行号时，使用鼠标选择内容区域。
+- 不要行号，使用 "* yny 复制n行或可视模式下选择。
+
+#. 将选择缓冲区中内容粘贴到vim文件。
+    
+- 插入模式下：Shift+Insert 或 鼠标中键
+- 普通模式下： "* p
+
+python egg学习笔记
+=====================
+
+经常接触Python的同学可能会注意到，当需要安装第三方python包时，可能会用到easy_install命令。easy_install是由PEAK(Python Enterprise Application Kit)开发的setuptools包里带的一个命令，它用来安装egg包。egg包是目前最流行的python应用打包部署方式。如何制作和安装egg包？下面我就简单的分析了一下。
+
+安装setuptools
+--------------
+
+首先要安装setuptools工具。Debian/Ubuntu下可以直接使用apt安装：::
+
+    $ sudo apt-get install python-setuptools
+
+手工安装的话，有两种方式：
+
+* 通过引导程序 `ez_setup.py <http://peak.telecommunity.com/dist/ez_setup.py>`_ 来安装。这个引导程序会联网下载最新版本setuptools来安装，同时也可以更新本地的setuptools。 ::
+
+   $ wget http://peak.telecommunity.com/dist/ez_setup.py
+   $ sudo python ez_setup.py
+
+  更新setuptools：::
+
+   $ sudo python ez_setup.py -U setuptools
+
+* 或者下载setuptools的egg包来安装。可以在 `这里 <http://pypi.python.org/packages/2.6/s/setuptools/>`_ 查看最新版本下载。下载完毕以后通过sh安装。 ::
+
+     $ wget http://pypi.python.org/packages/2.6/s/setuptools/setuptools-0.6c11-py2.6.egg
+     $ sudo sh setuptools-0.6c11-py2.6.egg 
+ 
+现在就可以使用easy_install命令来安装其他的egg包了。
+
+
+制作自己的egg包
+---------------
+
+总是安装别人的egg包，是不是也想制作自己的egg包呢？好，接下来我们就自己制作一个简单的egg包。
+
+首先建立工程目录egg-demo,初始化一个setup.py文件： ::
+
+  $ mkdir egg-demo
+  $ cd egg-demo
+  $ touch setup.py
+  $ ls
+  setup.py
+
+下面主要就是填充setup.py。setup.py其实是python工具包distutils的配置文件，setuptools就是基于distutils来做的。
+在setup.py中通过setup函数来配置打包信息。首先要引入setuptools的函数setup。setuptools的setup其实就是distutils的setup函数，填写setup.py为以下内容： ::
+
+    $ cat setup.py
+    #!/usr/bin/env python
+    #-*- coding:utf-8 -*-
+
+    from setuptools import setup
+
+    setup()
+
+写到这里，一个空的egg配置文件就写好了。我们可以使用下面命令生成egg包： ::
+
+    $ python setup.py bdist_egg
+
+下面看看究竟生成了什么： ::
+
+    $ ls -F
+    build/ dist/ setup.py UNKNOWN.egg-info/
+
+可以看到多了三个文件夹。而在dist文件夹下，有一个egg文件：UNKNOWN-0.0.0-py2.6.egg。
+
+产蛋成功！先看看这个egg文件是什么格式的： ::
+
+    $ file dist/UNKNOWN-0.0.0-py2.6.egg
+    dist/UNKNOWN-0.0.0-py2.6.egg: Zip archive data, at least v2.0 to extract
+
+噢，原来就是一个zip压缩包呀！好，再来看看内部构造： ::
+
+    $ unzip -l dist/UNKNOWN-0.0.0-py2.6.egg
+    Archive:  dist/KNOWN-0.0.0-py2.6.egg
+      Length      Date    Time    Name
+    ---------  ---------- -----   ----
+          120  2010-12-06 17:04   EGG-INFO/SOURCES.txt
+            1  2010-12-06 17:04   EGG-INFO/top_level.txt
+            1  2010-12-06 17:04   EGG-INFO/zip-safe
+            1  2010-12-06 17:04   EGG-INFO/dependency_links.txt
+          227  2010-12-06 17:04   EGG-INFO/PKG-INFO
+    ---------                     -------
+          350                     5 files
+
+只有一个EGG-INFO文件夹，内含五个egg信息文件，没了。
+
+这个egg名称未知，版本0.0.0。这是因为我们在setup里什么也没有设置。
+
+显然，这个egg什么也不能做。
+
+下面给它加点料。
+
+在setup.py中，setup函数接收一系列属性作为配置参数。
+
+- name name是egg包的名称，也是寻找要打包的文件夹的名称，默认是UNKNOWN。
+- version 版本号，默认0.0.0
+- packages 这里要用到setuptools的另一个函数find_packages，顾名思义，find_packages用来将指定目录下的文件打包。
+- zip_safe 默认是False，这样在每次生成egg包时都会检查项目文件的内容，确保无误。
+
+还有一些描述性的属性，如description，long_description，author，author_email，license，keywords，platform，url等。
+
+填充setup.py文件如下：::
+
+    $ cat setup.py
+    #!/usr/bin/env python
+    #-*- coding:utf-8 -*-
+
+    from setuptools import setup, find_packages
+
+    setup(
+            name = "demo",
+            version="0.1.0",
+            packages = find_packages(),
+            zip_safe = False,
+
+            description = "egg test demo.",
+            long_description = "egg test demo, haha.",
+            author = "amoblin",
+            author_email = "amoblin@ossxp.com",
+
+            license = "GPL",
+            keywords = ("test", "egg"),
+            platforms = "Independant",
+            url = "",
+            )
+
+在egg-demo目录下建立和上述name名称相同的目录demo，demo目录下写__init__.py文件： ::
+
+    $ mkdir demo
+    $ cat demo/__init__.py
+    #!/usr/bin/env python
+    #-*- coding:utf-8 -*-
+
+    def test():
+        print "Hello, I'm amoblin."
+
+    if __name__ == '__main__':
+        test()
+
+再次生成egg包以后查看egg包信息： ::
+
+    $ python setup.py bdist_egg
+    $ unzip -l dist/demo-0.1.0-py2.6.egg
+    Archive:  dist/demo-0.1.0-py2.6.egg
+      Length      Date    Time    Name
+    ---------  ---------- -----   ----
+          121  2010-12-06 17:30   demo/__init__.py
+          344  2010-12-06 17:46   demo/__init__.pyc
+          137  2010-12-06 17:46   EGG-INFO/SOURCES.txt
+            5  2010-12-06 17:46   EGG-INFO/top_level.txt
+            1  2010-12-06 17:46   EGG-INFO/zip-safe
+            1  2010-12-06 17:46   EGG-INFO/dependency_links.txt
+          227  2010-12-06 17:46   EGG-INFO/PKG-INFO
+    ---------                     -------
+          836                     7 files
+
+可以看到，多了一个文件夹demo，里面有我们写的__init__.py。
+
+奉行敏捷原则，先安装了体验一下再说： ::
+
+    $ sudo python setup.py install
+    running install
+    install_dir /usr/local/lib/python2.6/dist-packages/
+    ...
+    creating /usr/local/lib/python2.6/dist-packages/demo-0.1.0-py2.6.egg
+    Extracting demo-0.1.0-py2.6.egg to /usr/local/lib/python2.6/dist-packages
+    demo 0.1.0 is already the active version in easy-install.pth
+
+    Installed /usr/local/lib/python2.6/dist-packages/demo-0.1.0-py2.6.egg
+    Processing dependencies for demo==0.1.0   
+    Finished processing dependencies for demo==0.1.0
+
+OK!安装完毕！接下来我们就可以直接通过import来使用啦！ ::
+
+    $ python -c "from demo import test;test()"
+    Hello, I'm amoblin.
+    
+成功输出！这说明安装正确。我们的一个egg包诞生了。
+
+一般情况下，我们的源程序都放在src目录下，所以接下来将demo文件夹移动到src里。但这样也要修改setup.py文件，修改find_packages函数中参数为'src'，同时增加package_dir参数： ::
+
+    packages=find_packages('src'),
+    package_dir = {'':'src'}
+
+这样告诉setuptools在src目录下找包，而不是原来默认的工程根目录。
+
+egg文件卸载
+------------
+
+以python2.6版本为例，egg文件一般安装在/usr/local/lib/python2.6/dist-packages/目录下，该目录下还有一个easy-install.pth文件，用于存放安装的egg信息。::
+
+    $ cd /usr/local/lib/python2.6/dist-packages
+    $ cat easy-install.pth|grep demo
+    ./demo-0.1.0-py2.6.egg
+    $ ls -F|grep demo
+    demo-0.1.0-py2.6.egg/
+
+卸载egg文件很简单，首先将包含此egg的行从easy-install.pth中删除，然后删除egg文件夹即可。
+
+
 绑定变量
 ========
 
@@ -88,410 +447,4 @@ eggs越来越重要，开发者应该选择合适的工具来管理代码。zc.b
 
 Packages，products and eggs
 ---------------------------
-
-术语
-+++++
-
-在开始之前，确定你熟悉下面的术语：
-
-- Software home
-- Zope instance
-- Python path
-- Python 包
-- Zope产品
-- Python egg
-- Python包索引
-- easy_install
-- 名称空间包
-
-诡异的产品名称空间
-++++++++++++++++++
-  
-
-
-在通过表单获取输入值时，我们会得到一个REQUEST对象，它代表一个Zope web请求，存在于context里。例如/zoo/hippo/feed?food_type=spam，我么可以通过context.REQUEST.food_type来访问foot_type的值。另外一种使用REQUEST的方法是作为脚本的参数。 如果REQUEST是脚本的一个参数的话，Zope会忽略HTTP请求，直接把请求分配给这个参数。这时可以通过REQUEST.food_type来获取值。
-
-
-分段以及断行
-------------
-
-这是一个段落的开始，
-本行自动续行。下面用一个空行分隔两个段落。
-
-新的段落。
-
-缩进也是语法(类python)
------------------------
-
-这是一个段落。下面段落用空格缩进。
-
-  缩进的段落
-  等量缩进， *续行* 。
-
-    继续缩进的 *段落* 。
-
-结束缩进，成为一个段落。
-
-#. 列表1
-#. 列表2
-
-..
-
-  为了显示为缩进,而非作为列表的内容解析，前面的段落用空注释结束列表
-
-#. 列表2
-
-预格式化文本(literal blocks)
-------------------------------
-
-这是一个段落。下面的双冒号的孤立段落，将会开启一个样式为 literal-block 的 PRE 块。
-在该块中，reST 语法不做解析。
-
-::
-
-  双冒号的孤立行，开始 pre formatted text
-                  __更上一层楼
-                _|
-              _|
-  欲穷千里目-|
-
-  缩进中，reST **不** 进行解析
-
-缩进停止，则开始新的段落。
-
-----
-
-段落结尾的两个冒号，下个段落也开始一个literal block: ::
-
- 缩进样式 *不解析*
-   缩进样式 *不解析*
- 缩进样式 *不解析*
-
-引用块
---------
-
-双冒号的孤立段落，也可以开启一个引用式的缩进，就像邮件引用一样。
-在该块中，reST 语法不做解析。
-
-::
-
-> *something*
-> xyz
->> xyz
-> xyz
-
-行块
------
-
-下面的段落中，以竖线 | 和一个空格做起始，维持换行的格式
-
-| 开始一个line block
-| 另外的一行,
-  续行。
-| 再一行
-|    含有缩进的一行
-|  含有缩进的一行
-|    含有缩进的一行
-
-另外一个段落。
-
-文字样式
---------
-
-- *斜体*
-- **粗体**
-- 粗斜体如何显示？？？
-- 解析文本调用缺省解析器: `子曰：“学而时习之不亦乐乎？”`
-- 以 tt 标签显示的: ``import os``
-- 水的分子式是 |H2O|.
-- 相对论公式： |e=mc2|.
-
-.. |H2O| replace:: H\ :sub:`2`\ O
-.. |e=mc2| replace:: E = mc\ :sup:`2`
-
-列表
------
-
-* 子弹头列表
-
-   - 子列表
-   - 子列表
-
-* 子弹头列表2
-
-   #. 自动编号列表1
-   #. 自动编号列表2
-
-   #. 自动编号列表3
-
-* 子弹头列表3
-
-   2. 从2开始编号
-   3. 编号顺序递增
-
-       a) Item 3a.
-       b) Item 3b.
-
-   4. 列表4
-
-       i) Item 4i.
-       ii) Item 4ii.
-
-定义
------
-
-apple
-  一种水果
-
-  知名软件公司
-
-term2 : 名词
-  定义
-
-分隔线
-------
-
-四个减号开始一个分隔线
-
-------
-
-分隔线下内容。。。
-
-
-高级格式说明
-============
-
-超链接
-------
-
-直接嵌入超链接
-~~~~~~~~~~~~~~
-
-群英汇的网址是: http://www.ossxp.com.
-
-直接嵌入具名超链接
-~~~~~~~~~~~~~~~~~~~
-
-这个链接会自动创建一个具名链接，除了这里显示链接外，
-还可以在后面引用。如: `北京群英汇 <http://www.ossxp.com>`_
-是开源软件服务提供商。
-
-这里引用 北京群英汇_
-
-定义和引用具名超链接
-~~~~~~~~~~~~~~~~~~~~
-
-定义超链接格式： ``.. _hyperlink-name: link-block``
-
-内部anchor
-^^^^^^^^^^
-定位到 target_
-
-在文内通过一个不包含 link-block 的具名链接定义，即定义此 anchor，用于文内跳转。
-
-.. _target:
-
-上面是一个名为 target 的文内anchor。
-
-指向URI的超链接
-^^^^^^^^^^^^^^^
-
-群英汇_ [#]_ 的主页: ossxp_, 发邮件给 `Jiang Xin`_
-
-
-.. _群英汇: ossxp_
-.. _ossxp: http://www.ossxp.com/
-.. _Jiang Xin: worldhello.net@gmail.com
-.. [#] 链接的定义可以指向另外一个链接的定义
-
-匿名超链接
-~~~~~~~~~~
-
-格式：
-  * 引用时，后面是两个下划线，而不是一个
-  * 定义时，以两个下划线为名称，不包含链接名字
-
-示例： See `the web site of my favorite programming language`__.
-
-.. __: http://www.python.org
-
-一个文档可以包含多个匿名超链接，要求：
-
- * 引用的数量和定义的数量相同
- * 定义和引用一一对应
-
-
-脚注
-----
-
-脚注就是以顺序的数字显示链接，并指向脚注区域的相关注释。
-
-手动编号的脚注
-~~~~~~~~~~~~~~
-
-方括号 [1]_ 内手动编号 [1]_ ，别忘了结尾的下划线 [3]_, 可以重复引用脚注 [3]_
-
-.. [1] 嵌入的脚注前后要有空格
-.. [2] 阿拉伯数字
-.. [3] 下划线只在引用时需要提供，定义时，不需要
-
-自动编号的脚注
-~~~~~~~~~~~~~~
-
-自动编号的脚注是用井号 [#]_ 作为 label 的脚注 [#]_
-
-.. [#] 以 # 代替数字
-.. [#] 自动增加编号。定义的时候也写成 #，而不要用数字
-
-但是自动编号的局限性是：不能对一个脚注在多处引用。
-
-对于需要在多处引用自动编号的脚注，可以使用下面的带有 label 的自动编号脚注。
-
-
-带 label 自动编号的脚注
-~~~~~~~~~~~~~~~~~~~~~~~
-
-带有label 的自动脚注 [#note]_ 会根据前面的脚注情况，自动编号。显示为
-"[n]".  如果多此引用此脚注，可以多次出现同 label 的自动脚注 [#note]_ 。
-如果向使用链接指向脚注，可以用 *简单链接* 语法做指向。如： note_
-
-.. [#note] This is the footnote labeled "note".
-
-自动符号脚注
-~~~~~~~~~~~~~~~~~~~~~~~
-
-可以用星号 * 作为脚注的label，会依次用不同的符号来显示。脚注 [*]_,脚注 [*]_,脚注 [*]_,脚注 [*]_,脚注 [*]_ ...
-
-.. [*] 以符号的形式显示的脚注
-.. [*] 以符号的形式显示的脚注
-.. [*] 以符号的形式显示的脚注
-.. [*] 以符号的形式显示的脚注
-.. [*] 以符号的形式显示的脚注
-
-引证
-----
-
-引证就是以有意义的单词或者规定的格式编码显示链接，并指向引证区域的相关注释。
-
-和脚注类似，不过是直接使用字母而非数字作为 label。 [CIT2002]_.
-
-.. [CIT2002] This is the citation.  It's just like a footnote,
-   except the label is textual.
-
-替换
-----
-
-用竖线中间夹着要替换的单词。定义替换采用两个点的类似注释的语法。
-
-文字替换
-~~~~~~~~
-
-|RST|_ is a little annoying to type over and over, especially
-when writing about |RST| itself, and spelling out the
-bicapitalized word |RST| every time isn't really necessary for
-|RST| source readability.
-
-.. |RST| replace:: reStructuredText
-.. _RST: http://docutils.sourceforge.net/rst.html
-
-图片替换
-~~~~~~~~
-
-* 嵌入 |CC| 授权协议图标。
-* 带有链接的 |CC with link|_ 授权协议图标。
-
-.. |CC| image:: images/cc-icon.png
-.. |CC with link| image:: images/cc-icon.png
-.. _CC with link: http://creativecommons.org/licenses/by-sa/3.0/
-
-
-表格
-----
-
-* 英文表格
-
-  +------------+------------+-----------+
-  | Header 1   | Header 2   | Header 3  |
-  +============+============+===========+
-  | body row 1 | column 2   | column 3  |
-  +------------+------------+-----------+
-  | body row 2 |    `ps -ef | grep py`  |
-  |            |                        |
-  +------------+------------+-----------+
-  | body row 3 | Cells may  | - Cells   |
-  +------------+ span rows. | - contain |
-  | body row 4 |            | - blocks. |
-  +------------+------------+-----------+
-
-* 中文表格
-
-  +------------+------------+-----------+
-  |    表头1   |    表头2   |    表头3  |
-  +============+============+===========+
-  | 表格行1    |    列 2    |    列 3   |
-  +------------+------------+-----------+
-  | 表格行2    |    `ps -ef | grep py`  |
-  |            |                        |
-  +------------+------------+-----------+
-  | 表格行3    | 单元格     | - 单元格  |
-  +------------+ 跨越多行。 | - 包含    |
-  | 表格行4    |            | - 块.     |
-  +------------+------------+-----------+
-
-* 简单表格
-
-
-Simple table:
-
-=====  =====  ======
-   Inputs     Output
-------------  ------
-  A      B    A or B
-=====  =====  ======
-False  False  False
-True   False  True
-False  True   True
-True   True   True
-=====  =====  ======
-
-指令扩展
-============
-
-图片
-----
-
- * 嵌入图片
-
-   .. image:: images/cc-icon.png
-
- * 带标题的图片
-
-   .. figure:: images/cc-icon.png
-
-      Creative Commons 授权图标（by-sa）
-
- * 图片缩放
-
-   .. figure:: images/cc-icon.png
-      :scale: 50
-
-      缩放了 50% 的图片
-
- * 图片缩放
-
-   .. figure:: images/cc-icon.png
-      :height: 11
-      :width: 11
-
-      设置了固定高和宽度的图片
-
-警告
-----
-
-.. note:: This is a paragraph
-
-   - Here is a bullet list.
-
-.. Danger:: modify at your own risk!
-
 

@@ -706,6 +706,8 @@ sudo apt-get install cjk-latex latex-cjk-chinese
 
 #pdf不显示中文
 #sudo apt-get install poppler-data
+#sudo vi /etc/fonts/conf.d/49-sansserif.conf
+#将倒数第四行sans-serif修改为WenQuanYi Zen Hei即可
 
 ##mpd 用mpd命令直接读~/.mpdconf,而用/etc/init.d/mpd 则读/etc/mpd.conf
 ##建议用/etc/init.d/mpd不要自己写.mpdconf文件了，没必要。
