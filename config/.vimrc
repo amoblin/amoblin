@@ -2,6 +2,11 @@
 " General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"since 7.3
+set undofile
+set undodir=/tmp/vim/undo
+"end 7.3
+
 "显示行号 set nu/set nonu
 set number
 "set ruler
