@@ -4,7 +4,7 @@
 
 "since 7.3
 set undofile
-set undodir=/tmp/vim/undo
+set undodir=/tmp
 "end 7.3
 
 "显示行号 set nu/set nonu

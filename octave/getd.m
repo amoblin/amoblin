@@ -1,3 +1,5 @@
+#!/usr/bin/octave
+
 function[x,k]=getd(A,b,x0,ep,Nmax)
 %用共轭梯度法求解正定系数矩阵线性方程组Ax=b
 %A为线性方程组的系数矩阵，正定对称，b为方程组的右端向量
