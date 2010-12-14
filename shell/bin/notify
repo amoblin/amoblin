@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Copyright: TualatriX <tualatrix@gmail.com> GPL v3
+#
+# Website: http://imtx.cn/archives/1516.html
+#
+# Please add the following line to ~/.bashrc to enable the bash completion support
+#
+# 	complete -o filenames -F _root_command notify
+
+KERNEL=`uname -s`
+
+if [ $KERNEL == 'Linux' ]; then
+	$* && \
+	notify-send "Cool~ \"$*\" finished!" -i 'emblem-cool' || \
+	notify-send "Oh No! \"$*\" failed!" -i 'emblem-ohno'
+elif [ $KERNEL == 'Darwin' ]; then
+	$* && \
+	growlnotify -m "Cool~ \"$*\" finished!" || \
+	growlnotify -m "Oh No! \"$*\" failed!"
+fi

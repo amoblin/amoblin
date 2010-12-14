@@ -1,4 +1,5 @@
 #!/bin/bash
+# auto monitor the files change.
 
 cd /phish/trusted
 
