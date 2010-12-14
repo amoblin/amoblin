@@ -10,8 +10,15 @@
 #   2009-12-6 23:02 found gnofract4f, a good fractal software.
 #######################################################################
 
-#2010-11-5
 
+#2010年12月14日 星期二 13时27分34秒
+#readline configure:使用vi模式，取emacs风格中的contrl l清屏。通过在/etc/bash.bashrc中增加 set -o vi亦可使用vi模式，但不能使python交互界面使用vi模式。
+#vi /etc/inputrc
+#add:
+#set editing-mode vi
+#Control-l:"clear\C-M"
+
+#2010-11-5
 mailman configure
 sudo groupadd mailman
 sudo useradd -c "GNU Mailman" -s /no/shell -d /no/home -g mailman mailman
