@@ -16,7 +16,7 @@
 #vi /etc/inputrc
 #add:
 #set editing-mode vi
-#Control-l:"clear\C-M"
+#Control-l: clear-screen
 
 #2010-11-5
 mailman configure

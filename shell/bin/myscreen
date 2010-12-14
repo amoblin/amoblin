@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd ~
-gnome-terminal -e "screen"
+gnome-terminal -e "screen -DRR"
