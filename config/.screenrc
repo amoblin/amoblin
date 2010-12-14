@@ -1,0 +1,23 @@
+# 启动时不显示欢迎屏幕
+startup_message off
+#
+# # 屏幕缓冲区 5120 行。
+defscrollback 1024
+#
+# #在vi或less之类退出时完全恢复到原屏幕内容
+altscreen on
+#
+# #显示屏幕下方状态栏
+#hardstatus alwayslastline
+#
+# #状态栏的显示信息定制 ( 具体符号代表什么请 man screen )
+#hardstatus string "%{= kG[%{G%H%{g][%= %{= kw%?%-Lw%?%{r(%{W%n*%f%t%?(%u)%?%{r)%{w%?%+Lw%?%?%= %{g][%{B%Y-%m-%d%{W%c:%s%{g]"
+#hardstatus string "%{.kB%-w%{..M%n %t%{-%+w %=%{..B%H(%l) %{..B%Y/%m/%d %c:%s "
+#hardstatus string "%{.bW%-w%{.rY%n %t%{-%+w %=%{..G%H(%l) %{..Y%Y/%m/%d %c:%s "
+#
+# #绑定 Ctrl+a-w 为查看所有窗口列表
+bind w windowlist -b
+caption always "%{= kw}%-Lw%{= BW}%n %t%{-}%+w %-= @%H - %Y/%m/%d, %C"
+
+#screen -t mutt mutt
+#screen -t irssi irssi 
