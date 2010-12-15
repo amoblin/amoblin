@@ -11,7 +11,7 @@ set undodir=/tmp
 set number
 "set ruler
 "auto change dir
-set autochdir
+"set autochdir
 " 设置编码
 set enc=utf-8
 " 设置文件编码

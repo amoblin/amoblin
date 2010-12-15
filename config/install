@@ -10,6 +10,12 @@
 #   2009-12-6 23:02 found gnofract4f, a good fractal software.
 #######################################################################
 
+#2010年12月15日 星期三 13时55分03秒
+##vimana: 自动下载vim脚本
+# cpan install vimana
+
+
+
 
 #2010年12月14日 星期二 13时27分34秒
 #readline configure:使用vi模式，取emacs风格中的contrl l清屏。通过在/etc/bash.bashrc中增加 set -o vi亦可使用vi模式，但不能使python交互界面使用vi模式。
