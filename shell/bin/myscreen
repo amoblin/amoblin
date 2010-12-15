@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd /home/amoblin
+cd ~
 gnome-terminal -e "screen -DRR"
