@@ -14,6 +14,10 @@
 ##vimana: 自动下载vim脚本
 # cpan install vimana
 
+#2010年12月15日 星期三 15时58分32秒
+# 自动补全中文名
+# chsdir: http://code.google.com/p/esayscripts/
+
 
 
 
