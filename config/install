@@ -10,6 +10,10 @@
 #   2009-12-6 23:02 found gnofract4f, a good fractal software.
 #######################################################################
 
+#sqlite3
+# .tables
+# .quit
+
 #2010年12月16日 星期四 14时36分57秒
 #adjust LCD brightness from command line
 echo -n 100 > /proc/acpi/video/EGFX/LCD/brightness
@@ -600,7 +604,8 @@ sudo apt-get install cjk-latex latex-cjk-chinese
 #snownews is not available.
 
 #####screen (byodu)####
-##
+# quick start
+#screen -q
 ##Ctrl-a c 新建 bash screen 终端
 ##Ctrl-a " 列出
 ##Ctrl-a A 重命名
