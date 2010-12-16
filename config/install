@@ -280,8 +280,7 @@ sudo apt-get install octave3.2
 #mencoder -ss 00:00:00 -oac copy -ovc copy -endpos 00:00:05 input -o output
 
 #echo "installing develop environment(C/C++,PHP,JAVA,JSP,VSFTP,APACHE,GTKMM...)....."
-sudo apt-get install vim-full ctags cscope gcc g++ apache2 sun-java6-jdk dia glade-3 oracle-xe vsftpd subversion vnc4server
-sudo apt-get install libnet1-dev libpcap0.8-dev libgtkmm-2.4-dev  libglademm-2.4-dev libglade2-dev libboost-dev  libxqilla-dev libxerces-c2-dev  libncurses5-dev
+
  #mediawiki bugzilla3
 
 sudo apt-get install cjk-latex latex-cjk-chinese
@@ -310,6 +309,11 @@ sudo apt-get install cjk-latex latex-cjk-chinese
 
 ##cscope -bqk
 ##cscope show
+##cscope add cscope.out
+
+## cscope for python
+##find . -name '*.py' > cscope.files
+##cscope -b
 ##cscope add cscope.out
 
 
@@ -610,18 +614,14 @@ sudo apt-get install cjk-latex latex-cjk-chinese
 ##Ctrl-a :resize <height>	改变当前窗口高度为<height>
 ##Ctrl-a :quit 退出 screen，将关闭所有 screen 终端，结束其中所有任务
 ##
-##Ctrl-a <Esc>	 进入选择模式
-##<PageUp> 或 Ctrl-u 光标上移一页
-##<PageDown> 或 Ctrl-d	光标下移一页	
-##<Left> 或 h	 光标左移一格
-##<Down> 或 j 光标下移一行
-##<Up> 或 k 光标上移一行
-##<Right> 或 l	 光标右移一格
+##Ctrl-a <Esc>	 进入选择模式(vi模式)
 ##<Space> 选择开始，选择结束
 ##<Esc> 退出选择模式
 
 ##Ctrl-a ] 粘贴选择的内容
-
+#screen start errr:
+#Cannot make directory '/var/run/screen': Permission denied
+#solution: sudo /etc/init.d/screen-cleanup start
 
 #rrdtool   better than mtr?
 #gpick is better than gcolor2
