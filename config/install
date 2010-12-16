@@ -10,6 +10,11 @@
 #   2009-12-6 23:02 found gnofract4f, a good fractal software.
 #######################################################################
 
+#2010年12月16日 星期四 14时36分57秒
+#adjust LCD brightness from command line
+echo -n 100 > /proc/acpi/video/EGFX/LCD/brightness
+
+
 #2010年12月15日 星期三 13时55分03秒
 ##vimana: 自动下载vim脚本
 # cpan install vimana
@@ -22,11 +27,13 @@
 
 
 #2010年12月14日 星期二 13时27分34秒
-#readline configure:使用vi模式，取emacs风格中的contrl l清屏。通过在/etc/bash.bashrc中增加 set -o vi亦可使用vi模式，但不能使python交互界面使用vi模式。
+#readline configure:使用vi模式，取emacs风格中的contrll l清屏,cnotrol n,p使用历史命令功能。通过在/etc/bash.bashrc中增加 set -o vi亦可使用vi模式，但不能使python交互界面使用vi模式。
 #vi /etc/inputrc
 #add:
 #set editing-mode vi
 #Control-l: clear-screen
+#Control-n: next-history
+#Control-p: previous-history
 
 #2010-11-5
 mailman configure
@@ -722,7 +729,11 @@ sudo apt-get install cjk-latex latex-cjk-chinese
 #sudo apt-get install xpdf-chinese-simplified xpdf-chinese-traditional msttcorefonts
 
 #pdf不显示中文
+
 #sudo apt-get install poppler-data
+#其中包含cmap-adobe-gb1
+#CMap files for Adobe-GB character collection, which stands for Adobe-defined one, and including standard Simplified-Chinese charsets.
+
 #sudo vi /etc/fonts/conf.d/49-sansserif.conf
 #将倒数第四行sans-serif修改为WenQuanYi Zen Hei即可
 
