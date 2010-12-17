@@ -6,6 +6,18 @@
 set undofile
 set undodir=/tmp
 "end 7.3
+"
+"encoding of printing. use encoding if not set.
+set printencoding=utf-8
+"charset of print. should be compatible with printencoding.
+set printmbcharset=ISO10646
+"打印所用字体, 在linux下, 要用ghostscript里已有的字体, 不然会打印乱码.
+set printmbfont=r:UMing,c:yes
+"打印可选项, formfeed: 是否处理换页符, header: 页眉大小, paper: 用何种
+"纸, duplex: 是否双面打印, syntax: 是否支持语法高
+set printoptions=formfeed:y,paper:A4,duplex:on,syntax:y",header:3
+"打印时页眉的格式
+set printheader=%<%f%h%m%=Page\ %N
 
 "显示行号 set nu/set nonu
 set number
@@ -33,6 +45,9 @@ set backupdir=$HOME/.vim/backup
 set mouse=v
 "set selection=exclusive
 set selectmode=key
+
+"set the * register as the default register.
+set clipboard=unnamed
 
 " 设定文件浏览器目录为当前目录
 set bsdir=buffer
