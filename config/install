@@ -10,6 +10,18 @@
 #   2009-12-6 23:02 found gnofract4f, a good fractal software.
 #######################################################################
 
+
+2010年12月20日 星期一 18时30分08秒
+#农历
+sudo apt-get install lunar-applet
+sudo apt-get install ccal
+
+#vim 7.3
+#查看可安装版本
+sudo apt-cache policy vim
+#安装对应版本
+sudo apt-get install vim=<version>
+
 #sqlite3
 # .tables
 # .quit
