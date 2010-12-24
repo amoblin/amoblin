@@ -10,8 +10,18 @@
 #   2009-12-6 23:02 found gnofract4f, a good fractal software.
 #######################################################################
 
+#2010年12月24日 星期五 11时38分29秒
+# rhythmbox mp3 support.
+# 如果想支持mp3，需要安装gstreamer-0.10-plugins-bad和gstreamer-0.10-plugins-ugly
+# 如果想支持wma，需要安装gstreamer-0.10-ffmpeg
 
-2010年12月20日 星期一 18时30分08秒
+
+#2010年12月22日 星期三 15时21分41秒
+#彩色prompt
+#vi ~/.bashrc
+#force_color_prompt=yes
+
+#2010年12月20日 星期一 18时30分08秒
 #农历
 sudo apt-get install lunar-applet
 sudo apt-get install ccal
