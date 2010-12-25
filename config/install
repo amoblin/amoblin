@@ -10,6 +10,13 @@
 #   2009-12-6 23:02 found gnofract4f, a good fractal software.
 #######################################################################
 
+#2010年12月25日 星期六 19时50分46秒
+#多线程下载工具 axel
+# 10线程，不刷屏下载
+#axel -n 10 -a http://.../ubuntu.iso
+
+
+
 #2010年12月24日 星期五 11时38分29秒
 # rhythmbox mp3 support.
 # 如果想支持mp3，需要安装gstreamer-0.10-plugins-bad和gstreamer-0.10-plugins-ugly
