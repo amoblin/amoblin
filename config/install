@@ -10,7 +10,22 @@
 #   2009-12-6 23:02 found gnofract4f, a good fractal software.
 #######################################################################
 
-Sun 26 Dec 2010 09:45:55 AM CST
+#2010年12月27日 星期一 18时01分49秒
+#VirtualBox安装
+#sourcelist: deb http://download.virtualbox.org/virtualbox/debian maverick contrib
+#wget http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc
+#sudo apt-key add oracle_vbox.asc
+#sudo apt-get update
+#sudo apt-get install virtualbox-4.0
+
+
+#2010年12月27日 星期一 19时50分46秒
+#多线程下载工具 axel
+# 10线程，不刷屏下载
+#axel -n 10 -a http://.../ubuntu.iso
+
+
+#Sun 26 Dec 2010 09:45:55 AM CST
 #gdm 启动慢
 #重新生成字体
 # fc-cache -v -f
