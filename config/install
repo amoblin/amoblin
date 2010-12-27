@@ -10,6 +10,12 @@
 #   2009-12-6 23:02 found gnofract4f, a good fractal software.
 #######################################################################
 
+Sun 26 Dec 2010 09:45:55 AM CST
+#gdm 启动慢
+#重新生成字体
+# fc-cache -v -f
+
+
 #2010年12月24日 星期五 11时38分29秒
 # rhythmbox mp3 support.
 # 如果想支持mp3，需要安装gstreamer-0.10-plugins-bad和gstreamer-0.10-plugins-ugly
@@ -181,6 +187,15 @@ sudo apt-get install octave3.2
 
 ##sudo vi /boot/grub/menu.lst
 ##kernel后添加vga=791
+
+####关于分区########
+#160GB   Ubuntu
+#/boot   128MB
+#/       20GB
+#/usr    10GB
+#/var    5GB
+#/home   105GB
+####################
 
 ##修改开机启动画面usplash
 #sudo ln -sf /usr/local/usplash/usplash-theme-ubuntu.so /etc/alternatives/usplash-artwork.so
@@ -911,3 +926,19 @@ sudo apt-get install cjk-latex latex-cjk-chinese
 
 #At last, upgrade once again, if you want.
 sudo apt-get upgrade -y --force-yes 
+
+#bluetooth
+lsusb
+hciconfig
+hciconfig hci0 up
+sudo /etc/init.d/bluetooth restart
+hcitool scan
+sudo vi /etc/bluetooth/rfcommm.conf
+    device "MAC"
+rfcomm create dev
+sdptool add --channel=1 DID SP DUN LAN FAX OPUSH FTP HS HF SAP NAP GN PANU HID CIP CTP A2SRC A2SNK SYNCML NOKID PCSUITE SR1
+rfcomm bind /dev/rfcomm0 "MAC" "channel"
+hcitool cc 00:25:47:08:67:79
+obex-send "file"
+
+xrdb -load ~/.Xresources
