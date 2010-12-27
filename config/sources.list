@@ -5,6 +5,9 @@
 # deb http://archive.ubuntu.com/ubuntu/ maverick-proposed main restricted universe multiverse
 # deb http://archive.ubuntu.com/ubuntu/ maverick-backports main restricted universe multiverse
 
+#virtualbox
+deb http://download.virtualbox.org/virtualbox/debian maverick contrib
+
 #debian sid源 ，可按装最新软件版本，如vim-7.3
 #deb  http://mirrors.sohu.com/debian sid     main contrib
 

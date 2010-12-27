@@ -12,8 +12,9 @@
 
 #2010年12月27日 星期一 18时01分49秒
 #VirtualBox安装
-#sourcelist: deb http://download.virtualbox.org/virtualbox/debian maverick contrib
-#wget http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc
+#sourcelist:
+deb http://download.virtualbox.org/virtualbox/debian maverick contrib
+wget http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc
 #sudo apt-key add oracle_vbox.asc
 #sudo apt-get update
 #sudo apt-get install virtualbox-4.0
