@@ -63,3 +63,8 @@ set output-meta on
   # a history expansion in the line
   #Space: magic-space
 #$endif
+
+set editing-mode vi
+control-l: clear-screen
+control-n: next-history
+control-p: previous-history
