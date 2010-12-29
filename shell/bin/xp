@@ -1,3 +1,3 @@
 #!/bin/bash
 
-vboxmanage startvm Windows\ XP
+vboxmanage startvm WindowsXP

@@ -10,6 +10,21 @@
 #   2009-12-6 23:02 found gnofract4f, a good fractal software.
 #######################################################################
 
+#没有声音
+#aplay -l
+no soundcards found....
+#查看声卡型号
+#sudo head -1 /proc/asound/card0/codec#0
+
+#问题的根源在于用户失去了访问audio设备的权限。可以通过命令
+#ls -la /dev/snd 
+
+#2010年12月27日 星期一 19时51分20秒
+#date设置日期时间
+date -s 20101227
+date -s 19:51
+
+
 #2010年12月27日 星期一 18时01分49秒
 #VirtualBox安装
 #sourcelist:
@@ -133,7 +148,8 @@ setgid
 setuid
 sticky bit
 
-
+#ls中文乱码
+alias ls='ls --show-control-chars --color=auto'
 
 
 #verify the networking
@@ -526,6 +542,9 @@ sudo apt-get install cjk-latex latex-cjk-chinese
 ##git add file
 ##git commit -m "" file
 ##git push
+
+#git中文乱码解决
+#git config --system core.quotepath false
 
 
 
