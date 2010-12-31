@@ -4,7 +4,7 @@
 cd /phish/trusted
 
 ls *.txt > list_new
-new_file="new_file_`date "+%F"`"
+new_file="new_file_`date +%F`"
 diff list list_new | grep '> '|awk {'print $2'} > $new_file
 mv list_new list
 rm url
