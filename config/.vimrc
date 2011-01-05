@@ -291,7 +291,7 @@ endif
 
 
 "设置xml文档依缩进折叠
-autocmd FileType xml,html,xsl,xhtml,htm,xhtm,svg,xsd,php,vimrc,python set foldmethod=indent
+autocmd FileType xml,html,xsl,xhtml,htm,xhtm,svg,xsd,php,vimrc,python,matlab set foldmethod=indent
 "set foldmethod=marker
 "python设置
 autocmd FileType python setlocal makeprg=gnome-terminal\ -e\ ./%
