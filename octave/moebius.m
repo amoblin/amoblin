@@ -21,4 +21,5 @@ endfor
 mesh(X, Y, Z);
 axis([-R, R+W/2, -2*W, 2*W, -R-W/2, R+W/2]);
 print -dpng moebius.png
+pause
 input('Press any key...');

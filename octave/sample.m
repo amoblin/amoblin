@@ -1,10 +1,10 @@
-#!/usr/bin/octave -q
+#!/usr/bin/octave -qf
 
 %octave script file demo made by amoblin at 2010年12月09日 星期四 17时01分39秒
 
-a=[0:0.1:10]
+a=[0:0.1:10];
 plot(sin(a))
-input('...')
+pause
 
 %matrix
 A=[1 2 3; 4 5 6; 7 8 0]
@@ -38,6 +38,7 @@ x=A\b
 
 %图形输出
 plot(A)
+pause
 
 % 3x2的随机矩阵[0-1]
 B = rand(3,3)
@@ -57,3 +58,4 @@ clear A
 %清除所有变量
 clear all
 
+input('Press any key...');
