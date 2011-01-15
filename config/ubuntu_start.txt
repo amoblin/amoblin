@@ -1,0 +1,20 @@
+Ubuntu 启动笔记：upstart代替sysinit
+
+目前已无/etc/event.d目录
+1.加载BIOS
+2.读取MBR信息，如GRUB
+3.加载Linux Kernel
+4.Kernel执行init进程，以前是sysvinit，自从6.10以后是upstart，配置文件在/etc/init/rc-sysinit.conf.
+取得run-level信息，正常情况下是level 2. 0是关机，1是单用户模式，2-5是多用户模式，6是重启。
+5.执行/etc/rcS.d/下的脚本，然后执行/etc/rc2.d/下的脚本
+
+6.其中/etc/rcS.d/下的x11-common启动X服务器。
+启动X
+启动X时启动的进程在/etc/X11/Xsession.d/下。
+
+/etc/X11/default-display-manager文件指向一个登录管理器，比如gdm
+rc2.d下有gdm吗？
+
+gdm启动慢
+重新生成字体 
+sudo fc-cache -v -f

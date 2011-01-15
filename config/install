@@ -10,6 +10,37 @@
 #   2009-12-6 23:02 found gnofract4f, a good fractal software.
 #######################################################################
 
+vim tips
+ctrl o ctrl o: open recent file.
+
+2011年01月14日 星期五 11时03分56秒
+xlock   锁屏
+vlock   锁tty
+
+chartr  python写的vim风格脑图工具，目前不支持中文，观望中~
+
+系统-首选项-键盘-打字间断   设置 定时休息
+此外还有 workrave 可用。
+
+
+2011年01月13日 星期四 16时08分20秒
+编译安装virtualbox所需条件
+sudo apt-get install bin86 bcc iasl libxslt-dev libidl-dev libxmu-dev libqt4-dev libcap-dev
+
+
+#dpkg出现错误 Sub-process /usr/bin/dpkg returned an error code 
+解决办法：
+
+cd /var/lib/dpkg
+sudo mv info info.bak
+sudo mkdir info
+安装完毕后
+sudo su
+mv info.bak/* info
+
+#查看页面大小
+getconf PAGESIZE
+
 #2011年01月11日 星期二 11时20分57秒
 #查看显卡型号
 lspci|grep VGA
@@ -628,7 +659,7 @@ sudo apt-get install cjk-latex latex-cjk-chinese
 #		15:chm电子书也可以看，用xchm, kchmviewer
 #		16:上网用ff，w3m,epiphany,flock,opera,morido.firefox我用的扩展有mpd客户端minion,vim操作vimperator等。
 #		
-#		vim系列:evince,w3m,vimperator,mutt,vifm,ncmpc
+#		vim系列:evince,w3m,vimperator,mutt,vifm,ncmpc,chartr
 #
 #	sudo aptitude install libstdc++6
 #	sudo aptitude install libqt3-mt

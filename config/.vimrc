@@ -59,6 +59,9 @@ syntax on
 
 "自动换行
 "set lbr
+"
+" 打开文件时，按照 viminfo 保存的上次关闭时的光标位置重新设置光标
+au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 
 " tab宽度
 set expandtab

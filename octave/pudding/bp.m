@@ -30,10 +30,6 @@ dw=zeros(hidden_number,output_number);
 st2=zeros(1,output_number);
 
 
-%fid = fopen("input.dat","rt");
-%samplelist = fread(fid);
-%fclose(fid);
-
 samplelist = dlmread('input.dat');
 expectlist = dlmread('expect.dat');
 
@@ -81,7 +77,7 @@ while(count<=max_count) %迭代结束条件
         for k=1:output_number
             errortmp=errortmp+(d(k)-o(k))^2;    %第一组训练后的误差计算
         end
-        errorp(c)=0.5*errortmp;       
+        errorp(c)=0.5*errortmp;
         %end
 
         %Backward();
