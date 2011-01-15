@@ -10,6 +10,16 @@
 #   2009-12-6 23:02 found gnofract4f, a good fractal software.
 #######################################################################
 
+Sat 15 Jan 2011 06:18:16 PM CST
+启动时出现 ureadahead error with status 5
+解决办法：
+sudo mv /etc/init/ureadahead.conf /etc/init/ureadahead.conf.disable
+
+Ubuntu 10.10舍弃了对部分旧显卡的支持，其中就包括Intel915GM！
+所以我的联想旭日125c需要手动安装显卡驱动了！
+axel -n 10 -a http://downloadmirror.intel.com/8203/eng/i915Graphics.tar.gz
+
+
 vim tips
 ctrl o ctrl o: open recent file.
 
