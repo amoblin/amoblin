@@ -61,6 +61,7 @@ while(count<=max_count) %迭代结束条件
             net=net-st1(j);
             y(j)=1/(1+exp(-net)); %输出层处理单极性sigmoid函数
         end
+
         for k=1:output_number
             net=0.0;
             for j=1:hidden_number
@@ -103,9 +104,11 @@ while(count<=max_count) %迭代结束条件
                 dw(j,k)=deltw(j,k);
             end
         end
+        deltw
         for k=1:output_number
             st2(k)=st2(k)+alpha*yitao(k);
         end
+
         for i=1:input_number
             for j=1:hidden_number
                 deltv(i,j)=alpha*yitay(j)*x(i);
@@ -116,7 +119,6 @@ while(count<=max_count) %迭代结束条件
         for j=1:hidden_number
             st1(j)=st1(j)+alpha*yitay(j);
         end
-        %end
             
         c=c+1;
     end %一次BP训练结束
@@ -127,6 +129,7 @@ while(count<=max_count) %迭代结束条件
         tmp=tmp+errorp(i)*errorp(i);    %误差求和
     end
     tmp=tmp/c;
+    sqrt(tmp)
     error(count)=sqrt(tmp); %误差求均方根，即精度。
 
     if (error(count)<precision)

@@ -96,7 +96,7 @@ deb http://ppa.launchpad.net/blueman/ppa/ubuntu lucid main
 #zeitgeist
 
 #dropbox
-deb http://linux.getdropbox.com/ubuntu maverick main
+#deb http://linux.getdropbox.com/ubuntu maverick main
 
 #ppa
 #shutter
