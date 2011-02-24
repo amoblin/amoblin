@@ -46,3 +46,4 @@ fclose(fid);
 dlmwrite('input.dat',samplelist);
 dlmwrite('expect.dat',expectlist);
 
+input('转换完毕...');
