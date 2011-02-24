@@ -10,6 +10,9 @@
 #   2009-12-6 23:02 found gnofract4f, a good fractal software.
 #######################################################################
 
+2011年01月20日 星期四 17时38分07秒
+使用irssi
+
 vim tips
 ctrl o ctrl o: open recent file.
 
@@ -878,8 +881,12 @@ sudo apt-get install cjk-latex latex-cjk-chinese
 #注册
 ##/msg nickserv register password E-mail
 
-##  /server freenode.net
+##  /server irc.freenode.net
 ##  /join #vim
+##  /join #plone    #2011年01月20日 星期四 17时38分56秒
+## 设置峰鸣提醒
+##  /set bell_beeps ON
+##  /set beep_msg_level MSGS NOTICES DCC DCCMSGS HILIGHT
 ##  /quit
 
 #gdm
