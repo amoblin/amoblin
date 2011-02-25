@@ -7,5 +7,12 @@
 	TEXT="Vim">
 <node ID="ID_66523230" POSITION="right" 
 	TEXT="zz"/>
+<node FOLDED="true" ID="ID_1870963537" POSITION="right" 
+	TEXT="替换">
+<node ID="ID_159289895" 
+	TEXT="%s/-.\+//g 删除每行中从-到行尾的内容"/>
+<node ID="ID_1091024597" 
+	TEXT="删除不包含两个横扛的行： v/.*-.*-.*/d  开头的v改为g则删除匹配行"/>
+</node>
 </node>
 </map>
