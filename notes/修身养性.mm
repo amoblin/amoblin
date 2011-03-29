@@ -27,12 +27,19 @@
 	TEXT="答应别人的事一定要做好"/>
 <node ID="ID_1342197929" POSITION="right" 
 	TEXT="不要随便答应别人的要求，要好好思考一下先"/>
+<node ID="ID_636523943" POSITION="right" 
+	TEXT="凡事要三思而后行"/>
 <node FOLDED="true" ID="ID_155121813" POSITION="right" 
 	TEXT="个人卫生">
 <node ID="ID_1273682432" 
 	TEXT="晚上刷牙洗脚"/>
 <node ID="ID_557889438" 
 	TEXT="勤洗头"/>
+</node>
+<node FOLDED="true" ID="ID_1596311075" POSITION="right" 
+	TEXT="进步">
+<node ID="ID_670065953" 
+	TEXT="已做到每晚洗脚"/>
 </node>
 <node FOLDED="true" ID="ID_1952052183" POSITION="left" 
 	TEXT="不良习惯">
@@ -68,6 +75,10 @@
 	TEXT="说话哼哼唧唧"/>
 <node ID="ID_601010189" 
 	TEXT="看电脑时伸着脖子，张着嘴巴，像个傻子似的"/>
+<node ID="ID_1324809835" 
+	TEXT="吃饭吃的慢，边吃边说话"/>
+<node ID="ID_1166325570" 
+	TEXT="吃饭用嘴巴前面嚼，难看"/>
 </node>
 <node FOLDED="true" ID="ID_183508808" POSITION="left" 
 	TEXT="财商">

@@ -39,7 +39,7 @@ set nocompatible
 " Turn backup on
 set backup
 " Set backup directory
-set backupdir=$HOME/.vim/backup
+set backupdir=$HOME/.vim/backup/
 
 "设置鼠标可右键复制
 set mouse=v
