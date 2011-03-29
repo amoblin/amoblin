@@ -1,0 +1,13 @@
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+	br = branch
+    glog = log --graph
+[color]
+	ui = auto
+[core]
+	editor = vim
+	ignore = pyc
+	excludesfile = /etc/gitignore
+	quotepath = false
