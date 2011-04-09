@@ -42,7 +42,7 @@ set backup
 set backupdir=$HOME/.vim/backup/
 
 "设置鼠标可右键复制
-set mouse=v
+"set mouse=v
 "set selection=exclusive
 set selectmode=key
 
