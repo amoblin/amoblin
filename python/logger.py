@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ################################################################
 # z3c.pypimirror - A PyPI mirroring solution
 # Written by Daniel Kraft, Josip Delic, Gottfried Ganssauge and
