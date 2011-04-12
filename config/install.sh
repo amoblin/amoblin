@@ -6,5 +6,4 @@ ln .screenrc ~
 
 sudo ln gitconfig /etc
 
-sudo su
-tail -4 inputrc >> /etc/inputrc
+sudo sh -c "tail -4 inputrc >> /etc/inputrc"
