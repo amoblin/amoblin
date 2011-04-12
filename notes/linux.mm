@@ -17,5 +17,7 @@
 <node ID="ID_545915004" 
 	TEXT="后台启动：VBoxVRDP -s &quot;centos&quot;"/>
 </node>
+<node ID="ID_1595808473" POSITION="right" 
+	TEXT="文件改名－   ls|xargs -i mv {} {}.old"/>
 </node>
 </map>

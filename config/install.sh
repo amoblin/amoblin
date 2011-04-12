@@ -1,10 +1,10 @@
 #!/bin/bash
 
-ln -s `pwd`/.vimrc ~
+ln .vimrc ~
 
-ln -s `pwd`/.screenrc ~
+ln .screenrc ~
 
-sudo ln -s `pwd`/gitconfig /etc
+sudo ln gitconfig /etc
 
 sudo su
 tail -4 inputrc >> /etc/inputrc
