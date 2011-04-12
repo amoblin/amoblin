@@ -2,10 +2,11 @@
 " General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"since 7.3
-set undofile
-set undodir=/tmp
-"end 7.3
+"7.3版开始支持持久撤销
+if version >= 7.3
+    set undofile
+    set undodir=/tmp
+endif
 "
 "encoding of printing. use encoding if not set.
 set printencoding=utf-8
