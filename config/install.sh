@@ -1,8 +1,8 @@
 #!/bin/bash
 
-ln .vimrc ~
+ln _vimrc ~/.vimrc
 
-ln .screenrc ~
+ln _screenrc ~/.screenrc
 
 sudo ln gitconfig /etc
 
