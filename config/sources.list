@@ -6,17 +6,17 @@
 # deb http://archive.ubuntu.com/ubuntu/ maverick-backports main restricted universe multiverse
 
 #virtualbox
-deb http://download.virtualbox.org/virtualbox/debian maverick contrib
+deb http://download.virtualbox.org/virtualbox/debian natty contrib
 
 #debian sid源 ，可按装最新软件版本，如vim-7.3
 #deb  http://mirrors.sohu.com/debian sid     main contrib
 
 #bones74
-deb http://ubuntu.srt.cn/ubuntu/ maverick main restricted universe multiverse
-deb http://ubuntu.srt.cn/ubuntu/ maverick-security main restricted universe multiverse
-deb http://ubuntu.srt.cn/ubuntu/ maverick-updates main restricted universe multiverse
-deb http://ubuntu.srt.cn/ubuntu/ maverick-proposed main restricted universe multiverse
-deb http://ubuntu.srt.cn/ubuntu/ maverick-backports main restricted universe multiverse
+deb http://ubuntu.srt.cn/ubuntu/ natty main restricted universe multiverse
+deb http://ubuntu.srt.cn/ubuntu/ natty-security main restricted universe multiverse
+deb http://ubuntu.srt.cn/ubuntu/ natty-updates main restricted universe multiverse
+deb http://ubuntu.srt.cn/ubuntu/ natty-proposed main restricted universe multiverse
+deb http://ubuntu.srt.cn/ubuntu/ natty-backports main restricted universe multiverse
 # deb-src http://ubuntu.srt.cn/ubuntu/ lucid main restricted universe multiverse
 # deb-src http://ubuntu.srt.cn/ubuntu/ lucid-security main restricted universe multiverse
 # deb-src http://ubuntu.srt.cn/ubuntu/ lucid-updates main restricted universe multiverse
@@ -61,16 +61,16 @@ deb http://ubuntu.srt.cn/ubuntu/ maverick-backports main restricted universe mul
 #
 
 #ubuntu-tweak
-deb http://ppa.launchpad.net/tualatrix/ubuntu lucid main
+deb http://ppa.launchpad.net/tualatrix/ubuntu natty main
 
 #ofetion
-deb http://ppa.launchpad.net/happyaron/ppa/ubuntu maverick main
+deb http://ppa.launchpad.net/happyaron/ppa/ubuntu natty main
 
 #i3
 # deb http://debian.sur5r.net/i3/ lucid universe
 
 #osd-lyrics
-deb http://ppa.launchpad.net/osd-lyrics/ppa/ubuntu maverick main
+deb http://ppa.launchpad.net/osd-lyrics/ppa/ubuntu natty main
 
 #awesome wicked
 # deb http://ppa.launchpad.net/antage/ubuntu maverick main
@@ -82,7 +82,7 @@ deb http://ppa.launchpad.net/osd-lyrics/ppa/ubuntu maverick main
 
 #blueman
 #deb https://launchpad.net/~blueman/+archive/ppa
-deb http://ppa.launchpad.net/blueman/ppa/ubuntu lucid main
+#deb http://ppa.launchpad.net/blueman/ppa/ubuntu lucid main
 
 
 #arora
@@ -106,7 +106,7 @@ deb http://ppa.launchpad.net/blueman/ppa/ubuntu lucid main
 #epiphany-browser
 
 #VirtualBox
-deb http://download.virtualbox.org/virtualbox/debian maverick non-free
+deb http://download.virtualbox.org/virtualbox/debian natty non-free
 
 #oracle-xe
 # deb http://oss.oracle.com/debian unstable main non-free
@@ -116,8 +116,8 @@ deb http://download.virtualbox.org/virtualbox/debian maverick non-free
 # deb-src http://debian.websterwood.com/ hardy main
 
 #chromium-browser
-deb http://ppa.launchpad.net/fta/ppa/ubuntu maverick main
-deb http://ppa.launchpad.net/chromium-daily/ppa/ubuntu maverick main #chromium-browser
+deb http://ppa.launchpad.net/fta/ppa/ubuntu natty main
+deb http://ppa.launchpad.net/chromium-daily/ppa/ubuntu natty main #chromium-browser
 
 #chrome
 deb http://dl.google.com/linux/deb/ stable non-free #google
