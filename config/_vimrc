@@ -2,10 +2,11 @@
 " General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"since 7.3
-set undofile
-set undodir=/tmp
-"end 7.3
+"7.3版开始支持持久撤销
+if version >= 703
+    set undofile
+    set undodir=/tmp
+endif
 "
 "encoding of printing. use encoding if not set.
 set printencoding=utf-8
@@ -39,10 +40,10 @@ set nocompatible
 " Turn backup on
 set backup
 " Set backup directory
-set backupdir=$HOME/.vim/backup
+set backupdir=$HOME/.vim/backup/
 
 "设置鼠标可右键复制
-set mouse=v
+"set mouse=v
 "set selection=exclusive
 set selectmode=key
 

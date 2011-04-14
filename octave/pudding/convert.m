@@ -6,7 +6,7 @@ sentence1 = "他吃烤白薯";
 temp = input_number - size(double(sentence1))(1,2);
 samplelist = [double(sentence1),zeros(1,temp)];
 
-expectlist=[1 1 0 0 1 0 0 0 0 0];
+expectlist=[1 1 0 0 0 0 0 0 0 0];
 
 fid = fopen("exercise.txt","r");
 while ~feof(fid)
