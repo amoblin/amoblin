@@ -22,6 +22,10 @@ Ubuntu 10.10舍弃了对部分旧显卡的支持，其中就包括Intel915GM！
 所以我的联想旭日125c需要手动安装显卡驱动了！
 axel -n 10 -a http://downloadmirror.intel.com/8203/eng/i915Graphics.tar.gz
 
+修改grub配置文件
+/etc/default/grub在 quiet splash后加上 i915.modeset=1
+然后执行sudo update-grub进行更新grub.cfg
+
 
 vim tips
 ctrl o ctrl o: open recent file.
