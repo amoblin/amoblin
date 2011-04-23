@@ -1,0 +1,6 @@
+alias ll='ls -lh'
+alias la='ls -A'
+
+export LC_ALL=
+export LANG="en_US.UTF-8"
+export LC_CTYPE="zh_CN.UTF-8"

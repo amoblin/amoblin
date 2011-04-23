@@ -149,6 +149,15 @@
 	TEXT="rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
+<node COLOR="#990000" ID="ID_1315099573" 
+	TEXT="包含有quilt">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" ID="ID_1624884913" 
+	TEXT="设置源的优先级：yum-priorities ">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
 </node>
 </node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_905586846" POSITION="right" 
@@ -210,6 +219,11 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 </node>
+<node COLOR="#00b439" ID="ID_1488964366" 
+	TEXT="查看spec内容：rpm -qpi package.rpm">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
 <node COLOR="#00b439" ID="ID_592163511" 
 	TEXT="列出rpm文件内容： rpm -qpl *.rpm">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -260,6 +274,11 @@
 </node>
 <node COLOR="#00b439" ID="ID_1791185780" 
 	TEXT="重新编译：rpmbuild --rebuild *.src.rpm">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_1593124955" 
+	TEXT="安装编译环境： sudo yum groupinstall &quot;Development Tools&quot;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 </node>
@@ -363,9 +382,11 @@
 	TEXT="变量使用%{}括起来，%{?dist}什么意思？">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
-<node COLOR="#990000" ID="ID_727871258" 
+<node COLOR="#990000" FOLDED="true" ID="ID_727871258" 
 	TEXT="BuildPreReq">
 <font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1528607215" 
+	TEXT="package_1, package_2 &gt;=1.0, pcakge_3.1 / package_3.2"/>
 </node>
 <node COLOR="#990000" ID="ID_641366050" 
 	TEXT="Requires">
@@ -431,6 +452,11 @@
 	TEXT="rpmbuild -ta *.tar.gz">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
+</node>
+<node COLOR="#00b439" ID="ID_1405728661" 
+	TEXT="签名 --sign">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
 </node>
 </node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_863444608" POSITION="right" 
