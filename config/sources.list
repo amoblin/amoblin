@@ -5,18 +5,27 @@
 # deb http://archive.ubuntu.com/ubuntu/ maverick-proposed main restricted universe multiverse
 # deb http://archive.ubuntu.com/ubuntu/ maverick-backports main restricted universe multiverse
 
+deb http://192.168.0.2:/update/all/ubuntu natty main restricted
+
 #virtualbox
 deb http://download.virtualbox.org/virtualbox/debian natty contrib
 
 #debian sid源 ，可按装最新软件版本，如vim-7.3
-#deb  http://mirrors.sohu.com/debian sid     main contrib
+# deb http://mirrors.sohu.com/debian sid main contrib
+
+#北交通
+deb http://mirror.bjtu.edu.cn/ubuntu/ natty main restricted universe multiverse
+deb http://mirror.bjtu.edu.cn/ubuntu/ natty-security main restricted universe multiverse
+deb http://mirror.bjtu.edu.cn/ubuntu/ natty-updates main restricted universe multiverse
+deb http://mirror.bjtu.edu.cn/ubuntu/ natty-proposed main restricted universe multiverse
+deb http://mirror.bjtu.edu.cn/ubuntu/ natty-backports main restricted universe multiverse
 
 #bones74
-deb http://ubuntu.srt.cn/ubuntu/ natty main restricted universe multiverse
-deb http://ubuntu.srt.cn/ubuntu/ natty-security main restricted universe multiverse
-deb http://ubuntu.srt.cn/ubuntu/ natty-updates main restricted universe multiverse
-deb http://ubuntu.srt.cn/ubuntu/ natty-proposed main restricted universe multiverse
-deb http://ubuntu.srt.cn/ubuntu/ natty-backports main restricted universe multiverse
+# deb http://ubuntu.srt.cn/ubuntu/ natty main restricted universe multiverse
+# deb http://ubuntu.srt.cn/ubuntu/ natty-security main restricted universe multiverse
+# deb http://ubuntu.srt.cn/ubuntu/ natty-updates main restricted universe multiverse
+# deb http://ubuntu.srt.cn/ubuntu/ natty-proposed main restricted universe multiverse
+# deb http://ubuntu.srt.cn/ubuntu/ natty-backports main restricted universe multiverse
 # deb-src http://ubuntu.srt.cn/ubuntu/ lucid main restricted universe multiverse
 # deb-src http://ubuntu.srt.cn/ubuntu/ lucid-security main restricted universe multiverse
 # deb-src http://ubuntu.srt.cn/ubuntu/ lucid-updates main restricted universe multiverse
@@ -36,11 +45,11 @@ deb http://ubuntu.srt.cn/ubuntu/ natty-backports main restricted universe multiv
 # deb-src http://ubuntu.uestc.edu.cn/ubuntu jaunty-updates main restricted universe multiverse
 
 #新加坡国立大学理学院 ubuntu 更新源(所有用户通用）：
-# deb http://ftp.science.nus.edu.sg/ubuntu/ karmic main restricted universe multiverse
-# deb http://ftp.science.nus.edu.sg/ubuntu/ karmic-security main restricted universe multiverse
-# deb http://ftp.science.nus.edu.sg/ubuntu/ karmic-updates main restricted universe multiverse
-# deb http://ftp.science.nus.edu.sg/ubuntu/ karmic-proposed main restricted universe multiverse
-# deb http://ftp.science.nus.edu.sg/ubuntu/ karmic-backports main restricted universe multiverse
+# deb http://ftp.science.nus.edu.sg/ubuntu/ natty main restricted universe multiverse
+# deb http://ftp.science.nus.edu.sg/ubuntu/ natty-security main restricted universe multiverse
+# deb http://ftp.science.nus.edu.sg/ubuntu/ natty-updates main restricted universe multiverse
+# deb http://ftp.science.nus.edu.sg/ubuntu/ natty-proposed main restricted universe multiverse
+# deb http://ftp.science.nus.edu.sg/ubuntu/ natty-backports main restricted universe multiverse
 # deb-src http://ftp.science.nus.edu.sg/ubuntu/ karmic main restricted universe multiverse
 # deb-src http://ftp.science.nus.edu.sg/ubuntu/ karmic-security main restricted universe multiverse
 # deb-src http://ftp.science.nus.edu.sg/ubuntu/ karmic-updates main restricted universe multiverse
@@ -82,7 +91,7 @@ deb http://ppa.launchpad.net/osd-lyrics/ppa/ubuntu natty main
 
 #blueman
 #deb https://launchpad.net/~blueman/+archive/ppa
-#deb http://ppa.launchpad.net/blueman/ppa/ubuntu lucid main
+# deb http://ppa.launchpad.net/blueman/ppa/ubuntu lucid main
 
 
 #arora
@@ -96,7 +105,7 @@ deb http://ppa.launchpad.net/osd-lyrics/ppa/ubuntu natty main
 #zeitgeist
 
 #dropbox
-#deb http://linux.getdropbox.com/ubuntu maverick main
+# deb http://linux.getdropbox.com/ubuntu maverick main
 
 #ppa
 #shutter
