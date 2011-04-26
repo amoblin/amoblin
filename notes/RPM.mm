@@ -128,36 +128,68 @@
 <font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_316207639" 
-	TEXT="增加webtatic源">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_1710719620" 
-	TEXT="rpm -Uvh http://repo.webtatic.com/yum/centos/5/latest.rpm">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-</node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_764032177" 
-	TEXT="增加epel源">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_608381171" 
-	TEXT="Extra Packages for Enterprise Linux">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-<node COLOR="#990000" ID="ID_458143354" 
-	TEXT="rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-<node COLOR="#990000" ID="ID_1315099573" 
-	TEXT="包含有quilt">
-<font NAME="SansSerif" SIZE="14"/>
-</node>
-</node>
 <node COLOR="#00b439" ID="ID_1624884913" 
 	TEXT="设置源的优先级：yum-priorities ">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_749525082" 
+	TEXT="使用缓存：apt-cacher-ng">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_836389145" 
+	TEXT="使用代理">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_831134255" 
+	TEXT="proxy=http://ip:port">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_505439782" 
+	TEXT="局部不使用代理：proxy=_none_">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_303048227" 
+	TEXT="添加第三方源">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_764032177" 
+	TEXT="增加epel源">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_608381171" 
+	TEXT="Extra Packages for Enterprise Linux">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_458143354" 
+	TEXT="rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1315099573" 
+	TEXT="包含有quilt">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_316207639" 
+	TEXT="增加webtatic源">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1710719620" 
+	TEXT="rpm -Uvh http://repo.webtatic.com/yum/centos/5/latest.rpm">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_569846356" 
+	TEXT="增加rpmforge源">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_120688334" 
+	TEXT="http://packages.sw.be/rpmforge-release/rpmforge-release-0.5.2-2.el5.rf.i386.rpm">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+</node>
 </node>
 </node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_905586846" POSITION="right" 
@@ -168,6 +200,23 @@
 	TEXT="安装包 yum install package">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_691943488" 
+	TEXT="安装rpm包： yum install package.rpm">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_793836147" 
+	TEXT="安装本地包使用yum.conf配置文件，默认开启gpg检验">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1696975628" 
+	TEXT="未签名的包要添加参数--nogpgcheck">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_246736101" 
+	TEXT="可自动安装依赖">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" ID="ID_1117158227" 
 	TEXT="卸载包 yum remove package">
@@ -211,11 +260,6 @@
 </node>
 <node COLOR="#00b439" ID="ID_1924442582" 
 	TEXT="查询：rpm -q package_name">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="SansSerif" SIZE="16"/>
-</node>
-<node COLOR="#00b439" ID="ID_944184445" 
-	TEXT="查看rpm文件内容: rpm -qp --dump package.rpm">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
 </node>

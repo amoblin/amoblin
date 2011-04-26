@@ -1,5 +1,6 @@
 alias ll='ls -lh'
 alias la='ls -A'
+alias diff='colordiff -u'
 
 export LC_ALL=
 export LANG="en_US.UTF-8"

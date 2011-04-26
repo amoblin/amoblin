@@ -48,6 +48,14 @@
 	TEXT="开发还依赖trs2pdf">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1428052578" 
+	TEXT="wsgi安装">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_544768578" 
+	TEXT="centos下安装mod_wsgi，安装完毕编辑/etc/httpd/conf.d/wsgi.conf启用wsgi"/>
+<node COLOR="#111111" ID="ID_1096540236" 
+	TEXT="ubuntu下安装apache2-mod-wsgi，安装完毕建立从mod-available到mod-enable的软链接"/>
+</node>
 </node>
 <node COLOR="#00b439" ID="ID_357133675" 
 	TEXT="paste make ">
