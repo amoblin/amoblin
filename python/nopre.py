@@ -18,13 +18,7 @@ def convert_pre(filename):
         pre.setAttribute('class','codeText')
     xml_str = dom.toxml()
     xml_str = xml_str.replace('nbsp','&nbsp;')
-    f = codecs.open("b.html",'w','utf-8');
-    #writer = codecs.lookup('utf-8')[3](f)
-    #dom.writexml(writer,encoding='utf-8')
-    #f.close()
-
-    #f2 = open('b.thml','w')
-    #xml_str = f2.read()
+    f = codecs.open(filename,'w','utf-8');
     f.write(xml_str)
     f.close()
 
