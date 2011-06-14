@@ -7,7 +7,7 @@ ln _screenrc ~/.screenrc
 
 sudo ln gitconfig /etc
 
-cat _bashrc >> ~/.bashrc
+sudo sh -c "cat _bashrc >> /etc/bashrc"
 
 sudo sh -c "tail -4 inputrc >> /etc/inputrc"
 

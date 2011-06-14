@@ -8,6 +8,9 @@ if version >= 703
     set undodir=/tmp
 endif
 "
+set guifont=Menlo_Regular:h18
+set guifontwide=Hei_Regular:h18
+set linespace=2
 "encoding of printing. use encoding if not set.
 set printencoding=utf-8
 "charset of print. should be compatible with printencoding.
