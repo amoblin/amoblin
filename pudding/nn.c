@@ -130,7 +130,7 @@ int UseBp(bp_nn *bp) {    //使用bp网络
     double O1[50]; 
     double O2[OUT_COUT]; //O1为隐层输出,O2为输出层输出
     while (1) {           //持续执行，除非中断程序
-        printf("请输入3个数：\n");
+        printf("请输入一句话：\n");
         int i, j;
         for (i = 0; i < IN_COUT; i++)
             scanf("%f", &Input[i]);
