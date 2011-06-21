@@ -1,14 +1,14 @@
 #include <stdio.h>
-#include <wchar.h>
 
 int print_u(char *ustring, int i, int n)
 {
     printf("%d: ", i);
     int k;
     for(k=0; k<n; k++) {
-        printf("%x ", ustring[i+k]);
+        //printf("%x ", ustring[i+k]);
+        printf("%c", ustring[i+k]);
     }
-    printf("\n");
+    //printf("\n");
 }
 
 int main()
@@ -23,11 +23,8 @@ int main()
     char sentence[35];
     char out[15];
     int i,j;
-//    printf("%c%c%c", 0xe4,0xb8,0xad);
     while(fgets(sentence, 35, fp) != NULL)
     {
-        //printf("%d", strlen(sentence));
-        //printf("%d\n", wcslen(sentence));
         for(i=0,j=0;i<strlen(sentence);i++,j++) {
             if (sentence[i]<0xffffffc0) { //一位
                 if (sentence[i] == '\n') {
@@ -39,12 +36,25 @@ int main()
                 }
             } else if( sentence[i] < 0xffffffe0 ) {  //2位
                 print_u(sentence, i, 2);
+
+                //dest = ( sentence[i] & 0x1F ) << 12;
+
                 i = i + 1;
                 out[j] = 0;
             } else if (sentence[i] < 0xfffffff0 ) {  //3位
                 print_u(sentence, i, 3);
-                //printf("%x\n", 0x1f);
-                //printf("%x\n", sentence[i]  << 24);
+
+                unsigned short dest; /* two 2-byte variable */
+                dest = ( sentence[i] & 0x0F ) << 12;
+                //printf("%x\n", dest);
+                dest |= (sentence[i+1] & 0x3f) << 6;
+                //printf("%x\n", dest);
+                dest |= (sentence[i+2] & 0x3f);
+                printf("%x\n", dest);
+
+                printf("%d\n", dest >> 8);
+                printf("%d\n", dest & 0xff);
+
                 i = i + 2;
                 out[j] = 1;
             } else if (sentence[i] < 0xfffffff8 ) { //4位
