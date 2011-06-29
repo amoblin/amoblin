@@ -153,23 +153,53 @@ int UseBp(bp_nn *bp) {    //使用bp网络
     return 1;
 }
 
+int print_matrix(char **in, char **out) {
+    if (!DEBUG) {
+        return 0;
+    }
+    int t,i;
+    for(t=0; t<REAL_DATA_SIZE; t++) {
+        for(i=0; i < SEN_LEN * 2; i++) {
+            fprintf(stdout, "%d ", in[t][i]);
+        }
+        printf("\n");
+    }
+
+    for(t=0; t<REAL_DATA_SIZE; t++) {
+        for(i=0; i < SEN_LEN; i++) {
+            fprintf(stdout, "%d ", out[t][i]);
+        }
+        printf("\n");
+    }
+
+}
+
 int main()
 {
+    unsigned char in[REAL_DATA_SIZE][SEN_LEN * 2];  //无符号字符型数组，元素范围0～255.两个数字代表一个汉字。
+    char out[REAL_DATA_SIZE][SEN_LEN];       //输出向量，1代表连续，0代表分词点。
 
+    /* 读取输入层数据 */
     FILE *vector_p = NULL;
     vector_p = fopen("in.dat","rb");
     if (vector_p == NULL) {
         printf("Error! File 'in.dat' does not exist.\n");
         exit(0);
     }
-    unsigned char in[SEN_LEN * 2];  //无符号字符型数组，元素范围0～255.两个数字代表一个汉字。
-    char out[SEN_LEN];       //输出向量，1代表连续，0代表分词点。
-    fread(in, 1, SEN_LEN * 2, vector_p);
-    int i;
-    for(i=0; i<SEN_LEN*2; i++) {
-        fprintf(stdout, "%d: %d\n", i, in[i]);
+    fread(in, SEN_LEN * 2, REAL_DATA_SIZE, vector_p);
+    fclose(vector_p);
+    
+    /* 读取输出层数据 */
+    vector_p = fopen("out.dat","rb");
+    if (vector_p == NULL) {
+        printf("Error! File 'out.dat' does not exist.\n");
+        exit(0);
     }
-    printf("\n");
+    fread(out, SEN_LEN, REAL_DATA_SIZE, vector_p);
+    fclose(vector_p);
+
+    print_matrix(in, out);
+
     return 0;
     float x[][IN_NODES] = {{0.8,0.5,0}, 
                        {0.9,0.7,0.3},

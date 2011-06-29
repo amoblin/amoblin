@@ -6,6 +6,9 @@
 
 int print_u(char *ustring, int i, int n)
 {
+    if( !DEBUG ) {
+        return 0;
+    }
     printf("%d: ", i);
     int k;
     for(k=0; k<n; k++) {
@@ -81,12 +84,12 @@ int main()
                 dest |= (sentence[i+1] & 0x3f) << 6;
                 //printf("%x\n", dest);
                 dest |= (sentence[i+2] & 0x3f);
-                printf("%x ", dest);
+                //printf("%x ", dest);
 
                 out[t][k] = 1; //有字即1
                 in[t][j] = dest >> 8;  //高位
                 in[t][++j] = dest & 0xff;  //低位
-                printf("%d %d\n", in[t][j-1], in[t][j]);
+                //printf("%d %d\n", in[t][j-1], in[t][j]);
 
                 i = i + 3;
                 j++;
@@ -114,13 +117,10 @@ int main()
 
     FILE *vector_p = NULL;
     vector_p = fopen("in.dat","wb");
-    //fprintf(vector_p,"%s\n",in);
-    //fwrite(in, SEN_LEN*2, t, vector_p);
-    fwrite(in, 1, SEN_LEN*2, vector_p);
+    fwrite(in, SEN_LEN*2, t, vector_p);
     fclose(vector_p);
 
     vector_p = fopen("out.dat","wb");
-    //fprintf(vector_p,"%s\n",out);
     fwrite(out, SEN_LEN, t, vector_p);
     fclose(vector_p);
 
