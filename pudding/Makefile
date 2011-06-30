@@ -1,4 +1,4 @@
-nn:nn.c
+nn:nn.c config.h
 	gcc nn.c -o nn
 
 convert:convert.c

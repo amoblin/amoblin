@@ -7,8 +7,8 @@
 #define REAL_DATA_SIZE 3 //实际学习数据量
 
 
-#define LOOP_MAX 1000   //最大循环次数
-#define LEARN_RATE  0.3 //学习率
+#define LOOP_MAX 50000   //最大循环次数
+#define LEARN_RATE  0.08 //学习率
 #define PRECISINE 0.05  //精度
 
 #define DEBUG 1

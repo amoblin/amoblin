@@ -18,7 +18,7 @@ double fnet(double net) { //Sigmoid函数,神经网络激活函数
 
 int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[][IN_NODES], char out[][OUT_NODES]) {
     double f;                      //精度控制参数
-    double alpha;                      //学习率
+    double alpha = LEARN_RATE;                      //学习率
     double delta_hidden[HIDDEN_NODES], delta_out[OUT_NODES];         //修改量矩阵
     double O1[HIDDEN_NODES], O2[OUT_NODES];             //隐层和输出层输出量
     int i, j, k, n;
@@ -33,22 +33,22 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[]
                 for (j = 0; j < IN_NODES; j++) {
                     sum += in[i][j] * v[j][k];    
                 }
-                printf("sum: %f\n", sum/256);
+                //printf("sum: %f\n", sum/256);
                 O1[k] = fnet(sum/256);
-                printf("%f\n", O1[k]);
+                //printf("%f\n", O1[k]);
             }
             for (j = 0; j < OUT_NODES; j++) {
                 sum = 0;
                 for (k = 0; k < HIDDEN_NODES; k++)
                     sum += O1[k] * w[k][j];
                 O2[j] = fnet(sum/256);
-                printf("sum: %f\n", sum/256);
-                printf("%f\n", O2[j]);
+                //printf("sum: %f\n", sum/256);
+                //printf("%f\n", O2[j]);
             }
             for (j = 0; j < OUT_NODES; j++)    //计算输出层的权修改量    
                 delta_out[j] = O2[j] * (1 - O2[j]) * (out[i][j] - O2[j]);
             for (j = 0; j < OUT_NODES ; j++) {   //计算输出误差
-                printf("%f \n", (out[i][j] - O2[j]) * (out[i][j] - O2[j]));
+                //printf("%f \n", (out[i][j] - O2[j]) * (out[i][j] - O2[j]));
                 e += (out[i][j] - O2[j]) * (out[i][j] - O2[j]);
             }
             for (k = 0; k < HIDDEN_NODES; k++) {         //计算隐层权修改量
@@ -64,7 +64,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[]
                 for (k = 0; k < HIDDEN_NODES; k++)
                     v[j][k] += alpha * in[i][j] * delta_hidden[k]; 
         }
-        if (n % 10 == 0) {
+        if (n % 100 == 0) {
             printf("误差 : %f\n", e);
         }
     }
