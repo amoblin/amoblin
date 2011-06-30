@@ -8,8 +8,8 @@ if version >= 703
     set undodir=/tmp
 endif
 "
-set guifont=Menlo_Regular:h18
-set guifontwide=Hei_Regular:h18
+set guifont=Menlo_Regular:h20
+set guifontwide=Hei_Regular:h20
 set linespace=2
 "encoding of printing. use encoding if not set.
 set printencoding=utf-8
@@ -88,7 +88,7 @@ set laststatus=2
 set cmdheight=1
 
 " 状态行颜色
-highlight StatusLine guifg=SlateBlue guibg=Yellow
+highlight StatusLine guifg=SlateBlue guibg=Black
 "highlight StatusLineNC guifg=Gray guibg=White
 
 

@@ -1,0 +1,33 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{CJKutf8}
+\title{神经网络公式}
+\author{amoblin}
+\date{\today}
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+\maketitle
+\section{最速下降法}
+\subsection{梯度}
+\begin{equation}
+\Delta(h^Tx) = \Delta(x^Th) = h
+\end{equation}
+\begin{equation}
+\Delta x^TQx = Qx + Q^Tx = 2Qx
+\end{equation}
+\section{LMS算法}
+\subsection{均方误差}
+ADALINE的均方误差：
+\begin{equation}
+F(x)= E[e^2] = E[(t-a)^2] = E[(t-x^Tz)^2
+\end{equation}
+展开得
+\begin{equation}
+F(x) = E[t^2 - 2tx^Tz + x^Tzz^Tx]
+= E[t^2] - 2x^TE[tz] + x^TE[zz^T]x
+\end{equation}
+令$ c = E[t^2], h = E[tz], R = E[zz^T] $，则上式表示为
+\begin{equation}
+F(x) = c - 2x^Th + x^TRx
+\end{equation}
+\end{CJK*}
+\end{document}

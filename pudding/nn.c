@@ -18,9 +18,7 @@ double fnet(double net) { //Sigmoid函数,神经网络激活函数
 
 int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[][IN_NODES], char out[][OUT_NODES]) {
     double f;                      //精度控制参数
-    double a;                      //学习率
-    int h ;                         //隐层节点数
-    //double v[IN_NODES][HIDDEN_NODES], w[HIDDEN_NODES][OUT_NODES]; //权矩阵
+    double alpha;                      //学习率
     double delta_hidden[HIDDEN_NODES], delta_out[OUT_NODES];         //修改量矩阵
     double O1[HIDDEN_NODES], O2[OUT_NODES];             //隐层和输出层输出量
     int i, j, k, n;
@@ -51,7 +49,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[]
                 delta_out[j] = O2[j] * (1 - O2[j]) * (out[i][j] - O2[j]);
             for (j = 0; j < OUT_NODES ; j++) {   //计算输出误差
                 printf("%f \n", (out[i][j] - O2[j]) * (out[i][j] - O2[j]));
-                e = e + (out[i][j] - O2[j]) * (out[i][j] - O2[j]);
+                e += (out[i][j] - O2[j]) * (out[i][j] - O2[j]);
             }
             for (k = 0; k < HIDDEN_NODES; k++) {         //计算隐层权修改量
                 sum = 0;
@@ -61,10 +59,10 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[]
             }
             for (j = 0; j < HIDDEN_NODES; j++)           //修改输出层权矩阵
                 for (k = 0; k < OUT_NODES; k++)
-                    w[j][k] += a * O1[j] * delta_out[k]; 
+                    w[j][k] += alpha * O1[j] * delta_out[k]; 
             for (j = 0; j < IN_NODES; j++)
                 for (k = 0; k < HIDDEN_NODES; k++)
-                    v[j][k] += a * in[i][j] * delta_hidden[k]; 
+                    v[j][k] += alpha * in[i][j] * delta_hidden[k]; 
         }
         if (n % 10 == 0) {
             printf("误差 : %f\n", e);
