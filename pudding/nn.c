@@ -17,15 +17,14 @@ double fnet(double net) { //Sigmoid函数,神经网络激活函数
 }
 
 int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[][IN_NODES], char out[][OUT_NODES]) {
-    double f;                      //精度控制参数
-    double alpha = LEARN_RATE;                      //学习率
-    double delta_hidden[HIDDEN_NODES], delta_out[OUT_NODES];         //修改量矩阵
-    double O1[HIDDEN_NODES], O2[OUT_NODES];             //隐层和输出层输出量
+    double alpha = LEARN_RATE;  //学习率
+    double delta_hidden[HIDDEN_NODES], delta_out[OUT_NODES];    //修改量矩阵
+    double O1[HIDDEN_NODES], O2[OUT_NODES]; //隐层和输出层输出量
     int i, j, k, n;
     double sum;
 
-    double e = f + 1;
-    for (n = 0; e > f && n < LOOP_MAX; n++) {
+    double e = PRECISION + 1;
+    for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
         for (i= 0; i < REAL_DATA_SIZE; i++) { 
             for (k= 0; k < HIDDEN_NODES; k++) {
@@ -64,7 +63,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[]
                 for (k = 0; k < HIDDEN_NODES; k++)
                     v[j][k] += alpha * in[i][j] * delta_hidden[k]; 
         }
-        if (n % 100 == 0) {
+        if (n % 500 == 0) {
             printf("误差 : %f\n", e);
         }
     }
@@ -176,9 +175,7 @@ int main()
     /* 初始化权值矩阵 */
 
     //随机数
-    printf("%d\n", (unsigned) time(NULL));
     srand((unsigned)time(NULL));
-    printf("%d\n",rand());
     int i,j;
     for (i = 0; i < IN_NODES; i++) {
         for (j = 0; j < HIDDEN_NODES; j++) {
