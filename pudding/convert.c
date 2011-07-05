@@ -19,12 +19,14 @@ int main()
     int t = 0;  //向量数组游标
     while(fgets(sentence, SEN_LEN, fp) != NULL)
     {
-        /* 初始化输入输出矩阵 */
+        /* 初始化输入输出矩阵(貌似不要也可以) */
+        /*
         int i;
         for(i = 0; i<OUT_NODES; i++) {
             in[t][i] = in[t][i*2] = out[t][i] = 0;
         }
         in[DATA_SIZE][IN_NODES - 1] = 0;
+        */
         utf8_to_unicode(sentence, in[t],out[t]);
         t++;        //向量数组游标增1
     }

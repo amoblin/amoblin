@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdlib.h>
 
 int print_u(char *ustring, int i, int n)
 {
