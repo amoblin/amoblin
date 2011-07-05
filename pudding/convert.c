@@ -116,12 +116,9 @@ int main()
     fclose(fp);
 
     FILE *vector_p = NULL;
-    vector_p = fopen("in.dat","wb");
-    fwrite(in, SEN_LEN*2, t, vector_p);
-    fclose(vector_p);
-
-    vector_p = fopen("out.dat","wb");
-    fwrite(out, SEN_LEN, t, vector_p);
+    vector_p = fopen("sample.dat","wb");
+    fwrite(in, IN_NODES, t, vector_p);
+    fwrite(out, OUT_NODES, t, vector_p);
     fclose(vector_p);
 
     return 0;

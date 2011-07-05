@@ -84,20 +84,20 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[]
     return 0;
 }
 
-int print_matrix(unsigned char in[][SEN_LEN*2], char out[][SEN_LEN]) {
+int print_matrix(unsigned char in[][IN_NODES], char out[][OUT_NODES]) {
     if (!DEBUG) {
         return 0;
     }
     int i,j;
     for(i=0; i<REAL_DATA_SIZE; i++) {
-        for(j=0; j < SEN_LEN * 2 ; j++) {
+        for(j=0; j < IN_NODES ; j++) {
             fprintf(stdout, "%d ", in[i][j]);
         }
         printf("\n");
     }
 
     for(i=0; i<REAL_DATA_SIZE; i++) {
-        for(j=0; j < SEN_LEN; j++) {
+        for(j=0; j < OUT_NODES; j++) {
             fprintf(stdout, "%d ", out[i][j]);
         }
         printf("\n");
@@ -107,33 +107,24 @@ int print_matrix(unsigned char in[][SEN_LEN*2], char out[][SEN_LEN]) {
 
 int main()
 {
-    unsigned char in[REAL_DATA_SIZE][SEN_LEN * 2];  //无符号字符型数组，元素范围0～255.两个数字代表一个汉字。
-    char out[REAL_DATA_SIZE][SEN_LEN];       //输出向量，1代表连续，0代表分词点。
+    unsigned char in[REAL_DATA_SIZE][IN_NODES];  //无符号字符型数组，元素范围0～255.两个数字代表一个汉字。
+    char out[REAL_DATA_SIZE][OUT_NODES];       //输出向量，1代表连续，0代表分词点。
 
 
     double v[IN_NODES][HIDDEN_NODES];   //隐含层权值矩阵
     double w[HIDDEN_NODES][OUT_NODES];   //输出层权值矩阵
 
-    /* 读取输入层数据 */
+    /* 读取样本数据 */
     FILE *vector_p = NULL;
-    vector_p = fopen("in.dat","rb");
+    vector_p = fopen("sample.dat","rb");
     if (vector_p == NULL) {
-        printf("Error! File 'in.dat' does not exist.\n");
+        printf("Error! File 'sample.dat' does not exist.\n");
         exit(0);
     }
-    fread(in, SEN_LEN * 2, REAL_DATA_SIZE, vector_p);
+    fread(in, IN_NODES, REAL_DATA_SIZE, vector_p);
+    fread(out, OUT_NODES, REAL_DATA_SIZE, vector_p);
     fclose(vector_p);
     
-    /* 读取输出层数据 */
-    vector_p = NULL;
-    vector_p = fopen("out.dat","rb");
-    if (vector_p == NULL) {
-        printf("Error! File 'out.dat' does not exist.\n");
-        exit(0);
-    }
-    fread(out, SEN_LEN, REAL_DATA_SIZE, vector_p);
-    fclose(vector_p);
-
     print_matrix(in, out);
 
     /* 初始化权值矩阵 */
@@ -151,13 +142,28 @@ int main()
     for (i = 0; i < HIDDEN_NODES; i++) {
         for (j = 0; j < OUT_NODES; j++) {
             w[i][j] = rand() / (double)(RAND_MAX);    
-            //printf("%f ", v[i][j]);
+            printf("%f ", w[i][j]);
         }
-        //printf("\n ");
+        printf("\n ");
     }
 
     /* 训练 */
     train_bp(v, w, in, out);             //训练bp神经网络
+
+    /*
+    for (i = 0; i < IN_NODES; i++) {
+        for (j = 0; j < HIDDEN_NODES; j++) {
+            printf("%f ", v[i][j]);
+        }
+        printf("\n ");
+    }
+    */
+    for (i = 0; i < HIDDEN_NODES; i++) {
+        for (j = 0; j < OUT_NODES; j++) {
+            printf("%f ", w[i][j]);
+        }
+        printf("\n ");
+    }
 
     /* 保存权值矩阵 */
     vector_p = NULL;
