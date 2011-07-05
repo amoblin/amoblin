@@ -3,6 +3,7 @@
 
 int main(int argc, char *argv[])
 {
+    char sentences[OUT_NODES * 3];
     float in[IN_NODES];
     double O1[50]; 
     double O2[OUT_NODES];
@@ -34,12 +35,7 @@ int main(int argc, char *argv[])
         printf("\n ");
     }
 
-    for (i = 0; i < IN_NODES; i++) {
-        scanf("%f", &in[i]);
-    }
-    for (i = 0; i < IN_NODES; i++) {
-        printf("%f", in[i]);
-    }
+    scanf("%s", sentences);
 
     double sum;
     for (i = 0; i < HIDDEN_NODES; i++) {
@@ -54,8 +50,9 @@ int main(int argc, char *argv[])
             sum += O1[j] * w[j][i];
         O2[i] = fnet(sum);
     }
-    for (i = 0; i < OUT_NODES; i++)
+    for (i = 0; i < OUT_NODES; i++) {
         printf("%.3f ", O2[i]);
+    }
     printf("\n");
-    return 1;
+    return 0;
 }

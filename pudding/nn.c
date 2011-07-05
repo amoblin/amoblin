@@ -89,14 +89,16 @@ int print_matrix(unsigned char in[][IN_NODES], char out[][OUT_NODES]) {
         return 0;
     }
     int i,j;
-    for(i=0; i<REAL_DATA_SIZE; i++) {
+    printf("matrix v:\n");
+    for(i=0; i < REAL_DATA_SIZE; i++) {
         for(j=0; j < IN_NODES ; j++) {
             fprintf(stdout, "%d ", in[i][j]);
         }
         printf("\n");
     }
 
-    for(i=0; i<REAL_DATA_SIZE; i++) {
+    printf("matrix w:\n");
+    for(i=0; i < REAL_DATA_SIZE; i++) {
         for(j=0; j < OUT_NODES; j++) {
             fprintf(stdout, "%d ", out[i][j]);
         }
