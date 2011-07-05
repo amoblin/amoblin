@@ -1,9 +1,8 @@
 #include <stdlib.h>
-#include <math.h>
 #include <stdio.h>
 #include <time.h>
 
-#include "config.h"
+#include "nn.h"
 
 typedef struct {       //bp人工神经网络结构
     int h;             //实际使用隐层数量
@@ -11,10 +10,6 @@ typedef struct {       //bp人工神经网络结构
     double b;          //精度控制参数
     int L;      //最大循环次数
 } bp_nn;
-
-double fnet(double net) { //Sigmoid函数,神经网络激活函数
-    return 1/(1+exp(-net));
-}
 
 int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[][IN_NODES], char out[][OUT_NODES]) {
     double alpha = LEARN_RATE;  //学习率
@@ -88,38 +83,6 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[]
 
     return 0;
 }
-/*
-
-int UseBp(bp_nn *bp) {    //使用bp网络
-    float Input[IN_NODES];
-    double O1[50]; 
-    double O2[OUT_NODES]; //O1为隐层输出,O2为输出层输出
-    while (1) {           //持续执行，除非中断程序
-        printf("请输入一句话：\n");
-        int i, j;
-        for (i = 0; i < IN_NODES; i++)
-            scanf("%f", &Input[i]);
-        double temp;
-        for (i = 0; i < (*bp).h; i++) {
-            temp = 0;
-            for (j = 0; j < IN_NODES; j++)
-                temp += Input[j] * (*bp).v[j][i];
-            O1[i] = fnet(temp);
-        }
-        for (i = 0; i < OUT_NODES; i++) {
-            temp = 0;
-            for (j = 0; j < (*bp).h; j++)
-                temp += O1[j] * (*bp).w[j][i];
-            O2[i] = fnet(temp);
-        }
-        printf("结果：   ");
-        for (i = 0; i < OUT_NODES; i++)
-            printf("%.3f ", O2[i]);
-        printf("\n");
-    }
-    return 1;
-}
-*/
 
 int print_matrix(unsigned char in[][SEN_LEN*2], char out[][SEN_LEN]) {
     if (!DEBUG) {
@@ -162,6 +125,7 @@ int main()
     fclose(vector_p);
     
     /* 读取输出层数据 */
+    vector_p = NULL;
     vector_p = fopen("out.dat","rb");
     if (vector_p == NULL) {
         printf("Error! File 'out.dat' does not exist.\n");
@@ -194,7 +158,13 @@ int main()
 
     /* 训练 */
     train_bp(v, w, in, out);             //训练bp神经网络
-    //UseBp(&bp);                     //测试bp神经网络
+
+    /* 保存权值矩阵 */
+    vector_p = NULL;
+    vector_p = fopen("wisdom.dat","wb");
+    fwrite(v, HIDDEN_NODES, IN_NODES, vector_p);
+    fwrite(w, OUT_NODES, HIDDEN_NODES, vector_p);
+    fclose(vector_p);
 
     return 0;
 } 
