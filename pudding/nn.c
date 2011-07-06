@@ -159,19 +159,19 @@ int main()
         }
         printf("\n ");
     }
-    */
     for (i = 0; i < HIDDEN_NODES; i++) {
         for (j = 0; j < OUT_NODES; j++) {
             printf("%f ", w[i][j]);
         }
         printf("\n ");
     }
+    */
 
     /* 保存权值矩阵 */
     vector_p = NULL;
     vector_p = fopen("wisdom.dat","wb");
-    fwrite(v, HIDDEN_NODES, IN_NODES, vector_p);
-    fwrite(w, OUT_NODES, HIDDEN_NODES, vector_p);
+    fwrite(v, HIDDEN_NODES*8, IN_NODES, vector_p);
+    fwrite(w, OUT_NODES*8, HIDDEN_NODES, vector_p);
     fclose(vector_p);
 
     return 0;
