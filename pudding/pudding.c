@@ -30,6 +30,7 @@ int read_weight(double v[][HIDDEN_NODES], double w[][OUT_NODES])
         printf("\n ");
     }
     */
+    return 0;
 }
 
 int pudding(char sentence[], double v[][HIDDEN_NODES], double w[][OUT_NODES], char out[])
@@ -63,23 +64,27 @@ int pudding(char sentence[], double v[][HIDDEN_NODES], double w[][OUT_NODES], ch
     for (i = 0; i < OUT_NODES; i++) {
         printf("%.3f ", O2[i]);
     }
+    printf("\n");
 
+    /*
     for(i=0; i < OUT_NODES; i++) {
         printf("%d ", out[i]);
     }
     printf("\n");
+    */
+    return 0;
 }
 
 int main(int argc, char *argv[])
 {
     char sentence[SEN_LEN];
-    //scanf("%s", sentence);
+    scanf("%s", sentence);
 
     double v[IN_NODES][HIDDEN_NODES];
     double w[HIDDEN_NODES][OUT_NODES];
     read_weight(v, w);
 
     char out[OUT_NODES];
-    //pudding(sentence, v, w, out);
+    pudding(sentence, v, w, out);
     return 0;
 }

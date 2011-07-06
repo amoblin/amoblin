@@ -6,3 +6,5 @@ convert:convert.c config.h
 
 pudding: pudding.c config.h
 	gcc pudding.c -o pudding
+
+all: convert nn pudding
