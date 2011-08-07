@@ -27,7 +27,7 @@ int get_utf8_bytes(char code, int *length)
     return 0;
 }
 
-int utf8_to_unicode(char *sentence, unsigned char in[], char out[])
+int utf8_to_unicode(char *sentence, unsigned char in[], float out[])
 {
     int i = 0;    //utf8编码串游标；
     int j = 0;  //输入向量游标；
@@ -50,11 +50,11 @@ int utf8_to_unicode(char *sentence, unsigned char in[], char out[])
                     }
                     printf("\n");
                     for(s=0; s<OUT_NODES; s++) {
-                        printf("%d ",out[s]);
+                        printf("%f ",out[s]);
                     }
                     printf("\n");
                 } else if (sentence[i] == 32) { //空格
-                    out[k] = 0; //分词点
+                    out[k] = 0.1; //分词点
                 }
                 break;
             case 2:
@@ -63,7 +63,7 @@ int utf8_to_unicode(char *sentence, unsigned char in[], char out[])
                 printf("2字节的utf8编码，看看怎么回事？\n");
                 exit(0);
 
-                out[k] = 0;
+                out[k] = 0.1;
                 break;
 
             case 3:
@@ -74,7 +74,7 @@ int utf8_to_unicode(char *sentence, unsigned char in[], char out[])
                 dest |= (sentence[i+2] & 0x3f);
                 //printf("%x ", dest);
 
-                out[k] = 1; //有字即1
+                out[k] = 0.9; //有字即1
                 in[j] = dest >> 8;  //高位
                 in[++j] = dest & 0xff;  //低位
                 //printf("%d %d\n", in[t][j-1], in[t][j]);
@@ -95,4 +95,5 @@ int utf8_to_unicode(char *sentence, unsigned char in[], char out[])
 
 int get_data_size()
 {
+    return 6;
 }
