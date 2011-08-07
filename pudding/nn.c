@@ -4,13 +4,6 @@
 
 #include "nn.h"
 
-typedef struct {       //bp人工神经网络结构
-    int h;             //实际使用隐层数量
-    double a;          //学习率
-    double b;          //精度控制参数
-    int L;      //最大循环次数
-} bp_nn;
-
 int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[][IN_NODES], char out[][OUT_NODES]) {
     double alpha = LEARN_RATE;  //学习率
     double delta_hidden[HIDDEN_NODES], delta_out[OUT_NODES];    //修改量矩阵

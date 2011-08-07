@@ -14,8 +14,11 @@ int main()
         return 0;
     }
     char sentence[SEN_LEN];  //语句长度最大值：18
-    unsigned char in[DATA_SIZE][IN_NODES];  //无符号字符型数组，元素范围0～255.两个数字代表一个汉字。
-    char out[DATA_SIZE][OUT_NODES];       //输出向量，1代表连续，0代表分词点。
+    data_size = get_data_size();
+    in = (unsigned char *) malloc(IN_NODES * data_size);
+    //unsigned char in[DATA_SIZE][IN_NODES];  //无符号字符型数组，元素范围0～255.两个数字代表一个汉字。
+    out = (char *) malloc(OUT_NODES * data_size);
+    //char out[DATA_SIZE][OUT_NODES];       //输出向量，1代表连续，0代表分词点。
     int t = 0;  //向量数组游标
     while(fgets(sentence, SEN_LEN, fp) != NULL)
     {
