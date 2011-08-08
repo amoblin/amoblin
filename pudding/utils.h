@@ -27,7 +27,7 @@ int get_utf8_bytes(char code, int *length)
     return 0;
 }
 
-int utf8_to_unicode(char *sentence, unsigned char in[], float out[])
+int utf8_to_unicode(char *sentence, unsigned char in[], double out[])
 {
     int i = 0;    //utf8编码串游标；
     int j = 0;  //输入向量游标；

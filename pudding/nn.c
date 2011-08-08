@@ -4,7 +4,7 @@
 
 #include "nn.h"
 
-int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[][IN_NODES], char out[][OUT_NODES]) {
+int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in, double **out) {
     double alpha = LEARN_RATE;  //学习率
     double delta_hidden[HIDDEN_NODES], delta_out[OUT_NODES];    //修改量矩阵
     double O1[HIDDEN_NODES], O2[OUT_NODES]; //隐层和输出层输出量
@@ -77,7 +77,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[]
     return 0;
 }
 
-int print_matrix(unsigned char in[][IN_NODES], char out[][OUT_NODES]) {
+int print_matrix(unsigned char **in, double **out) {
     if (!DEBUG) {
         return 0;
     }
@@ -93,7 +93,7 @@ int print_matrix(unsigned char in[][IN_NODES], char out[][OUT_NODES]) {
     printf("matrix w:\n");
     for(i=0; i < REAL_DATA_SIZE; i++) {
         for(j=0; j < OUT_NODES; j++) {
-            fprintf(stdout, "%d ", out[i][j]);
+            fprintf(stdout, "%f ", out[i][j]);
         }
         printf("\n");
     }
@@ -102,9 +102,15 @@ int print_matrix(unsigned char in[][IN_NODES], char out[][OUT_NODES]) {
 
 int main()
 {
-    unsigned char in[REAL_DATA_SIZE][IN_NODES];  //无符号字符型数组，元素范围0～255.两个数字代表一个汉字。
-    char out[REAL_DATA_SIZE][OUT_NODES];       //输出向量，1代表连续，0代表分词点。
-
+    int data_size = get_data_size();
+    unsigned char **in = (unsigned char **) malloc(sizeof(unsigned char*) * data_size);
+    double **out = (double **) malloc(sizeof(double *) * data_size);//输出向量，0.9代表连续，0.1代表分词点
+    int i,j;
+    for(i=0;i<data_size;i++)
+    {
+        in[i] = (unsigned char *) malloc(sizeof(unsigned char) * IN_NODES);
+        out[i] = (double *) malloc(sizeof(double) * OUT_NODES);
+    }
 
     double v[IN_NODES][HIDDEN_NODES];   //隐含层权值矩阵
     double w[HIDDEN_NODES][OUT_NODES];   //输出层权值矩阵
@@ -116,17 +122,32 @@ int main()
         printf("Error! File 'sample.dat' does not exist.\n");
         exit(0);
     }
-    fread(in, IN_NODES, REAL_DATA_SIZE, vector_p);
-    fread(out, OUT_NODES, REAL_DATA_SIZE, vector_p);
+    for(i=0; i< data_size; i++) {
+        fread(in[i], sizeof(unsigned char), IN_NODES, vector_p);
+    }
+    for(i=0; i< data_size; i++) {
+        fread(out[i], sizeof(double), IN_NODES, vector_p);
+    }
+    //unsigned char tmp;
+    //fread(&tmp, sizeof(unsigned char), 1, vector_p);
+//    fread(in, sizeof(unsigned char), IN_NODES * data_size, vector_p);
+ //   fread(out, sizeof(double), OUT_NODES * data_size, vector_p);
     fclose(vector_p);
-    
-    print_matrix(in, out);
+    //printf("%d\n",tmp);
 
+    printf("matrix in:\n");
+    for(i=0; i < data_size; i++) {
+        for(j=0; j < IN_NODES ; j++) {
+            fprintf(stdout, "%d ", in[i][j]);
+        }
+        printf("\n");
+    }
+    
     /* 初始化权值矩阵 */
 
     //随机数
     srand((unsigned)time(NULL));
-    int i,j;
+    //int j;
     for (i = 0; i < IN_NODES; i++) {
         for (j = 0; j < HIDDEN_NODES; j++) {
             v[i][j] = rand() / (double)(RAND_MAX);    

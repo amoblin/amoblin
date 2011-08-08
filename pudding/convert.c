@@ -17,12 +17,12 @@ int main()
     int data_size = get_data_size();
     unsigned char **in = (unsigned char **) malloc(sizeof(unsigned char*) * data_size);
     //unsigned char in[DATA_SIZE][IN_NODES];  //无符号字符型数组，元素范围0～255.两个数字代表一个汉字。
-    float **out = (float **) malloc(sizeof(float *) * data_size);//输出向量，0.9代表连续，0.1代表分词点
+    double **out = (double **) malloc(sizeof(double *) * data_size);//输出向量，0.9代表连续，0.1代表分词点
     int i;
     for(i=0;i<data_size;i++)
     {
         in[i] = (unsigned char *) malloc(sizeof(unsigned char) * IN_NODES);
-        out[i] = (float *) malloc(sizeof(float) * OUT_NODES);
+        out[i] = (double *) malloc(sizeof(double) * OUT_NODES);
     }
     //char out[DATA_SIZE][OUT_NODES];       //输出向量，1代表连续，0代表分词点。
     //unsigned char **in = (unsigned char **) malloc(sizeof(unsigned char) * data_size * IN_NODES);
@@ -45,9 +45,17 @@ int main()
 
     FILE *vector_p = NULL;
     vector_p = fopen("sample.dat","wb");
-    fwrite(in, IN_NODES, t, vector_p);
-    fwrite(out, OUT_NODES, t, vector_p);
-    fclose(vector_p);
 
+    /* 这样不行，必须使用下面的循环实现。*/
+    //fwrite(in, sizeof(unsigned char) , IN_NODES * data_size, vector_p);
+    //fwrite(out, sizeof(double) , OUT_NODES * data_size, vector_p);
+
+    for(i=0; i< data_size; i++) {
+        fwrite(in[i], sizeof(unsigned char), IN_NODES, vector_p);
+    }
+    for(i=0; i< data_size; i++) {
+        fwrite(out[i], sizeof(double), IN_NODES, vector_p);
+    }
+    fclose(vector_p);
     return 0;
 }
