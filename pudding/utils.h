@@ -95,5 +95,13 @@ int utf8_to_unicode(char *sentence, unsigned char in[], float out[])
 
 int get_data_size()
 {
-    return 6;
+    FILE *fp = fopen("exercise.txt","r");
+    char buffer[49];
+    int i=0;
+    while(fgets(buffer,sizeof(buffer),fp) != NULL) {
+        //printf("%s",buffer);
+        i++;
+    }
+    //printf("lines:%d\n",i);
+    return i;
 }

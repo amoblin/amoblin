@@ -49,7 +49,7 @@ int pudding(char sentence[], double v[][HIDDEN_NODES], double w[][OUT_NODES], do
     for(i=0; i < OUT_NODES; i++) {
         out[i] = 0;
     }
-    char tmp[OUT_NODES];
+    float tmp[OUT_NODES];
     utf8_to_unicode(sentence, in, tmp);
 
     double O1[HIDDEN_NODES]; 

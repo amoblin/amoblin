@@ -25,6 +25,8 @@ int main()
         out[i] = (float *) malloc(sizeof(float) * OUT_NODES);
     }
     //char out[DATA_SIZE][OUT_NODES];       //输出向量，1代表连续，0代表分词点。
+    //unsigned char **in = (unsigned char **) malloc(sizeof(unsigned char) * data_size * IN_NODES);
+    //float **out = (float **)malloc(sizeof(float) * data_size * OUT_NODES);
     int t = 0;  //向量数组游标
     while(fgets(sentence, SEN_LEN, fp) != NULL)
     {
