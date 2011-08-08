@@ -35,21 +35,20 @@ int utf8_to_unicode(char *sentence, unsigned char in[], float out[])
     while(i<strlen(sentence)) {
         int length;
         get_utf8_bytes(sentence[i], &length);
-        /*
         printf("%d: ", i);
         print_u(sentence, i, length);
         printf("\n");
-        */
         unsigned short dest;//2字节
         switch(length) {
             case 1:
                 if (sentence[i] == '\n') {
+                    printf("输入向量:");
                     int s;
-                    for(s=0; s<IN_NODES; s++) {
+                    for(s=0; s<UNI_LEN; s++) {
                         printf("%d ",in[s]);
                     }
-                    printf("\n");
-                    for(s=0; s<OUT_NODES; s++) {
+                    printf("\n输出向量:");
+                    for(s=0; s<SEN_LEN; s++) {
                         printf("%f ",out[s]);
                     }
                     printf("\n");
@@ -57,15 +56,6 @@ int utf8_to_unicode(char *sentence, unsigned char in[], float out[])
                     out[k] = 0.1; //分词点
                 }
                 break;
-            case 2:
-
-                //dest = ( sentence[i] & 0x1F ) << 12;
-                printf("2字节的utf8编码，看看怎么回事？\n");
-                exit(0);
-
-                out[k] = 0.1;
-                break;
-
             case 3:
                 dest = ( sentence[i] & 0x0F ) << 12;
                 //printf("%x\n", dest);
@@ -77,9 +67,10 @@ int utf8_to_unicode(char *sentence, unsigned char in[], float out[])
                 out[k] = 0.9; //有字即1
                 in[j] = dest >> 8;  //高位
                 in[++j] = dest & 0xff;  //低位
-                //printf("%d %d\n", in[t][j-1], in[t][j]);
+                printf("%d %d\n", in[j-1], in[j]);
                 j++;
                 break;
+            case 2:
             case 4:
             case 5:
             case 6:
@@ -103,5 +94,5 @@ int get_data_size()
         i++;
     }
     //printf("lines:%d\n",i);
-    return i;
+    return i*15;//每行最多15个（18-4+1）单元。
 }
