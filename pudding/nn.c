@@ -4,7 +4,7 @@
 
 #include "nn.h"
 
-int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[][IN_NODES], char out[][OUT_NODES]) {
+int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in, double **out, int data_size) {
     double alpha = LEARN_RATE;  //学习率
     double delta_hidden[HIDDEN_NODES], delta_out[OUT_NODES];    //修改量矩阵
     double O1[HIDDEN_NODES], O2[OUT_NODES]; //隐层和输出层输出量
@@ -12,10 +12,16 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[]
     double sum;
 
     double e = PRECISION + 1;
+
+    double old_e;
+    double old_v[IN_NODES][HIDDEN_NODES];   //隐含层权值矩阵
+    double old_w[HIDDEN_NODES][OUT_NODES];   //输出层权值矩阵
+
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
-        for (i= 0; i < REAL_DATA_SIZE; i++) { 
-            for (k= 0; k < HIDDEN_NODES; k++) {
+        old_e = 9999;
+        for (i=0; i < data_size; i++) { 
+            for (k=0; k < HIDDEN_NODES; k++) {
                 sum = 0;
                 for (j = 0; j < IN_NODES; j++) {
                     sum += in[i][j] * v[j][k];    
@@ -37,6 +43,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[]
             for (j = 0; j < OUT_NODES ; j++) {   //计算输出误差
                 //printf("%f \n", (out[i][j] - O2[j]) * (out[i][j] - O2[j]));
                 e += (out[i][j] - O2[j]) * (out[i][j] - O2[j]);
+                //printf("e:%f\n",e);
             }
             for (k = 0; k < HIDDEN_NODES; k++) {         //计算隐层权修改量
                 sum = 0;
@@ -51,8 +58,18 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[]
                 for (k = 0; k < HIDDEN_NODES; k++)
                     v[j][k] += alpha * in[i][j] * delta_hidden[k]; 
         }
-        if (n % 500 == 0) {
+        if (n % 1000 == 0) {
             printf("误差 : %f\n", e);
+        }
+        if (e< old_e) { //进行权值更新
+            old_e = e;
+            memcpy(old_v, v, sizeof(double) * IN_NODES * HIDDEN_NODES);
+            memcpy(old_w, w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
+        } else {    //取消权值更新
+            memcpy(v, old_v, sizeof(double) * IN_NODES * HIDDEN_NODES);
+            memcpy(w, old_w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
+            alpha = 0.9 * alpha;
+            printf("new alpha:%f\n",alpha);
         }
     }
     printf("总共循环次数：%d\n", n);
@@ -77,38 +94,16 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char in[]
     return 0;
 }
 
-int print_matrix(unsigned char in[][IN_NODES], char out[][OUT_NODES]) {
-    if (!DEBUG) {
-        return 0;
-    }
-    int i,j;
-    printf("matrix v:\n");
-    for(i=0; i < REAL_DATA_SIZE; i++) {
-        for(j=0; j < IN_NODES ; j++) {
-            fprintf(stdout, "%d ", in[i][j]);
-        }
-        printf("\n");
-    }
-
-    printf("matrix w:\n");
-    for(i=0; i < REAL_DATA_SIZE; i++) {
-        for(j=0; j < OUT_NODES; j++) {
-            fprintf(stdout, "%d ", out[i][j]);
-        }
-        printf("\n");
-    }
-
-}
-
 int main()
 {
-    unsigned char in[REAL_DATA_SIZE][IN_NODES];  //无符号字符型数组，元素范围0～255.两个数字代表一个汉字。
-    char out[REAL_DATA_SIZE][OUT_NODES];       //输出向量，1代表连续，0代表分词点。
-
-
-    double v[IN_NODES][HIDDEN_NODES];   //隐含层权值矩阵
-    double w[HIDDEN_NODES][OUT_NODES];   //输出层权值矩阵
-
+    int data_size = get_data_size();
+    unsigned char **in = (unsigned char**) malloc(sizeof(unsigned char*) * data_size);
+    double **out = (double **) malloc(sizeof(double *) * data_size);
+    int i,j;
+    for(i=0;i<data_size;i++) {
+        in[i] = (unsigned char*) malloc(sizeof(unsigned char) * IN_NODES);
+        out[i] = (double *) malloc(sizeof(double) * OUT_NODES);
+    }
     /* 读取样本数据 */
     FILE *vector_p = NULL;
     vector_p = fopen("sample.dat","rb");
@@ -116,17 +111,33 @@ int main()
         printf("Error! File 'sample.dat' does not exist.\n");
         exit(0);
     }
-    fread(in, IN_NODES, REAL_DATA_SIZE, vector_p);
-    fread(out, OUT_NODES, REAL_DATA_SIZE, vector_p);
+    for(i=0;i<data_size;i++) {
+        fread(in[i], sizeof(unsigned char), IN_NODES, vector_p);
+        fread(out[i], sizeof(double), OUT_NODES, vector_p);
+    }
     fclose(vector_p);
+
+    printf("matrix in:\n");
+    for(i=0; i < data_size; i++) {
+        for(j=0; j < IN_NODES ; j++) {
+            fprintf(stdout, "%d ", in[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("matrix out:\n");
+    for(i=0; i < data_size; i++) {
+        for(j=0; j < OUT_NODES ; j++) {
+            fprintf(stdout, "%f ", out[i][j]);
+        }
+        printf("\n");
+    }
     
-    print_matrix(in, out);
-
+    double v[IN_NODES][HIDDEN_NODES];   //隐含层权值矩阵
+    double w[HIDDEN_NODES][OUT_NODES];   //输出层权值矩阵
     /* 初始化权值矩阵 */
-
     //随机数
     srand((unsigned)time(NULL));
-    int i,j;
     for (i = 0; i < IN_NODES; i++) {
         for (j = 0; j < HIDDEN_NODES; j++) {
             v[i][j] = rand() / (double)(RAND_MAX);    
@@ -143,7 +154,7 @@ int main()
     }
 
     /* 训练 */
-    train_bp(v, w, in, out);             //训练bp神经网络
+    train_bp(v, w, in, out, data_size);             //训练bp神经网络
 
     /*
     for (i = 0; i < IN_NODES; i++) {
@@ -166,6 +177,13 @@ int main()
     fwrite(v, HIDDEN_NODES*8, IN_NODES, vector_p);
     fwrite(w, OUT_NODES*8, HIDDEN_NODES, vector_p);
     fclose(vector_p);
+
+    for(i=0;i<data_size;i++) {
+        free(in[i]);
+        free(out[i]);
+    }
+    free(in);
+    free(out);
 
     return 0;
 } 

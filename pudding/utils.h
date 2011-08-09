@@ -27,7 +27,7 @@ int get_utf8_bytes(char code, int *length)
     return 0;
 }
 
-int utf8_to_unicode(char *sentence, unsigned char in[], float out[])
+int utf8_to_unicode(char *sentence, unsigned char in[], double out[])
 {
     int i = 0;    //utf8编码串游标；
     int j = 0;  //输入向量游标；
@@ -88,11 +88,20 @@ int get_data_size()
 {
     FILE *fp = fopen("exercise.txt","r");
     char buffer[49];
-    int i=0;
+    int data_size=0;
     while(fgets(buffer,sizeof(buffer),fp) != NULL) {
-        //printf("%s",buffer);
-        i++;
+        int i=0;
+        int sen_len = strlen(buffer);
+        int j;
+        for(j=0; j< sen_len;j++) {
+            if (buffer[j] == 32) {
+                i++;
+            }
+        }
+        int utf8_len = sen_len - i -1;
+
+        data_size += utf8_len/3 - 3;
+        //printf("%d\n",data_size);
     }
-    //printf("lines:%d\n",i);
-    return i*15;//每行最多15个（18-4+1）单元。
+    return data_size;
 }

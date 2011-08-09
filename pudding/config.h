@@ -2,15 +2,15 @@
 #define UTF8_LEN 54
 #define UNI_LEN 36
 
-#define IN_NODES 64     //输入层节点数,一个汉字占2个unicode字节
+#define IN_NODES 8     //输入层节点数,一个汉字占2个unicode字节
 #define OUT_NODES 4     //输出层节点数,汉字的个数
 #define HIDDEN_NODES 48   //隐含层节点数
 
 #define REAL_DATA_SIZE 6 //实际学习数据量.    TODO: 动态分配
 
 
-#define LOOP_MAX 100000   //最大循环次数
-#define LEARN_RATE  0.09 //学习率
+#define LOOP_MAX 1000000   //最大循环次数
+#define LEARN_RATE  0.8 //学习率
 #define PRECISION 0.05  //精度
 
 #define DEBUG 1
