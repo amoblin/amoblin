@@ -89,10 +89,10 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
 }
 
 int print_matrix(double **matrix, int h, int w) {
-    int i;
+    int i,j;
     for(i=0; i < h; i++) {
         for(j=0; j < w; j++) {
-            fprintf(stdout, "%f ", out[i][j]);
+            fprintf(stdout, "%f ", matrix[i][j]);
         }
         printf("\n");
     }
