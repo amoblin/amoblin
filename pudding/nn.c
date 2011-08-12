@@ -13,10 +13,12 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
 
     double e = PRECISION + 1;
 
+    /* 动态更新权值 */
     double old_e;
-    double old_v[IN_NODES][HIDDEN_NODES];   //隐含层权值矩阵
-    double old_w[HIDDEN_NODES][OUT_NODES];   //输出层权值矩阵
+    double old_v[IN_NODES][HIDDEN_NODES];
+    double old_w[HIDDEN_NODES][OUT_NODES];
 
+    /* 计时器 */
     int time_s = time((time_t*)NULL);
 
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
@@ -60,8 +62,8 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
                 for (k = 0; k < HIDDEN_NODES; k++)
                     v[j][k] += alpha * in[i][j] * delta_hidden[k]; 
         }
-        if (n % 1000 == 0) {
-            printf("次数: %d 学习率: %f 误差: %f\n", n, alpha, e);
+        if (n % 10000 == 0) {
+            printf("次数: %dw 学习率: %f 误差: %f\n", n/10000, alpha, e);
         }
         if (e< old_e) { //进行权值更新
             old_e = e;
@@ -78,24 +80,22 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
     int seconds = time_e - time_s;
     printf("耗时：%dh\n", seconds / 3600 );
 
-    /*
     printf("调整后的隐层权矩阵：\n");
-    for (i = 0; i < IN_NODES; i++) {    
-        for (j = 0; j < HIDDEN_NODES; j++) {
-            printf("%f    ", v[i][j]);    
-        }
-        printf("\n");
-    }
+    print_matrix(v, IN_NODES, HIDDEN_NODES);
     printf("调整后的输出层权矩阵：\n");
-    for (i = 0; i < HIDDEN_NODES; i++) {
-        for (j = 0; j < OUT_NODES; j++) {
-            printf("%f    ", w[i][j]);    
-        }
-        printf("\n");
-    }
-    */
+    print_matrix(w, HIDDEN_NODES, OUT_NODES);
 
     return 0;
+}
+
+int print_matrix(double **matrix, int h, int w) {
+    int i;
+    for(i=0; i < h; i++) {
+        for(j=0; j < w; j++) {
+            fprintf(stdout, "%f ", out[i][j]);
+        }
+        printf("\n");
+    }
 }
 
 int main()
@@ -121,6 +121,7 @@ int main()
     }
     fclose(vector_p);
 
+    /*
     printf("matrix in:\n");
     for(i=0; i < data_size; i++) {
         for(j=0; j < IN_NODES ; j++) {
@@ -128,52 +129,26 @@ int main()
         }
         printf("\n");
     }
+    print_matrix(out, data_size, OUT_NODES);
+    */
 
-    printf("matrix out:\n");
-    for(i=0; i < data_size; i++) {
-        for(j=0; j < OUT_NODES ; j++) {
-            fprintf(stdout, "%f ", out[i][j]);
-        }
-        printf("\n");
-    }
-    
     double v[IN_NODES][HIDDEN_NODES];   //隐含层权值矩阵
     double w[HIDDEN_NODES][OUT_NODES];   //输出层权值矩阵
     /* 初始化权值矩阵 */
-    //随机数
     srand((unsigned)time(NULL));
     for (i = 0; i < IN_NODES; i++) {
         for (j = 0; j < HIDDEN_NODES; j++) {
             v[i][j] = rand() / (double)(RAND_MAX);    
-            //printf("%f ", v[i][j]);
         }
-        //printf("\n ");
     }
     for (i = 0; i < HIDDEN_NODES; i++) {
         for (j = 0; j < OUT_NODES; j++) {
             w[i][j] = rand() / (double)(RAND_MAX);    
-            printf("%f ", w[i][j]);
         }
-        printf("\n ");
     }
 
     /* 训练 */
     train_bp(v, w, in, out, data_size);             //训练bp神经网络
-
-    /*
-    for (i = 0; i < IN_NODES; i++) {
-        for (j = 0; j < HIDDEN_NODES; j++) {
-            printf("%f ", v[i][j]);
-        }
-        printf("\n ");
-    }
-    for (i = 0; i < HIDDEN_NODES; i++) {
-        for (j = 0; j < OUT_NODES; j++) {
-            printf("%f ", w[i][j]);
-        }
-        printf("\n ");
-    }
-    */
 
     /* 保存权值矩阵 */
     vector_p = NULL;
@@ -182,13 +157,12 @@ int main()
     fwrite(w, OUT_NODES*8, HIDDEN_NODES, vector_p);
     fclose(vector_p);
 
+    /* 释放内存 */
     for(i=0;i<data_size;i++) {
         free(in[i]);
         free(out[i]);
     }
     free(in);
     free(out);
-
     return 0;
-} 
-
+}
