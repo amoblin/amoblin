@@ -17,6 +17,8 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
     double old_v[IN_NODES][HIDDEN_NODES];   //隐含层权值矩阵
     double old_w[HIDDEN_NODES][OUT_NODES];   //输出层权值矩阵
 
+    time_s = time();
+
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
         old_e = 9999;
@@ -69,10 +71,12 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             memcpy(v, old_v, sizeof(double) * IN_NODES * HIDDEN_NODES);
             memcpy(w, old_w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
             alpha = 0.9 * alpha;
-            printf("new alpha:%f\n",alpha);
         }
     }
     printf("总共循环次数：%d\n", n);
+    time_e = time();
+    seconds = time_e - time_s;
+    printf("耗时：%dh\n", seconds / 3600 );
 
     /*
     printf("调整后的隐层权矩阵：\n");
