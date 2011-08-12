@@ -70,7 +70,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
         } else {    //取消权值更新
             memcpy(v, old_v, sizeof(double) * IN_NODES * HIDDEN_NODES);
             memcpy(w, old_w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
-            alpha = 0.9 * alpha;
+            alpha = 0.99 * alpha;
         }
     }
     printf("总共循环次数：%d\n", n);
