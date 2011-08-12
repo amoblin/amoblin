@@ -9,9 +9,5 @@
 #define REAL_DATA_SIZE 6 //实际学习数据量.    TODO: 动态分配
 
 
-#define LOOP_MAX 1000000   //最大循环次数
-#define LEARN_RATE  0.8 //学习率
-#define PRECISION 0.05  //精度
-
 #define DEBUG 1
 

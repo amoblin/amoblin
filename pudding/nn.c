@@ -59,7 +59,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
                     v[j][k] += alpha * in[i][j] * delta_hidden[k]; 
         }
         if (n % 1000 == 0) {
-            printf("误差 : %f\n", e);
+            printf("次数: %d 学习率: %f 误差: %f\n", n, alpha, e);
         }
         if (e< old_e) { //进行权值更新
             old_e = e;
