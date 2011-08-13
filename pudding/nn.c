@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <syslog.h>
 
 #include "nn.h"
 
@@ -63,7 +64,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
                     v[j][k] += alpha * in[i][j] * delta_hidden[k]; 
         }
         if (n % 10000 == 0) {
-            printf("次数: %dw 学习率: %f 误差: %f\n", n/10000, alpha, e);
+            syslog(LOG_USER|LOG_DEBUG, "次数: %dw 学习率: %f 误差: %f\n", n/10000, alpha, e);
         }
         if (e< old_e) { //进行权值更新
             old_e = e;
@@ -73,7 +74,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             memcpy(v, old_v, sizeof(double) * IN_NODES * HIDDEN_NODES);
             memcpy(w, old_w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
             alpha = 0.99 * alpha;
-            printf("alpha changed:%f\n", alpha);
+            //printf("alpha changed:%f\n", alpha);
         }
         //TODO:键盘中断
     }
@@ -89,6 +90,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
 
 int main()
 {
+    openlog("nn", LOG_CONS|LOG_PID, 0);
     int data_size = get_data_size();
     unsigned char **in = (unsigned char**) malloc(sizeof(unsigned char*) * data_size);
     double **out = (double **) malloc(sizeof(double *) * data_size);
@@ -162,5 +164,6 @@ int main()
     }
     free(in);
     free(out);
+    closelog();
     return 0;
 }
