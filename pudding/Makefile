@@ -2,7 +2,7 @@ SERVER=ubuntu-edu.unix-center.net
 
 all: convert nn pudding
 
-nn:nn.c config.h
+nn:nn.c config.h nn.h
 	gcc -lm nn.c -o nn
 
 convert:convert.c config.h utils.h
@@ -15,7 +15,5 @@ clean:
 	rm nn convert pudding
 
 scp:
+	rm nn
 	scp -r . amoblin@$(SERVER):~/pudding
-
-run:
-	ssh amoblin@$(SERVER) -c "nohup

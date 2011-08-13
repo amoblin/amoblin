@@ -124,7 +124,6 @@ int main()
             v[i][j] = rand() / (double)(RAND_MAX);    
         }
     }
-    printf("matrix w is:\n");
     for (i = 0; i < HIDDEN_NODES; i++) {
         for (j = 0; j < OUT_NODES; j++) {
             w[i][j] = rand() / (double)(RAND_MAX);    
@@ -132,6 +131,7 @@ int main()
     }
 
     /* 训练 */
+    printf("开始网络训练\n");
     train_bp(v, w, in, out, data_size);             //训练bp神经网络
 
     /* 保存权值矩阵 */
