@@ -79,23 +79,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
     int time_e = time((time_t*)NULL);
     int seconds = time_e - time_s;
     printf("耗时：%dh\n", seconds / 3600 );
-
-    printf("调整后的隐层权矩阵：\n");
-    print_matrix(v, IN_NODES, HIDDEN_NODES);
-    printf("调整后的输出层权矩阵：\n");
-    print_matrix(w, HIDDEN_NODES, OUT_NODES);
-
     return 0;
-}
-
-int print_matrix(double **matrix, int h, int w) {
-    int i,j;
-    for(i=0; i < h; i++) {
-        for(j=0; j < w; j++) {
-            fprintf(stdout, "%f ", matrix[i][j]);
-        }
-        printf("\n");
-    }
 }
 
 int main()
@@ -129,18 +113,18 @@ int main()
         }
         printf("\n");
     }
-    print_matrix(out, data_size, OUT_NODES);
     */
 
     double v[IN_NODES][HIDDEN_NODES];   //隐含层权值矩阵
     double w[HIDDEN_NODES][OUT_NODES];   //输出层权值矩阵
     /* 初始化权值矩阵 */
-    srand((unsigned)time(NULL));
+    srand((unsigned)time((time_t *)NULL));
     for (i = 0; i < IN_NODES; i++) {
         for (j = 0; j < HIDDEN_NODES; j++) {
             v[i][j] = rand() / (double)(RAND_MAX);    
         }
     }
+    printf("matrix w is:\n");
     for (i = 0; i < HIDDEN_NODES; i++) {
         for (j = 0; j < OUT_NODES; j++) {
             w[i][j] = rand() / (double)(RAND_MAX);    
