@@ -73,13 +73,17 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             memcpy(v, old_v, sizeof(double) * IN_NODES * HIDDEN_NODES);
             memcpy(w, old_w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
             alpha = 0.99 * alpha;
+            printf("alpha changed:%f\n", alpha);
         }
         //TODO:键盘中断
     }
     printf("总共循环次数：%d\n", n);
     int time_e = time((time_t*)NULL);
+
     int seconds = time_e - time_s;
-    printf("耗时：%dh\n", seconds / 3600 );
+    int mins = seconds % 3600;
+    int secs = mins % 60;
+    printf("耗时：%dh %dm %ds\n", seconds / 3600, mins/60, secs);
     return 0;
 }
 
