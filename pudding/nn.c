@@ -74,6 +74,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             memcpy(w, old_w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
             alpha = 0.99 * alpha;
         }
+        //TODO:键盘中断
     }
     printf("总共循环次数：%d\n", n);
     int time_e = time((time_t*)NULL);
@@ -117,19 +118,28 @@ int main()
 
     double v[IN_NODES][HIDDEN_NODES];   //隐含层权值矩阵
     double w[HIDDEN_NODES][OUT_NODES];   //输出层权值矩阵
-    /* 初始化权值矩阵 */
-    srand((unsigned)time((time_t *)NULL));
-    for (i = 0; i < IN_NODES; i++) {
-        for (j = 0; j < HIDDEN_NODES; j++) {
-            v[i][j] = rand() / (double)(RAND_MAX);    
-        }
-    }
-    for (i = 0; i < HIDDEN_NODES; i++) {
-        for (j = 0; j < OUT_NODES; j++) {
-            w[i][j] = rand() / (double)(RAND_MAX);    
-        }
-    }
 
+    vector_p = NULL;
+    vector_p = fopen("wisdom.dat","rb");
+    if (vector_p == NULL) { //不存在，使用随机数初始化
+        /* 初始化权值矩阵 */
+        srand((unsigned)time((time_t *)NULL));
+        for (i = 0; i < IN_NODES; i++) {
+            for (j = 0; j < HIDDEN_NODES; j++) {
+                v[i][j] = rand() / (double)(RAND_MAX);
+            }
+        }
+        for (i = 0; i < HIDDEN_NODES; i++) {
+            for (j = 0; j < OUT_NODES; j++) {
+                w[i][j] = rand() / (double)(RAND_MAX);
+            }
+        }
+    } else {    //使用上一次的矩阵
+        printf("使用上次矩阵");
+        fread(v, HIDDEN_NODES*8, IN_NODES, vector_p);
+        fread(w, OUT_NODES*8, HIDDEN_NODES, vector_p);
+        fclose(vector_p);
+    }
     /* 训练 */
     printf("开始网络训练\n");
     train_bp(v, w, in, out, data_size);             //训练bp神经网络
