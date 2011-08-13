@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <time.h>
 #include <syslog.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #include "nn.h"
 
@@ -90,7 +92,12 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
 
 int main()
 {
-    openlog("nn", LOG_CONS|LOG_PID, 0);
+    /* 记录日志 */
+    int logfd = open( "nn.log", O_RDWR | O_CREAT | O_APPEND, 0644 );
+    close(STDERR_FILENO);
+    dup2(logfd, STDERR_FILENO);
+    close(logfd);
+    openlog(NULL, LOG_PERROR, LOG_DAEMON);
     int data_size = get_data_size();
     unsigned char **in = (unsigned char**) malloc(sizeof(unsigned char*) * data_size);
     double **out = (double **) malloc(sizeof(double *) * data_size);
