@@ -18,8 +18,12 @@ scp:
 	-@rm nn wisdom.dat nn.log
 	@scp -r . amoblin@$(SERVER):~/pudding
 
+run:
+	ssh amoblin@$(SERVER) "cd pudding;nohup ./nn&"
+
 log:
 	@ssh amoblin@$(SERVER) "tail -8 ~/pudding/nn.log"
+	@echo NOW `date +%H:%M:%S`
 
 ssh:
 	ssh amoblin@$(SERVER)
