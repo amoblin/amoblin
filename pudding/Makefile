@@ -19,7 +19,7 @@ scp:
 	scp -r . amoblin@$(SERVER):~/pudding
 
 log:
-	ssh amoblin@$(SERVER) "tail -8 ~/pudding/nn.log"
+	@ssh amoblin@$(SERVER) "tail -8 ~/pudding/nn.log"
 
 ssh:
 	ssh amoblin@$(SERVER)
