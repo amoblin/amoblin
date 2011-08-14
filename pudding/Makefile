@@ -16,7 +16,7 @@ clean:
 
 scp:
 	-@rm nn wisdom.dat nn.log
-	scp -r . amoblin@$(SERVER):~/pudding
+	@scp -r . amoblin@$(SERVER):~/pudding
 
 log:
 	@ssh amoblin@$(SERVER) "tail -8 ~/pudding/nn.log"

@@ -24,6 +24,10 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
     /* 计时器 */
     int time_s = time((time_t*)NULL);
 
+    /* 保存数据 */
+    FILE *fp = NULL;
+    fp = fopen("grapher.txt","w");
+
     printf("LOOP_MAX: %dw\n", LOOP_MAX/10000);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
@@ -84,7 +88,12 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             //printf("alpha changed:%f\n", alpha);
         }
         //TODO:键盘中断
+        /* 保存图像数据 */
+        if( n % 100 == 0) {
+            fprintf(fp, "%d %f %f\n", n/100, e, alpha);
+        }
     }
+    fclose(fp);
     int time_e = time((time_t*)NULL);
     int seconds = (int)difftime(time_e, time_s);
     int mins = seconds % 3600;
