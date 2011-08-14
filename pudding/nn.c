@@ -28,6 +28,10 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
     FILE *fp = NULL;
     fp = fopen("grapher.txt","w");
 
+    /* 保存权值矩阵 */
+    FILE *vector_p = NULL;
+    vector_p = fopen("wisdom.dat","wb");
+
     printf("LOOP_MAX: %dw\n", LOOP_MAX/10000);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
@@ -70,13 +74,6 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
                 for (k = 0; k < HIDDEN_NODES; k++)
                     v[j][k] += alpha * in[i][j] * delta_hidden[k]; 
         }
-        if (n % LOG_DEN == 0) {
-            time_t rawtime;
-            time(&rawtime);
-            struct tm *timeinfo;
-            timeinfo = localtime(&rawtime);
-            syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d 次数: %dw 学习率: %f 误差: %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, n/LOG_DEN, alpha, e);
-        }
         if (e < old_e) { //进行权值更新
             old_e = e;
             memcpy(old_v, v, sizeof(double) * IN_NODES * HIDDEN_NODES);
@@ -87,13 +84,29 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             alpha = 0.99 * alpha;
             //printf("alpha changed:%f\n", alpha);
         }
-        //TODO:键盘中断
+
+        if (n % LOG_DEN == 0) {
+            /* 写入日志 */
+            time_t rawtime;
+            time(&rawtime);
+            struct tm *timeinfo;
+            timeinfo = localtime(&rawtime);
+            syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d 次数: %dw 学习率: %f 误差: %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, n/LOG_DEN, alpha, e);
+            /* 保存权值矩阵 */
+            fwrite(v, HIDDEN_NODES*8, IN_NODES, vector_p);
+            fwrite(w, OUT_NODES*8, HIDDEN_NODES, vector_p);
+            fflush(vector_p);
+        }
+
         /* 保存图像数据 */
         if( n % PLOT_DEN== 0) {
             fprintf(fp, "%d %f %f\n", n/PLOT_DEN, e, alpha);
         }
     }
+
     fclose(fp);
+    fclose(vector_p);
+
     int time_e = time((time_t*)NULL);
     int seconds = (int)difftime(time_e, time_s);
     int mins = seconds % 3600;
@@ -110,6 +123,7 @@ int main()
     dup2(logfd, STDERR_FILENO);
     close(logfd);
     openlog(NULL, LOG_PERROR, LOG_DAEMON);
+
     int data_size = get_data_size();
     unsigned char **in = (unsigned char**) malloc(sizeof(unsigned char*) * data_size);
     double **out = (double **) malloc(sizeof(double *) * data_size);
@@ -168,13 +182,6 @@ int main()
     /* 训练 */
     printf("开始网络训练\n");
     train_bp(v, w, in, out, data_size);             //训练bp神经网络
-
-    /* 保存权值矩阵 */
-    vector_p = NULL;
-    vector_p = fopen("wisdom.dat","wb");
-    fwrite(v, HIDDEN_NODES*8, IN_NODES, vector_p);
-    fwrite(w, OUT_NODES*8, HIDDEN_NODES, vector_p);
-    fclose(vector_p);
 
     /* 释放内存 */
     for(i=0;i<data_size;i++) {
