@@ -93,6 +93,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             timeinfo = localtime(&rawtime);
             syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d 次数: %dw 学习率: %f 误差: %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, n/LOG_DEN, alpha, e);
             /* 保存权值矩阵 */
+            fseek(vector_p, 0, SEEK_SET);
             fwrite(v, HIDDEN_NODES*8, IN_NODES, vector_p);
             fwrite(w, OUT_NODES*8, HIDDEN_NODES, vector_p);
             fflush(vector_p);

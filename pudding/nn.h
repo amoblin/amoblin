@@ -5,7 +5,7 @@
 #define LOOP_MAX 10000000   //最大循环次数
 #define LEARN_RATE  0.1 //学习率
 #define PRECISION 0.05  //精度
-#define LOG_DEN 10
+#define LOG_DEN 10000
 #define PLOT_DEN 100
 
 
