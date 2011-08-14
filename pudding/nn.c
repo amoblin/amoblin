@@ -70,14 +70,14 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
                 for (k = 0; k < HIDDEN_NODES; k++)
                     v[j][k] += alpha * in[i][j] * delta_hidden[k]; 
         }
-        if (n % 10000 == 0) {
+        if (n % LOG_DEN == 0) {
             time_t rawtime;
             time(&rawtime);
             struct tm *timeinfo;
             timeinfo = localtime(&rawtime);
-            syslog(LOG_USER|LOG_DEBUG, "%2d:%2d:%2d 次数: %dw 学习率: %f 误差: %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, n/10000, alpha, e);
+            syslog(LOG_USER|LOG_DEBUG, "%2d:%2d:%2d 次数: %dw 学习率: %f 误差: %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, n/LOG_DEN, alpha, e);
         }
-        if (e< old_e) { //进行权值更新
+        if (e < old_e) { //进行权值更新
             old_e = e;
             memcpy(old_v, v, sizeof(double) * IN_NODES * HIDDEN_NODES);
             memcpy(old_w, w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
@@ -89,8 +89,8 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
         }
         //TODO:键盘中断
         /* 保存图像数据 */
-        if( n % 100 == 0) {
-            fprintf(fp, "%d %f %f\n", n/100, e, alpha);
+        if( n % PLOT_DEN== 0) {
+            fprintf(fp, "%d %f %f\n", n/PLOT_DEN, e, alpha);
         }
     }
     fclose(fp);
