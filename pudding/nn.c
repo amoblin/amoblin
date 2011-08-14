@@ -24,6 +24,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
     /* 计时器 */
     int time_s = time((time_t*)NULL);
 
+    printf("LOOP_MAX: %dw\n", LOOP_MAX/10000);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
         old_e = 9999;

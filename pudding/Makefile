@@ -15,7 +15,7 @@ clean:
 	rm nn convert pudding
 
 scp:
-	-@rm nn wisdom.dat
+	-@rm nn wisdom.dat nn.log
 	scp -r . amoblin@$(SERVER):~/pudding
 
 test:
