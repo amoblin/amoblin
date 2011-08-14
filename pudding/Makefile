@@ -18,5 +18,8 @@ scp:
 	-@rm nn wisdom.dat nn.log
 	scp -r . amoblin@$(SERVER):~/pudding
 
-test:
-	ssh amoblin@$(SERVER) "ps -ef|grep nn"
+log:
+	ssh amoblin@$(SERVER) "tail -8 ~/pudding/nn.log"
+
+ssh:
+	ssh amoblin@$(SERVER)

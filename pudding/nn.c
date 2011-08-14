@@ -71,7 +71,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             time(&rawtime);
             struct tm *timeinfo;
             timeinfo = localtime(&rawtime);
-            syslog(LOG_USER|LOG_DEBUG, "%d:%d 次数: %dw 学习率: %f 误差: %f\n", timeinfo->tm_hour, timeinfo->tm_min, n/10000, alpha, e);
+            syslog(LOG_USER|LOG_DEBUG, "%d:%d:%d 次数: %dw 学习率: %f 误差: %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, n/10000, alpha, e);
         }
         if (e< old_e) { //进行权值更新
             old_e = e;
