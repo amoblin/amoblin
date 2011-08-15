@@ -7,7 +7,7 @@
 
 #include "nn.h"
 
-int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in, double **out, int data_size, FILE *vector_p) {
+int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in, double **out, int data_size, FILE *vector_p, FILE *fp) {
     double alpha = LEARN_RATE;  //学习率
     double delta_hidden[HIDDEN_NODES], delta_out[OUT_NODES];    //修改量矩阵
     double O1[HIDDEN_NODES], O2[OUT_NODES]; //隐层和输出层输出量
@@ -23,10 +23,6 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
 
     /* 计时器 */
     int time_s = time((time_t*)NULL);
-
-    /* 保存数据 */
-    FILE *fp = NULL;
-    fp = fopen("grapher.txt","w");
 
     printf("LOOP_MAX: %dw\n", LOOP_MAX/10000);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
@@ -191,9 +187,18 @@ int main(int argc, char* argv[])
         fread(w, OUT_NODES*8, HIDDEN_NODES, vector_p);
         fclose(vector_p);
     }
+
+    /* 保存数据点 */
+    FILE *fp = NULL;
+    if(argc < 4) {
+        fp = fopen("grapher.txt", "w");
+    } else {
+        fp = fopen(argv[3], "w");
+    }
+
     /* 训练 */
     printf("开始网络训练\n");
-    train_bp(v, w, in, out, data_size, vector_p);             //训练bp神经网络
+    train_bp(v, w, in, out, data_size, vector_p, fp);             //训练bp神经网络
 
     /* 释放内存 */
     for(i=0;i<data_size;i++) {
