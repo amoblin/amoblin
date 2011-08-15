@@ -1,3 +1,4 @@
+cmake_minimum_required (VERSION 2.8)
 project (pudding)
 add_subdirectory(src bin)
 #set (src_list convert.c nn.c pudding.c)

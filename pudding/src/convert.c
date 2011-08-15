@@ -4,17 +4,20 @@
 #include "config.h"
 #include "utils.h"
 
-int main()
+int main(int argc, char *argv[])
 {
+    if(argc < 2) {
+        printf("usage: %s [sentence file] [matrix file]\n", argv[0]);
+        return 0;
+    }
     FILE *fp = NULL;
-    char *fname = "exercise.txt";
-    fp = fopen(fname,"r");
+    fp = fopen(argv[1], "r");
     if(fp == NULL) {
-        printf("file: %s does not exist, please check again.\n", fname);
+        printf("file: %s does not exist, please check again.\n", argv[1]);
         return 0;
     }
     char sentence[UTF8_LEN];  //语句长度最大值：18
-    int data_size = get_data_size();
+    int data_size = get_data_size(fp);
     unsigned char **in = (unsigned char **) malloc(sizeof(unsigned char*) * data_size);
     //unsigned char in[DATA_SIZE][IN_NODES];  //无符号字符型数组，元素范围0～255.两个数字代表一个汉字。
     double **out = (double **) malloc(sizeof(double *) * data_size);//输出向量，0.9代表连续，0.1代表分词点
@@ -26,9 +29,6 @@ int main()
         out[i] = (double*) malloc(sizeof(double) * OUT_NODES);
         //memset(out[i],0,sizeof(float) * OUT_NODES);
     }
-    //char out[DATA_SIZE][OUT_NODES];       //输出向量，1代表连续，0代表分词点。
-    //unsigned char **in = (unsigned char **) malloc(sizeof(unsigned char) * data_size * IN_NODES);
-    //float **out = (float **)malloc(sizeof(float) * data_size * OUT_NODES);
     int t = 0;  //向量数组游标
     while(fgets(sentence, UTF8_LEN, fp) != NULL)
     {
@@ -55,7 +55,13 @@ int main()
     fclose(fp);
 
     FILE *vector_p = NULL;
-    vector_p = fopen("sample.dat","wb");
+    if(argc < 3) {
+        vector_p = fopen("sample.dat", "wb");
+    } else {
+        vector_p = fopen(argv[2], "wb");
+    }
+
+    fwrite(&data_size, sizeof(int), 1, vector_p);
     for(i=0;i<data_size;i++) {
         fwrite(in[i], sizeof(unsigned char), IN_NODES, vector_p);
         fwrite(out[i], sizeof(double), OUT_NODES, vector_p);

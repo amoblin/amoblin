@@ -84,9 +84,8 @@ int utf8_to_unicode(char *sentence, unsigned char in[], double out[])
     }
 }
 
-int get_data_size()
+int get_data_size(FILE *fp)
 {
-    FILE *fp = fopen("exercise.txt","r");
     char buffer[49];
     int data_size=0;
     while(fgets(buffer,sizeof(buffer),fp) != NULL) {
@@ -103,5 +102,6 @@ int get_data_size()
         data_size += utf8_len/3 - 3;
         //printf("%d\n",data_size);
     }
+    fseek(fp, 0, SEEK_SET);
     return data_size;
 }

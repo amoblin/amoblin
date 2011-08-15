@@ -7,7 +7,7 @@
 
 #include "nn.h"
 
-int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in, double **out, int data_size) {
+int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in, double **out, int data_size, FILE *vector_p) {
     double alpha = LEARN_RATE;  //学习率
     double delta_hidden[HIDDEN_NODES], delta_out[OUT_NODES];    //修改量矩阵
     double O1[HIDDEN_NODES], O2[OUT_NODES]; //隐层和输出层输出量
@@ -27,10 +27,6 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
     /* 保存数据 */
     FILE *fp = NULL;
     fp = fopen("grapher.txt","w");
-
-    /* 保存权值矩阵 */
-    FILE *vector_p = NULL;
-    vector_p = fopen("wisdom.dat","wb");
 
     printf("LOOP_MAX: %dw\n", LOOP_MAX/10000);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
@@ -87,11 +83,13 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
 
         if (n % LOG_DEN == 0) {
             /* 写入日志 */
-            time_t rawtime;
-            time(&rawtime);
+            time_t time_e = time(NULL);
             struct tm *timeinfo;
-            timeinfo = localtime(&rawtime);
-            syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d 次数: %dw 学习率: %f 误差: %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, n/LOG_DEN, alpha, e);
+            timeinfo = localtime(&time_e);
+            int seconds = (int)difftime(time_e, time_s);
+            int mins = seconds % 3600;
+            int secs = mins % 60;
+            syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %dw %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/LOG_DEN, alpha, e);
             /* 保存权值矩阵 */
             fseek(vector_p, 0, SEEK_SET);
             fwrite(v, HIDDEN_NODES*8, IN_NODES, vector_p);
@@ -108,15 +106,10 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
     fclose(fp);
     fclose(vector_p);
 
-    int time_e = time((time_t*)NULL);
-    int seconds = (int)difftime(time_e, time_s);
-    int mins = seconds % 3600;
-    int secs = mins % 60;
-    syslog(LOG_DEBUG, "耗时：%02dh %02dm %02ds\n", seconds / 3600, mins/60, secs);
     return 0;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     /* 记录日志 */
     int logfd = open( "nn.log", O_RDWR | O_CREAT | O_APPEND, 0644 );
@@ -125,7 +118,22 @@ int main()
     close(logfd);
     openlog(NULL, LOG_PERROR, LOG_DAEMON);
 
-    int data_size = get_data_size();
+    /* 读取样本数据 */
+    FILE *vector_p = NULL;
+    if(argc < 2) {
+        printf("usage: %s [matrix file] [weight file]\n", argv[0]);
+        return 0;
+    } else {
+        vector_p = fopen(argv[1], "rb");
+    }
+    if (vector_p == NULL) {
+        printf("Error! File %s does not exist.\n", argv[1]);
+        exit(0);
+    }
+    /* 获取数据量 */
+    int data_size;
+    fread(&data_size, sizeof(int), 1, vector_p);
+    /* 输入输出矩阵分配内存 */
     unsigned char **in = (unsigned char**) malloc(sizeof(unsigned char*) * data_size);
     double **out = (double **) malloc(sizeof(double *) * data_size);
     int i,j;
@@ -133,13 +141,7 @@ int main()
         in[i] = (unsigned char*) malloc(sizeof(unsigned char) * IN_NODES);
         out[i] = (double *) malloc(sizeof(double) * OUT_NODES);
     }
-    /* 读取样本数据 */
-    FILE *vector_p = NULL;
-    vector_p = fopen("sample.dat","rb");
-    if (vector_p == NULL) {
-        printf("Error! File 'sample.dat' does not exist.\n");
-        exit(0);
-    }
+    /* 读入输入输出矩阵 */
     for(i=0;i<data_size;i++) {
         fread(in[i], sizeof(unsigned char), IN_NODES, vector_p);
         fread(out[i], sizeof(double), OUT_NODES, vector_p);
@@ -160,7 +162,15 @@ int main()
     double w[HIDDEN_NODES][OUT_NODES];   //输出层权值矩阵
 
     vector_p = NULL;
-    vector_p = fopen("wisdom.dat","rb");
+    char *data_file;
+    char file_str[] = "wisdom.dat";
+    if(argc < 3) {
+        data_file = file_str;
+        printf("Warning: 使用当前目录下数据文件\n");
+    } else {
+        data_file = argv[2];
+    }
+    vector_p = fopen(data_file, "rb+");
     if (vector_p == NULL) { //不存在，使用随机数初始化
         /* 初始化权值矩阵 */
         srand((unsigned)time((time_t *)NULL));
@@ -174,6 +184,7 @@ int main()
                 w[i][j] = rand() / (double)(RAND_MAX);
             }
         }
+        vector_p = fopen(data_file, "wb");
     } else {    //使用上一次的矩阵
         printf("使用上次矩阵");
         fread(v, HIDDEN_NODES*8, IN_NODES, vector_p);
@@ -182,7 +193,7 @@ int main()
     }
     /* 训练 */
     printf("开始网络训练\n");
-    train_bp(v, w, in, out, data_size);             //训练bp神经网络
+    train_bp(v, w, in, out, data_size, vector_p);             //训练bp神经网络
 
     /* 释放内存 */
     for(i=0;i<data_size;i++) {
