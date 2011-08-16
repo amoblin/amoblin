@@ -5,16 +5,11 @@
 
 int usage(char *cmd)
 {
-    printf("usage: %s [sentence]\n", cmd);
+    printf("usage: %s [network matrix] [sentence]\n", cmd);
 }
 
-int read_weight(double v[][HIDDEN_NODES], double w[][OUT_NODES])
+int read_weight(double v[][HIDDEN_NODES], double w[][OUT_NODES], FILE *vector_p)
 {
-    FILE *vector_p = NULL;
-    vector_p = fopen("wisdom.dat","rb");
-    if (vector_p == NULL) {
-        printf("Error! wisdom.dat does not exist.");
-    }
     fread(v, HIDDEN_NODES * 8, IN_NODES, vector_p);
     fread(w, OUT_NODES * 8, HIDDEN_NODES, vector_p);
     fclose(vector_p);
@@ -60,13 +55,13 @@ int use_nn(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char *in, d
 
 int pudding(unsigned char sentence[], double v[][HIDDEN_NODES], double w[][OUT_NODES])
 {
-    /* utf8转unicode */
+    /* 整句utf8转unicode */
     unsigned char tmp_in[UNI_LEN];
-
     double tmp_out[SEN_LEN];
     utf8_to_unicode(sentence, tmp_in, tmp_out);
     int length = strlen(tmp_in)/2;
 
+    /* 4字为一组输入，有out_size组 */
     unsigned char in[IN_NODES];
     int out_size = length - 3;
     double** out = (double **) malloc(sizeof(double *) * out_size);
@@ -106,14 +101,20 @@ int pudding(unsigned char sentence[], double v[][HIDDEN_NODES], double w[][OUT_N
 int main(int argc, char *argv[])
 {
     unsigned char sentence[UTF8_LEN];
-    if( argc < 2) {
+    if( argc < 3) {
         usage(argv[0]);
         return 0;
     }
-    strcpy(sentence, argv[1]);
+    strcpy(sentence, argv[2]);
     double v[IN_NODES][HIDDEN_NODES];
     double w[HIDDEN_NODES][OUT_NODES];
-    read_weight(v, w);
+
+    FILE *vector_p = NULL;
+    vector_p = fopen(argv[1], "rb");
+    if (vector_p == NULL) {
+        printf("Error! %s does not exist.\n", argv[1]);
+    }
+    read_weight(v, w, vector_p);
 
     pudding(sentence, v, w);
 

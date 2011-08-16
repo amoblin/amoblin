@@ -4,6 +4,7 @@
 int print_u(char *ustring, int i, int n)
 {
     int k;
+    printf("%d: ", i);
     for(k=0; k<n; k++) {
         printf("%c", ustring[i+k]);
     }
@@ -35,9 +36,7 @@ int utf8_to_unicode(char *sentence, unsigned char in[], double out[])
     while(i<strlen(sentence)) {
         int length;
         get_utf8_bytes(sentence[i], &length);
-        printf("%d: ", i);
         print_u(sentence, i, length);
-        printf("\n");
         unsigned short dest;//2字节
         switch(length) {
             case 1:
@@ -67,7 +66,7 @@ int utf8_to_unicode(char *sentence, unsigned char in[], double out[])
                 out[k] = 0.9; //有字即1
                 in[j] = dest >> 8;  //高位
                 in[++j] = dest & 0xff;  //低位
-                printf("%d %d\n", in[j-1], in[j]);
+                printf("%d %d\t", in[j-1], in[j]);
                 j++;
                 break;
             case 2:
@@ -82,6 +81,7 @@ int utf8_to_unicode(char *sentence, unsigned char in[], double out[])
         i = i + length;
         k++;    //输出向量游标增1
     }
+    in[j] = '\0';
 }
 
 int get_data_size(FILE *fp)
