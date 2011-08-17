@@ -24,10 +24,10 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
     /* 计时器 */
     int time_s = time((time_t*)NULL);
 
+    old_e = 9999;
     printf("LOOP_MAX: %dw\n", LOOP_MAX/10000);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
-        old_e = 9999;
         for (i=0; i < data_size; i++) { 
             for (k=0; k < HIDDEN_NODES; k++) {
                 sum = 0;
@@ -88,8 +88,8 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %dw %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/LOG_DEN, alpha, e);
             /* 保存权值矩阵 */
             fseek(vector_p, 0, SEEK_SET);
-            fwrite(v, HIDDEN_NODES*8, IN_NODES, vector_p);
-            fwrite(w, OUT_NODES*8, HIDDEN_NODES, vector_p);
+            fwrite(v, HIDDEN_NODES * sizeof(double), IN_NODES, vector_p);
+            fwrite(w, OUT_NODES * sizeof(double), HIDDEN_NODES, vector_p);
             fflush(vector_p);
         }
 
@@ -183,8 +183,8 @@ int main(int argc, char* argv[])
         vector_p = fopen(data_file, "wb");
     } else {    //使用上一次的矩阵
         printf("使用上次矩阵");
-        fread(v, HIDDEN_NODES*8, IN_NODES, vector_p);
-        fread(w, OUT_NODES*8, HIDDEN_NODES, vector_p);
+        fread(v, HIDDEN_NODES * sizeof(double), IN_NODES, vector_p);
+        fread(w, OUT_NODES * sizeof(double), HIDDEN_NODES, vector_p);
         fclose(vector_p);
     }
 

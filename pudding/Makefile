@@ -20,10 +20,11 @@ clean:
 	rm ${BIN_DIR}/nn
 
 cmake:
+	-@mkdir build
 	@cd build;cmake ..
 
 scp:
-	-@rm data/wisdom.dat data/nn.log
+	-@rm data/wisdom.dat nn.log build
 	@scp -r . amoblin@$(SERVER):~/pudding
 
 run:

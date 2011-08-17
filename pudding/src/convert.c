@@ -25,30 +25,31 @@ int main(int argc, char *argv[])
     for(i=0;i<data_size;i++)
     {
         in[i] = (unsigned char *) malloc(sizeof(unsigned char) * IN_NODES);
-        //memset(in[i],0,sizeof(unsigned char) * IN_NODES);
+        //memset(in[i], 0, sizeof(unsigned char) * IN_NODES);
         out[i] = (double*) malloc(sizeof(double) * OUT_NODES);
-        //memset(out[i],0,sizeof(float) * OUT_NODES);
     }
     int t = 0;  //向量数组游标
     while(fgets(sentence, UTF8_LEN, fp) != NULL)
     {
-        /* 初始化输入输出矩阵(貌似不要也可以,静态数组可以不要，但malloc分配的必须清零先) */
-        /*
-
-        int i;
-        for(i = 0; i<OUT_NODES; i++) {
-            in[t][i] = in[t][i*2] = out[t][i] = 0;
+        unsigned char tmp_in[UNI_LEN] = {0};//输入最大长度18汉字，每个汉字2字节。要先清空
+        double tmp_out[SEN_LEN];//默认为0，不需清零先。
+        for(i=0; i< SEN_LEN; i++) {
+            tmp_out[i] = 0.9;
         }
-        in[DATA_SIZE][IN_NODES - 1] = 0;
-        */
-
-        unsigned char tmp_in[UNI_LEN]={0};//输入最大长度18汉字，每个汉字2字节。要先清空
-        double tmp_out[18];//默认为0，不需清零先。
-        utf8_to_unicode(sentence, tmp_in,tmp_out);
+        utf8_to_unicode(sentence, tmp_in, tmp_out);
         int length = strlen(tmp_in)/2;//该句汉字数。
         for(i=0;i<length-3;i++) {
             memcpy(in[t],tmp_in + i*2, sizeof(unsigned char) * IN_NODES);
+            int j;
+            for(j=0; j< IN_NODES; j++) {
+                printf("%d ", in[t][j]);
+            }
+            printf("\n");
             memcpy(out[t], tmp_out + i, sizeof(double) * OUT_NODES);
+            for(j=0; j< OUT_NODES; j++) {
+                printf("%f ", out[t][j]);
+            }
+            printf("\n");
             t++;        //向量数组游标增1
         }
     }

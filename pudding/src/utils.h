@@ -63,11 +63,11 @@ int utf8_to_unicode(char *sentence, unsigned char in[], double out[])
                 dest |= (sentence[i+2] & 0x3f);
                 //printf("%x ", dest);
 
-                out[k] = 0.9; //有字即1
                 in[j] = dest >> 8;  //高位
                 in[++j] = dest & 0xff;  //低位
                 printf("%d %d\t", in[j-1], in[j]);
                 j++;
+                k++;    //输出向量游标增1
                 break;
             case 2:
             case 4:
@@ -79,7 +79,6 @@ int utf8_to_unicode(char *sentence, unsigned char in[], double out[])
                 break;
         }
         i = i + length;
-        k++;    //输出向量游标增1
     }
     in[j] = '\0';
 }
