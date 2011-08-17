@@ -185,7 +185,6 @@ int main(int argc, char* argv[])
         printf("使用上次矩阵");
         fread(v, HIDDEN_NODES * sizeof(double), IN_NODES, vector_p);
         fread(w, OUT_NODES * sizeof(double), HIDDEN_NODES, vector_p);
-        fclose(vector_p);
     }
 
     /* 保存数据点 */
