@@ -118,7 +118,9 @@ def search(key_words,page=1):
     return msg
 
 if __name__ == "__main__":
-    if len(sys.argv) == 1:
+    if len(sys.argv) < 2:
         print "help"
-    else:
+    elif len(sys.argv) < 3:
         print search(sys.argv[1])
+    else:
+        print search(sys.argv[1], sys.argv[2])
