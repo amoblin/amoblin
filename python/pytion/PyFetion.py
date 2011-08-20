@@ -421,9 +421,9 @@ class SIPC():
 
         else:
             self.__tcp_send(content)
-            while response is '':
+            retry = 5
+            while retry > 0 and response == '':
                 try:
-                    d_print("here ?")
                     ret = self.__tcp_recv()
                 except socket.error,e:
                     raise PyFetionSocketError(e)
@@ -440,12 +440,11 @@ class SIPC():
                     except exceptions.ValueError:
                         self.queue.put(rs)
                         continue
+                retry = retry - 1
         if self._lock:
             self._lock.release()
             d_print("release lock")
  
-        raw_input("def send")
-
         return response
 
     def __sendSIPP(self):
@@ -556,8 +555,6 @@ class SIPC():
         #return ''.join(total_data)
 
     def __split(self,data):
-        d_print("Hello")
-        raw_input()
         c = []
         d = []
 
@@ -589,7 +586,10 @@ class SIPC():
             c.pop()
 
         c.reverse()
+        raw_input()
         while c:
+            print bool(c)
+            raw_input()
             s = c.pop()
             s += '\r\n\r\n'
             if c:
@@ -638,14 +638,11 @@ class SIPC():
         modulus = int(hex_modulus,16) #modulus
         publicexponent = int(hex_public,16)
 
-        key = {}
-        key['e'] = publicexponent
-        key['n'] = modulus
-
-        print key
+        key, priv = rsa.key.newkeys(256)
+        key.n = modulus
 
         res = rsa.encrypt(raw_str,key)
-        res = base64.decodestring(res)
+        #res = base64.decodestring(res)
         res = binascii.b2a_hex(res)
 
         d_print(('nonce','aeskey','aes_hex','raw_str','res'),locals())

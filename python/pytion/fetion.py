@@ -1156,8 +1156,8 @@ class CLI():
     def main(self,phone):
         '''main function'''
         try:
-            t = progressBar()
-            t.start()
+            #t = progressBar()
+            #t.start()
             #可以在这里选择登录的方式[隐身 在线 忙碌 离开]
             ret = phone.login(FetionHidden)
         except PyFetionSupportError,e:
@@ -1171,7 +1171,8 @@ class CLI():
             printl("网络通信出错 请检查网络连接")
             return 1
         finally:
-            t.stop()
+            #t.stop()
+            pass
 
         if ret:
             printl("登录成功")
