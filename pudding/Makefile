@@ -2,7 +2,7 @@ SERVER=ubuntu-edu.unix-center.net
 SRC_DIR=src
 BIN_DIR=build/bin
 
-all:
+all: cmake
 	@cd build;make
 
 make: convert nn pudding
@@ -24,11 +24,11 @@ cmake:
 	@cd build;cmake ..
 
 scp:
-	-@rm data/wisdom.dat nn.log build
+	-@rm -rf data/wisdom.dat nn.log build
 	@scp -r . amoblin@$(SERVER):~/pudding
 
 run:
-	ssh amoblin@$(SERVER) "cd pudding;./nn.sh"
+	ssh amoblin@$(SERVER) "cd pudding;nohup ./nn.sh&"
 
 log:
 	@ssh amoblin@$(SERVER) "tail -8 ~/pudding/nn.log"
@@ -36,3 +36,6 @@ log:
 
 ssh:
 	ssh amoblin@$(SERVER)
+
+get:
+	scp amoblin@$(SERVER):~/pudding/data/wisdom.dat data/wisdom.dat

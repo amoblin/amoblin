@@ -1124,8 +1124,10 @@ def login():
                         continue
                     if line.startswith("tel"):
                         mobile_no = line.split("=")[1][:-1]
+                        print mobile_no
                     elif line.startswith("password"):
-                        passwd = line.split("=")[1][:-1]    #不要"\n"
+                        passwd = line.split("=")[1]    #不要"\n"
+                        print passwd
                 phone = PyFetion(mobile_no,passwd,"TCP",debug=True)
                 return phone
             except:
@@ -1229,5 +1231,5 @@ class GUI():
 if __name__ == "__main__":
     config()
     phone = login()
-    #CLI(phone)
-    GUI()
+    CLI(phone)
+    #GUI()
