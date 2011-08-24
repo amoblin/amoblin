@@ -45,27 +45,23 @@ class CustomParser(HTMLParser):
             self.title.append(data)
 
 def generate_google_short_url(url):
-    #conn = httplib.HTTPConnection('goo.gl')
-    #params = urllib.urlencode({'url':url})   
-    #conn.request('POST', '/api/shorten', headers={"Content-Type":"application/x-www-form-urlencoded"}, body=params)   
-    #result = conn.getresponse()   
-    dest_url = "http://goo.gl/api/shorten?url=%s" % url
-    response = urllib2.urlopen(dest_url)
+    params = urllib.urlencode({'url':url})
+    dest_url = "http://goo.gl/api/shorten"
+    response = urllib2.urlopen(dest_url, params)
     false = False
     return eval(response.read())['short_url']
 
 def generate_bailu_short_url(url):
     params = urllib.urlencode({'url':url})   
     dest_url="http://bai.lu/api?%s" % params
-    result = urllib2.urlopen(dest_url)
-    response = result.read()
-    data = eval(response)
+    response = urllib2.urlopen(dest_url)
+    result = response.read()
+    data = eval(result)
     short_url = data['url']
     if (data['status'] == 'ok'):
         return data['url'].replace('\\','')
     else:
         return None
-
 
 def search(key_words,page=1):
     data={}
@@ -83,8 +79,8 @@ def search(key_words,page=1):
     data['ordersc'] = "desc"                        #
     url='http://211.68.37.131/opac2/book/search.jsp?%s' % urllib.urlencode(data)
 
-    short_url = generate_bailu_short_url(url)
-    #short_url = generate_google_short_url(url)
+    #short_url = generate_bailu_short_url(url)
+    short_url = generate_google_short_url(url)
     condition = "分馆号：小营 匹配方式：前向 检索词类型：所有题名"
 
     pg = urllib2.urlopen(url)
