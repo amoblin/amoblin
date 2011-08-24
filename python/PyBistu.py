@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #-*coding:utf-8-*-
 
-import urllib,re,sys
+import urllib2,re,sys,urllib 
 from HTMLParser import HTMLParser
 
 class CustomParser(HTMLParser):
@@ -44,9 +44,30 @@ class CustomParser(HTMLParser):
         if self.istitle:
             self.title.append(data)
 
-def search(key_words,page=1):
-    url='http://211.68.37.131/opac2/book/search.jsp'
+def generate_google_short_url(url):
+    #conn = httplib.HTTPConnection('goo.gl')
+    #params = urllib.urlencode({'url':url})   
+    #conn.request('POST', '/api/shorten', headers={"Content-Type":"application/x-www-form-urlencoded"}, body=params)   
+    #result = conn.getresponse()   
+    dest_url = "http://goo.gl/api/shorten?url=%s" % url
+    response = urllib2.urlopen(dest_url)
+    false = False
+    return eval(response.read())['short_url']
 
+def generate_bailu_short_url(url):
+    params = urllib.urlencode({'url':url})   
+    dest_url="http://bai.lu/api?%s" % params
+    result = urllib2.urlopen(dest_url)
+    response = result.read()
+    data = eval(response)
+    short_url = data['url']
+    if (data['status'] == 'ok'):
+        return data['url'].replace('\\','')
+    else:
+        return None
+
+
+def search(key_words,page=1):
     data={}
     data['recordtype'] = 'all'      #资料类型 01中文图书
     data['library_id'] = "C"                  #分馆号 A健翔桥,B清河,C小营 
@@ -60,10 +81,13 @@ def search(key_words,page=1):
     data['curpage'] =  page                          #
     data['orderby'] = "pubdate_date"                #
     data['ordersc'] = "desc"                        #
-    url_values = urllib.urlencode(data)
-    url = url + '?' + url_values
+    url='http://211.68.37.131/opac2/book/search.jsp?%s' % urllib.urlencode(data)
 
-    pg = urllib.urlopen(url)
+    short_url = generate_bailu_short_url(url)
+    #short_url = generate_google_short_url(url)
+    condition = "分馆号：小营 匹配方式：前向 检索词类型：所有题名"
+
+    pg = urllib2.urlopen(url)
     content = pg.read()
     pg.close()
 
@@ -92,9 +116,9 @@ def search(key_words,page=1):
     if len(curpage)>0:
         curpage=curpage[0]
         page_number= re.findall(page_number_re,content)[0]
-        msg = "检索结果共" + number.encode('utf-8') + "条，" + page_number.encode('utf-8')  + "页，当前在第" +curpage.encode('utf-8')  +"页:\n"
+        msg = "%s 检索结果共%s条，%s页，当前在第%s页(检索词+空格+页码 可以翻页):\n" % (condition, number.encode('utf-8'), page_number.encode('utf-8'), curpage.encode('utf-8'))
     else:
-        msg="没有检索到关键词'%s'的记录" % key_words
+        msg="检索条件:%s 检索词'%s' 检索结果为空" % (condition, key_words)
 	return msg
 
 
@@ -114,6 +138,8 @@ def search(key_words,page=1):
         else:
             msg = msg + "《" + title.encode('utf-8')  + "》\n"
             flag=1
+
+    msg += "更多信息点击：%s" % short_url
 
     return msg
 
