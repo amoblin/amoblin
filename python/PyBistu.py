@@ -69,7 +69,7 @@ def search(key_words,page=1):
     data['library_id'] = "C"                  #分馆号 A健翔桥,B清河,C小营 
     data['kind'] = "simple"                                     #简单检索
     data['word'] = key_words.decode('utf-8').encode('cp936')    #关键词
-    data['cmatch'] = "qx"                                       #匹配方式：前向 mh,jq
+    data['cmatch'] = "mh"                                       #匹配方式：前向 mh,jq
     data['searchtimes'] = "1"
     data['type'] = "title"                              #检索词类型：所有题名
     data['searchtimes'] = "1"                       #
@@ -81,7 +81,7 @@ def search(key_words,page=1):
 
     #short_url = generate_bailu_short_url(url)
     short_url = generate_google_short_url(url)
-    condition = "分馆号：小营 匹配方式：前向 检索词类型：所有题名"
+    condition = "分馆号：小营 匹配方式：模糊 检索词类型：所有题名"
 
     pg = urllib2.urlopen(url)
     content = pg.read()
@@ -135,7 +135,7 @@ def search(key_words,page=1):
             msg = msg + "《" + title.encode('utf-8')  + "》\n"
             flag=1
 
-    msg += "更多信息点击：%s" % short_url
+    msg += "更多信息点击(仅限教育网)：%s" % short_url
 
     return msg
 
