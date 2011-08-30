@@ -7,6 +7,12 @@
 
 #include "nn.h"
 
+int usage(char *argv[])
+{
+    printf("usage: %s [matrix file] [weight file]\n", argv[0]);
+    return 0;
+}
+
 int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in, double **out, int data_size, FILE *vector_p, FILE *fp) {
     double alpha = LEARN_RATE;  //学习率
     double delta_hidden[HIDDEN_NODES], delta_out[OUT_NODES];    //修改量矩阵
@@ -107,6 +113,9 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
 
 int main(int argc, char* argv[])
 {
+    char in_file[128];
+    char out_file[128];
+    char xy_file[128];
     /* 记录日志 */
     int logfd = open( "nn.log", O_RDWR | O_CREAT | O_APPEND, 0644 );
     close(STDERR_FILENO);
@@ -114,16 +123,42 @@ int main(int argc, char* argv[])
     close(logfd);
     openlog(NULL, LOG_PERROR, LOG_DAEMON);
 
+    /* 输入参数分析 */
+    int ch;
+    int flag=0;
+    do {
+        ch = getopt(argc, argv, "i:o:g:h");
+        switch(ch) {
+            case 'i':
+                strncpy(in_file, optarg, sizeof(in_file) -1 );
+                flag++;
+                break;
+            case 'o':
+                strncpy(out_file, optarg, sizeof(out_file) -1 );
+                flag++;
+                break;
+            case 'g':
+                strncpy(xy_file, optarg, sizeof(xy_file) -1 );
+                flag++;
+                break;
+            case 'h':
+                usage(argv);
+                break;
+            case '?':
+            default:
+                break;
+        }
+    } while( -1 != ch);
+    if(3 > flag) {
+        usage(argv);
+        return 0;
+    }
+
     /* 读取样本数据 */
     FILE *vector_p = NULL;
-    if(argc < 2) {
-        printf("usage: %s [matrix file] [weight file]\n", argv[0]);
-        return 0;
-    } else {
-        vector_p = fopen(argv[1], "rb");
-    }
+    vector_p = fopen(in_file, "rb");
     if (vector_p == NULL) {
-        printf("Error! File %s does not exist.\n", argv[1]);
+        printf("Error! File %s does not exist.\n", in_file);
         exit(0);
     }
     /* 获取数据量 */
@@ -158,16 +193,8 @@ int main(int argc, char* argv[])
     double w[HIDDEN_NODES][OUT_NODES];   //输出层权值矩阵
 
     vector_p = NULL;
-    char *data_file;
-    char file_str[] = "wisdom.dat";
-    if(argc < 3) {
-        data_file = file_str;
-        printf("Warning: 使用当前目录下数据文件\n");
-    } else {
-        data_file = argv[2];
-    }
-    vector_p = fopen(data_file, "rb+");
-    if (vector_p == NULL) { //不存在，使用随机数初始化
+    vector_p = fopen(out_file, "rb+");
+    if (NULL == vector_p) { //不存在，使用随机数初始化
         /* 初始化权值矩阵 */
         srand((unsigned)time((time_t *)NULL));
         for (i = 0; i < IN_NODES; i++) {
@@ -180,19 +207,19 @@ int main(int argc, char* argv[])
                 w[i][j] = rand() / (double)(RAND_MAX);
             }
         }
-        vector_p = fopen(data_file, "wb");
+        vector_p = fopen(out_file, "wb");
     } else {    //使用上一次的矩阵
-        printf("使用上次矩阵");
+        syslog(LOG_INFO, "使用上次矩阵");
         fread(v, HIDDEN_NODES * sizeof(double), IN_NODES, vector_p);
         fread(w, OUT_NODES * sizeof(double), HIDDEN_NODES, vector_p);
     }
 
     /* 保存数据点 */
     FILE *fp = NULL;
-    if(argc < 4) {
-        fp = fopen("grapher.txt", "w");
-    } else {
-        fp = fopen(argv[3], "w");
+    fp = fopen(xy_file, "w");
+    if (NULL == fp) {
+        syslog(LOG_ERR, "创建坐标数据文件失败");
+        exit(0);
     }
 
     /* 训练 */

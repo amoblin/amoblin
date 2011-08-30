@@ -1,2 +1,2 @@
 #!/bin/bash
-build/bin/nn data/sample.dat data/wisdom.dat data/grapher.txt
+build/bin/nn -i data/sample.dat -o data/wisdom.dat -g data/grapher.txt

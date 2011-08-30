@@ -1,5 +1,9 @@
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <syslog.h>
+
 
 int print_u(char *ustring, int i, int n)
 {
@@ -81,6 +85,7 @@ int utf8_to_unicode(char *sentence, unsigned char in[], double out[])
         i = i + length;
     }
     in[j] = '\0';
+    printf("\n");
 }
 
 int get_data_size(FILE *fp)

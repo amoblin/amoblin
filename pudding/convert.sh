@@ -1,2 +1,2 @@
 #!/bin/bash
-build/bin/convert data/exercise.txt data/sample.dat
+build/bin/convert -i data/exercise.txt -o data/sample.dat
