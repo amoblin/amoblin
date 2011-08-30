@@ -80,9 +80,21 @@ set wrap
 set novisualbell
 "set noerrorbells
 set vb t_vb="."
+
 "状态行显示的内容（包括文件类型和解码）
-"set statusline=%F%m%r%h%w\ FORMAT=%{&ff}\ TYPE=%Y\ POS=%l,%v\ %p%%\ %{strftime(\"%y-%m-%d\ -\ %H:%M\")}
-set statusline=%<%f\ %h%m%r%=%k%{&ff}\ [%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",BOM\":\"\")}]\ %-14.(%l,%c%V%)\ %P
+let statusHead='%n:%-.50F %h%m%r%y'
+"let statusFileType='%{((&ft=="help"||&ft=="")?"":"[".&ft."]")} '
+"let statusBreakPoint='%<'
+"let statusCwd='%-.50{getcwd()}'
+" 设置statusEnd"
+"let statusModifyTime='%{strftime("%y-%m-%d",getftime(expand("%")))}'
+let statusTime='%{strftime("%H:%M")} '
+let statusFormatEncoding='%{&ff} [%{(&fenc==""?&enc:&fenc).(&bomb?",BOM":"")}] '
+let statusAscii='%o (%b:0x%B) '
+let statusRuler='%l,%c%V [%L] %P'
+let statusEnd='%=%k'.statusTime.statusFormatEncoding.statusAscii.statusRuler
+" 最终展示 "
+set statusline=%!statusHead.statusEnd
 set laststatus=2
 "命令行高度
 set cmdheight=1
