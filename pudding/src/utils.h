@@ -5,7 +5,8 @@
 #include <syslog.h>
 #include <stdarg.h>
 
-int debug_level=1;
+int debug_level=3;
+
 void d_printf(unsigned int level, const char * format, ...)
 {
     if(level >= debug_level) {

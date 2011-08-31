@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    /* 读取输出 */
+    /* 读取输入 */
     FILE *fp = NULL;
     fp = fopen(in_file, "r");
     if(fp == NULL) {
@@ -68,14 +68,24 @@ int main(int argc, char *argv[])
     int i;
     for(i=0;i<data_size;i++)
     {
+        in[i] = NULL;
         in[i] = (unsigned char *) malloc(sizeof(unsigned char) * IN_NODES);
+        if(NULL == in[i]) {
+            printf("malloc failed.\n");
+            exit(0);
+        }
         //memset(in[i], 0, sizeof(unsigned char) * IN_NODES);
+        out[i] = NULL;
         out[i] = (double*) malloc(sizeof(double) * OUT_NODES);
+        if(NULL == out[i]) {
+            printf("malloc failed.\n");
+            exit(0);
+        }
     }
     int t = 0;  //向量数组游标
     while(fgets(sentence, UTF8_LEN, fp) != NULL)
     {
-        //syslog(LOG_DEBUG, "%s", sentence);
+        d_printf(0, "%s", sentence);
         /* 保存转换为unicode码的句子 */
         unsigned char tmp_in[UNI_LEN] = {0};
         /* 保存转换为二进制码的句子 */
@@ -88,16 +98,13 @@ int main(int argc, char *argv[])
         utf82unicode(sentence, tmp_in, tmp_out);
         unicode2binary(tmp_in, binary_in);
         int length = strlen(tmp_in)/2;//该句汉字数。
-        //syslog(LOG_DEBUG, "%d\n", *tmp_in);
         for(i=0;i<length-3;i++) {
             memcpy(in[t],binary_in + i*16, sizeof(unsigned char) * IN_NODES);
             int j;
-            if(DEBUG) {
-                for(j=0; j< IN_NODES; j++) {
-                    printf("%d ", in[t][j]);
-                }
-                printf("\n");
+            for(j=0; j< IN_NODES; j++) {
+                d_printf(1, "%d ", in[t][j]);
             }
+            d_printf(1, "\n");
             memcpy(out[t], tmp_out + i, sizeof(double) * OUT_NODES);
             for(j=0; j< OUT_NODES; j++) {
                 //syslog(LOG_DEBUG, "%f ", out[t][j]);
@@ -117,6 +124,8 @@ int main(int argc, char *argv[])
         fwrite(out[i], sizeof(double), OUT_NODES, vector_p);
     }
     fclose(vector_p);
+
+    /* 内存释放 */
     for(i=0;i<data_size;i++)
     {
         free(in[i]);

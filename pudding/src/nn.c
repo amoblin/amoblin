@@ -40,50 +40,69 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
                 for (j = 0; j < IN_NODES; j++) {
                     sum += in[i][j] * v[j][k];    
                 }
-                //printf("sum: %f\n", sum/256);
-                O1[k] = fnet(sum/256);
-                //printf("%f\n", O1[k]);
+                d_printf(0, "sum: %f\n", sum/64);
+                O1[k] = fnet(sum/64);
+                d_printf(0, "%f\n", O1[k]);
             }
             for (j = 0; j < OUT_NODES; j++) {
                 sum = 0;
                 for (k = 0; k < HIDDEN_NODES; k++)
                     sum += O1[k] * w[k][j];
-                O2[j] = fnet(sum/256);
-                //printf("sum: %f\n", sum/256);
-                //printf("%f\n", O2[j]);
+                O2[j] = fnet(sum/64);
+                d_printf(0, "sum: %f\n", sum/64);
+                d_printf(0, "%f\n", O2[j]);
             }
-            for (j = 0; j < OUT_NODES; j++)    //计算输出层的权修改量    
+
+            /* 计算输出层的权修改量 */
+            for (j = 0; j < OUT_NODES; j++) {
                 delta_out[j] = O2[j] * (1 - O2[j]) * (out[i][j] - O2[j]);
-            for (j = 0; j < OUT_NODES ; j++) {   //计算输出误差
+            }
+
+            /* 计算输出误差 */
+            for (j = 0; j < OUT_NODES ; j++) {
                 //printf("%f \n", (out[i][j] - O2[j]) * (out[i][j] - O2[j]));
                 e += (out[i][j] - O2[j]) * (out[i][j] - O2[j]);
-                //printf("e:%f\n",e);
             }
-            for (k = 0; k < HIDDEN_NODES; k++) {         //计算隐层权修改量
+
+            /* 计算隐层权修改量 */
+            for (k = 0; k < HIDDEN_NODES; k++) {
                 sum = 0;
-                for (j = 0; j < OUT_NODES; j++)
+                for (j = 0; j < OUT_NODES; j++) {
                     sum += w[k][j] * delta_out[j];
+                }
                 delta_hidden[j] = sum * O1[j] * (1 - O1[j]);
             }
-            for (j = 0; j < HIDDEN_NODES; j++)           //修改输出层权矩阵
-                for (k = 0; k < OUT_NODES; k++)
+
+            /* 修改输出层权矩阵 */
+            for (j = 0; j < HIDDEN_NODES; j++) {
+                for (k = 0; k < OUT_NODES; k++) {
                     w[j][k] += alpha * O1[j] * delta_out[k]; 
-            for (j = 0; j < IN_NODES; j++)
-                for (k = 0; k < HIDDEN_NODES; k++)
+                }
+            }
+            for (j = 0; j < IN_NODES; j++) {
+                for (k = 0; k < HIDDEN_NODES; k++) {
                     v[j][k] += alpha * in[i][j] * delta_hidden[k]; 
+                }
+            }
         }
-        if (e < old_e) { //进行权值更新
+        d_printf(1, "e:%f\n",e);
+        //d_printf(1, "old e:%f\n",old_e);
+        //double temp_e = e - old_e;
+        //d_printf(1, "%f\n", temp_e);
+        if (e <= old_e+1) {
+            /* 进行权值更新 */
             old_e = e;
             memcpy(old_v, v, sizeof(double) * IN_NODES * HIDDEN_NODES);
             memcpy(old_w, w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
-        } else {    //取消权值更新
+        } else {
+            /* 取消权值更新 */
             memcpy(v, old_v, sizeof(double) * IN_NODES * HIDDEN_NODES);
             memcpy(w, old_w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
             alpha = 0.99 * alpha;
-            //printf("alpha changed:%f\n", alpha);
+            d_printf(1, "alpha changed:%f\n", alpha);
         }
 
-        if (n % LOG_DEN == 0) {
+        if (0 == (n % LOG_DEN)) {
             /* 写入日志 */
             time_t time_e = time(NULL);
             struct tm *timeinfo;
@@ -169,8 +188,18 @@ int main(int argc, char* argv[])
     double **out = (double **) malloc(sizeof(double *) * data_size);
     int i,j;
     for(i=0;i<data_size;i++) {
+        in[i] = NULL;
         in[i] = (unsigned char*) malloc(sizeof(unsigned char) * IN_NODES);
+        if(NULL == in[i]) {
+            printf("malloc failed.\n");
+            exit(0);
+        }
+        out[i] = NULL;
         out[i] = (double *) malloc(sizeof(double) * OUT_NODES);
+        if(NULL == out[i]) {
+            printf("malloc failed.\n");
+            exit(0);
+        }
     }
     /* 读入输入输出矩阵 */
     for(i=0;i<data_size;i++) {
@@ -179,15 +208,13 @@ int main(int argc, char* argv[])
     }
     fclose(vector_p);
 
-    /*
-    printf("matrix in:\n");
+    d_printf(1, "matrix in:\n");
     for(i=0; i < data_size; i++) {
         for(j=0; j < IN_NODES ; j++) {
-            fprintf(stdout, "%d ", in[i][j]);
+            d_printf(1, "%d ", in[i][j]);
         }
-        printf("\n");
+        d_printf(1, "\n");
     }
-    */
 
     double v[IN_NODES][HIDDEN_NODES];   //隐含层权值矩阵
     double w[HIDDEN_NODES][OUT_NODES];   //输出层权值矩阵
@@ -196,6 +223,7 @@ int main(int argc, char* argv[])
     vector_p = fopen(out_file, "rb+");
     if (NULL == vector_p) { //不存在，使用随机数初始化
         /* 初始化权值矩阵 */
+        syslog(LOG_INFO, "初始化矩阵");
         srand((unsigned)time((time_t *)NULL));
         for (i = 0; i < IN_NODES; i++) {
             for (j = 0; j < HIDDEN_NODES; j++) {
