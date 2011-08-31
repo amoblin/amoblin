@@ -58,7 +58,7 @@ int pudding(unsigned char sentence[], double v[][HIDDEN_NODES], double w[][OUT_N
     /* 整句utf8转unicode */
     unsigned char tmp_in[UNI_LEN];
     double tmp_out[SEN_LEN];
-    utf8_to_unicode(sentence, tmp_in, tmp_out);
+    utf82unicode(sentence, tmp_in, tmp_out);
     int length = strlen(tmp_in)/2;
 
     /* 4字为一组输入，有out_size组 */

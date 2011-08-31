@@ -82,7 +82,7 @@ set novisualbell
 set vb t_vb="."
 
 "状态行显示的内容（包括文件类型和解码）
-let statusHead='%n:%-.50F %h%m%r%y'
+let statusHead='%n:%<%-.50f %h%m%r%y'
 "let statusFileType='%{((&ft=="help"||&ft=="")?"":"[".&ft."]")} '
 "let statusBreakPoint='%<'
 "let statusCwd='%-.50{getcwd()}'

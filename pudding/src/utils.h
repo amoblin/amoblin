@@ -3,7 +3,18 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <syslog.h>
+#include <stdarg.h>
 
+int debug_level=1;
+void d_printf(unsigned int level, const char * format, ...)
+{
+    if(level >= debug_level) {
+        va_list ap;
+        va_start(ap, format);
+        vprintf(format, ap);
+        va_end(ap);
+    }
+}
 
 int print_u(char *ustring, int i, int n)
 {
@@ -32,7 +43,7 @@ int get_utf8_bytes(char code, int *length)
     return 0;
 }
 
-int utf8_to_unicode(char *sentence, unsigned char in[], double out[])
+int utf82unicode(char *sentence, unsigned char in[], double out[])
 {
     int i = 0;    //utf8编码串游标；
     int j = 0;  //输入向量游标；
@@ -45,10 +56,10 @@ int utf8_to_unicode(char *sentence, unsigned char in[], double out[])
         switch(length) {
             case 1:
                 if (sentence[i] == '\n') {
-                    printf("输入向量:");
+                    printf("Unicode向量:");
                     int s;
                     for(s=0; s<UNI_LEN; s++) {
-                        printf("%d ",in[s]);
+                        printf("%o ",in[s]);
                     }
                     printf("\n输出向量:");
                     for(s=0; s<SEN_LEN; s++) {
@@ -88,6 +99,24 @@ int utf8_to_unicode(char *sentence, unsigned char in[], double out[])
     printf("\n");
 }
 
+int unicode2binary(unsigned char *unicode_str, unsigned char *binary_str)
+{
+    int i;
+    int j;
+    int length = strlen(unicode_str);
+    int reset_num;
+    for(i=0;i<length;i++) {
+        reset_num = 128;
+        d_printf(0, "0%o:", unicode_str[i]);
+        for(j=0; j<8; j++) {
+            binary_str[8*i+j] = (unicode_str[i] & reset_num) >> (7-j) ;
+            reset_num >>= 1;
+            d_printf(0, "%d", binary_str[8*i+j]);
+        }
+        d_printf(0, "\n");
+    }
+}
+
 int get_data_size(FILE *fp)
 {
     char buffer[49];
@@ -101,6 +130,7 @@ int get_data_size(FILE *fp)
                 i++;
             }
         }
+        /* 除去空格和行末回车 */
         int utf8_len = sen_len - i -1;
 
         data_size += utf8_len/3 - 3;

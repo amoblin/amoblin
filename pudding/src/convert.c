@@ -76,21 +76,28 @@ int main(int argc, char *argv[])
     while(fgets(sentence, UTF8_LEN, fp) != NULL)
     {
         //syslog(LOG_DEBUG, "%s", sentence);
-        unsigned char tmp_in[UNI_LEN] = {0};//输入最大长度18汉字，每个汉字2字节。要先清空
+        /* 保存转换为unicode码的句子 */
+        unsigned char tmp_in[UNI_LEN] = {0};
+        /* 保存转换为二进制码的句子 */
+        unsigned char binary_in[BIN_LEN] = {0};
+        /* 保存输出值 */
         double tmp_out[SEN_LEN];//默认为0，不需清零先。
         for(i=0; i< SEN_LEN; i++) {
             tmp_out[i] = 0.9;
         }
-        utf8_to_unicode(sentence, tmp_in, tmp_out);
+        utf82unicode(sentence, tmp_in, tmp_out);
+        unicode2binary(tmp_in, binary_in);
         int length = strlen(tmp_in)/2;//该句汉字数。
         //syslog(LOG_DEBUG, "%d\n", *tmp_in);
         for(i=0;i<length-3;i++) {
-            memcpy(in[t],tmp_in + i*2, sizeof(unsigned char) * IN_NODES);
+            memcpy(in[t],binary_in + i*16, sizeof(unsigned char) * IN_NODES);
             int j;
-            for(j=0; j< IN_NODES; j++) {
-                printf("%d ", in[t][j]);
+            if(DEBUG) {
+                for(j=0; j< IN_NODES; j++) {
+                    printf("%d ", in[t][j]);
+                }
+                printf("\n");
             }
-            printf("\n");
             memcpy(out[t], tmp_out + i, sizeof(double) * OUT_NODES);
             for(j=0; j< OUT_NODES; j++) {
                 //syslog(LOG_DEBUG, "%f ", out[t][j]);
