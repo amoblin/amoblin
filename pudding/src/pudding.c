@@ -3,34 +3,32 @@
 #define LEFT_B 0.3
 #define RIGHT_B 0.7
 
-int usage(char *cmd)
+int usage(char *argv[])
 {
-    printf("usage: %s [network matrix] [sentence]\n", cmd);
+    printf("usage: %s [network matrix] [sentence]\n", argv[0]);
 }
 
 int read_weight(double v[][HIDDEN_NODES], double w[][OUT_NODES], FILE *vector_p)
 {
-    fread(v, HIDDEN_NODES * 8, IN_NODES, vector_p);
-    fread(w, OUT_NODES * 8, HIDDEN_NODES, vector_p);
+    fread(v, HIDDEN_NODES * sizeof(double), IN_NODES, vector_p);
+    fread(w, OUT_NODES * sizeof(double), HIDDEN_NODES, vector_p);
     fclose(vector_p);
 
-    /*
     int i,j;
-    printf("matrix v is: \n");
+    d_printf(1, "matrix v is: \n");
     for (i = 0; i < IN_NODES; i++) {
         for (j = 0; j < HIDDEN_NODES; j++) {
-            printf("%f ", v[i][j]);
+            d_printf(1, "%f ", v[i][j]);
         }
-        printf("\n ");
+        d_printf(1, "\n ");
     }
-    printf("matrix w is: \n");
+    d_printf(1, "matrix w is: \n");
     for (i = 0; i < HIDDEN_NODES; i++) {
         for (j = 0; j < OUT_NODES; j++) {
-            printf("%f ", w[i][j]);
+            d_printf(1, "%f ", w[i][j]);
         }
-        printf("\n ");
+        d_printf(1, "\n ");
     }
-    */
     return 0;
 }
 
@@ -58,7 +56,9 @@ int pudding(unsigned char sentence[], double v[][HIDDEN_NODES], double w[][OUT_N
     /* 整句utf8转unicode */
     unsigned char tmp_in[UNI_LEN];
     double tmp_out[SEN_LEN];
+    unsigned char binary_in[BIN_LEN];
     utf82unicode(sentence, tmp_in, tmp_out);
+    unicode2binary(tmp_in, binary_in);
     int length = strlen(tmp_in)/2;
 
     /* 4字为一组输入，有out_size组 */
@@ -69,12 +69,12 @@ int pudding(unsigned char sentence[], double v[][HIDDEN_NODES], double w[][OUT_N
     int i,j;
     for(i=0;i<out_size;i++) {
         out[i] = (double *) malloc(sizeof(double) * OUT_NODES);
-        memcpy(in, tmp_in+i*2, 8);
+        memcpy(in, binary_in+i*16, sizeof(unsigned char) * IN_NODES);
         use_nn(v, w, in, out[i]);
         for(j=0; j<OUT_NODES; j++) {
-            printf("%f ", out[i][j]);
+            d_printf(1, "%f ", out[i][j]);
         }
-        printf("\n");
+        d_printf(1, "\n");
     }
     return 0;
     /*
@@ -100,19 +100,40 @@ int pudding(unsigned char sentence[], double v[][HIDDEN_NODES], double w[][OUT_N
 
 int main(int argc, char *argv[])
 {
+    /* 参数处理 */
     unsigned char sentence[UTF8_LEN];
-    if( argc < 3) {
-        usage(argv[0]);
+    char data_file[128];
+    char ch;
+    int flag = 0;
+    do {
+        ch = getopt(argc, argv, "l:s:h");
+        switch(ch) {
+            case 'l':
+                strncpy(data_file, optarg, sizeof(data_file) - 1);
+                flag++;
+                break;
+            case 's':
+                strncpy(sentence, optarg, sizeof(sentence) - 1);
+                flag++;
+                break;
+            case 'h':
+            default:
+                usage(argv);
+                break;
+        }
+    } while(-1 != ch);
+    if( 2 > flag) {
+        usage(argv);
         return 0;
     }
-    strcpy(sentence, argv[2]);
+
     double v[IN_NODES][HIDDEN_NODES];
     double w[HIDDEN_NODES][OUT_NODES];
-
     FILE *vector_p = NULL;
-    vector_p = fopen(argv[1], "rb");
-    if (vector_p == NULL) {
-        printf("Error! %s does not exist.\n", argv[1]);
+    vector_p = fopen(data_file, "rb");
+    if (NULL == vector_p) {
+        printf("Error! %s does not exist.\n", data_file);
+        exit(0);
     }
     read_weight(v, w, vector_p);
 

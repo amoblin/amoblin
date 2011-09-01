@@ -99,7 +99,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             memcpy(v, old_v, sizeof(double) * IN_NODES * HIDDEN_NODES);
             memcpy(w, old_w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
             alpha = 0.99 * alpha;
-            d_printf(1, "alpha changed:%f\n", alpha);
+            d_printf(3, "alpha changed:%f\n", alpha);
         }
 
         if (0 == (n % LOG_DEN)) {
