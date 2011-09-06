@@ -31,7 +31,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
     int time_s = time((time_t*)NULL);
 
     old_e = 9999;
-    printf("LOOP_MAX: %dw\n", LOOP_MAX/10000);
+    printf("LOOP_MAX: %dk\n", LOOP_MAX/10000);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
         for (i=0; i < data_size; i++) { 
@@ -110,7 +110,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             int seconds = (int)difftime(time_e, time_s);
             int mins = seconds % 3600;
             int secs = mins % 60;
-            syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %dw %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/LOG_DEN, alpha, e);
+            syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %dk %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/LOG_DEN, alpha, e);
             /* 保存权值矩阵 */
             fseek(vector_p, 0, SEEK_SET);
             fwrite(v, HIDDEN_NODES * sizeof(double), IN_NODES, vector_p);
