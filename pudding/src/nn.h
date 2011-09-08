@@ -3,7 +3,7 @@
 #include "utils.h"
 
 #define LOOP_MAX 100000000   //最大循环次数
-#define LOG_DEN 10000
+#define LOG_DEN 100
 #define LEARN_RATE  0.9 //学习率
 #define PRECISION 0.05  //精度
 #define PLOT_DEN 100

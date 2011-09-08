@@ -55,13 +55,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
 
             /* 计算输出层的权修改量 */
             for (j = 0; j < OUT_NODES; j++) {
-                delta_out[j] = O2[j] * (1 - O2[j]) * (out[i][j] - O2[j]);
-            }
-
-            /* 计算输出误差 */
-            for (j = 0; j < OUT_NODES ; j++) {
-                //printf("%f \n", (out[i][j] - O2[j]) * (out[i][j] - O2[j]));
-                e += (out[i][j] - O2[j]) * (out[i][j] - O2[j]);
+                delta_out[j] = -2 * O2[j] * (1 - O2[j]) * (out[i][j] - O2[j]);
             }
 
             /* 计算隐层权修改量 */
@@ -70,32 +64,44 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
                 for (j = 0; j < OUT_NODES; j++) {
                     sum += w[k][j] * delta_out[j];
                 }
-                delta_hidden[j] = sum * O1[j] * (1 - O1[j]);
+                delta_hidden[j] = -2 * O1[j] * (1 - O1[j]) * sum;
             }
 
-            /* 修改输出层权矩阵 */
-            for (j = 0; j < HIDDEN_NODES; j++) {
-                for (k = 0; k < OUT_NODES; k++) {
-                    w[j][k] += alpha * O1[j] * delta_out[k]; 
-                }
-            }
+            /* 调整隐含层权值矩阵 */
             for (j = 0; j < IN_NODES; j++) {
                 for (k = 0; k < HIDDEN_NODES; k++) {
-                    v[j][k] += alpha * in[i][j] * delta_hidden[k]; 
+                    v[j][k] -= alpha * in[i][j] * delta_hidden[k]; 
                 }
+            }
+            /* 调整输出层权值矩阵 */
+            for (j = 0; j < HIDDEN_NODES; j++) {
+                for (k = 0; k < OUT_NODES; k++) {
+                    w[j][k] -= alpha * O1[j] * delta_out[k]; 
+                }
+            }
+
+            /* 计算输出误差 */
+            for (j = 0; j < OUT_NODES ; j++) {
+                //printf("%f \n", (out[i][j] - O2[j]) * (out[i][j] - O2[j]));
+                e += (out[i][j] - O2[j]) * (out[i][j] - O2[j]);
             }
         }
         d_printf(1, "e:%f\n",e);
         //d_printf(1, "old e:%f\n",old_e);
         //double temp_e = e - old_e;
         //d_printf(1, "%f\n", temp_e);
-        if (e <= old_e+1) {
+        if (e > old_e) {
+            d_printf(1, "e:%f\n",e);
+            d_printf(1, "old_e:%f\n",old_e);
+        }
+        if (e <= old_e+0.5) {
             /* 进行权值更新 */
             old_e = e;
             memcpy(old_v, v, sizeof(double) * IN_NODES * HIDDEN_NODES);
             memcpy(old_w, w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
         } else {
             /* 取消权值更新 */
+            return 0;
             memcpy(v, old_v, sizeof(double) * IN_NODES * HIDDEN_NODES);
             memcpy(w, old_w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
             alpha = 0.99 * alpha;
@@ -110,7 +116,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             int seconds = (int)difftime(time_e, time_s);
             int mins = seconds % 3600;
             int secs = mins % 60;
-            syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %dk %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/LOG_DEN, alpha, e);
+            syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %2.1fk %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/10.0/LOG_DEN, alpha, e);
             /* 保存权值矩阵 */
             fseek(vector_p, 0, SEEK_SET);
             fwrite(v, HIDDEN_NODES * sizeof(double), IN_NODES, vector_p);
