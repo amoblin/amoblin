@@ -7,6 +7,63 @@
 
 int debug_level=3;
 
+template <typename T>
+typedef struct
+{
+    int m;
+    int n;
+    T **matrix;
+
+} Matrix;
+
+int matrix_create(int m, int n, Matrix *X)
+{
+    X->matrix = NULL;
+    X->matrix = (double **) malloc(sizeof(double*) * m );
+    if(NULL == X->matrix) {
+        return -1;
+    }
+    int i;
+    for(i = 0; i < m; i++) {
+        X->matrix[i] = NULL;
+        X->matrix[i] = (double*) malloc(sizeof(double) * n);
+        if(NULL == X->matrix[i]) {
+            return -1;
+        }
+    }
+    X->m = m;
+    X->n = n;
+    return 0;
+}
+
+int matrix_init(Matrix *X)
+{
+    int i;
+    int j;
+    for(i = 0; i < m; i++) {
+        for( j = 0; j < n; j++) {
+            X->matrix[i][j] = 0;
+        }
+    }
+}
+
+int matrix_multiply(Matrix *W, Matrix *X, Matrix *Y)
+{
+    if(W->n != X->m) {
+        return -1;
+    }
+    int i;
+    int j;
+    int k;
+    for(i=0; i < W->m; i++) {
+        for(j=0; j < X->n; j++) {
+            for(k=0; k < W->n; k++) {
+                Y->matrix[i][j] += W->matrix[i][k] * X->matrix[k][j];
+            }
+        }
+    }
+}
+
 void d_printf(unsigned int level, const char * format, ...)
 {
     if(level >= debug_level) {

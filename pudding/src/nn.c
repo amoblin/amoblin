@@ -31,7 +31,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
     int time_s = time((time_t*)NULL);
 
     old_e = 9999;
-    printf("LOOP_MAX: %dk\n", LOOP_MAX/10000);
+    printf("LOOP_MAX: %d\n", LOOP_MAX);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
         for (i=0; i < data_size; i++) { 
@@ -91,8 +91,8 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
         //double temp_e = e - old_e;
         //d_printf(1, "%f\n", temp_e);
         if (e > old_e) {
-            d_printf(1, "e:%f\n",e);
-            d_printf(1, "old_e:%f\n",old_e);
+            d_printf(3, "e:%f\n",e);
+            d_printf(3, "old_e:%f\n",old_e);
         }
         if (e <= old_e+0.5) {
             /* 进行权值更新 */
@@ -101,7 +101,6 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             memcpy(old_w, w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
         } else {
             /* 取消权值更新 */
-            return 0;
             memcpy(v, old_v, sizeof(double) * IN_NODES * HIDDEN_NODES);
             memcpy(w, old_w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
             alpha = 0.99 * alpha;
@@ -116,7 +115,7 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             int seconds = (int)difftime(time_e, time_s);
             int mins = seconds % 3600;
             int secs = mins % 60;
-            syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %2.1fk %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/10.0/LOG_DEN, alpha, e);
+            syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %d %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n, alpha, e);
             /* 保存权值矩阵 */
             fseek(vector_p, 0, SEEK_SET);
             fwrite(v, HIDDEN_NODES * sizeof(double), IN_NODES, vector_p);
