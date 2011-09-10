@@ -13,7 +13,7 @@ int usage(char *argv[])
     return 0;
 }
 
-int train_bp(Matrix* v, Matrix* w, Matrix* in, Matrix* out, FILE* vector_p, FILE* fp) {
+int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FILE* fp) {
     double alpha = LEARN_RATE;  //学习率
     double delta_hidden[HIDDEN_NODES], delta_out[OUT_NODES];    //修改量矩阵
     double O1[HIDDEN_NODES], O2[OUT_NODES]; //隐层和输出层输出量
@@ -23,17 +23,22 @@ int train_bp(Matrix* v, Matrix* w, Matrix* in, Matrix* out, FILE* vector_p, FILE
     double e = PRECISION + 1;
 
 
-    Matrix* a1;
-    matrix_init(in->m, v->n, &a1, DOUBLE);
+    /* 初始化矩阵 */
+    Matrix* n1;
+    matrix_init(in->m, w1->n, &n1, DOUBLE);
 
-    Matrix* f1;
-    matrix_init(a1->m, a1->n, &f1, DOUBLE);
+    Matrix* a1;
+    matrix_init(n1->m, n1->n, &a1, DOUBLE);
+
+    Matrix* n2;
+    matrix_init(a1->m, w2->n, &n2, DOUBLE);
 
     Matrix* a2;
-    matrix_init(f1->m, w->n, &a2, DOUBLE);
+    matrix_init(n2->m, n2->n, &a2, DOUBLE);
 
-    Matrix* f2;
-    matrix_init(a2->m, a2->n, &f2, DOUBLE);
+    Matrix* diff2;
+    matrix_init(a2->m, a2->n, &diff2, DOUBLE);
+
 
     /* 动态更新权值 */
     double old_e;
@@ -47,46 +52,33 @@ int train_bp(Matrix* v, Matrix* w, Matrix* in, Matrix* out, FILE* vector_p, FILE
     printf("LOOP_MAX: %d\n", LOOP_MAX);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
-        matrix_dot_multiply(in, v, a1);
-        matrix_fnet(a1, f1);
 
-        matrix_dot_multiply(f1, w, a2);
-        matrix_fnet(a2, f2);
-        for (i=0; i < in->m; i++) { 
+        /* 输入正传 */
+        matrix_dot_multiply(in, w1, n1);
+        matrix_fnet(n1, a1);
 
-            /* 计算输出层的权修改量 */
-            for (j = 0; j < OUT_NODES; j++) {
-                delta_out[j] = -2 * O2[j] * (1 - O2[j]) * (out[i][j] - O2[j]);
-            }
+        matrix_dot_multiply(a1, w2, n2);
+        matrix_fnet(n2, a2);
 
-            /* 计算隐层权修改量 */
-            for (k = 0; k < HIDDEN_NODES; k++) {
-                sum = 0;
-                for (j = 0; j < OUT_NODES; j++) {
-                    sum += w[k][j] * delta_out[j];
-                }
-                delta_hidden[j] = -2 * O1[j] * (1 - O1[j]) * sum;
-            }
+        /* 误差反传 */
+        matrix_minus(out, a2, diff2);
+        matrix_multiply(h2, diff2, s2);
 
-            /* 调整隐含层权值矩阵 */
-            for (j = 0; j < IN_NODES; j++) {
-                for (k = 0; k < HIDDEN_NODES; k++) {
-                    v[j][k] -= alpha * in[i][j] * delta_hidden[k]; 
-                }
-            }
-            /* 调整输出层权值矩阵 */
-            for (j = 0; j < HIDDEN_NODES; j++) {
-                for (k = 0; k < OUT_NODES; k++) {
-                    w[j][k] -= alpha * O1[j] * delta_out[k]; 
-                }
-            }
+        matrix_dot_multiply(w2, s2, diff1, REVERSE1);
+        matrix_multiply(h1, diff1, s1);
 
-            /* 计算输出误差 */
-            for (j = 0; j < OUT_NODES ; j++) {
-                //printf("%f \n", (out[i][j] - O2[j]) * (out[i][j] - O2[j]));
-                e += (out[i][j] - O2[j]) * (out[i][j] - O2[j]);
-            }
-        }
+        /* 更新权值 */
+        matrix_dot_multiply(s1, in, delta1, REVERSE2);
+        matrix_times(delta1, alpha);
+        matrix_minus(w1, delta1, w1);
+
+        matrix_dot_multiply(s2, a1, delta2, REVERSE2);
+        matrix_times(delta2, alpha);
+        matrix_minus(w2, delta2, w2);
+
+        /* 计算输出误差 */
+        matrix_distance(a2, out, e);
+
         d_printf(1, "e:%f\n",e);
         //d_printf(1, "old e:%f\n",old_e);
         //double temp_e = e - old_e;

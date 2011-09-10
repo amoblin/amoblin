@@ -1,18 +1,10 @@
-毕业论文
----------
+毕业论文相关代码
+-----------------
 
 代码
 
-.. sourcecode:: python
-    :linenos:
-
-    My code goes here.
-
 .. sourcecode:: c
-    :linenos:
 
-    double alpha = LEARN_RATE;  //学习率
-    double delta_hidden[HIDDEN_NODES], delta_out[OUT_NODES];    //修改量矩阵
     26     Matrix* a1;
     27     matrix_init(in->m, v->n, &a1, DOUBLE);
     28 
@@ -24,3 +16,9 @@
     34 
     35     Matrix* f2;
     36     matrix_init(a2->m, a2->n, &f2, DOUBLE);
+
+    50    matrix_dot_multiply(in, v, a1);
+    51    matrix_fnet(a1, f1);
+    52
+    53    matrix_dot_multiply(f1, w, a2);
+    54    matrix_fnet(a2, f2);
