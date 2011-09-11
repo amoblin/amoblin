@@ -25,20 +25,35 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
 
     /* 初始化矩阵 */
     Matrix* n1;
-    matrix_init(in->m, w1->n, &n1, DOUBLE);
+    matrix_init(in->m, w1->n, &n1);
 
     Matrix* a1;
-    matrix_init(n1->m, n1->n, &a1, DOUBLE);
+    matrix_init(n1->m, n1->n, &a1);
 
     Matrix* n2;
-    matrix_init(a1->m, w2->n, &n2, DOUBLE);
+    matrix_init(a1->m, w2->n, &n2);
 
     Matrix* a2;
-    matrix_init(n2->m, n2->n, &a2, DOUBLE);
+    matrix_init(n2->m, n2->n, &a2);
 
     Matrix* diff2;
-    matrix_init(a2->m, a2->n, &diff2, DOUBLE);
+    matrix_init(a2->m, a2->n, &diff2);
 
+    Matrix* h2;
+    matrix_init(a2->m, a2->n, &h2);
+
+    Matrix *s2;
+    matrix_init(a2->m, a2->n, &s2);
+
+
+    Matrix* diff1;
+    matrix_init(w2->n, a2->n, &diff1);
+
+    Matrix* h1;
+    matrix_init(a1->m, a1->n, &h1);
+
+    Matrix *s1;
+    matrix_init(a1->m, a1->n, &s1);
 
     /* 动态更新权值 */
     double old_e;
@@ -54,14 +69,14 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
         e = 0;
 
         /* 输入正传 */
-        matrix_dot_multiply(in, w1, n1);
+        matrix_dot_multiply(in, w1, n1, NORMAL);
         matrix_fnet(n1, a1);
 
-        matrix_dot_multiply(a1, w2, n2);
+        matrix_dot_multiply(a1, w2, n2, NORMAL);
         matrix_fnet(n2, a2);
 
         /* 误差反传 */
-        matrix_minus(out, a2, diff2);
+        matrix_plus(out, a2, diff2, -1);
         matrix_multiply(h2, diff2, s2);
 
         matrix_dot_multiply(w2, s2, diff1, REVERSE1);
@@ -69,15 +84,13 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
 
         /* 更新权值 */
         matrix_dot_multiply(s1, in, delta1, REVERSE2);
-        matrix_times(delta1, alpha);
-        matrix_minus(w1, delta1, w1);
+        matrix_plus(w1, delta1, w1, alpha * -1);
 
         matrix_dot_multiply(s2, a1, delta2, REVERSE2);
-        matrix_times(delta2, alpha);
-        matrix_minus(w2, delta2, w2);
+        matrix_plus(w2, delta2, w2, alpha * -1);
 
         /* 计算输出误差 */
-        matrix_distance(a2, out, e);
+        matrix_fanshu(a2, out, &e);
 
         d_printf(1, "e:%f\n",e);
         //d_printf(1, "old e:%f\n",old_e);
