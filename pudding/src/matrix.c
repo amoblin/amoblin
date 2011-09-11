@@ -24,6 +24,16 @@ int matrix_init(int m, int n, Matrix **X_p)
     return 0;
 }
 
+int matrix_copy(unsigned char** X, Matrix* Y) {
+    int i,j;
+    for(i= 0; i< Y->m; i++) {
+        for(j= 0; j< Y->n; j++) {
+            Y->matrix[i][j] = (double) X[i][j];
+        }
+    }
+    return 0;
+}
+
 int matrix_free(Matrix *X)
 {
     int i;
@@ -34,11 +44,13 @@ int matrix_free(Matrix *X)
     return 0;
 }
 
-int matrix_set_value(Matrix *X, unsigned int value)
+int matrix_set_value(Matrix *X, double value)
 {
-    int i;
+    int i,j;
     for(i = 0; i < X->m; i++) {
-        memset(X->matrix[i], value, sizeof(double) * X->n);
+        for(j= 0; j< X->n; j++) {
+            X->matrix[i][j] = value;
+        }
     }
     return 0;
 }
@@ -63,9 +75,9 @@ int matrix_dot_multiply(Matrix *W, Matrix *X, Matrix *Y, rtype type)
     int i, j, k;
     switch(type) {
         case NORMAL:
-            if(W->n != X->m) {
-                return -1;
-            }
+            assert(W->n == X->m);
+            assert(W->m == Y->m);
+            assert(X->n == Y->n);
 
             for(i=0; i < W->m; i++) {
                 for(j=0; j < X->n; j++) {
@@ -153,12 +165,14 @@ int matrix_fanshu(Matrix* X, Matrix* Y, double *result) {
     assert(X->n == Y->n);
 
     int i,j;
-    *result = 0;
+    double diff;
+    double e = 0;
     for(i= 0; i< X->m; i++) {
         for(j= 0; j< X->n; j++) {
             diff = X->matrix[i][j] - Y->matrix[i][j];
-            result += diff * diff;
+            e += diff * diff;
         }
     }
+    *result = e;
     return 0;
 }

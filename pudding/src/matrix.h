@@ -1,4 +1,8 @@
 #include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
+#include <assert.h>
+#include <string.h>
 
 /* 矩阵类型 */
 typedef enum {
@@ -31,9 +35,11 @@ typedef struct
 
 int matrix_init(int m, int n, Matrix **X_p);
 
+int matrix_copy(unsigned char** X, Matrix* Y);
+
 int matrix_free(Matrix *X);
 
-int matrix_set_value(Matrix *X, unsigned int value);
+int matrix_set_value(Matrix *X, double value);
 
 int matrix_set_random(Matrix *X);
 
