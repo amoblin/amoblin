@@ -1,5 +1,10 @@
 #include "matrix.h"
 
+/* Sigmoid函数,神经网络激活函数 */
+double fnet(double net) {
+    return 1 / ( 1 + exp( -net ) );
+}
+
 int matrix_init(int m, int n, Matrix **X_p)
 {
     *X_p = (Matrix *) malloc(sizeof(Matrix));
@@ -88,27 +93,27 @@ int matrix_dot_multiply(Matrix *W, Matrix *X, Matrix *Y, rtype type)
             }
             break;
         case REVERSE1:
-            if(W->m != X->m) {
-                return -1;
-            }
+            assert(W->m == X->m);
+            assert(W->n == Y->m);
+            assert(X->n == Y->n);
 
             for(i=0; i < W->n; i++) {
                 for(j=0; j < X->n; j++) {
                     for(k=0; k < W->m; k++) {
-                        Y->matrix[i][j] += W->matrix[i][k] * X->matrix[k][j];
+                        Y->matrix[i][j] += W->matrix[k][i] * X->matrix[k][j];
                     }
                 }
             }
             break;
         case REVERSE2:
-            if(W->n != X->n) {
-                return -1;
-            }
+            assert(W->n == X->n);
+            assert(W->m == Y->m);
+            assert(X->m == Y->n);
 
             for(i=0; i < W->m; i++) {
                 for(j=0; j < X->m; j++) {
                     for(k=0; k < W->n; k++) {
-                        Y->matrix[i][j] += W->matrix[i][k] * X->matrix[k][j];
+                        Y->matrix[i][j] += W->matrix[i][k] * X->matrix[j][k];
                     }
                 }
             }
@@ -126,7 +131,20 @@ int matrix_fnet(Matrix *X, Matrix *Y) {
     int i,j;
     for(i=0; i< X->m; i++) {
         for(j=0; j < X->n; j++) {
-            Y->matrix[i][j] = fnet(X->matrix[i][j]);
+            Y->matrix[i][j] = fnet(X->matrix[i][j]-9);
+        }
+    }
+    return 0;
+}
+
+int matrix_fnet_dot(Matrix *X, Matrix *Y) {
+    assert(X->m == Y->m);
+    assert(X->n == Y->n);
+
+    int i,j;
+    for(i= 0; i< X->m; i++) {
+        for(j= 0; j< X->n; j++) {
+            Y->matrix[i][j] = (1- X->matrix[i][j]) * X->matrix[i][j];
         }
     }
     return 0;
@@ -146,8 +164,7 @@ int matrix_plus(Matrix* A, Matrix* B, Matrix* C, double alpha) {
     return 0;
 }
 
-int matrix_multiply(Matrix *A, Matrix *B, Matrix *C)
-{
+int matrix_multiply(Matrix *A, Matrix *B, Matrix *C) {
     if(A->m != B->m || A->n != B->n) {
         return -1;
     }

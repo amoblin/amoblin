@@ -3,6 +3,9 @@
 #include <time.h>
 #include <assert.h>
 #include <string.h>
+#include <math.h>
+
+double fnet(double net);
 
 /* 矩阵类型 */
 typedef enum {

@@ -1,5 +1,12 @@
 #include <stdio.h>
-#include "nn.h"
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+#include "config.h"
+#include "utils.h"
+#include "matrix.h"
+
 #define LEFT_B 0.3
 #define RIGHT_B 0.7
 

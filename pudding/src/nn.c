@@ -5,7 +5,10 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "nn.h"
+#include <math.h>
+#include "config.h"
+#include "utils.h"
+#include "matrix.h"
 
 int usage(char *argv[])
 {
@@ -15,40 +18,51 @@ int usage(char *argv[])
 
 int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FILE* fp) {
     /* 初始化矩阵 */
+    /* n1 = in . w1 */
     Matrix* n1;
     matrix_init(in->m, w1->n, &n1);
 
+    /* a1 = f(n1) */
     Matrix* a1;
-    matrix_init(n1->m, n1->n, &a1);
+    matrix_init(in->m, w1->n, &a1);
 
+    /* n2 = a1 . w2 */
     Matrix* n2;
-    matrix_init(a1->m, w2->n, &n2);
+    matrix_init(in->m, w2->n, &n2);
 
+    /* a2 = f(n2) */
     Matrix* a2;
-    matrix_init(n2->m, n2->n, &a2);
+    matrix_init(in->m, w2->n, &a2);
 
+    /* diff2 = out - a2 */
     Matrix* diff2;
-    matrix_init(a2->m, a2->n, &diff2);
+    matrix_init(in->m, w2->n, &diff2);
 
+    /* h2 = _f(n2) = _h(a2) */
     Matrix* h2;
-    matrix_init(a2->m, a2->n, &h2);
+    matrix_init(in->m, w2->n, &h2);
 
+    /* s2 = h2 x diff2 */
     Matrix* s2;
-    matrix_init(a2->m, a2->n, &s2);
+    matrix_init(in->m, w2->n, &s2);
 
-
+    /* diff1 = s2 . w2^T */
     Matrix* diff1;
-    matrix_init(w2->n, a2->n, &diff1);
+    matrix_init(in->m, w2->m, &diff1);
 
+    /* h1 = _f(n1) = _h(a1) */
     Matrix* h1;
-    matrix_init(a1->m, a1->n, &h1);
+    matrix_init(in->m, w1->n, &h1);
 
+    /* s1 = h1 x diff1 */
     Matrix* s1;
-    matrix_init(a1->m, a1->n, &s1);
+    matrix_init(in->m, w1->n, &s1);
 
+    /* delta1 = in . s1 */
     Matrix* delta1;
     matrix_init(w1->m, w1->n, &delta1);
 
+    /* delta2 = a1 . s2 */
     Matrix* delta2;
     matrix_init(w2->m, w2->n, &delta2);
 
@@ -73,27 +87,29 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
         matrix_fnet(n2, a2);
 
         /* 误差反传 */
+        matrix_fnet_dot(a2, h2);
         matrix_plus(out, a2, diff2, -1);
         matrix_multiply(h2, diff2, s2);
 
-        matrix_dot_multiply(w2, s2, diff1, REVERSE1);
+        matrix_fnet_dot(a1, h1);
+        matrix_dot_multiply(s2, w2, diff1, REVERSE2);
         matrix_multiply(h1, diff1, s1);
 
         /* 更新权值 */
-        matrix_dot_multiply(s1, in, delta1, REVERSE2);
+        matrix_dot_multiply(in, s1, delta1, REVERSE1);
         matrix_plus(w1, delta1, w1, alpha * -1);
 
-        matrix_dot_multiply(s2, a1, delta2, REVERSE2);
+        matrix_dot_multiply(a1, s2, delta2, REVERSE1);
         matrix_plus(w2, delta2, w2, alpha * -1);
 
         /* 计算输出误差 */
         matrix_fanshu(a2, out, &e);
 
-        d_printf(1, "e:%f\n",e);
+        d_printf(3, "e:%f\n",e);
         //d_printf(1, "old e:%f\n",old_e);
         //double temp_e = e - old_e;
         //d_printf(1, "%f\n", temp_e);
-        if (e > old_e) {
+        if (e > old_e + 0.5) {
             d_printf(3, "e:%f\n",e);
             d_printf(3, "old_e:%f\n",old_e);
         }
@@ -114,7 +130,7 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
             int seconds = (int)difftime(time_e, time_s);
             int mins = seconds % 3600;
             int secs = mins % 60;
-            syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %d %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n, alpha, e);
+            syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %dw %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/10000, alpha, e);
             /* 保存权值矩阵 */
             fseek(vector_p, 0, SEEK_SET);
             fwrite(w1->matrix, HIDDEN_NODES * sizeof(double), IN_NODES, vector_p);
@@ -244,7 +260,6 @@ int main(int argc, char* argv[])
             fread(w2->matrix[i], sizeof(double), OUT_NODES, vector_p);
         }
     }
-    printf("%f\n", w1->matrix[0][0]);
 
     /* 保存数据点 */
     FILE *fp = NULL;
