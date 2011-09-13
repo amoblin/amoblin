@@ -55,3 +55,5 @@ int matrix_plus(Matrix* A, Matrix* B, Matrix* C, double alpha);
 int matrix_multiply(Matrix *A, Matrix *B, Matrix *C);
 
 int matrix_fanshu(Matrix* X, Matrix* Y, double *result);
+
+int matrix_printf(Matrix* X);

@@ -131,7 +131,7 @@ int matrix_fnet(Matrix *X, Matrix *Y) {
     int i,j;
     for(i=0; i< X->m; i++) {
         for(j=0; j < X->n; j++) {
-            Y->matrix[i][j] = fnet(X->matrix[i][j]-9);
+            Y->matrix[i][j] = fnet(X->matrix[i][j]-2);
         }
     }
     return 0;
@@ -165,9 +165,8 @@ int matrix_plus(Matrix* A, Matrix* B, Matrix* C, double alpha) {
 }
 
 int matrix_multiply(Matrix *A, Matrix *B, Matrix *C) {
-    if(A->m != B->m || A->n != B->n) {
-        return -1;
-    }
+    assert(A->m == B->m);
+    assert(A->n == B->n);
 
     int i,j;
     for(i = 0; i < A->m; i++) {
@@ -192,4 +191,14 @@ int matrix_fanshu(Matrix* X, Matrix* Y, double *result) {
     }
     *result = e;
     return 0;
+}
+
+int matrix_printf(Matrix* X) {
+    int i,j;
+    for(i= 0; i< X->m; i++) {
+        for(j= 0; j< X->n; j++) {
+            printf("%f ", X->matrix[i][j]);
+        }
+        printf("\n");
+    }
 }

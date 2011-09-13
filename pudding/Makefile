@@ -41,4 +41,4 @@ get:
 	scp amoblin@$(SERVER):~/pudding/data/wisdom.dat data/wisdom.dat
 
 html:
-	rst2html paper.rst paper.html
+	rst2html doc/paper.rst doc/paper.html
