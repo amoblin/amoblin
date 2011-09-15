@@ -3,7 +3,8 @@
 
 CC=pdflatex
 
-all:amoblin.pdf
+all:
+	pdflatex amoblin.tex
 
 %.pdf:%.tex
 	$(CC) $^
