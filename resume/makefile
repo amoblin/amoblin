@@ -1,13 +1,8 @@
-# This file is generated manually by NetXRay@byhh.
-# It isn't very elagent. Don't mock me :)
-
-CC=pdflatex
-
-all:amoblin.pdf
-
-%.pdf:%.tex
-	$(CC) $^
+# Author: amoblin@gmail.com
+#
+all:
+	pdflatex amoblin.tex > amoblin.log
+	@make clean
+	
 clean:
-	rm *.aux *.pdf *.log
-rebuild:
-	make clean all
+	rm *.aux *.out *.log

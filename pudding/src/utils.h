@@ -1,9 +1,9 @@
 #include <string.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <syslog.h>
 #include <stdarg.h>
+#include <stdlib.h>
 
 int debug_level=3;
 
@@ -57,6 +57,7 @@ int utf82unicode(char *sentence, unsigned char in[], double out[])
         switch(length) {
             case 1:
                 if (sentence[i] == '\n') {
+                    in[j] = '\0';
                     printf("Unicode向量:");
                     int s;
                     for(s=0; s<UNI_LEN; s++) {
@@ -64,7 +65,7 @@ int utf82unicode(char *sentence, unsigned char in[], double out[])
                     }
                     printf("\n输出向量:");
                     for(s=0; s<SEN_LEN; s++) {
-                        printf("%f ",out[s]);
+                        printf("%2.1f ",out[s]);
                     }
                     printf("\n");
                 } else if (sentence[i] == 32) { //空格
@@ -73,11 +74,8 @@ int utf82unicode(char *sentence, unsigned char in[], double out[])
                 break;
             case 3:
                 dest = ( sentence[i] & 0x0F ) << 12;
-                //printf("%x\n", dest);
                 dest |= (sentence[i+1] & 0x3f) << 6;
-                //printf("%x\n", dest);
                 dest |= (sentence[i+2] & 0x3f);
-                //printf("%x ", dest);
 
                 in[j] = dest >> 8;  //高位
                 in[++j] = dest & 0xff;  //低位
@@ -96,7 +94,6 @@ int utf82unicode(char *sentence, unsigned char in[], double out[])
         }
         i = i + length;
     }
-    in[j] = '\0';
     printf("\n");
 }
 

@@ -20,3 +20,12 @@
 #define HIDDEN_NODES 32
 
 #define DEBUG 1
+
+/* 最大循环次数 */
+#define LOOP_MAX 5
+
+#define LOG_DEN 1
+#define LEARN_RATE  1.9
+#define PRECISION 0.05
+#define PLOT_DEN 100
+

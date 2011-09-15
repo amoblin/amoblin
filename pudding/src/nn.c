@@ -5,7 +5,10 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "nn.h"
+#include <math.h>
+#include "config.h"
+#include "utils.h"
+#include "matrix.h"
 
 int usage(char *argv[])
 {
@@ -13,108 +16,141 @@ int usage(char *argv[])
     return 0;
 }
 
-int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in, double **out, int data_size, FILE *vector_p, FILE *fp) {
-    double alpha = LEARN_RATE;  //学习率
-    double delta_hidden[HIDDEN_NODES], delta_out[OUT_NODES];    //修改量矩阵
-    double O1[HIDDEN_NODES], O2[OUT_NODES]; //隐层和输出层输出量
-    int i, j, k, n;
-    double sum;
+int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FILE* fp) {
+    /* 初始化矩阵 \*/
+    /* n1 = in . w1 \*/
+    Matrix* n1;
+    matrix_init(in->m, w1->n, &n1);
 
-    double e = PRECISION + 1;
+    /* a1 = f(n1) \*/
+    Matrix* a1;
+    matrix_init(in->m, w1->n, &a1);
 
-    /* 动态更新权值 */
-    double old_e;
-    double old_v[IN_NODES][HIDDEN_NODES];
-    double old_w[HIDDEN_NODES][OUT_NODES];
+    /* n2 = a1 . w2 \*/
+    Matrix* n2;
+    matrix_init(in->m, w2->n, &n2);
+
+    /* a2 = f(n2) \*/
+    Matrix* a2;
+    matrix_init(in->m, w2->n, &a2);
+
+    /* diff2 = out - a2 \*/
+    Matrix* diff2;
+    matrix_init(in->m, w2->n, &diff2);
+
+    /* h2 = _f(n2) = _h(a2) \*/
+    Matrix* h2;
+    matrix_init(in->m, w2->n, &h2);
+
+    /* h2 = 0 - 2 . h2 \*/
+    Matrix* zero;
+    matrix_init(in->m, w2->n, &zero);
+    matrix_set_value(zero, 0);
+
+    /* s2 = -2 . h2 x diff2 \*/
+    Matrix* s2;
+    matrix_init(in->m, w2->n, &s2);
+
+    /* diff1 = s2 . w2^T \*/
+    Matrix* diff1;
+    matrix_init(in->m, w2->m, &diff1);
+
+    /* h1 = _f(n1) = _h(a1) \*/
+    Matrix* h1;
+    matrix_init(in->m, w1->n, &h1);
+
+    /* s1 = h1 x diff1 \*/
+    Matrix* s1;
+    matrix_init(in->m, w1->n, &s1);
+
+    /* delta1 = in . s1 \*/
+    Matrix* delta1;
+    matrix_init(w1->m, w1->n, &delta1);
+
+    /* delta2 = a1 . s2 \*/
+    Matrix* delta2;
+    matrix_init(w2->m, w2->n, &delta2);
+
+    /* 备份权值矩阵以便回退 \*/
+    Matrix* w1_old;
+    matrix_init(w1->m, w1->n, &w1_old);
+    Matrix* w2_old;
+    matrix_init(w2->m, w2->n, &w2_old);
 
     /* 计时器 */
     int time_s = time((time_t*)NULL);
 
-    old_e = 9999;
-    printf("LOOP_MAX: %dk\n", LOOP_MAX/10000);
+    /* 学习率 */
+    double alpha = LEARN_RATE;
+
+    double old_e = 9999;
+    double e = PRECISION + 1;
+    int n;
+    printf("LOOP_MAX: %d\n", LOOP_MAX);
+    matrix_printf(in);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
-        for (i=0; i < data_size; i++) { 
-            for (k=0; k < HIDDEN_NODES; k++) {
-                sum = 0;
-                for (j = 0; j < IN_NODES; j++) {
-                    sum += in[i][j] * v[j][k];    
-                }
-                d_printf(0, "sum: %f\n", sum/64);
-                O1[k] = fnet(sum/64);
-                d_printf(0, "%f\n", O1[k]);
-            }
-            for (j = 0; j < OUT_NODES; j++) {
-                sum = 0;
-                for (k = 0; k < HIDDEN_NODES; k++)
-                    sum += O1[k] * w[k][j];
-                O2[j] = fnet(sum/64);
-                d_printf(0, "sum: %f\n", sum/64);
-                d_printf(0, "%f\n", O2[j]);
-            }
 
-            /* 计算输出层的权修改量 */
-            for (j = 0; j < OUT_NODES; j++) {
-                delta_out[j] = O2[j] * (1 - O2[j]) * (out[i][j] - O2[j]);
-            }
+        /* 输入正传 */
+        matrix_dot_multiply(in, w1, n1, NORMAL);
+        matrix_fnet(n1, a1);
+        //matrix_printf(a1);
 
-            /* 计算输出误差 */
-            for (j = 0; j < OUT_NODES ; j++) {
-                //printf("%f \n", (out[i][j] - O2[j]) * (out[i][j] - O2[j]));
-                e += (out[i][j] - O2[j]) * (out[i][j] - O2[j]);
-            }
+        matrix_dot_multiply(a1, w2, n2, NORMAL);
+        matrix_fnet(n2, a2);
 
-            /* 计算隐层权修改量 */
-            for (k = 0; k < HIDDEN_NODES; k++) {
-                sum = 0;
-                for (j = 0; j < OUT_NODES; j++) {
-                    sum += w[k][j] * delta_out[j];
-                }
-                delta_hidden[j] = sum * O1[j] * (1 - O1[j]);
-            }
+        /* 误差反传 */
+        matrix_fnet_dot(a2, h2);
+        matrix_plus(zero, h2, h2, -2);
+        matrix_plus(out, a2, diff2, -1);
+        matrix_multiply(h2, diff2, s2);
 
-            /* 修改输出层权矩阵 */
-            for (j = 0; j < HIDDEN_NODES; j++) {
-                for (k = 0; k < OUT_NODES; k++) {
-                    w[j][k] += alpha * O1[j] * delta_out[k]; 
-                }
-            }
-            for (j = 0; j < IN_NODES; j++) {
-                for (k = 0; k < HIDDEN_NODES; k++) {
-                    v[j][k] += alpha * in[i][j] * delta_hidden[k]; 
-                }
-            }
-        }
-        d_printf(1, "e:%f\n",e);
-        //d_printf(1, "old e:%f\n",old_e);
-        //double temp_e = e - old_e;
-        //d_printf(1, "%f\n", temp_e);
-        if (e <= old_e+1) {
-            /* 进行权值更新 */
+        matrix_fnet_dot(a1, h1);
+        matrix_dot_multiply(s2, w2, diff1, REVERSE2);
+        matrix_multiply(h1, diff1, s1);
+
+        /* 计算输出误差 */
+        matrix_fanshu(a2, out, &e);
+        d_printf(3, "e:%f\n",e);
+        d_printf(3, "old e:%f\n",old_e);
+
+        if (e <= old_e+0.5) {
+            matrix_copy(w1, w1_old);
+            matrix_copy(w2, w2_old);
+
+            /* 更新权值 */
+            matrix_dot_multiply(in, s1, delta1, REVERSE1);
+            matrix_plus(w1, delta1, w1, alpha * -1);
+
+            matrix_dot_multiply(a1, s2, delta2, REVERSE1);
+            matrix_plus(w2, delta2, w2, alpha * -1);
+
             old_e = e;
-            memcpy(old_v, v, sizeof(double) * IN_NODES * HIDDEN_NODES);
-            memcpy(old_w, w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
         } else {
-            /* 取消权值更新 */
-            memcpy(v, old_v, sizeof(double) * IN_NODES * HIDDEN_NODES);
-            memcpy(w, old_w, sizeof(double) * HIDDEN_NODES * OUT_NODES);
             alpha = 0.99 * alpha;
             d_printf(3, "alpha changed:%f\n", alpha);
+            matrix_copy(w1_old, w1);
+            matrix_copy(w2_old, w2);
         }
 
+        /* 写入日志 */
         if (0 == (n % LOG_DEN)) {
-            /* 写入日志 */
             time_t time_e = time(NULL);
             struct tm *timeinfo;
             timeinfo = localtime(&time_e);
             int seconds = (int)difftime(time_e, time_s);
             int mins = seconds % 3600;
             int secs = mins % 60;
-            syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %dk %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/LOG_DEN, alpha, e);
+            syslog(LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %dw %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/LOG_DEN, alpha, e);
             /* 保存权值矩阵 */
             fseek(vector_p, 0, SEEK_SET);
-            fwrite(v, HIDDEN_NODES * sizeof(double), IN_NODES, vector_p);
-            fwrite(w, OUT_NODES * sizeof(double), HIDDEN_NODES, vector_p);
+            int i;
+            for( i= 0; i< w1->m; i++) {
+                fwrite(w1->matrix[i], sizeof(double), w1->n, vector_p);
+            }
+            for( i= 0; i< w2->m; i++) {
+                fwrite(w2->matrix[i], sizeof(double), w2->n, vector_p);
+            }
             fflush(vector_p);
         }
 
@@ -123,10 +159,22 @@ int train_bp(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char **in
             fprintf(fp, "%d %f %f\n", n/PLOT_DEN, e, alpha);
         }
     }
-
-    fclose(fp);
-    fclose(vector_p);
-
+    /* 释放矩阵内存 */
+    matrix_free(n1);
+    matrix_free(a1);
+    matrix_free(n2);
+    matrix_free(a2);
+    matrix_free(diff2);
+    matrix_free(h2);
+    matrix_free(zero);
+    matrix_free(s2);
+    matrix_free(diff1);
+    matrix_free(h1);
+    matrix_free(s1);
+    matrix_free(delta1);
+    matrix_free(delta2);
+    matrix_free(w1_old);
+    matrix_free(w2_old);
     return 0;
 }
 
@@ -184,62 +232,52 @@ int main(int argc, char* argv[])
     int data_size;
     fread(&data_size, sizeof(int), 1, vector_p);
     /* 输入输出矩阵分配内存 */
-    unsigned char **in = (unsigned char**) malloc(sizeof(unsigned char*) * data_size);
-    double **out = (double **) malloc(sizeof(double *) * data_size);
+    Matrix *in;
+    matrix_init(data_size, IN_NODES, &in);
+    Matrix *out;
+    matrix_init(data_size, OUT_NODES, &out);
+
+    /* 读取输入输出矩阵 */
+    unsigned char **tmp_in = (unsigned char**) malloc(sizeof(unsigned char*) * data_size);
     int i,j;
     for(i=0;i<data_size;i++) {
-        in[i] = NULL;
-        in[i] = (unsigned char*) malloc(sizeof(unsigned char) * IN_NODES);
-        if(NULL == in[i]) {
+        tmp_in[i] = NULL;
+        tmp_in[i] = (unsigned char*) malloc(sizeof(unsigned char) * IN_NODES);
+        if(NULL == tmp_in[i]) {
             printf("malloc failed.\n");
             exit(0);
         }
-        out[i] = NULL;
-        out[i] = (double *) malloc(sizeof(double) * OUT_NODES);
-        if(NULL == out[i]) {
-            printf("malloc failed.\n");
-            exit(0);
-        }
-    }
-    /* 读入输入输出矩阵 */
-    for(i=0;i<data_size;i++) {
-        fread(in[i], sizeof(unsigned char), IN_NODES, vector_p);
-        fread(out[i], sizeof(double), OUT_NODES, vector_p);
+        fread(tmp_in[i], sizeof(unsigned char), IN_NODES, vector_p);
+        fread(out->matrix[i], sizeof(double), OUT_NODES, vector_p);
     }
     fclose(vector_p);
 
-    d_printf(1, "matrix in:\n");
-    for(i=0; i < data_size; i++) {
-        for(j=0; j < IN_NODES ; j++) {
-            d_printf(1, "%d ", in[i][j]);
-        }
-        d_printf(1, "\n");
-    }
+    matrix_set(tmp_in, in);
 
-    double v[IN_NODES][HIDDEN_NODES];   //隐含层权值矩阵
-    double w[HIDDEN_NODES][OUT_NODES];   //输出层权值矩阵
+   /* 初始化隐含层权值矩阵 */
+    Matrix *w1;
+    matrix_init(IN_NODES, HIDDEN_NODES, &w1);
+
+   /* 初始化输出层权值矩阵 */
+    Matrix *w2;
+    matrix_init(HIDDEN_NODES, OUT_NODES, &w2);
 
     vector_p = NULL;
     vector_p = fopen(out_file, "rb+");
     if (NULL == vector_p) { //不存在，使用随机数初始化
         /* 初始化权值矩阵 */
         syslog(LOG_INFO, "初始化矩阵");
-        srand((unsigned)time((time_t *)NULL));
-        for (i = 0; i < IN_NODES; i++) {
-            for (j = 0; j < HIDDEN_NODES; j++) {
-                v[i][j] = rand() / (double)(RAND_MAX);
-            }
-        }
-        for (i = 0; i < HIDDEN_NODES; i++) {
-            for (j = 0; j < OUT_NODES; j++) {
-                w[i][j] = rand() / (double)(RAND_MAX);
-            }
-        }
+        matrix_set_random(w1);
+        matrix_set_random(w2);
         vector_p = fopen(out_file, "wb");
     } else {    //使用上一次的矩阵
         syslog(LOG_INFO, "使用上次矩阵");
-        fread(v, HIDDEN_NODES * sizeof(double), IN_NODES, vector_p);
-        fread(w, OUT_NODES * sizeof(double), HIDDEN_NODES, vector_p);
+        for(i= 0; i< w1->m; i++) {
+            fread(w1->matrix[i], sizeof(double), w1->n, vector_p);
+        }
+        for(i= 0; i< w2->m; i++) {
+            fread(w2->matrix[i], sizeof(double), w2->n, vector_p);
+        }
     }
 
     /* 保存数据点 */
@@ -252,15 +290,16 @@ int main(int argc, char* argv[])
 
     /* 训练 */
     printf("开始网络训练\n");
-    train_bp(v, w, in, out, data_size, vector_p, fp);             //训练bp神经网络
+    train_bp(w1, w2, in, out, vector_p, fp);             //训练bp神经网络
+    fclose(vector_p);
+    fclose(fp);
 
     /* 释放内存 */
-    for(i=0;i<data_size;i++) {
-        free(in[i]);
-        free(out[i]);
-    }
-    free(in);
-    free(out);
+
+    matrix_free(in);
+    matrix_free(out);
+    matrix_free(w1);
+    matrix_free(w2);
     closelog();
     return 0;
 }

@@ -20,7 +20,6 @@ int main(int argc, char *argv[])
     close(logfd);
     openlog(NULL, LOG_PERROR, LOG_DAEMON);
     //setlogmask(LOG_ERR);
-    syslog(LOG_DEBUG, "hello,world!");
 
     /* 输入参数处理 */
     int ch;
