@@ -71,6 +71,12 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
     Matrix* delta2;
     matrix_init(w2->m, w2->n, &delta2);
 
+    /* 备份权值矩阵以便回退 \*/
+    Matrix* w1_old;
+    matrix_init(w1->m, w1->n, &w1_old);
+    Matrix* w2_old;
+    matrix_init(w2->m, w2->n, &w2_old);
+
     /* 计时器 */
     int time_s = time((time_t*)NULL);
 
@@ -81,6 +87,7 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
     double e = PRECISION + 1;
     int n;
     printf("LOOP_MAX: %d\n", LOOP_MAX);
+    matrix_printf(in);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
 
@@ -104,10 +111,13 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
 
         /* 计算输出误差 */
         matrix_fanshu(a2, out, &e);
-        d_printf(1, "e:%f\n",e);
+        d_printf(3, "e:%f\n",e);
+        d_printf(3, "old e:%f\n",old_e);
 
-        //d_printf(1, "old e:%f\n",old_e);
         if (e <= old_e+0.5) {
+            matrix_copy(w1, w1_old);
+            matrix_copy(w2, w2_old);
+
             /* 更新权值 */
             matrix_dot_multiply(in, s1, delta1, REVERSE1);
             matrix_plus(w1, delta1, w1, alpha * -1);
@@ -117,8 +127,10 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
 
             old_e = e;
         } else {
-            //alpha = 0.99 * alpha;
-            //d_printf(3, "alpha changed:%f\n", alpha);
+            alpha = 0.99 * alpha;
+            d_printf(3, "alpha changed:%f\n", alpha);
+            matrix_copy(w1_old, w1);
+            matrix_copy(w2_old, w2);
         }
 
         /* 写入日志 */
@@ -129,11 +141,16 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
             int seconds = (int)difftime(time_e, time_s);
             int mins = seconds % 3600;
             int secs = mins % 60;
-            syslog(LOG_USER|LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %dw %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/LOG_DEN, alpha, e);
+            syslog(LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %dw %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/LOG_DEN, alpha, e);
             /* 保存权值矩阵 */
             fseek(vector_p, 0, SEEK_SET);
-            fwrite(w1->matrix, HIDDEN_NODES * sizeof(double), IN_NODES, vector_p);
-            fwrite(w2->matrix, OUT_NODES * sizeof(double), HIDDEN_NODES, vector_p);
+            int i;
+            for( i= 0; i< w1->m; i++) {
+                fwrite(w1->matrix[i], sizeof(double), w1->n, vector_p);
+            }
+            for( i= 0; i< w2->m; i++) {
+                fwrite(w2->matrix[i], sizeof(double), w2->n, vector_p);
+            }
             fflush(vector_p);
         }
 
@@ -156,6 +173,8 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
     matrix_free(s1);
     matrix_free(delta1);
     matrix_free(delta2);
+    matrix_free(w1_old);
+    matrix_free(w2_old);
     return 0;
 }
 
@@ -233,7 +252,7 @@ int main(int argc, char* argv[])
     }
     fclose(vector_p);
 
-    matrix_copy(tmp_in, in);
+    matrix_set(tmp_in, in);
 
    /* 初始化隐含层权值矩阵 */
     Matrix *w1;
@@ -254,10 +273,10 @@ int main(int argc, char* argv[])
     } else {    //使用上一次的矩阵
         syslog(LOG_INFO, "使用上次矩阵");
         for(i= 0; i< w1->m; i++) {
-            fread(w1->matrix[i], sizeof(double), HIDDEN_NODES, vector_p);
+            fread(w1->matrix[i], sizeof(double), w1->n, vector_p);
         }
         for(i= 0; i< w2->m; i++) {
-            fread(w2->matrix[i], sizeof(double), OUT_NODES, vector_p);
+            fread(w2->matrix[i], sizeof(double), w2->n, vector_p);
         }
     }
 
@@ -276,6 +295,7 @@ int main(int argc, char* argv[])
     fclose(fp);
 
     /* 释放内存 */
+
     matrix_free(in);
     matrix_free(out);
     matrix_free(w1);

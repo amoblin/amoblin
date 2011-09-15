@@ -38,7 +38,9 @@ typedef struct
 
 int matrix_init(int m, int n, Matrix **X_p);
 
-int matrix_copy(unsigned char** X, Matrix* Y);
+int matrix_set( unsigned char** X, Matrix* Y);
+
+int matrix_copy( Matrix* X, Matrix* Y);
 
 int matrix_free(Matrix *X);
 

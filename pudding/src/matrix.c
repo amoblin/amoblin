@@ -29,11 +29,23 @@ int matrix_init(int m, int n, Matrix **X_p)
     return 0;
 }
 
-int matrix_copy(unsigned char** X, Matrix* Y) {
+int matrix_set(unsigned char** X, Matrix* Y) {
     int i,j;
     for(i= 0; i< Y->m; i++) {
         for(j= 0; j< Y->n; j++) {
             Y->matrix[i][j] = (double) X[i][j];
+        }
+    }
+    return 0;
+}
+
+int matrix_copy( Matrix* X, Matrix* Y) {
+    assert( X->m == Y->m);
+    assert( X->n == Y->n);
+    int i, j;
+    for( i= 0; i< X->m; i++) {
+        for( j= 0; j< X->n; j++) {
+            Y->matrix[i][j] = X->matrix[i][j];
         }
     }
     return 0;
@@ -197,7 +209,7 @@ int matrix_printf(Matrix* X) {
     int i,j;
     for(i= 0; i< X->m; i++) {
         for(j= 0; j< X->n; j++) {
-            printf("%f ", X->matrix[i][j]);
+            printf("%2.1f ", X->matrix[i][j]);
         }
         printf("\n");
     }
