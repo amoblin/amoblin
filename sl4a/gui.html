@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <title>Text to Speech</title>
+        <script>
+            var droid = new Android();
+            var speak = function() {
+            droid.postEvent("say", document.getElementById("say").value);
+            }
+        </script>
+    </head>
+    <body>
+        <form onsubmit="speak(); return false;">
+            <label for="say">要查询的车次：</label>
+            <input type="text" id="number" />
+            <input type="submit" value="查询" />
+        </form>
+    </body>
+</html>
