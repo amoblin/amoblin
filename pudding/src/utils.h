@@ -20,9 +20,9 @@ void d_printf(unsigned int level, const char * format, ...)
 int print_u(char *ustring, int i, int n)
 {
     int k;
-    printf("%d: ", i);
+    d_printf(1, "%d: ", i);
     for(k=0; k<n; k++) {
-        printf("%c", ustring[i+k]);
+        d_printf(1, "%c", ustring[i+k]);
     }
 }
 
@@ -47,7 +47,7 @@ int get_utf8_bytes(char code, int *length)
 int utf82unicode(char *sentence, unsigned char in[], double out[])
 {
     int i = 0;    //utf8编码串游标；
-    int j = 0;  //输入向量游标；
+    int j = 1;  //输入向量游标；
     int k = 0;  //输出向量游标。
     while(i<strlen(sentence)) {
         int length;
@@ -57,17 +57,17 @@ int utf82unicode(char *sentence, unsigned char in[], double out[])
         switch(length) {
             case 1:
                 if (sentence[i] == '\n') {
-                    in[j] = '\0';
-                    printf("Unicode向量:");
+                    in[0] = 2 * k;
+                    d_printf(4, "Unicode向量:");
                     int s;
-                    for(s=0; s<UNI_LEN; s++) {
-                        printf("%o ",in[s]);
+                    for (s = 1; s < 2 * k + 1; s++) {
+                        d_printf(4, "%o ",in[s]);
                     }
-                    printf("\n输出向量:");
-                    for(s=0; s<SEN_LEN; s++) {
-                        printf("%2.1f ",out[s]);
+                    d_printf(4, "\n输出向量:");
+                    for(s=0; s<k; s++) {
+                        d_printf(4, "%2.1f ",out[s]);
                     }
-                    printf("\n");
+                    d_printf(4, "\n");
                 } else if (sentence[i] == 32) { //空格
                     out[k] = 0.1; //分词点
                 }
@@ -79,7 +79,7 @@ int utf82unicode(char *sentence, unsigned char in[], double out[])
 
                 in[j] = dest >> 8;  //高位
                 in[++j] = dest & 0xff;  //低位
-                printf("%d %d\t", in[j-1], in[j]);
+                d_printf(3, "%d %d\t", in[j-1], in[j]);
                 j++;
                 k++;    //输出向量游标增1
                 break;
@@ -94,32 +94,32 @@ int utf82unicode(char *sentence, unsigned char in[], double out[])
         }
         i = i + length;
     }
-    printf("\n");
+    d_printf(1, "\n");
 }
 
 int unicode2binary(unsigned char *unicode_str, unsigned char *binary_str)
 {
     int i;
     int j;
-    int length = strlen(unicode_str);
+    int length = unicode_str[0];
     int reset_num;
-    for(i=0;i<length;i++) {
+    for (i = 0; i < length; i++) {
         reset_num = 128;
-        d_printf(0, "0%o:", unicode_str[i]);
+        d_printf(2, "0%o: ", unicode_str[i+1]);
         for(j=0; j<8; j++) {
-            binary_str[8*i+j] = (unicode_str[i] & reset_num) >> (7-j) ;
+            binary_str[8*i+j] = (unicode_str[i+1] & reset_num) >> (7-j) ;
             reset_num >>= 1;
-            d_printf(0, "%d", binary_str[8*i+j]);
+            d_printf(2, "%d", binary_str[8*i+j]);
         }
-        d_printf(0, "\n");
+        d_printf(2, "\n");
     }
 }
 
 int get_data_size(FILE *fp)
 {
-    char buffer[49];
+    char buffer[UTF8_LEN];
     int data_size=0;
-    while(fgets(buffer,sizeof(buffer),fp) != NULL) {
+    while( fgets(buffer, sizeof(buffer), fp) != NULL) {
         int i=0;
         int sen_len = strlen(buffer);
         int j;

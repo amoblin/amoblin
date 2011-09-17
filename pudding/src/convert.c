@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
     int t = 0;  //向量数组游标
     while(fgets(sentence, UTF8_LEN, fp) != NULL)
     {
-        d_printf(0, "%s", sentence);
+        d_printf(5, "%s", sentence);
         /* 保存转换为unicode码的句子 */
         unsigned char tmp_in[UNI_LEN] = {0};
         /* 保存转换为二进制码的句子 */
@@ -96,14 +96,14 @@ int main(int argc, char *argv[])
         }
         utf82unicode(sentence, tmp_in, tmp_out);
         unicode2binary(tmp_in, binary_in);
-        int length = strlen(tmp_in)/2;//该句汉字数。
-        for(i=0;i<length-3;i++) {
+        int length = tmp_in[0] / 2;//该句汉字数。
+        for( i = 0; i < length - OUT_NODES + 1; i++) {
             memcpy(in[t],binary_in + i*16, sizeof(unsigned char) * IN_NODES);
             int j;
             for(j=0; j< IN_NODES; j++) {
-                d_printf(1, "%d ", in[t][j]);
+                d_printf(5, "%d ", in[t][j]);
             }
-            d_printf(1, "\n");
+            d_printf(5, "\n");
             memcpy(out[t], tmp_out + i, sizeof(double) * OUT_NODES);
             for(j=0; j< OUT_NODES; j++) {
                 //syslog(LOG_DEBUG, "%f ", out[t][j]);

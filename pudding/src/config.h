@@ -1,14 +1,14 @@
 /* 分词语句最大长度*/
-#define SEN_LEN 30
+#define SEN_LEN 50
 
 /* 一个汉字占3个utf8字节 SEN_LEN*3 */
-#define UTF8_LEN 90
+#define UTF8_LEN 150
 
 /* 每个汉字的Unicode码占2字节 SEN_LEN*2 */
-#define UNI_LEN 60
+#define UNI_LEN 100
 
 /* 每个汉字2字节,用16个char保存每一位。SEN_LEN*16 */
-#define BIN_LEN 480
+#define BIN_LEN 800
 
 /* 输出层节点数,汉字的个数 */
 #define OUT_NODES 4
