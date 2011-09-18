@@ -7,8 +7,12 @@ double fnet(double net) {
 
 int matrix_init(int m, int n, Matrix **X_p)
 {
-    *X_p = (Matrix *) malloc(sizeof(Matrix));
-    Matrix *X = *X_p;
+    Matrix *X = NULL;
+    X = (Matrix *) malloc(sizeof(Matrix));
+    if (NULL == X) {
+        return -1;
+    }
+    *X_p = X;
     int i;
     X->matrix = NULL;
     X->matrix = (double **) malloc(sizeof(double*) * m );
@@ -26,16 +30,6 @@ int matrix_init(int m, int n, Matrix **X_p)
     }
     X->m = m;
     X->n = n;
-    return 0;
-}
-
-int matrix_set(unsigned char** X, Matrix* Y) {
-    int i,j;
-    for(i= 0; i< Y->m; i++) {
-        for(j= 0; j< Y->n; j++) {
-            Y->matrix[i][j] = (double) X[i][j];
-        }
-    }
     return 0;
 }
 
@@ -58,6 +52,7 @@ int matrix_free(Matrix *X)
         free(X->matrix[i]);
     }
     free(X->matrix);
+    free(X);
     return 0;
 }
 
