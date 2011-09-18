@@ -44,7 +44,7 @@ int get_utf8_bytes(char code, int *length)
     return 0;
 }
 
-int utf82unicode(char *sentence, unsigned char in[], double out[])
+int utf82unicode(char *sentence, unsigned char in[], unsigned char out[])
 {
     int i = 0;    //utf8编码串游标；
     int j = 1;  //输入向量游标；
@@ -65,11 +65,11 @@ int utf82unicode(char *sentence, unsigned char in[], double out[])
                     }
                     d_printf(4, "\n输出向量:");
                     for(s=0; s<k; s++) {
-                        d_printf(4, "%2.1f ",out[s]);
+                        d_printf(4, "%d ",out[s]);
                     }
                     d_printf(4, "\n");
                 } else if (sentence[i] == 32) { //空格
-                    out[k] = 0.1; //分词点
+                    out[k] = 0; //分词点
                 }
                 break;
             case 3:
@@ -79,7 +79,7 @@ int utf82unicode(char *sentence, unsigned char in[], double out[])
 
                 in[j] = dest >> 8;  //高位
                 in[++j] = dest & 0xff;  //低位
-                d_printf(3, "%d %d\t", in[j-1], in[j]);
+                d_printf(2, "%d %d\t", in[j-1], in[j]);
                 j++;
                 k++;    //输出向量游标增1
                 break;
@@ -97,7 +97,24 @@ int utf82unicode(char *sentence, unsigned char in[], double out[])
     d_printf(1, "\n");
 }
 
-int unicode2binary(unsigned char *unicode_str, unsigned char *binary_str)
+int unicode4short(unsigned char* tmp_in, unsigned char* tmp_out, unsigned char short_str[][OUT_NODES * 3], int *n)
+{
+    int length = tmp_in[0] / 2;
+    int stop_point = length - OUT_NODES + 1;
+    int i;
+    for (i = 0; i < stop_point; i++) {
+        memcpy(short_str[*n], tmp_in + i*2, sizeof(unsigned char) * OUT_NODES * 2);
+        memcpy(short_str[*n] + OUT_NODES * 2, tmp_out + i, sizeof(unsigned char) * OUT_NODES);
+        int j;
+        for (j = 0; j < OUT_NODES * 3; j++) {
+            d_printf(3, "%d ", short_str[*n][j]);
+        }
+        d_printf(3, "\n");
+        (*n)++;        //向量数组游标增1
+    }
+}
+
+int unicode2binary(unsigned char* unicode_str, unsigned char *binary_str)
 {
     int i;
     int j;

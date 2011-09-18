@@ -238,21 +238,15 @@ int main(int argc, char* argv[])
     matrix_init(data_size, OUT_NODES, &out);
 
     /* 读取输入输出矩阵 */
-    unsigned char **tmp_in = (unsigned char**) malloc(sizeof(unsigned char*) * data_size);
     int i,j;
     for(i=0;i<data_size;i++) {
-        tmp_in[i] = NULL;
-        tmp_in[i] = (unsigned char*) malloc(sizeof(unsigned char) * IN_NODES);
-        if(NULL == tmp_in[i]) {
-            printf("malloc failed.\n");
-            exit(0);
-        }
-        fread(tmp_in[i], sizeof(unsigned char), IN_NODES, vector_p);
+        fread(in->matrix[i], sizeof(double), IN_NODES, vector_p);
+    }
+    for(i=0;i<data_size;i++) {
         fread(out->matrix[i], sizeof(double), OUT_NODES, vector_p);
     }
     fclose(vector_p);
 
-    matrix_set(tmp_in, in);
 
    /* 初始化隐含层权值矩阵 */
     Matrix *w1;

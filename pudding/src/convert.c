@@ -59,29 +59,11 @@ int main(int argc, char *argv[])
         syslog(LOG_ERR, "file: %s does not exist, please check again.\n", argv[1]);
         return 0;
     }
-    char sentence[UTF8_LEN];  //语句长度最大值：18
+    char sentence[UTF8_LEN];
     int data_size = get_data_size(fp);
-    unsigned char **in = (unsigned char **) malloc(sizeof(unsigned char*) * data_size);
-    //unsigned char in[DATA_SIZE][IN_NODES];  //无符号字符型数组，元素范围0～255.两个数字代表一个汉字。
-    double **out = (double **) malloc(sizeof(double *) * data_size);//输出向量，0.9代表连续，0.1代表分词点
-    int i;
-    for(i=0;i<data_size;i++)
-    {
-        in[i] = NULL;
-        in[i] = (unsigned char *) malloc(sizeof(unsigned char) * IN_NODES);
-        if(NULL == in[i]) {
-            printf("malloc failed.\n");
-            exit(0);
-        }
-        //memset(in[i], 0, sizeof(unsigned char) * IN_NODES);
-        out[i] = NULL;
-        out[i] = (double*) malloc(sizeof(double) * OUT_NODES);
-        if(NULL == out[i]) {
-            printf("malloc failed.\n");
-            exit(0);
-        }
-    }
-    int t = 0;  //向量数组游标
+    /* 保存规格化数据 */
+    unsigned char tmp_short[data_size][OUT_NODES * 3];
+    int n = 0;  //向量数组游标
     while(fgets(sentence, UTF8_LEN, fp) != NULL)
     {
         d_printf(5, "%s", sentence);
@@ -90,48 +72,39 @@ int main(int argc, char *argv[])
         /* 保存转换为二进制码的句子 */
         unsigned char binary_in[BIN_LEN] = {0};
         /* 保存输出值 */
-        double tmp_out[SEN_LEN];//默认为0，不需清零先。
+        unsigned char tmp_out[SEN_LEN];//默认为0，不需清零先。
+        int i;
         for(i=0; i< SEN_LEN; i++) {
-            tmp_out[i] = 0.9;
+            tmp_out[i] = 1;
         }
+
         utf82unicode(sentence, tmp_in, tmp_out);
-        unicode2binary(tmp_in, binary_in);
-        int length = tmp_in[0] / 2;//该句汉字数。
-        for( i = 0; i < length - OUT_NODES + 1; i++) {
-            memcpy(in[t],binary_in + i*16, sizeof(unsigned char) * IN_NODES);
-            int j;
-            for(j=0; j< IN_NODES; j++) {
-                d_printf(5, "%d ", in[t][j]);
-            }
-            d_printf(5, "\n");
-            memcpy(out[t], tmp_out + i, sizeof(double) * OUT_NODES);
-            for(j=0; j< OUT_NODES; j++) {
-                //syslog(LOG_DEBUG, "%f ", out[t][j]);
-            }
-            t++;        //向量数组游标增1
-        }
+        unicode4short(tmp_in, tmp_out, tmp_short, &n);
+        //unicode2binary(tmp_in, binary_in);
+
     }
     fclose(fp);
+
+    double in[data_size][IN_NODES];
+    double out[data_size][OUT_NODES];
+    int i,j;
+    for (i = 0; i < data_size; i++) {
+        for (j = 0; j < IN_NODES; j++) {
+            in[i][j] = tmp_short[i][j];
+        }
+        for (j = 0; j < OUT_NODES; j++) {
+            out[i][j] = tmp_short[i][IN_NODES+j] ? 0.9:0.1;
+        }
+    }
 
     /* 保存矩阵 */
     FILE *vector_p = NULL;
     vector_p = fopen(out_file, "wb");
 
     fwrite(&data_size, sizeof(int), 1, vector_p);
-    for(i=0;i<data_size;i++) {
-        fwrite(in[i], sizeof(unsigned char), IN_NODES, vector_p);
-        fwrite(out[i], sizeof(double), OUT_NODES, vector_p);
-    }
+    fwrite(in, sizeof(double), IN_NODES * data_size, vector_p);
+    fwrite(out, sizeof(double), OUT_NODES * data_size, vector_p);
     fclose(vector_p);
-
-    /* 内存释放 */
-    for(i=0;i<data_size;i++)
-    {
-        free(in[i]);
-        free(out[i]);
-    }
-    free(in);
-    free(out);
 
     return 0;
 }
