@@ -6,3 +6,6 @@ all:
 	
 clean:
 	rm *.aux *.out *.log
+
+upload:
+	cp amoblin.pdf ~/Everbox/
