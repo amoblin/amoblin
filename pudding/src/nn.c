@@ -87,17 +87,20 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
     double e = PRECISION + 1;
     int n;
     printf("LOOP_MAX: %d\n", LOOP_MAX);
-    matrix_printf(in);
+    matrix_printf(in, 5);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
 
         /* 输入正传 */
         matrix_dot_multiply(in, w1, n1, NORMAL);
         matrix_fnet(n1, a1);
-        //matrix_printf(a1);
+        d_printf(3, "a1矩阵如下：\n");
+        matrix_printf(a1, 3);
 
         matrix_dot_multiply(a1, w2, n2, NORMAL);
         matrix_fnet(n2, a2);
+        d_printf(3, "a2矩阵如下：\n");
+        matrix_printf(a2, 3);
 
         /* 误差反传 */
         matrix_fnet_dot(a2, h2);
@@ -111,10 +114,11 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
 
         /* 计算输出误差 */
         matrix_fanshu(a2, out, &e);
-        d_printf(3, "e:%f\n",e);
-        d_printf(3, "old e:%f\n",old_e);
 
-        if (e <= old_e+0.5) {
+        d_printf(4, "e:%f\n",e);
+        d_printf(4, "old e:%f\n",old_e);
+        if (e < old_e) {
+            d_printf(5, "e:%f\n",e);
             matrix_copy(w1, w1_old);
             matrix_copy(w2, w2_old);
 
@@ -128,7 +132,7 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
             old_e = e;
         } else {
             alpha = 0.99 * alpha;
-            d_printf(3, "alpha changed:%f\n", alpha);
+            d_printf(5, "alpha changed:%f\n", alpha);
             matrix_copy(w1_old, w1);
             matrix_copy(w2_old, w2);
         }

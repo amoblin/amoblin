@@ -138,7 +138,7 @@ int matrix_fnet(Matrix *X, Matrix *Y) {
     int i,j;
     for(i=0; i< X->m; i++) {
         for(j=0; j < X->n; j++) {
-            Y->matrix[i][j] = fnet(X->matrix[i][j]-2);
+            Y->matrix[i][j] = fnet(X->matrix[i][j]);
         }
     }
     return 0;
@@ -200,12 +200,12 @@ int matrix_fanshu(Matrix* X, Matrix* Y, double *result) {
     return 0;
 }
 
-int matrix_printf(Matrix* X) {
+int matrix_printf(Matrix* X, int level) {
     int i,j;
     for(i= 0; i< X->m; i++) {
         for(j= 0; j< X->n; j++) {
-            printf("%2.1f ", X->matrix[i][j]);
+            d_printf(level, "%2.1f ", X->matrix[i][j]);
         }
-        printf("\n");
+        d_printf(level, "\n");
     }
 }
