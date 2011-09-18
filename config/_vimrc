@@ -83,6 +83,7 @@ set vb t_vb="."
 
 "状态行显示的内容（包括文件类型和解码）
 let statusHead='%n:%<%-.50f %h%m%r%y'
+
 "let statusFileType='%{((&ft=="help"||&ft=="")?"":"[".&ft."]")} '
 "let statusBreakPoint='%<'
 "let statusCwd='%-.50{getcwd()}'
@@ -184,16 +185,16 @@ set expandtab
 set completeopt=longest,menu
 
 "括号自动补全
-":inoremap ( ()<ESC>i
-":inoremap ) <c-r>=ClosePair(’)')<CR>
+:inoremap ( ()<ESC>i
+:inoremap ) <c-r>=ClosePair(’)')<CR>
 ":inoremap { {}<ESC>i
 ":inoremap } <c-r>=ClosePair(’}')<CR>
-":inoremap " ""<ESC>i
-":inoremap " <c-r>=ClosePair(’"’)<CR>
-":inoremap ' ''<ESC>i
-":inoremap ' <c-r>=ClosePair(’\'’)<CR>
-":inoremap [ []<ESC>i
-"":inoremap ] <c-r>=ClosePair(’]')<CR>
+:inoremap " ""<ESC>i
+:inoremap " <c-r>=ClosePair(’"’)<CR>
+:inoremap ' ''<ESC>i
+:inoremap ' <c-r>=ClosePair(’\'’)<CR>
+:inoremap [ []<ESC>i
+:inoremap ] <c-r>=ClosePair(’]')<CR>
 ":inoremap < <><ESC>i
 ":inoremap > <c-r>=ClosePair(’>’)<CR>
 
@@ -268,9 +269,6 @@ nmap <F8> :make run<cr>
 
 "添加时间戳
 map <F5> O<C-R>=strftime("%c")<CR><Esc>o
-"nmap <F7> :!sdcv -n <C-R>=expand("<cword>")<CR><CR>
-"nmap <C-[> :!sdcv "<cword>" <C-R>=expand("<cword>")<CR><CR>
-"nmap <C-B> :!"<cword>"<CR>
 
 map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 let OmniCpp_MayCompleteScope = 1
@@ -283,16 +281,10 @@ set completeopt=menu
 "设置make来更新conky设置
 au BufNewFile,BufRead *conkyrc* set makeprg=pkill\ conky&conky\ -c\ %\ 2>~/.conky/%.log&
 au BufNewFile,BufRead *conkyrc* set filetype=conkyrc
-au BufNewFile,BufRead *tint2rc* set makeprg=pkill\ tint2&tint2\ -c\ %&
-au BufNewFile,BufRead .trayrc set makeprg=pkill\ trayer&trayer\ `cat\ .trayrc`&
-au BufNewFile,BufRead lrcdis set makeprg=pkill\ lrcdis&lrcdis\ -m\ fifo
 "设置make来更新openbox配置
 au BufNewFile,BufRead rc.xml set makeprg=openbox\ --reconfigure&
 
-au BufNewFile,BufRead *.cc set makeprg=g++\ %\ -o\ %.out&
-
 "autocmd
-"autocmd FileType cc source ~/.vim/myplugin/cpp.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Fold
@@ -310,46 +302,15 @@ endif
 
 
 "设置xml文档依缩进折叠
-autocmd FileType xml,html,xsl,xhtml,htm,xhtm,svg,xsd,php,vimrc,python,matlab set foldmethod=indent
-"set foldmethod=marker
-"python设置
-autocmd FileType python setlocal makeprg=gnome-terminal\ -e\ ./%
-autocmd FileType sh setlocal makeprg=xterm\ -e\ ./%
+autocmd FileType xml,html,xsl,xhtml,htm,xhtm,svg,xsd,php,python,matlab set foldmethod=indent
 
-"光标行折行总是打开的
-"set foldopen=all
-"光标离开时折行自动关闭
-"set foldclose=all
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""
 " Commet
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
+"""""""""""""
 "sh脚本自动注释
-let g:BASH_AuthorName='csip'
+let g:BASH_AuthorName='amoblin'
 let g:BASH_Email='amoblin@gmail.com'
 let g:BASH_Company='bistu'
-
-"augroup math
-"	au!
-"	au BufEnter *.m set makeprg=octave\ --persist\ %
-"augroup END
-
-"""""""""""""""""""""""""""
-" Latex file settings
-"""""""""""""""""""""""""""
-
-augroup tex
-	au!
-	au BufEnter *.tex set makeprg=pdflatex\ %
-augroup END
-let g:Tex_CompileRule_dvi="latex -src-specials -interaction=nonstopmode $*"
-
-""""""""""""""""""""""""""""""""""""""""""""""
-" rest file setting
-""""""""""""""""""""""""""""""""""""""""""""""
-autocmd FileType rst setlocal makeprg=rake\ html
-
 
 """"""""""""""""""""""""""""""
 " c source file settings
