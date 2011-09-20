@@ -18,56 +18,48 @@ int usage(char *argv[])
 
 int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FILE* fp) {
     /* 初始化矩阵 \*/
-    /* n1 = in . w1 \*/
-    Matrix* n1;
-    matrix_init(in->m, w1->n, &n1);
+    /* n1 = w1 . a0 \*/
+    assert(w1->n == in->n);
+    double *n1 = malloc( sizeof(double) * w1->m);
 
     /* a1 = f(n1) \*/
-    Matrix* a1;
-    matrix_init(in->m, w1->n, &a1);
+    double *a1 = malloc( sizeof(double) * w1->m);
 
-    /* n2 = a1 . w2 \*/
-    Matrix* n2;
-    matrix_init(in->m, w2->n, &n2);
+    /* n2 = w2 . a1 \*/
+    double *n2 = malloc( sizeof(double) * w2->m);
 
     /* a2 = f(n2) \*/
-    Matrix* a2;
-    matrix_init(in->m, w2->n, &a2);
+    double *a2 = malloc( sizeof(double) * w2->m);
 
     /* diff2 = out - a2 \*/
-    Matrix* diff2;
-    matrix_init(in->m, w2->n, &diff2);
+    assert( w2->m == OUT_NODES);
+    double *diff2 = malloc( sizeof(double) * w2->m);
 
     /* h2 = _f(n2) = _h(a2) \*/
-    Matrix* h2;
-    matrix_init(in->m, w2->n, &h2);
+    double* h2 = malloc( sizeof(double) * w2->m);
 
     /* h2 = 0 - 2 . h2 \*/
-    Matrix* zero;
-    matrix_init(in->m, w2->n, &zero);
-    matrix_set_value(zero, 0);
+    double* zero = malloc( sizeof(double) * w2->m);
+    memset(zero, 0, sizeof(double) * w2->m);
 
     /* s2 = -2 . h2 x diff2 \*/
-    Matrix* s2;
-    matrix_init(in->m, w2->n, &s2);
+    double* s2 = malloc( sizeof(double) * w2->m);
 
-    /* diff1 = s2 . w2^T \*/
-    Matrix* diff1;
-    matrix_init(in->m, w2->m, &diff1);
+    /* diff1 = w2^T . s2 \*/
+    double* diff1 = malloc( sizeof(double) * w2->n);
 
     /* h1 = _f(n1) = _h(a1) \*/
-    Matrix* h1;
-    matrix_init(in->m, w1->n, &h1);
+    double* h1 = malloc( sizeof(double) * w1->m);
 
     /* s1 = h1 x diff1 \*/
-    Matrix* s1;
-    matrix_init(in->m, w1->n, &s1);
+    assert(w2->n == w1->m);
+    double* s1 = malloc( sizeof(double) * w1->m);
 
-    /* delta1 = in . s1 \*/
+    /* delta1 = s1 . a0^T \*/
     Matrix* delta1;
     matrix_init(w1->m, w1->n, &delta1);
 
-    /* delta2 = a1 . s2 \*/
+    /* delta2 = s2 . a1^T \*/
     Matrix* delta2;
     matrix_init(w2->m, w2->n, &delta2);
 
@@ -87,54 +79,56 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
     double e = PRECISION + 1;
     int n;
     printf("LOOP_MAX: %d\n", LOOP_MAX);
-    matrix_printf(in, 5);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
+        int i;
+        for (i = 0; i < in->m; i++) {
 
-        /* 输入正传 */
-        matrix_dot_multiply(in, w1, n1, NORMAL);
-        matrix_fnet(n1, a1);
-        d_printf(3, "a1矩阵如下：\n");
-        matrix_printf(a1, 3);
+            /* 输入正传 */
+            matrix_dot_multiply(w1, in->matrix[i], n1, NORMAL);
+            matrix_fnet(n1, a1, w1->m);
+            d_printf(3, "a1向量：");
+            vector_printf(a1, w1->m, 3);
 
-        matrix_dot_multiply(a1, w2, n2, NORMAL);
-        matrix_fnet(n2, a2);
-        d_printf(3, "a2矩阵如下：\n");
-        matrix_printf(a2, 3);
+            matrix_dot_multiply(w2, a1, n2, NORMAL);
+            matrix_fnet(n2, a2, w2->m);
+            d_printf(3, "a2向量：");
+            vector_printf(a2, w2->m, 3);
 
-        /* 误差反传 */
-        matrix_fnet_dot(a2, h2);
-        matrix_plus(zero, h2, h2, -2);
-        matrix_plus(out, a2, diff2, -1);
-        matrix_multiply(h2, diff2, s2);
+            /* 误差反传 */
+            matrix_fnet_dot(a2, h2, w2->m);
+            vector_plus(zero, h2, h2, w2->m, -2);
+            vector_plus(out->matrix[i], a2, diff2, w2->m, -1);
+            matrix_multiply(h2, diff2, s2, w2->m);
 
-        matrix_fnet_dot(a1, h1);
-        matrix_dot_multiply(s2, w2, diff1, REVERSE2);
-        matrix_multiply(h1, diff1, s1);
+            matrix_fnet_dot(a1, h1, w1->m);
+            matrix_dot_multiply(w2, s2, diff1, REVERSE);
+            matrix_multiply(h1, diff1, s1, w1->m);
 
-        /* 计算输出误差 */
-        matrix_fanshu(a2, out, &e);
-
-        d_printf(4, "e:%f\n",e);
-        d_printf(4, "old e:%f\n",old_e);
-        if (e < old_e) {
-            d_printf(5, "e:%f\n",e);
-            matrix_copy(w1, w1_old);
-            matrix_copy(w2, w2_old);
+            /* 计算输出误差 */
+            double e_once;
+            matrix_fanshu(a2, out->matrix[i], w2->m, &e_once);
+            e += e_once;
+            d_printf(4, "e:%f\n",e_once);
 
             /* 更新权值 */
-            matrix_dot_multiply(in, s1, delta1, REVERSE1);
+            vector_dot_multiply(s1, in->matrix[i], delta1);
             matrix_plus(w1, delta1, w1, alpha * -1);
 
-            matrix_dot_multiply(a1, s2, delta2, REVERSE1);
+            vector_dot_multiply(s2, a1, delta2);
             matrix_plus(w2, delta2, w2, alpha * -1);
-
+        }
+        d_printf(5, "e:%f\n",e);
+        d_printf(5, "old e:%f\n",old_e);
+        if (e < old_e) {
+            matrix_copy(w1, w1_old);
+            matrix_copy(w2, w2_old);
             old_e = e;
         } else {
-            alpha = 0.99 * alpha;
+            //alpha = 0.99 * alpha;
             d_printf(5, "alpha changed:%f\n", alpha);
-            matrix_copy(w1_old, w1);
-            matrix_copy(w2_old, w2);
+            //matrix_copy(w1_old, w1);
+            //matrix_copy(w2_old, w2);
         }
 
         /* 写入日志 */
@@ -164,17 +158,17 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
         }
     }
     /* 释放矩阵内存 */
-    matrix_free(n1);
-    matrix_free(a1);
-    matrix_free(n2);
-    matrix_free(a2);
-    matrix_free(diff2);
-    matrix_free(h2);
-    matrix_free(zero);
-    matrix_free(s2);
-    matrix_free(diff1);
-    matrix_free(h1);
-    matrix_free(s1);
+    free(n1);
+    free(a1);
+    free(n2);
+    free(a2);
+    free(diff2);
+    free(h2);
+    free(zero);
+    free(s2);
+    free(diff1);
+    free(h1);
+    free(s1);
     matrix_free(delta1);
     matrix_free(delta2);
     matrix_free(w1_old);
@@ -254,11 +248,11 @@ int main(int argc, char* argv[])
 
    /* 初始化隐含层权值矩阵 */
     Matrix *w1;
-    matrix_init(IN_NODES, HIDDEN_NODES, &w1);
+    matrix_init(HIDDEN_NODES, IN_NODES, &w1);
 
    /* 初始化输出层权值矩阵 */
     Matrix *w2;
-    matrix_init(HIDDEN_NODES, OUT_NODES, &w2);
+    matrix_init(OUT_NODES, HIDDEN_NODES, &w2);
 
     vector_p = NULL;
     vector_p = fopen(out_file, "rb+");

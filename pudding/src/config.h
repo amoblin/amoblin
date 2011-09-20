@@ -11,10 +11,10 @@
 #define BIN_LEN 800
 
 /* 输出层节点数,汉字的个数 */
-#define OUT_NODES 2
+#define OUT_NODES 4
 
 /* 输入层节点数,一个汉字16位 OUT_NODES*2  */
-#define IN_NODES 4
+#define IN_NODES 8
 
 /* 隐含层节点数 */
 #define HIDDEN_NODES 6

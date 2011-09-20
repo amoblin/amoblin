@@ -80,48 +80,24 @@ int matrix_set_random(Matrix *X)
     return 0;
 }
 
-int matrix_dot_multiply(Matrix *W, Matrix *X, Matrix *Y, rtype type)
+int matrix_dot_multiply(Matrix *W, double *X, double *Y, rtype type)
 {
-    matrix_set_value(Y, 0);
 
-    int i, j, k;
+    int i, j;
     switch(type) {
         case NORMAL:
-            assert(W->n == X->m);
-            assert(W->m == Y->m);
-            assert(X->n == Y->n);
-
+            memset(Y, 0, sizeof(double) * W->n);
             for(i=0; i < W->m; i++) {
-                for(j=0; j < X->n; j++) {
-                    for(k=0; k < W->n; k++) {
-                        Y->matrix[i][j] += W->matrix[i][k] * X->matrix[k][j];
-                    }
+                for(j=0; j < W->n; j++) {
+                    Y[i] += W->matrix[i][j] * X[j];
                 }
             }
             break;
-        case REVERSE1:
-            assert(W->m == X->m);
-            assert(W->n == Y->m);
-            assert(X->n == Y->n);
-
-            for(i=0; i < W->n; i++) {
-                for(j=0; j < X->n; j++) {
-                    for(k=0; k < W->m; k++) {
-                        Y->matrix[i][j] += W->matrix[k][i] * X->matrix[k][j];
-                    }
-                }
-            }
-            break;
-        case REVERSE2:
-            assert(W->n == X->n);
-            assert(W->m == Y->m);
-            assert(X->m == Y->n);
-
-            for(i=0; i < W->m; i++) {
-                for(j=0; j < X->m; j++) {
-                    for(k=0; k < W->n; k++) {
-                        Y->matrix[i][j] += W->matrix[i][k] * X->matrix[j][k];
-                    }
+        case REVERSE:
+            memset(Y, 0, sizeof(double) * W->m);
+            for( i = 0; i < W->n; i++) {
+                for( j = 0; j < W->m; j++) {
+                    Y[i] += W->matrix[j][i] * X[j];
                 }
             }
             break;
@@ -131,81 +107,77 @@ int matrix_dot_multiply(Matrix *W, Matrix *X, Matrix *Y, rtype type)
     return 0;
 }
 
-int matrix_fnet(Matrix *X, Matrix *Y) {
-    assert(X->m == Y->m);
-    assert(X->n == Y->n);
-
-    int i,j;
-    for(i=0; i< X->m; i++) {
-        for(j=0; j < X->n; j++) {
-            Y->matrix[i][j] = fnet(X->matrix[i][j]);
-        }
+int matrix_fnet(double* X, double* Y, int m) {
+    int i;
+    for (i = 0; i < m; i++) {
+        Y[i] = fnet(X[i]);
     }
     return 0;
 }
 
-int matrix_fnet_dot(Matrix *X, Matrix *Y) {
-    assert(X->m == Y->m);
-    assert(X->n == Y->n);
+int matrix_fnet_dot(double *X, double *Y, int m) {
+    int i;
+    for (i = 0; i < m; i++) {
+        Y[i] = (1- X[i]) * X[i];
+    }
+    return 0;
+}
 
-    int i,j;
-    for(i= 0; i< X->m; i++) {
-        for(j= 0; j< X->n; j++) {
-            Y->matrix[i][j] = (1- X->matrix[i][j]) * X->matrix[i][j];
-        }
+int vector_plus(double* x, double* y, double* z, int m, double alpha) {
+    int i;
+    for (i = 0; i < m; i++) {
+        z[i] = x[i] + alpha * y[i];
     }
     return 0;
 }
 
 int matrix_plus(Matrix* A, Matrix* B, Matrix* C, double alpha) {
     assert(A->m == B->m);
-    assert(B->m == C->m);
     assert(A->n == B->n);
+    assert(B->m == C->m);
     assert(B->n == C->n);
-    int i,j;
-    for(i=0; i< A->m; i++) {
-        for(j= 0; j< A->n; j++) {
+    int i, j;
+    for (i = 0; i < A->m; i++) {
+        for (j = 0; j < A->n; j++) {
             C->matrix[i][j] = A->matrix[i][j] + alpha * B->matrix[i][j];
         }
     }
     return 0;
 }
 
-int matrix_multiply(Matrix *A, Matrix *B, Matrix *C) {
-    assert(A->m == B->m);
-    assert(A->n == B->n);
-
-    int i,j;
-    for(i = 0; i < A->m; i++) {
-        for(j=0; j< A->n; j++) {
-            C->matrix[i][j] = A->matrix[i][j] * B->matrix[i][j];
-        }
+int matrix_multiply(double* A, double* B, double* C, int m) {
+    int i;
+    for(i = 0; i < m; i++) {
+        C[i] = A[i] * B[i];
     }
 }
 
-int matrix_fanshu(Matrix* X, Matrix* Y, double *result) {
-    assert(X->m == Y->m);
-    assert(X->n == Y->n);
-
-    int i,j;
+int matrix_fanshu(double* X, double* Y, int m, double *result) {
+    int i;
     double diff;
     double e = 0;
-    for(i= 0; i< X->m; i++) {
-        for(j= 0; j< X->n; j++) {
-            diff = X->matrix[i][j] - Y->matrix[i][j];
-            e += diff * diff;
-        }
+    for (i = 0; i < m; i++) {
+        diff = X[i] - Y[i];
+        e += diff * diff;
     }
     *result = e;
     return 0;
 }
 
-int matrix_printf(Matrix* X, int level) {
+int vector_dot_multiply(double* x, double* y, Matrix* A) {
     int i,j;
-    for(i= 0; i< X->m; i++) {
-        for(j= 0; j< X->n; j++) {
-            d_printf(level, "%2.1f ", X->matrix[i][j]);
+    for (i = 0; i < A->m; i++) {
+        for (j = 0; j < A->n; j++) {
+            A->matrix[i][j] = x[i] * y[j];
         }
-        d_printf(level, "\n");
     }
+    return 0;
+}
+
+int vector_printf(double* X, int m, int level) {
+    int i;
+    for (i = 0; i < m; i++) {
+        d_printf(level, "%2.1f ", X[i]);
+    }
+    d_printf(level, "\n");
 }

@@ -18,8 +18,7 @@ typedef enum {
 /* 转置类型 */
 typedef enum {
     NORMAL,
-    REVERSE1,
-    REVERSE2,
+    REVERSE,
 } rtype;
 
 typedef union
@@ -46,14 +45,20 @@ int matrix_set_value(Matrix *X, double value);
 
 int matrix_set_random(Matrix *X);
 
-int matrix_dot_multiply(Matrix *W, Matrix *X, Matrix *Y, rtype type);
+int matrix_dot_multiply(Matrix* W, double* X, double Y[], rtype type);
 
-int matrix_fnet(Matrix *X, Matrix *Y);
+int vector_dot_multiply(double* x, double* y, Matrix* A);
+
+int matrix_fnet(double* X, double* Y, int m);
+
+int matrix_fnet_dot(double *X, double *Y, int m);
 
 int matrix_plus(Matrix* A, Matrix* B, Matrix* C, double alpha);
 
-int matrix_multiply(Matrix *A, Matrix *B, Matrix *C);
+int vector_plus(double* x, double* y, double* z, int m, double alpha);
 
-int matrix_fanshu(Matrix* X, Matrix* Y, double *result);
+int matrix_multiply(double* A, double* B, double* C, int m);
 
-int matrix_printf(Matrix* X, int level);
+int matrix_fanshu(double* X, double* Y, int m, double *result);
+
+int vector_printf(double* X, int m, int level);
