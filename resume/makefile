@@ -9,3 +9,4 @@ clean:
 
 upload:
 	cp amoblin.pdf ~/Everbox/
+	cp amoblin.pdf ~/Dropbox/Public/
