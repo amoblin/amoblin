@@ -1,5 +1,5 @@
 %% start of file `moderncv.cls'.
-%% Copyright 2007 Xavier Danaux (xdanaux@gmail.com).
+%% Copyright 2011 amoblin(amoblin@gmail.com).
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License version 1.3c,
@@ -10,7 +10,7 @@
 %                identification
 %-------------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{moderncv}[2007/05/28 v0.6 modern curriculum vitae document class]
+\ProvidesClass{moderncvwutao}[2007/05/28 v0.6 modern curriculum vitae document class]
 
 
 %-------------------------------------------------------------------------------
@@ -79,6 +79,15 @@
 %-------------------------------------------------------------------------------
 %                required packages
 %-------------------------------------------------------------------------------
+\RequirePackage{CJK}
+\newcommand{\song}{\CJKfamily{song}}    % ËÎÌå   (Windows×Ô´øsimsun.ttf)
+\newcommand{\fs}{\CJKfamily{fs}}        % ·ÂËÎÌå (Windows×Ô´øsimfs.ttf)
+\newcommand{\kai}{\CJKfamily{kai}}      % ¿¬Ìå   (Windows×Ô´øsimkai.ttf)
+\newcommand{\hei}{\CJKfamily{hei}}      % ºÚÌå   (Windows×Ô´øsimhei.ttf)
+\newcommand{\li}{\CJKfamily{li}}        % Á¥Êé   (Windows×Ô´øsimli.ttf)
+\newcommand{\you}{\CJKfamily{you}}      % Ó×Ô²   (Windows×Ô´øsimyou.ttf)
+%\RequirePackage{charter}
+
 % ifthen package
 \RequirePackage{ifthen}
 
@@ -94,9 +103,6 @@
 
 % fontenc package
 \RequirePackage[T1]{fontenc}
-
-%ä¸­æ–‡åŒ…
-\RequirePackage{CJKutf8}
 
 % scalable Computer Modern fonts
 %\usepackage{type1cm}
@@ -123,9 +129,13 @@
 % hyperrefs
 \RequirePackage{url}
 \ifpdf
-  \RequirePackage[pdftex]{hyperref}
+  %\RequirePackage[pdftex]{hyperref}
+  %\RequirePackage[pdftex,bookmarksopen=true,CJKbookmarks]{hyperref}
+  \RequirePackage[pdftex,CJKbookmarks,bookmarksnumbered=true,bookmarksopen=true]{hyperref}
 \else
-  \RequirePackage[dvips]{hyperref}\fi
+  %%\RequirePackage[dvips]{hyperref}\fi
+  \RequirePackage[dvips,bookmarksopen=true,CJKbookmarks]{hyperref}\fi
+
 \AtEndOfClass{%
   \AtBeginDocument{%
     \hypersetup{%
@@ -135,12 +145,14 @@
       pdfpagemode   = None,
       pdfstartview  = XYZ,
       pdfstartpage  = 1,
-      pdfauthor     = \@firstname~\@familyname,%
-      pdftitle      = \@title,%
-      pdfsubject    = \@firstname~\@familyname,%
-      pdfkeywords   = \@firstname~\@familyname{} curriculum vit\ae{},%
+      pdfauthor     = Tao Wu,%
+      pdftitle      = moderncv PDFLaTeX,%
+      pdfsubject    = moderncv,%
+      pdfkeywords   = moderncv curriculum vitae{},%
       pdfcreator    = \LaTeX{} with `moderncv' package,%
-      pdfproducer   = \LaTeX}}}
+      pdfproducer   = \LaTeX,
+      pdftex,bookmarksopen=true,CJKbookmarks}}}
+
 \urlstyle{tt}
 
 % tables that split across multiple pages
@@ -209,6 +221,7 @@
 \definecolor{hintcolor}{rgb}{0,0,0}
 
 % fonts
+%\begin{CJK}{GBK}{song}\end{CJK}
 \providecommand*{\firstnamefont}{}
 \providecommand*{\familynamefont}{}
 \providecommand*{\titlefont}{}
@@ -233,8 +246,8 @@
   \def\@moderncvtheme{#2}
   \def\@moderncvthemeoptions{#1}}
 \moderncvtheme{casual}   % default theme
-\AtBeginDocument{\RequirePackage[\@moderncvthemeoptions]{moderncvtheme\@moderncvtheme}}
-
+%%\AtBeginDocument{\RequirePackage[\@moderncvthemeoptions]{moderncvtheme\@moderncvtheme}}
+\AtBeginDocument{\RequirePackage[\@moderncvthemeoptions]{moderncvtheme\@moderncvtheme}\begin{CJK*}{GBK}{song}}
 
 %-------------------------------------------------------------------------------
 %                structure commands definitions
@@ -257,6 +270,7 @@
 % section lengths
 \newlength{\hintscolumnwidth}
 \newlength{\separatorcolumnwidth}
+%ÁÐ¿í
 \setlength{\separatorcolumnwidth}{0.025\textwidth}
 \newlength{\maincolumnwidth}
 \newcommand*{\sethintscolumnlength}[1]{
@@ -291,6 +305,7 @@
   \setlength{\listdoubleitemmaincolumnwidth}{0.475\listdoubleitemmaincolumnwidth}%
   % fancyhdr lengths
   \renewcommand{\headwidth}{\textwidth}}
+%´óÐÐ¿í
 \sethintscolumnlength{0.15\textwidth}
 \recomputelengths
 
@@ -310,7 +325,8 @@
 %    \phantomsection% reset the anchor for hyperrefs
 %    \par\null%
     \@sectionopenfalse\fi}
-\AtEndDocument{\closesection{}}
+%%\AtEndDocument{\closesection{}}
+\AtEndDocument{\closesection{}\end{CJK*}}
 % usage: \section{<title>}, or \emptysection{}
 \newcommand*{\section}[1]{%
   \closesection{}%
@@ -318,7 +334,7 @@
   \phantomsection{}% reset the anchor for hyperrefs
   \addcontentsline{toc}{part}{#1}%
   \begin{longtable}[l]{@{}p{\hintscolumnwidth}@{\hspace{\separatorcolumnwidth}}p{\maincolumnwidth}@{}}%
-  {\color{sectionrectanglecolor}\rule{\hintscolumnwidth}{1ex}} &\sectionstyle{#1}\\[1ex]%
+  {\color{sectionrectanglecolor}\rule{\hintscolumnwidth}{1ex}} &\sectionstyle{#1}\\[1ex]% itemÓë±êÌâµÄ¼ä¾à
   \@firstcvlineofsectiontrue%
   }
 \newcommand*{\emptysection}{%
@@ -330,8 +346,9 @@
 
 % usage (inside section): \subsection{title}
 \newcommand*{\subsection}[1]{%
-  \cvline[0.65em]{}{\subsectionstyle{#1}}}
-
+  \cvline[.65em]{}{\subsectionstyle{#1}}}
+  
+%¾­ÀúµÄitem¼ä¾à
 % usage (inside section): \cvline{leftmark}{text}
 \newcommand*{\cvline}[3][.25em]{%
   \if@firstcvlineofsection%
@@ -366,7 +383,7 @@
     \ifthenelse{\equal{#4}{}}{}{, #4}%
     \ifthenelse{\equal{#5}{}}{}{, #5}%
     .%
-    \ifthenelse{\equal{#6}{}}{}{\newline{}\small#6}
+    \ifthenelse{\equal{#6}{}}{}{\newline{}\small#6} 
     }}%
 %  \ifthenelse{\equal{#6}{}}{}{\cvline[0pt]{}{\small#6}}}
 
@@ -459,6 +476,5 @@
 
 
 \endinput
-
 
 %% end of file `moderncv.cls'.

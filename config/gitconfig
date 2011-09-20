@@ -1,3 +1,6 @@
+[user]
+    name = amoblin@anywhere
+    email = amoblin@gmail.com
 [alias]
 	st = status
 	ci = commit
@@ -11,3 +14,10 @@
 	ignore = pyc
 	excludesfile = /etc/gitignore
 	quotepath = false
+[merge]
+    tool = extMerge
+[mergetool "extMerge"]
+    cmd = extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+    trustExitCode = false
+[diff]
+    external = extDiff

@@ -1,0 +1,19 @@
+diff --git a/Users/whoomoblin/Projects/pygments/external/rst-directive.py b/rst_directive.py
+index 2447d08..93e846a 100644
+--- a/Users/whoomoblin/Projects/pygments/external/rst-directive.py
++++ b/rst_directive.py
+@@ -39,12 +39,12 @@
+ # ~~~~~~~
+ 
+ # Set to True if you want inline CSS styles instead of classes
+-INLINESTYLES = False
++INLINESTYLES = True
+ 
+ from pygments.formatters import HtmlFormatter
+ 
+ # The default formatter
+-DEFAULT = HtmlFormatter(noclasses=INLINESTYLES)
++DEFAULT = HtmlFormatter(noclasses=INLINESTYLES, lineseparator="<br/>")
+ 
+ # Add name -> formatter pairs for every variant you want to use
+ VARIANTS = {

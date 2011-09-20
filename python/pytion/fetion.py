@@ -1124,8 +1124,10 @@ def login():
                         continue
                     if line.startswith("tel"):
                         mobile_no = line.split("=")[1][:-1]
+                        print mobile_no
                     elif line.startswith("password"):
-                        passwd = line.split("=")[1][:-1]    #不要"\n"
+                        passwd = line.split("=")[1]    #不要"\n"
+                        print passwd
                 phone = PyFetion(mobile_no,passwd,"TCP",debug=True)
                 return phone
             except:
@@ -1154,8 +1156,8 @@ class CLI():
     def main(self,phone):
         '''main function'''
         try:
-            t = progressBar()
-            t.start()
+            #t = progressBar()
+            #t.start()
             #可以在这里选择登录的方式[隐身 在线 忙碌 离开]
             ret = phone.login(FetionHidden)
         except PyFetionSupportError,e:
@@ -1169,7 +1171,8 @@ class CLI():
             printl("网络通信出错 请检查网络连接")
             return 1
         finally:
-            t.stop()
+            #t.stop()
+            pass
 
         if ret:
             printl("登录成功")
@@ -1229,5 +1232,5 @@ class GUI():
 if __name__ == "__main__":
     config()
     phone = login()
-    #CLI(phone)
-    GUI()
+    CLI(phone)
+    #GUI()
