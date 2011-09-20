@@ -75,7 +75,9 @@ int matrix_set_random(Matrix *X)
     for (i = 0; i < X->m; i++) {
         for (j = 0; j < X->n; j++) {
             X->matrix[i][j] = rand() / (double)(RAND_MAX);
+            d_printf(6, "%2.1f ", X->matrix[i][j]);
         }
+        d_printf(6, "\n");
     }
     return 0;
 }
@@ -91,7 +93,9 @@ int matrix_dot_multiply(Matrix *W, double *X, double *Y, rtype type)
                 for(j=0; j < W->n; j++) {
                     Y[i] += W->matrix[i][j] * X[j];
                 }
+                d_printf(3, "%2.1f ", Y[i]);
             }
+            d_printf(3, "\n");
             break;
         case REVERSE:
             memset(Y, 0, sizeof(double) * W->m);
@@ -111,7 +115,9 @@ int matrix_fnet(double* X, double* Y, int m) {
     int i;
     for (i = 0; i < m; i++) {
         Y[i] = fnet(X[i]);
+        //printf("%f ", Y[i]);
     }
+    //printf("\n");
     return 0;
 }
 
@@ -177,7 +183,7 @@ int vector_dot_multiply(double* x, double* y, Matrix* A) {
 int vector_printf(double* X, int m, int level) {
     int i;
     for (i = 0; i < m; i++) {
-        d_printf(level, "%2.1f ", X[i]);
+        d_printf(level, "%f ", X[i]);
     }
     d_printf(level, "\n");
 }

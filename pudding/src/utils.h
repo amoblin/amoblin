@@ -5,7 +5,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-int debug_level=4;
+int debug_level=7;
 
 void d_printf(unsigned int level, const char * format, ...)
 {

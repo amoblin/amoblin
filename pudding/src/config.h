@@ -11,20 +11,20 @@
 #define BIN_LEN 800
 
 /* 输出层节点数,汉字的个数 */
-#define OUT_NODES 4
+#define OUT_NODES 10
 
 /* 输入层节点数,一个汉字16位 OUT_NODES*2  */
-#define IN_NODES 8
+#define IN_NODES 20
 
 /* 隐含层节点数 */
-#define HIDDEN_NODES 6
+#define HIDDEN_NODES 16
 
 #define DEBUG 1
 
 /* 最大循环次数 */
-#define LOOP_MAX 5
+#define LOOP_MAX 50000
 
-#define LOG_DEN 1
+#define LOG_DEN 1000
 #define LEARN_RATE  1.9
 #define PRECISION 0.05
 #define PLOT_DEN 100
