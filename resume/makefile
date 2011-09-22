@@ -1,7 +1,11 @@
 # Author: amoblin@gmail.com
 #
-all:
-	pdflatex amoblin.tex > amoblin.log
+whoomin:
+	@pdflatex whoomin.tex > /dev/null
+	@make clean
+
+amoblin:
+	@pdflatex amoblin.tex > /dev/null
 	@make clean
 	
 clean:
@@ -10,3 +14,4 @@ clean:
 upload:
 	cp amoblin.pdf ~/Everbox/
 	cp amoblin.pdf ~/Dropbox/Public/
+	cp whoomin.pdf ~/Everbox/

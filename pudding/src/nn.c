@@ -38,6 +38,10 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
     /* h2 = _f(n2) = _h(a2) \*/
     double* h2 = malloc( sizeof(double) * w2->m);
 
+    /* h2 = 0 - 2 . h2 \*/
+    double* zero = malloc( sizeof(double) * w2->m);
+    memset(zero, 0, sizeof(double) * w2->m);
+
     /* s2 = -2 . h2 x diff2 \*/
     double* s2 = malloc( sizeof(double) * w2->m);
 
@@ -82,21 +86,18 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
 
             /* 输入正传 */
             matrix_dot_multiply(w1, in->matrix[i], n1, NORMAL);
-            d_printf(6, "n1向量：");
-            vector_printf(n1, w1->m, 6);
             matrix_fnet(n1, a1, w1->m);
-            d_printf(6, "a1向量：");
-            vector_printf(a1, w1->m, 6);
+            d_printf(3, "a1向量：");
+            vector_printf(a1, w1->m, 3);
 
             matrix_dot_multiply(w2, a1, n2, NORMAL);
             matrix_fnet(n2, a2, w2->m);
-            d_printf(6, "a2向量：");
-            vector_printf(a2, w2->m, 6);
+            d_printf(3, "a2向量：");
+            vector_printf(a2, w2->m, 3);
 
             /* 误差反传 */
             matrix_fnet_dot(a2, h2, w2->m);
-            d_printf(6, "h2向量：");
-            vector_printf(h2, w2->m, 6);
+            vector_plus(zero, h2, h2, w2->m, -2);
             vector_plus(out->matrix[i], a2, diff2, w2->m, -1);
             matrix_multiply(h2, diff2, s2, w2->m);
 
@@ -108,16 +109,16 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
             double e_once;
             matrix_fanshu(a2, out->matrix[i], w2->m, &e_once);
             e += e_once;
-            d_printf(6, "e:%f\n",e_once);
+            d_printf(4, "e:%f\n",e_once);
 
             /* 更新权值 */
             vector_dot_multiply(s1, in->matrix[i], delta1);
-            matrix_plus(w1, delta1, w1, alpha);
+            matrix_plus(w1, delta1, w1, alpha * -1);
 
             vector_dot_multiply(s2, a1, delta2);
-            matrix_plus(w2, delta2, w2, alpha);
+            matrix_plus(w2, delta2, w2, alpha * -1);
         }
-        //d_printf(7, "e:%f\n",e);
+        d_printf(5, "e:%f\n",e);
         d_printf(5, "old e:%f\n",old_e);
         if (e < old_e) {
             matrix_copy(w1, w1_old);
@@ -163,6 +164,7 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
     free(a2);
     free(diff2);
     free(h2);
+    free(zero);
     free(s2);
     free(diff1);
     free(h1);
@@ -235,15 +237,11 @@ int main(int argc, char* argv[])
 
     /* 读取输入输出矩阵 */
     int i,j;
-    d_printf(6, "输入矩阵:\n");
     for(i=0;i<data_size;i++) {
         fread(in->matrix[i], sizeof(double), IN_NODES, vector_p);
-        vector_printf(in->matrix[i], IN_NODES, 6);
     }
-    d_printf(6, "输出矩阵:\n");
     for(i=0;i<data_size;i++) {
         fread(out->matrix[i], sizeof(double), OUT_NODES, vector_p);
-        vector_printf(out->matrix[i], OUT_NODES, 6);
     }
     fclose(vector_p);
 
