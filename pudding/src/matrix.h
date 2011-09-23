@@ -5,6 +5,8 @@
 #include <string.h>
 #include <math.h>
 
+#include "config.h"
+
 double fnet(double net);
 
 /* 矩阵类型 */
@@ -32,7 +34,7 @@ typedef struct
 {
     int m;
     int n;
-    double **matrix;
+    double *matrix;
 } Matrix;
 
 int matrix_init(int m, int n, Matrix **X_p);

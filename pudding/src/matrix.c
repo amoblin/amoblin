@@ -1,5 +1,7 @@
 #include "matrix.h"
 
+#define pos(x,y,m) matrix[(x)*(m)+(y)]
+
 /* Sigmoid函数,神经网络激活函数 */
 double fnet(double net) {
     return 1 / ( 1 + exp( -net ) );
@@ -12,24 +14,17 @@ int matrix_init(int m, int n, Matrix **X_p)
     if (NULL == X) {
         return -1;
     }
-    *X_p = X;
     int i;
     X->matrix = NULL;
-    X->matrix = (double **) malloc(sizeof(double*) * m );
+    X->matrix = (double *) malloc(sizeof(double) * m * n );
     if(NULL == X->matrix) {
         return -1;
     }
-    for(i = 0; i < m; i++) {
-        X->matrix[i] = NULL;
-        X->matrix[i] = (double*) malloc(sizeof(double) * n);
-        if(NULL == X->matrix[i]) {
-            return -1;
-        }
-        memset(X->matrix[i], 0, sizeof(double) * n);
-        X->matrix[i][0] = 0;
-    }
+    memset(X->matrix, 0, sizeof(double) * m * n);
     X->m = m;
     X->n = n;
+
+    *X_p = X;
     return 0;
 }
 
@@ -39,7 +34,7 @@ int matrix_copy( Matrix* X, Matrix* Y) {
     int i, j;
     for( i= 0; i< X->m; i++) {
         for( j= 0; j< X->n; j++) {
-            Y->matrix[i][j] = X->matrix[i][j];
+            Y->pos(i,j,Y->n) = X->pos(i,j,X->n);
         }
     }
     return 0;
@@ -48,9 +43,6 @@ int matrix_copy( Matrix* X, Matrix* Y) {
 int matrix_free(Matrix *X)
 {
     int i;
-    for(i=0; i < X->m; i++) {
-        free(X->matrix[i]);
-    }
     free(X->matrix);
     free(X);
     return 0;
@@ -61,7 +53,7 @@ int matrix_set_value(Matrix *X, double value)
     int i,j;
     for(i = 0; i < X->m; i++) {
         for(j= 0; j< X->n; j++) {
-            X->matrix[i][j] = value;
+            X->pos(i,j,X->n) = value;
         }
     }
     return 0;
@@ -74,8 +66,8 @@ int matrix_set_random(Matrix *X)
     srand((unsigned)time((time_t *)NULL));
     for (i = 0; i < X->m; i++) {
         for (j = 0; j < X->n; j++) {
-            X->matrix[i][j] = rand() / (double)(RAND_MAX);
-            d_printf(6, "%2.1f ", X->matrix[i][j]);
+            X->pos(i,j,X->n) = rand() / (double)(RAND_MAX);
+            d_printf(6, "%2.1f ", X->pos(i,j,X->n));
         }
         d_printf(6, "\n");
     }
@@ -91,7 +83,7 @@ int matrix_dot_multiply(Matrix *W, double *X, double *Y, rtype type)
             memset(Y, 0, sizeof(double) * W->n);
             for(i=0; i < W->m; i++) {
                 for(j=0; j < W->n; j++) {
-                    Y[i] += W->matrix[i][j] * X[j];
+                    Y[i] += W->pos(i,j,W->n) * X[j];
                 }
                 d_printf(3, "%2.1f ", Y[i]);
             }
@@ -101,7 +93,7 @@ int matrix_dot_multiply(Matrix *W, double *X, double *Y, rtype type)
             memset(Y, 0, sizeof(double) * W->m);
             for( i = 0; i < W->n; i++) {
                 for( j = 0; j < W->m; j++) {
-                    Y[i] += W->matrix[j][i] * X[j];
+                    Y[i] += W->pos(j,i,W->m) * X[j];
                 }
             }
             break;
@@ -145,7 +137,7 @@ int matrix_plus(Matrix* A, Matrix* B, Matrix* C, double alpha) {
     int i, j;
     for (i = 0; i < A->m; i++) {
         for (j = 0; j < A->n; j++) {
-            C->matrix[i][j] = A->matrix[i][j] + alpha * B->matrix[i][j];
+            C->pos(i,j, C->n) = A->pos(i,j, A->n) + alpha * B->pos(i,j,B->n);
         }
     }
     return 0;
@@ -174,7 +166,7 @@ int vector_dot_multiply(double* x, double* y, Matrix* A) {
     int i,j;
     for (i = 0; i < A->m; i++) {
         for (j = 0; j < A->n; j++) {
-            A->matrix[i][j] = x[i] * y[j];
+            A->pos(i,j,A->n) = x[i] * y[j];
         }
     }
     return 0;

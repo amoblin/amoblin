@@ -85,20 +85,18 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
         for (i = 0; i < in->m; i++) {
 
             /* 输入正传 */
-            matrix_dot_multiply(w1, in->matrix[i], n1, NORMAL);
+            double* in_vector = in->matrix + i * (in->n);
+            double* out_vector = out->matrix + i * (out->n);
+            matrix_dot_multiply(w1, in_vector, n1, NORMAL);
             matrix_fnet(n1, a1, w1->m);
-            d_printf(3, "a1向量：");
-            vector_printf(a1, w1->m, 3);
 
             matrix_dot_multiply(w2, a1, n2, NORMAL);
             matrix_fnet(n2, a2, w2->m);
-            d_printf(3, "a2向量：");
-            vector_printf(a2, w2->m, 3);
 
             /* 误差反传 */
             matrix_fnet_dot(a2, h2, w2->m);
             vector_plus(zero, h2, h2, w2->m, -2);
-            vector_plus(out->matrix[i], a2, diff2, w2->m, -1);
+            vector_plus(out_vector, a2, diff2, w2->m, -1);
             matrix_multiply(h2, diff2, s2, w2->m);
 
             matrix_fnet_dot(a1, h1, w1->m);
@@ -107,28 +105,24 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
 
             /* 计算输出误差 */
             double e_once;
-            matrix_fanshu(a2, out->matrix[i], w2->m, &e_once);
+            matrix_fanshu(a2, out_vector, w2->m, &e_once);
             e += e_once;
-            d_printf(4, "e:%f\n",e_once);
 
             /* 更新权值 */
-            vector_dot_multiply(s1, in->matrix[i], delta1);
+            vector_dot_multiply(s1, in_vector, delta1);
             matrix_plus(w1, delta1, w1, alpha * -1);
 
             vector_dot_multiply(s2, a1, delta2);
             matrix_plus(w2, delta2, w2, alpha * -1);
         }
-        d_printf(5, "e:%f\n",e);
-        d_printf(5, "old e:%f\n",old_e);
         if (e < old_e) {
             matrix_copy(w1, w1_old);
             matrix_copy(w2, w2_old);
             old_e = e;
         } else {
-            //alpha = 0.99 * alpha;
-            d_printf(5, "alpha changed:%f\n", alpha);
-            //matrix_copy(w1_old, w1);
-            //matrix_copy(w2_old, w2);
+            alpha = 0.99 * alpha;
+            matrix_copy(w1_old, w1);
+            matrix_copy(w2_old, w2);
         }
 
         /* 写入日志 */
@@ -139,16 +133,12 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
             int seconds = (int)difftime(time_e, time_s);
             int mins = seconds % 3600;
             int secs = mins % 60;
-            syslog(LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %dw %f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/LOG_DEN, alpha, e);
+            syslog(LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %dw %2.1f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/LOG_DEN, alpha, e);
             /* 保存权值矩阵 */
             fseek(vector_p, 0, SEEK_SET);
             int i;
-            for( i= 0; i< w1->m; i++) {
-                fwrite(w1->matrix[i], sizeof(double), w1->n, vector_p);
-            }
-            for( i= 0; i< w2->m; i++) {
-                fwrite(w2->matrix[i], sizeof(double), w2->n, vector_p);
-            }
+            fwrite(w1->matrix, sizeof(double), w1->m * w1->n, vector_p);
+            fwrite(w2->matrix, sizeof(double), w2->m * w2->n, vector_p);
             fflush(vector_p);
         }
 
@@ -237,12 +227,8 @@ int main(int argc, char* argv[])
 
     /* 读取输入输出矩阵 */
     int i,j;
-    for(i=0;i<data_size;i++) {
-        fread(in->matrix[i], sizeof(double), IN_NODES, vector_p);
-    }
-    for(i=0;i<data_size;i++) {
-        fread(out->matrix[i], sizeof(double), OUT_NODES, vector_p);
-    }
+    fread(in->matrix, sizeof(double), data_size * IN_NODES, vector_p);
+    fread(out->matrix, sizeof(double), data_size * OUT_NODES, vector_p);
     fclose(vector_p);
 
 
@@ -264,12 +250,8 @@ int main(int argc, char* argv[])
         vector_p = fopen(out_file, "wb");
     } else {    //使用上一次的矩阵
         syslog(LOG_INFO, "使用上次矩阵");
-        for(i= 0; i< w1->m; i++) {
-            fread(w1->matrix[i], sizeof(double), w1->n, vector_p);
-        }
-        for(i= 0; i< w2->m; i++) {
-            fread(w2->matrix[i], sizeof(double), w2->n, vector_p);
-        }
+        fread(w1->matrix, sizeof(double), w1->m * w1->n, vector_p);
+        fread(w2->matrix, sizeof(double), w2->m * w2->n, vector_p);
     }
 
     /* 保存数据点 */
