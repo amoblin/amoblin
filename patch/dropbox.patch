@@ -1,0 +1,14 @@
+diff --git a/dropbox b/dropbox
+index 557b372..962fe71 100755
+--- a/dropbox
++++ b/dropbox
+@@ -148,7 +148,8 @@ urllib._urlopener = DropboxURLopener()
+ class DownloadState(object):
+     def __init__(self):
+         try:
+-            self.file = urllib.urlopen("http://www.dropbox.com/download?plat=%s" % plat())
++            url = os.path.join(os.path.expanduser("~"), "dropbox-%s-1.1.45.tar.gz" % plat())
++            self.file = urllib.urlopen(url)
+         except IOError:
+             FatalVisibleError("Trouble connecting to Dropbox servers. Maybe your internet connection is down, or you need to set your http_proxy environment variable.")
+             
