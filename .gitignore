@@ -3,3 +3,5 @@
 *.aux
 *.dvi
 *.out
+.DS_Store
+build/
