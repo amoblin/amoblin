@@ -186,21 +186,17 @@ set completeopt=longest,menu
 
 "括号自动补全
 :inoremap ( ()<ESC>i
-:inoremap ) <c-r>=ClosePair(’)')<CR>
-":inoremap { {}<ESC>i
-":inoremap } <c-r>=ClosePair(’}')<CR>
+:inoremap ) <c-r>=ClosePair(')')<CR>
+:inoremap { {}<ESC>i
+:inoremap } <c-r>=ClosePair('}')<CR>
 :inoremap " ""<ESC>i
-:inoremap " <c-r>=ClosePair(’"’)<CR>
 :inoremap ' ''<ESC>i
-:inoremap ' <c-r>=ClosePair(’\'’)<CR>
 :inoremap [ []<ESC>i
-:inoremap ] <c-r>=ClosePair(’]')<CR>
-":inoremap < <><ESC>i
-":inoremap > <c-r>=ClosePair(’>’)<CR>
+:inoremap ] <c-r>=ClosePair(']')<CR>
 
 function ClosePair(char)
-	if getline(’.')[col(’.') - 1] == a:char
-		return “\<Right>”
+	if getline('.')[col('.') - 1] == a:char
+		return "\<Right>"
 	else
 		return a:char
 	endif
@@ -262,10 +258,7 @@ nnoremap gn :bn<cr>
 nnoremap gp :bp<cr>
 
 "编译
-nmap <F7> :make<cr>
-nmap mk :make<cr><cr>
-"运行
-nmap <F8> :make run<cr>
+nmap ,mk :make<cr>
 
 "添加时间戳
 map <F5> O<C-R>=strftime("%c")<CR><Esc>o
@@ -333,3 +326,7 @@ function MyFoldfun(lineNum)
 	endif
 endfunction
 
+""""""""""""""""""""""""""""""""""""
+" gdb
+""""""""""""""""""""""""""""""""""""
+run macros/gdb_mappings.vim
