@@ -4,10 +4,16 @@
         <title> Auto Post </title>
         <link type="text/css" href="styles/popup.css" rel="stylesheet" />
         <script type="text/javascript" src="scripts/core.js"> </script>
-        <script type="text/javascript" src="scripts/popup.js"> </script>
     </head>
-    <body>
+    <body onload="init();">
         <div id="menu">
+            <div id="accounts">
+                <div id="sample_item" class="templateItem" title="">
+                    <div class="icon"></div>
+                    <span> 账号 </span>
+                </div>
+            </div>
+            <div id="separatorAccounts" class="separator"></div>
             <div id="login" name="登陆" class="item" onclick="login();" title="登陆">
                 <div class="icon" ></div>
                 <span> 登陆 </span>
@@ -15,13 +21,6 @@
             <div id="logout" name="退出" class="item" onclick="logout();" title="退出">
                 <div class="icon" ></div>
                 <span> 退出 </span>
-            </div>
-            <div id="separatorAccounts" class="separator"></div>
-            <div id="accounts">
-                <div class="templateItem" title="">
-                    <div class="icon"></div>
-                    <span> 账号 </span>
-                </div>
             </div>
             <div id="separatorOptions" class="separator"></div>
             <div id="menuAddAccount" class="item" onclick="showAddAccount();" title="添加一个账号">
@@ -46,10 +45,12 @@
             <div class="header title"> 添加账号 </div>
             <div class="header light">
                 <table>
+                    <!--
                     <tr>
                         <th> 昵称 </th>
                         <td><input id="txtAccountName" type="text" value=""></td>
                     </tr>
+                    -->
                     <tr>
                         <th> 用户名 </th>
                         <td><input id="txtAccountID" type="text" value=""></td>
