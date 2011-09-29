@@ -2,11 +2,74 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title> Auto Post </title>
-        <link type="text/css" href="css/default.css" rel="stylesheet" />
-        <script type="text/javascript" src="js/default.js"> </script>
+        <link type="text/css" href="styles/popup.css" rel="stylesheet" />
+        <script type="text/javascript" src="scripts/core.js"> </script>
+        <script type="text/javascript" src="scripts/popup.js"> </script>
     </head>
     <body>
-        <div onclick="login('2009020268', 'lenovo')" >登录</div>
-        <div onclick="logout('2009020268', 'lenovo')" >退出</div>
+        <div id="menu">
+            <div id="login" name="登陆" class="item" onclick="login();" title="登陆">
+                <div class="icon" ></div>
+                <span> 登陆 </span>
+            </div>
+            <div id="logout" name="退出" class="item" onclick="logout();" title="退出">
+                <div class="icon" ></div>
+                <span> 退出 </span>
+            </div>
+            <div id="separatorAccounts" class="separator"></div>
+            <div id="accounts">
+                <div class="templateItem" title="">
+                    <div class="icon"></div>
+                    <span> 账号 </span>
+                </div>
+            </div>
+            <div id="separatorOptions" class="separator"></div>
+            <div id="menuAddAccount" class="item" onclick="showAddAccount();" title="添加一个账号">
+                <img src="images/add.png" />
+                <span> 添加账号 </span>
+            </div>
+            <div id="menuAbout" class="item" onclick="showAbout();">
+                <img src="images/about.png" />
+                <span> 关于 Auto Post </span>
+            </div>
+            <div id="separatorError" class="separator"></div>
+            <div id="menuError" class="item" onclick="openErrorLog();" title="运行异常，请查看日志">
+                <img src="images/error.png" />
+                <span> 运行异常 </span>
+            </div>
+        </div>
+
+        <div id="about">
+        </div>
+
+        <div id="addAccount">
+            <div class="header title"> 添加账号 </div>
+            <div class="header light">
+                <table>
+                    <tr>
+                        <th> 昵称 </th>
+                        <td><input id="txtAccountName" type="text" value=""></td>
+                    </tr>
+                    <tr>
+                        <th> 用户名 </th>
+                        <td><input id="txtAccountID" type="text" value=""></td>
+                    </tr>
+                    <tr>
+                        <th> 密码 </th>
+                        <td><input id="txtAccountPassword" type="password"></td>
+                    </tr>
+                </table>
+            </div>
+            <table class="control">
+                <tr>
+                    <td width="100%"></td>
+                    <td><button class="button bold" id="btnSave" onclick="addAccount();"> 添加 </button></td>
+                    <td>&nbsp;&nbsp;&nbsp;</td>
+                    <td><button class="button" id="btnCancel" onclick="closePopup();"> 退出 </button></td>
+                </tr>
+            </table>
+            <br />
+            <br />
+        </div>
     </body>
 </html>
