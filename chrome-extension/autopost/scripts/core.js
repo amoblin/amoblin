@@ -45,6 +45,13 @@ function showAddAccount() {
 	document.getElementById("addAccount").style.visibility =  "visible";
 }
 
+function showAbout() {
+    document.getElementById("about").style.visibility =  "hidden";
+	document.getElementById("menu").style.display = "none";
+	document.getElementById("about").style.display = "block";
+	document.getElementById("about").style.visibility =  "visible";
+}
+
 function urlencode(params) {
     var par = [];
     for( var key in params) {
