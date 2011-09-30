@@ -109,7 +109,8 @@ hr {
 	width: 16px;
 	height: 16px;
 	vertical-align: middle;
-	?background: url(../images/checked.png);
+	background: url(../images/checked.png);
+    visibility: hidden;
 }
 
 #menu .checked .icon {

@@ -1,24 +1,31 @@
-var params = {username: "", password: ""};
 var http = new XMLHttpRequest();
 
-function login() {
-    if (!params.username) {
+function login(username) {
+    /*
+    if (!localStorage["active"]) {
         showAddAccount();
         return 0;
     }
-    closePopup();
+    */
+    //closePopup();
 
+    //username = localStorage.getItem("active");
+    password = localStorage.getItem(username);
+    /*
     var intra_login_url = "https://6.6.6.6/login.html";
-    var intra_login_data = {"username": params.username, "password": params.password,
+    var intra_login_data = {"username": username, "password": password,
         "buttonClicked": "4", redirect_url: "", err_flag: "0", };
     xmlhttp_post(intra_login_url, urlencode(intra_login_data), null);
-    //window = chrome.tabs.create({"url": "http://baidu.com"});
+    window = chrome.tabs.create({"url": "http://baidu.com"});
+    */
 
-    var inter_login_data = {userid: params.username, passwd: params.password,
+    var inter_login_data = {userid: username, passwd: password,
         serivce: "internet", chap: "0", random: "internet", };
     inter_login_url = "http://10.78.17.3/fcgi/websAuth";
     xmlhttp_post(inter_login_url, urlencode(inter_login_data), null);
+    alert(password);
     window = chrome.tabs.create({"url": "http://baidu.com"});
+    return 1;
 }
 
 function logout() {
@@ -33,34 +40,116 @@ function logout() {
 }
 
 function init() {
-    load_options(params);
-    buildAccountItems(params);
+    buildAccountItems();
 }
 
-function buildAccountItems(params) {
+function buildAccountItems() {
     var menu = document.getElementById("accounts");
-    var templateItem = document.getElementById("sample_item");
-    var div = document.createElement("div");
-    div.id= params.username;
-    div.name= params.username;
-    div.title = params.username;
-    div.className = "item";
-
-    if(params.username) {
-        var span = document.createElement("span");
-        var cont = document.createTextNode(params.username);
-        span.appendChild(cont);
-        div.appendChild(span);
+    var children = menu.childNodes;
+    for(var i=0; i < children.length; i++) {
+        menu.removeChild( children[i] );
     }
-    menu.appendChild(div);
+    for( var i=0; i < localStorage.length; i++) {
+        //alert(localStorage.key(i)+":"+localStorage[localStorage.key(i)]);
+        if (localStorage.key(i) == "active") {
+            continue;
+        }
+        addItem(menu, localStorage.key(i), 1);
+    }
     menu.style.display="block";
 }
 
+function setDeActive(accounts) {
+    /*
+    */
+    for (var i=0; i< accounts.childNodes.length; i++) {
+        accounts.childNodes[i].onclick = null;
+        accounts.childNodes[i].title = "当前状态不可用";
+    }
+}
+
+function selectItem() {
+    username = this.getAttribute("id");
+    if (login(username) == 1 ) {
+        setDeActive(this.parentNode);
+        localStorage["active"] = username;
+        this.firstChild.style.visibility = "visible";
+        this.onclick = selectItem;
+        this.title = "在线";
+        closePopup();
+    }
+    return 0;
+}
+
+function unselect() {
+    if (logout() == 1 ) {
+        setActive();
+        closePopup();
+    }
+}
+
+function setActive() {
+    var accounts = document.getElementById("accounts");
+    for (var i=0; i< accounts.childNodes.length; i++) {
+        accounts.childNodes[i].onclick = selectItem;
+        accounts.childNodes[i].title = "点击登陆";
+        accounts.childNodes[i].style.className = "visible";
+    }
+
+    if ( localStorage["active"] == undefined) {
+        return 0;
+    }
+
+    var item = document.getElementById(localStorage["active"]);
+    item.firstChild.style.visibility = "hidden";
+
+    localStorage["active"] = undefined;
+}
+function addItem(menu, username, type) {
+    var sample_item = document.getElementById("sample_item");
+    var new_item = sample_item.cloneNode(true);
+    new_item.id = username;
+    new_item.name = username;
+    new_item.className = "item";
+    if(type == 0) {
+        new_item.title = "当前状态不可用";
+        new_item.onclick = null;
+    }
+
+    var span = document.createElement("span");
+    var cont = document.createTextNode(username);
+    span.appendChild(cont);
+    new_item.appendChild(span);
+
+    menu.appendChild(new_item);
+}
+
 function addAccount() {
-    closePopup();
     var username = document.getElementById("txtAccountID").value;
     var password = document.getElementById("txtAccountPassword").value;
-    save_options({username: username, password: password});
+    document.getElementById("txtAccountID").value = '';
+    document.getElementById("txtAccountPassword").value = '';
+    localStorage[username] = password;
+
+    var menu = document.getElementById("accounts");
+    if (localStorage["active"] == undefined || localStorage["active"] == "undefined") {
+        addItem(menu, username, 1);
+    } else {
+        addItem(menu, username, 0);
+    }
+    showMenu();
+}
+
+function clearAccount() {
+    localStorage.clear();
+    buildAccountItems();
+    closePopup();
+}
+
+function showMenu() {
+    document.getElementById("addAccount").style.visibility =  "hidden";
+	document.getElementById("menu").style.display = "block";
+	document.getElementById("addAccount").style.display = "none";
 }
 
 function showAddAccount() {
@@ -138,18 +227,6 @@ function form_post(url, params) {
     form.submit();
 }
 
-function save_options(params) {
-    for (var item in params) {
-        localStorage[item] = params[item];
-    }
-}
-
-function load_options(params) {
-    for( var item in params) {
-        params[item] = localStorage[item];
-    }
-}
-
 function closePopup() {
     window.close();
 }
@@ -171,5 +248,4 @@ function submitenter(form_id, e) {
         return true;
     }
 }
-
 

@@ -8,24 +8,23 @@
     <body onload="init();">
         <div id="menu">
             <div id="accounts">
-                <div id="sample_item" class="templateItem" title="">
+                <div id="sample_item" class="templateItem" title="点击登陆" onclick="selectItem();">
                     <div class="icon"></div>
                     <span> 账号 </span>
                 </div>
             </div>
             <div id="separatorAccounts" class="separator"></div>
-            <div id="login" name="登陆" class="item" onclick="login();" title="登陆">
-                <div class="icon" ></div>
-                <span> 登陆 </span>
-            </div>
-            <div id="logout" name="退出" class="item" onclick="logout();" title="退出">
-                <div class="icon" ></div>
+            <div id="logout" name="退出" class="item" onclick="unselect();" title="退出">
+                <img src="images/close.png" />
                 <span> 退出 </span>
             </div>
-            <div id="separatorOptions" class="separator"></div>
             <div id="menuAddAccount" class="item" onclick="showAddAccount();" title="添加一个账号">
                 <img src="images/add.png" />
                 <span> 添加账号 </span>
+            </div>
+            <div id="menuClearAccount" class="item" onclick="clearAccount();" title="清空账号">
+                <img src="images/delete.png" />
+                <span> 清空账号 </span>
             </div>
             <div id="menuAbout" class="item" onclick="showAbout();">
                 <img src="images/about.png" />
@@ -83,7 +82,7 @@
                     -->
                     <tr>
                         <th> 用户名 </th>
-                        <td><input id="txtAccountID" type="text" value=""></td>
+                        <td><input id="txtAccountID" type="text" onKeyPress="submitenter();" /></td>
                     </tr>
                     <tr>
                         <th> 密码 </th>
