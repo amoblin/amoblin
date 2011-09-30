@@ -1,6 +1,37 @@
 var params = {username: "", password: ""};
 var http = new XMLHttpRequest();
 
+function login() {
+    if (!params.username) {
+        showAddAccount();
+        return 0;
+    }
+    closePopup();
+
+    var intra_login_url = "https://6.6.6.6/login.html";
+    var intra_login_data = {"username": params.username, "password": params.password,
+        "buttonClicked": "4", redirect_url: "", err_flag: "0", };
+    xmlhttp_post(intra_login_url, urlencode(intra_login_data), null);
+    //window = chrome.tabs.create({"url": "http://baidu.com"});
+
+    var inter_login_data = {userid: params.username, passwd: params.password,
+        serivce: "internet", chap: "0", random: "internet", };
+    inter_login_url = "http://10.78.17.3/fcgi/websAuth";
+    xmlhttp_post(inter_login_url, urlencode(inter_login_data), null);
+    window = chrome.tabs.create({"url": "http://baidu.com"});
+}
+
+function logout() {
+    closePopup();
+    var inter_logout_url = "http://10.78.17.3/fcgi/websLogout";
+    xmlhttp_post(inter_logout_url, '', null);
+    chrome.tabs.create({"url": inter_logout_url});
+
+    var intra_logout_url = "https://6.6.6.6/logout.html";
+    var intra_logout_data = {"userStatus": "1", "err_flag": "0", "err_msg": "", }
+    xmlhttp_post(intra_logout_url, urlencode(intra_logout_data));
+}
+
 function init() {
     load_options(params);
     buildAccountItems(params);
@@ -43,6 +74,7 @@ function showAddAccount() {
 
 	//document.body.style.direction = currentBodyDirection;		// ....if the body's direction is "rtl"
 	document.getElementById("addAccount").style.visibility =  "visible";
+    document.getElementById("txtAccountID").focus();
 }
 
 function showAbout() {
@@ -82,12 +114,12 @@ function handle_state_change() {
     }
 }
 
-function xmlhttp_post(url, params) {
+function xmlhttp_post(url, params, handle_func) {
     http.open("POST", url, false);
     http.setRequestHeader("Content-type", "application/x-www-form-url");
     http.setRequestHeader("Connection", "close");
     http.setRequestHeader("Content-length", params.length);
-    http.onreadystatechange=handle_state_change;
+    http.onreadystatechange = handle_func;
     http.send(params);
 }
 
@@ -106,36 +138,6 @@ function form_post(url, params) {
     form.submit();
 }
 
-function login() {
-    if (!params.username) {
-        showAddAccount();
-        return 0;
-    }
-
-    var intra_login_data = {username: params.username, password: params.password,
-        buttonClicked: "4", redirect_url: "", err_flag: "0", };
-
-    //form_post("https://6.6.6.6/login.html", intra_login_data);
-    xmlhttp_post("https://6.6.6.6/login.html", urlencode(intra_login_data));
-    return 0;
-
-    var inter_login_data = {userid: params.username, passwd: params.password,
-        serivce: "internet", chap: "0", random: "internet", };
-
-    //form_post("http://10.78.17.3/fcgi/websAuth", inter_login_data);
-    xmlhttp_post("http://10.78.17.3/fcgi/websAuth", urlencode(inter_login_data));
-    closePopup();
-}
-
-function logout() {
-    closePopup();
-    //form_post("http://10.78.17.3/fcgi/websLogout", '');
-    xmlhttp_post("http://10.78.17.3/fcgi/websLogout", '');
-
-    var intra_logout_data = {userStatus: "1", err_flag: "0", err_msg: "", }
-    xmlhttp_post("https://6.6.6.6/logout.html", urlencode(intra_logout_data));
-}
-
 function save_options(params) {
     for (var item in params) {
         localStorage[item] = params[item];
@@ -151,3 +153,23 @@ function load_options(params) {
 function closePopup() {
     window.close();
 }
+
+function submitenter(form_id, e) {
+    var keycode;
+    if(window.event) {
+        keycode = window.event.keyCode;
+    } else if (e) {
+        keycode = e.which;
+    } else {
+        return true;
+    }
+
+    if( keycode == 13) {
+        addAccount();
+        return false;
+    } else {
+        return true;
+    }
+}
+
+
