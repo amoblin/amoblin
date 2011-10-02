@@ -1,45 +1,38 @@
 var http = new XMLHttpRequest();
 
 function login(username) {
-    /*
-    if (!localStorage["active"]) {
-        showAddAccount();
-        return 0;
-    }
-    */
-    //closePopup();
-
-    //username = localStorage.getItem("active");
     password = localStorage.getItem(username);
-    /*
+
     var intra_login_url = "https://6.6.6.6/login.html";
     var intra_login_data = {"username": username, "password": password,
         "buttonClicked": "4", redirect_url: "", err_flag: "0", };
     xmlhttp_post(intra_login_url, urlencode(intra_login_data), null);
     window = chrome.tabs.create({"url": "http://baidu.com"});
-    */
 
     var inter_login_data = {userid: username, passwd: password,
         serivce: "internet", chap: "0", random: "internet", };
     inter_login_url = "http://10.78.17.3/fcgi/websAuth";
     xmlhttp_post(inter_login_url, urlencode(inter_login_data), null);
-    alert(password);
     window = chrome.tabs.create({"url": "http://baidu.com"});
     return 1;
 }
 
 function logout() {
-    closePopup();
     var inter_logout_url = "http://10.78.17.3/fcgi/websLogout";
     xmlhttp_post(inter_logout_url, '', null);
-    chrome.tabs.create({"url": inter_logout_url});
+    chrome.tabs.create({"url": "https://6.6.6.6/logout.html"});
 
     var intra_logout_url = "https://6.6.6.6/logout.html";
     var intra_logout_data = {"userStatus": "1", "err_flag": "0", "err_msg": "", }
-    xmlhttp_post(intra_logout_url, urlencode(intra_logout_data));
+    xmlhttp_post(intra_logout_url, urlencode(intra_logout_data), null);
+    chrome.tabs.create({"url": "https://6.6.6.6/logout.html"});
+    return 1;
 }
 
 function init() {
+    if(localStorage["active"] == undefined) {
+        localStorage["active"] = 0;
+    }
     buildAccountItems();
 }
 
@@ -49,19 +42,27 @@ function buildAccountItems() {
     for(var i=0; i < children.length; i++) {
         menu.removeChild( children[i] );
     }
+
+    var type = 0;
+    if (localStorage["active"] == 0) {
+        type = 1;
+    }
+
     for( var i=0; i < localStorage.length; i++) {
-        //alert(localStorage.key(i)+":"+localStorage[localStorage.key(i)]);
         if (localStorage.key(i) == "active") {
             continue;
         }
-        addItem(menu, localStorage.key(i), 1);
+        addItem(menu, localStorage.key(i), type);
+    }
+    if (localStorage["active"] != 0) {
+        username = localStorage["active"];
+        item = document.getElementById(username);
+        item.getElementsByClassName("icon")[0].style.visibility = "visible";
     }
     menu.style.display="block";
 }
 
 function setDeActive(accounts) {
-    /*
-    */
     for (var i=0; i< accounts.childNodes.length; i++) {
         accounts.childNodes[i].onclick = null;
         accounts.childNodes[i].title = "当前状态不可用";
@@ -69,14 +70,17 @@ function setDeActive(accounts) {
 }
 
 function selectItem() {
-    username = this.getAttribute("id");
+    item = event.target.id ? event.target : event.target.parentNode;
+    username = item.id;
     if (login(username) == 1 ) {
-        setDeActive(this.parentNode);
+        setDeActive(item.parentNode);
         localStorage["active"] = username;
-        this.firstChild.style.visibility = "visible";
-        this.onclick = selectItem;
-        this.title = "在线";
+        item.getElementsByClassName("icon")[0].style.visibility = "visible";
+        item.onclick = selectItem;
+        item.title = "在线";
         closePopup();
+    } else {
+        item.title = "未知错误";
     }
     return 0;
 }
@@ -96,14 +100,14 @@ function setActive() {
         accounts.childNodes[i].style.className = "visible";
     }
 
-    if ( localStorage["active"] == undefined) {
+    if ( localStorage["active"] == 0) {
         return 0;
     }
 
     var item = document.getElementById(localStorage["active"]);
-    item.firstChild.style.visibility = "hidden";
+    item.getElementsByClassName("icon")[0].style.visibility = "hidden";
 
-    localStorage["active"] = undefined;
+    localStorage["active"] = 0;
 }
 function addItem(menu, username, type) {
     var sample_item = document.getElementById("sample_item");
@@ -120,7 +124,6 @@ function addItem(menu, username, type) {
     var cont = document.createTextNode(username);
     span.appendChild(cont);
     new_item.appendChild(span);
-
     menu.appendChild(new_item);
 }
 
@@ -132,7 +135,7 @@ function addAccount() {
     localStorage[username] = password;
 
     var menu = document.getElementById("accounts");
-    if (localStorage["active"] == undefined || localStorage["active"] == "undefined") {
+    if (localStorage["active"] == 0) {
         addItem(menu, username, 1);
     } else {
         addItem(menu, username, 0);
@@ -142,6 +145,7 @@ function addAccount() {
 
 function clearAccount() {
     localStorage.clear();
+    localStorage["active"] = 0;
     buildAccountItems();
     closePopup();
 }
@@ -153,15 +157,9 @@ function showMenu() {
 }
 
 function showAddAccount() {
-	//var currentBodyDirection = document.body.style.direction;	// ....workaround for a Chrome bug
-	//document.body.style.direction = "ltr";						// ....prevents resizing the popup
     document.getElementById("addAccount").style.visibility =  "hidden";
 	document.getElementById("menu").style.display = "none";
 	document.getElementById("addAccount").style.display = "block";
-	//$(document.body).height($("#addAccount").height());
-	//$(window).height($("#addAccount").height());
-
-	//document.body.style.direction = currentBodyDirection;		// ....if the body's direction is "rtl"
 	document.getElementById("addAccount").style.visibility =  "visible";
     document.getElementById("txtAccountID").focus();
 }
@@ -184,20 +182,16 @@ function urlencode(params) {
 function handle_state_change() {
     switch(http.readyState) {
         case 0:
-            alert(http.readyState);
             break;
         case 1:
-            alert(http.readyState);
             break;
         case 2:
-            alert(http.readyState);
             break;
         case 3:
-            alert(http.readyState);
             break;
         case 4:
             if(http.status == 200) {
-                alert(http.responseText);
+                //alert(http.responseText);
             }
             break;
     }
