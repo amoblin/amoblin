@@ -7,14 +7,13 @@ function login(username) {
     var intra_login_data = {"username": username, "password": password,
         "buttonClicked": "4", redirect_url: "", err_flag: "0", };
     xmlhttp_post(intra_login_url, urlencode(intra_login_data), null);
-    window = chrome.tabs.create({"url": "http://baidu.com"});
+    chrome.tabs.create({"url": "http://www.baidu.com"});
 
     var inter_login_data = {userid: username, passwd: password,
         serivce: "internet", chap: "0", random: "internet", };
     inter_login_url = "http://10.78.17.3/fcgi/websAuth";
     xmlhttp_post(inter_login_url, urlencode(inter_login_data), null);
-    window = chrome.tabs.create({"url": "http://baidu.com"});
-    return 1;
+    return 0;
 }
 
 function logout() {
@@ -25,8 +24,7 @@ function logout() {
     var intra_logout_url = "https://6.6.6.6/logout.html";
     var intra_logout_data = {"userStatus": "1", "err_flag": "0", "err_msg": "", }
     xmlhttp_post(intra_logout_url, urlencode(intra_logout_data), null);
-    chrome.tabs.create({"url": "https://6.6.6.6/logout.html"});
-    return 1;
+    return 0;
 }
 
 function init() {
@@ -43,16 +41,11 @@ function buildAccountItems() {
         menu.removeChild( children[i] );
     }
 
-    var type = 0;
-    if (localStorage["active"] == 0) {
-        type = 1;
-    }
-
     for( var i=0; i < localStorage.length; i++) {
         if (localStorage.key(i) == "active") {
             continue;
         }
-        addItem(menu, localStorage.key(i), type);
+        addItem(menu, localStorage.key(i));
     }
     if (localStorage["active"] != 0) {
         username = localStorage["active"];
@@ -62,21 +55,19 @@ function buildAccountItems() {
     menu.style.display="block";
 }
 
-function setDeActive(accounts) {
-    for (var i=0; i< accounts.childNodes.length; i++) {
-        accounts.childNodes[i].onclick = null;
-        accounts.childNodes[i].title = "当前状态不可用";
-    }
-}
-
-function selectItem() {
+function onlogin() {
     item = event.target.id ? event.target : event.target.parentNode;
     username = item.id;
-    if (login(username) == 1 ) {
-        setDeActive(item.parentNode);
+
+    /* 先退出 */
+    if( onlogout() != 0 ) {
+        return 1;
+    }
+
+    /*再登陆 */
+    if (login(username) == 0 ) {
         localStorage["active"] = username;
         item.getElementsByClassName("icon")[0].style.visibility = "visible";
-        item.onclick = selectItem;
         item.title = "在线";
         closePopup();
     } else {
@@ -85,40 +76,26 @@ function selectItem() {
     return 0;
 }
 
-function unselect() {
-    if (logout() == 1 ) {
-        setActive();
-        closePopup();
+function onlogout() {
+    if (logout() != 0 ) {
+        return 1;
     }
+
+    if ( localStorage["active"] != 0) {
+        var item = document.getElementById(localStorage["active"]);
+        item.getElementsByClassName("icon")[0].style.visibility = "hidden";
+        localStorage["active"] = 0;
+    }
+    closePopup();
+    return 0;
 }
 
-function setActive() {
-    var accounts = document.getElementById("accounts");
-    for (var i=0; i< accounts.childNodes.length; i++) {
-        accounts.childNodes[i].onclick = selectItem;
-        accounts.childNodes[i].title = "点击登陆";
-        accounts.childNodes[i].style.className = "visible";
-    }
-
-    if ( localStorage["active"] == 0) {
-        return 0;
-    }
-
-    var item = document.getElementById(localStorage["active"]);
-    item.getElementsByClassName("icon")[0].style.visibility = "hidden";
-
-    localStorage["active"] = 0;
-}
-function addItem(menu, username, type) {
+function addItem(menu, username) {
     var sample_item = document.getElementById("sample_item");
     var new_item = sample_item.cloneNode(true);
     new_item.id = username;
     new_item.name = username;
     new_item.className = "item";
-    if(type == 0) {
-        new_item.title = "当前状态不可用";
-        new_item.onclick = null;
-    }
 
     var span = document.createElement("span");
     var cont = document.createTextNode(username);
@@ -127,7 +104,7 @@ function addItem(menu, username, type) {
     menu.appendChild(new_item);
 }
 
-function addAccount() {
+function onAddAccount() {
     var username = document.getElementById("txtAccountID").value;
     var password = document.getElementById("txtAccountPassword").value;
     document.getElementById("txtAccountID").value = '';
@@ -135,11 +112,7 @@ function addAccount() {
     localStorage[username] = password;
 
     var menu = document.getElementById("accounts");
-    if (localStorage["active"] == 0) {
-        addItem(menu, username, 1);
-    } else {
-        addItem(menu, username, 0);
-    }
+    addItem(menu, username);
     showMenu();
 }
 
@@ -236,7 +209,7 @@ function submitenter(form_id, e) {
     }
 
     if( keycode == 13) {
-        addAccount();
+        onAddAccount();
         return false;
     } else {
         return true;

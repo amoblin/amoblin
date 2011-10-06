@@ -8,13 +8,13 @@
     <body onload="init();">
         <div id="menu">
             <div id="accounts">
-                <div id="sample_item" class="templateItem" title="点击登陆" onclick="selectItem();">
+                <div id="sample_item" class="templateItem" title="点击登陆" onclick="onlogin();">
                     <div class="icon"></div>
                     <span> 账号 </span>
                 </div>
             </div>
             <div id="separatorAccounts" class="separator"></div>
-            <div id="logout" name="退出" class="item" onclick="unselect();" title="退出">
+            <div id="logout" name="退出" class="item" onclick="onlogout();" title="退出">
                 <img src="images/close.png" />
                 <span> 退出 </span>
             </div>
@@ -93,7 +93,7 @@
             <table class="control">
                 <tr>
                     <td width="100%"></td>
-                    <td><button class="button bold" id="btnSave" onclick="addAccount();"> 添加 </button></td>
+                    <td><button class="button bold" id="btnSave" onclick="onAddAccount();"> 添加 </button></td>
                     <td>&nbsp;&nbsp;&nbsp;</td>
                     <td><button class="button" id="btnCancel" onclick="closePopup();"> 退出 </button></td>
                 </tr>
