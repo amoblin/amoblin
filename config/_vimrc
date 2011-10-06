@@ -185,14 +185,14 @@ set expandtab
 set completeopt=longest,menu
 
 "括号自动补全
-:inoremap ( ()<ESC>i
-:inoremap ) <c-r>=ClosePair(')')<CR>
-:inoremap { {}<ESC>i
-:inoremap } <c-r>=ClosePair('}')<CR>
-:inoremap " ""<ESC>i
-:inoremap ' ''<ESC>i
-:inoremap [ []<ESC>i
-:inoremap ] <c-r>=ClosePair(']')<CR>
+":inoremap ( ()<ESC>i
+":inoremap ) <c-r>=ClosePair(')')<CR>
+":inoremap { {}<ESC>i
+":inoremap } <c-r>=ClosePair('}')<CR>
+":inoremap " ""<ESC>i
+":inoremap ' ''<ESC>i
+":inoremap [ []<ESC>i
+":inoremap ] <c-r>=ClosePair(']')<CR>
 
 function ClosePair(char)
 	if getline('.')[col('.') - 1] == a:char
@@ -276,6 +276,9 @@ au BufNewFile,BufRead *conkyrc* set makeprg=pkill\ conky&conky\ -c\ %\ 2>~/.conk
 au BufNewFile,BufRead *conkyrc* set filetype=conkyrc
 "设置make来更新openbox配置
 au BufNewFile,BufRead rc.xml set makeprg=openbox\ --reconfigure&
+
+"设置json文件为javascript类型
+au BufNewFile,BufRead *.json set filetype=javascript
 
 "autocmd
 

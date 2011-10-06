@@ -7,6 +7,10 @@ whoomin:
 	@pdflatex whoomin.tex > /dev/null
 	@make clean
 
+dev:
+	@pdflatex whoomin_dev.tex > /dev/null
+	@make clean
+
 amoblin:
 	@pdflatex amoblin.tex > /dev/null
 	@make clean
