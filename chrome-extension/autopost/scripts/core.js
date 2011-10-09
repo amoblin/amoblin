@@ -59,12 +59,14 @@ function onlogin() {
     item = event.target.id ? event.target : event.target.parentNode;
     username = item.id;
 
-    /* 先退出 */
-    if( onlogout() != 0 ) {
-        return 1;
+    /* 没退出的话先退出 */
+    if (localStorage["active"] != 0) {
+        if( onlogout() != 0 ) {
+            return 1;
+        }
     }
 
-    /*再登陆 */
+    /*登陆 */
     if (login(username) == 0 ) {
         localStorage["active"] = username;
         item.getElementsByClassName("icon")[0].style.visibility = "visible";
