@@ -12,6 +12,7 @@
         "popup": "popup.html"
     },
     "permissions": [
-        "tabs", "http://10.78.17.3/*", "https://6.6.6.6/*"
+        "tabs", "http://10.78.17.3/*", "https://6.6.6.6/*",
+    "notifications"
         ]
 }

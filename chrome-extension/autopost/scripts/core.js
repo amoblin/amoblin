@@ -1,4 +1,5 @@
 var http = new XMLHttpRequest();
+const AUTO_CLOSE_DELAY_SECONDS = 2;
 
 function login(username) {
     password = localStorage.getItem(username);
@@ -7,7 +8,6 @@ function login(username) {
     var intra_login_data = {"username": username, "password": password,
         "buttonClicked": "4", redirect_url: "", err_flag: "0", };
     xmlhttp_post(intra_login_url, urlencode(intra_login_data), null);
-    chrome.tabs.create({"url": "http://www.baidu.com"});
 
     var inter_login_data = {userid: username, passwd: password,
         serivce: "internet", chap: "0", random: "internet", };
@@ -19,7 +19,6 @@ function login(username) {
 function logout() {
     var inter_logout_url = "http://10.78.17.3/fcgi/websLogout";
     xmlhttp_post(inter_logout_url, '', null);
-    chrome.tabs.create({"url": "https://6.6.6.6/logout.html"});
 
     var intra_logout_url = "https://6.6.6.6/logout.html";
     var intra_logout_data = {"userStatus": "1", "err_flag": "0", "err_msg": "", }
@@ -68,10 +67,12 @@ function onlogin() {
 
     /*登陆 */
     if (login(username) == 0 ) {
+        //notify("登陆成功！", 0.2);
         localStorage["active"] = username;
         item.getElementsByClassName("icon")[0].style.visibility = "visible";
         item.title = "在线";
         closePopup();
+        chrome.tabs.create({"url": "http://www.baidu.com"});
     } else {
         item.title = "未知错误";
     }
@@ -82,6 +83,7 @@ function onlogout() {
     if (logout() != 0 ) {
         return 1;
     }
+    //notify("退出认证！", 300);
 
     if ( localStorage["active"] != 0) {
         var item = document.getElementById(localStorage["active"]);
@@ -218,3 +220,35 @@ function submitenter(form_id, e) {
     }
 }
 
+function test() {
+    /*
+    setTimeout(function() {
+        event.currentTarget.cancel();
+    }, timeout * 1000);
+    */
+    //chrome.tabs.create({"url": "http://www.baidu.com"});
+    notify("hello", 2);
+    notify("world", 2);
+}
+
+function notify(message, timeout) {
+    var icon = "../images/bistu.png";
+    //var title = "[" + new Date().toLocaleTimeString() + "] This notification will close in " + AUTO_CLOSE_DELAY_SECONDS + " seconds";
+    var title = " Auto Post ";
+    var body = message;
+
+    if (window.webkitNotifications) {
+        if (window.webkitNotifications.checkPermission() == 0) {
+            var popup = window.webkitNotifications.createNotification(icon, title, body);
+            popup.ondisplay = function(event) {
+                setTimeout(function() {
+                    event.currentTarget.cancel();
+                }, timeout);
+            }
+            popup.show();
+        } else {
+            window.webkitNotifications.requestPermission();
+            return;
+        }
+    }
+}
