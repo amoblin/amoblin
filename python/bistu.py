@@ -79,8 +79,8 @@ def search(key_words,page=1):
     data['ordersc'] = "desc"                        #
     url='http://211.68.37.131/opac2/book/search.jsp?%s' % urllib.urlencode(data)
 
-    #short_url = generate_bailu_short_url(url)
-    short_url = generate_google_short_url(url)
+    #url = generate_bailu_short_url(url)
+    #url = generate_google_short_url(url)
     condition = "分馆号：小营 匹配方式：模糊 检索词类型：所有题名"
 
     pg = urllib2.urlopen(url)
@@ -135,7 +135,7 @@ def search(key_words,page=1):
             msg = msg + "《" + title.encode('utf-8')  + "》\n"
             flag=1
 
-    msg += "更多信息点击(仅限教育网)：%s" % short_url
+    msg += "更多信息点击(仅限教育网)：%s" % url
 
     return msg
 
