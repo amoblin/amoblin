@@ -32,20 +32,22 @@ int kmp(char *string, char* pat) {
     next[2] = 1;
     next[3] = 2;
     next[4] = 3;
-    while ( i<bp ) {
-        while( string[i] == pat[j] && j < len_p ) {
+    while ( i<bp && j < len_p ) {
+        if( string[i] == pat[j] ) {
             i++;
             j++;
+            continue;
         }
-        if ( j < len_p ) {
-            if( j > 0 ) {
+        if( j > 0 ) {
                 j = next[j] - 1;
-            } else {
-                i++;
-            }
         } else {
-            return i-j;
+            i++;
         }
+    }
+    if( j== len_p) {
+        return i-j;
+    } else {
+        return -1;
     }
 }
 
