@@ -48,3 +48,10 @@ void quick_sort(element list[], int left, int right) {
     quick_sort(list, j+1, right);
 }
 
+/* 冒泡排序 */
+void bubble(elememnt list[], int n) {
+    int i=0;
+    int j;
+    for(; i<n; i++) {
+
+}
