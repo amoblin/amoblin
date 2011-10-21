@@ -308,6 +308,18 @@ let g:BASH_AuthorName='amoblin'
 let g:BASH_Email='amoblin@gmail.com'
 let g:BASH_Company='bistu'
 
+"c注释
+func SetComment()
+  call setline(1,"/**************************************************************") 
+  call append(line("."),   "*   Copyright (C) ".strftime("%Y")." All rights reserved.")
+  call append(line(".")+1, "*   ") 
+  call append(line(".")+2, "*   File Name: ".expand("%:t")) 
+  call append(line(".")+3, "*   Author: amoblin <amoblin@gmail.com> ")
+  call append(line(".")+4, "*   Create Date: ".strftime("%Y-%m-%d")) 
+  call append(line(".")+5, "**********************************************************/") 
+endfunc
+autocmd FileType c ":call SetComment()"
+
 """"""""""""""""""""""""""""""
 " c source file settings
 """"""""""""""""""""""""""""""

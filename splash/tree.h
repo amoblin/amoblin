@@ -1,58 +1,52 @@
 #include <stdio.h>
 #include "stack.h"
+#include "type.h"
 
-typedef struct tree_node *tree_point;
-typedef struct tree_node {
-    int data;
-    tree_point left_child;
-    tree_point right_child; 
-};
-
-void process( tree_pointer ptr ) {
-    printf("%d", ptr->data);
+void process( BNode *node) {
+    printf("%d", node->value);
 }
 
 /* 前序遍历 */
-void preorder(tree_pointer ptr) {
-    if( ptr == NULL ) {
+void preorder(BNode *node) {
+    if( node == NULL ) {
         return;
     }
 
-    process( ptr );
-    preorder( ptr->left_child );
-    preorder( ptr->right_child );
+    process( node );
+    preorder( node->left);
+    preorder( node->right);
 }
 
 /* 中序遍历 */
-void inorder( tree_pointer ptr ) {
-    if( ptr == NULL ) {
+void inorder( BNode *node) {
+    if( node == NULL ) {
         return;
     }
 
-    inorder( ptr->left_child );
-    process( ptr );
-    inorder( ptr->right_child );
+    inorder( node->left );
+    process( node );
+    inorder( node->right );
 }
 
 /* 后序遍历 */
-void postorder( tree_pointer ptr ) {
-    if( ptr == NULL ) {
+void postorder( BNode *node ) {
+    if( node == NULL ) {
         return;
     }
 
-    postorder( ptr->left_child );
-    postorder( ptr->right_child );
-    process( ptr );
+    postorder( node->left );
+    postorder( node->right );
+    process( node );
 }
 
 /* 用栈模拟递归，迭代实现 */
 
 /* 非递归中序遍历 */
-void iter_inorder( tree_pointer node ) {
+void iter_inorder( BNode *node ) {
     tree_pointer stack[1024];
     for(;;) {
         /* 在node为NULL时返回上一层 */
-        for(; node; node = node->left_child) {
+        for(; node; node = node->left) {
             push(stack, node);
         }
         node = pop(stack);
@@ -61,7 +55,7 @@ void iter_inorder( tree_pointer node ) {
             break;
         }
         printf("%d", node->data);
-        node = node->right_child;
+        node = node->right;
     }
 }
 
