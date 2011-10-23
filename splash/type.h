@@ -1,4 +1,9 @@
 
+/* 数组元素 */
+typedef struct {
+    int value;
+} element;
+
 /* 线性节点 */
 typedef struct linear_node {
     int value;
