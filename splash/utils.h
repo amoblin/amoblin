@@ -11,6 +11,8 @@ void swap_f(int *a, int *b) {
 #define min(a,b) ((a) > (b) ? (b) : (a))
 #define max(a,b) ((a) > (b) ? (a) : (b))
 
+/* 求众数:出现次数最多的数 */
+/* 求中位数: 数据的中间位置数或中间两个数的均值. */
 
 void test_swap() {
     int x=2;
