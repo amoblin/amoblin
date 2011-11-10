@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
+# 键盘记录回放
+# 
 
 import pythoncom,pyHook
 import SendKeys

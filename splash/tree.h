@@ -2,6 +2,25 @@
 #include "stack.h"
 #include "type.h"
 
+void node_init(BNode *node, int value) {
+    node = (BNode *) malloc( sizeof(BNode) );
+    node->left = NULL;
+    node->right = NULL;
+    node->value = value;
+}
+
+void append_left(BNode *node, int value) {
+    BNode *left;
+    node_init(left);
+    node->left = left;
+}
+
+void append_right(BNode *node, int value) {
+    BNode *right;
+    node_init(right);
+    node->right= right;
+}
+
 void process( BNode *node) {
     printf("%d", node->value);
 }
@@ -43,7 +62,7 @@ void postorder( BNode *node ) {
 
 /* 非递归中序遍历 */
 void iter_inorder( BNode *node ) {
-    tree_pointer stack[1024];
+    LNode *stack[1024];
     for(;;) {
         /* 在node为NULL时返回上一层 */
         for(; node; node = node->left) {
@@ -60,4 +79,38 @@ void iter_inorder( BNode *node ) {
 }
 
 /* 层序遍历 */
+void traverse(BNode *node) {
+    queue_init();
 
+}
+
+/* 小根堆 */
+
+/* 调整当前节点 */
+void max_heapify(element *A, int i, int n) {
+    int left = 2 * i;
+    int right = left + 1;
+    int largest;
+    largest = left < n ? (A[left] > A[i] ? left : i) : i;
+    largest = right < n ? (A[right] > A[small] ? right : small) : small;
+    if(largest != i) {
+        swap(A[small].value, A[i].value);
+        max_heapify(A, small, n);
+    }
+}
+void build_max_heap(element *heap, int n) {
+    int i = n / 2;
+    for(; i>=0; i--) {
+        max_heapify(heap, i, n);
+    }
+}
+
+void test_tree() {
+    BNode *root;
+    node_init(root);
+    int i;
+    for(i=0; i<4; i++) {
+        append_left(root, rand()%100);
+        append_right(root, rand()%100);
+    }
+}

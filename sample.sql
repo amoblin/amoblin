@@ -6,11 +6,11 @@ create table user (
     age tinyint
 );
 
-insert into user values(1, "whoomin", 0, 20);
+insert into user(id,name,gender,age) values(1, "whoomin", 0, 20);
 insert into user values(2, "amoblin", 1, 21);
 /* select * from user where age > any(10, 20); */
 update user set age = age - 1 where id=1;
-/* delete from user where id=2; */
+delete from user where id=2;
 /* select * from user ; */
 
 alter table user add birth date;

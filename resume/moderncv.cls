@@ -203,11 +203,11 @@
 %-------------------------------------------------------------------------------
 % symbols used 
 \providecommand*{\listitemsymbol}{\textbullet}
-\providecommand*{\addresssymbol}{}
 \providecommand*{\mobilesymbol}{\Mobilefone}
 \providecommand*{\phonesymbol}{\Telefon}
 \providecommand*{\faxsymbol}{\FAX}
 \providecommand*{\emailsymbol}{\Letter}
+\providecommand*{\addresssymbol}{}
 
 % colors
 \definecolor{firstnamecolor}{rgb}{0,0,0}
@@ -255,11 +255,11 @@
 \newcommand*{\firstname}[1]{\def\@firstname{#1}}
 \newcommand*{\familyname}[1]{\def\@familyname{#1}}
 \renewcommand*{\title}[1]{\def\@title{#1}}
-\newcommand*{\address}[2]{\def\@addressstreet{#1}\def\@addresscity{#2}}
 \newcommand*{\mobile}[1]{\def\@mobile{#1}}
 \newcommand*{\phone}[1]{\def\@phone{#1}}
 \renewcommand*{\fax}[1]{\def\@fax{#1}}
 \newcommand*{\email}[1]{\def\@email{#1}}
+\newcommand*{\address}[1]{\def\@addressstreet{#1}}
 \newcommand*{\extrainfo}[1]{\def\@extrainfo{#1}}
 \newcommand*{\photo}[2][64pt]{\def\@photoheight{#1}\def\@photo{#2}}
 \newcommand*{\quote}[1]{\def\@quote{#1}}

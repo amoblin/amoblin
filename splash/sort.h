@@ -196,7 +196,11 @@ void gnome_sort(element array[], int n) {
 }
 
 /* 堆排序 */
+#include "tree.h"
 void heap_sort(element array[], int n) {
+    build_max_heap(array, n);
+    int i = n-1;
+    for*
 }
 
 void sort(element array[], int n, int type) {

@@ -57,6 +57,7 @@
 %-------------------------------------------------------------------------------
 % symbols used
 \renewcommand*{\listitemsymbol}{\textbullet}
+\linespread{1.2}
 
 % colors
 \definecolor{firstnamecolor}{rgb}{0,0,0}
@@ -121,15 +122,15 @@
   % optional data 联系方式,住址等列宽
   \begin{minipage}[b]{.40\textwidth}%
     \raggedleft\addressfont\color{addresscolor}%
-    \ifthenelse{\isundefined{\@addressstreet}}{}{%
-      \addresssymbol~\@addressstreet%
-      \ifthenelse{\isundefined{\@addresscity}}{}{\\\@addresscity}%
-      \\[.25em]}%
     \ifthenelse{\isundefined{\@mobile}}{}{\mobilesymbol~\@mobile\\[.2em]}%
     \ifthenelse{\isundefined{\@phone}}{}{\phonesymbol~\@phone\\[.2em]}%
     \ifthenelse{\isundefined{\@fax}}{}{\faxsymbol~\@fax\\[.2em]}%
     \ifthenelse{\isundefined{\@email}}{}{\emailsymbol~\emaillink{\@email}\\[.2em]}%
     \ifthenelse{\isundefined{\@extrainfo}}{}{\@extrainfo\\[.2em]}%
+    \ifthenelse{\isundefined{\@addressstreet}}{}{%
+      \addresssymbol~\@addressstreet%
+      \ifthenelse{\isundefined{\@addresscity}}{}{\\\@addresscity}%
+      \\[.25em]}%
   \end{minipage}%
   % optional photo
   \ifthenelse{\isundefined{\@photo}}%
@@ -142,8 +143,6 @@
     {\centering{\begin{minipage}{\quotewidth}\centering\quotestyle{\@quote}\end{minipage}}\\[1.5em]}%
   }
 
-
 \endinput
-
 
 %% end of file `moderncvthemeclassic.sty'.
