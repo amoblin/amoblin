@@ -23,7 +23,7 @@ void set_random(element array[], int n, int max) {
 void print_array(element array[], int n) {
     int i=0;
     for(; i<n; i++) {
-        printf("%02d ", array[i]);
+        printf("%02d ", array[i].value);
     }
     printf("\n");
 }
@@ -203,7 +203,6 @@ void gnome_sort(element array[], int n) {
 void heap_sort(element array[], int n) {
     build_max_heap(array, n);
     int i = n-1;
-    for*
 }
 
 void sort(element array[], int n, int type) {

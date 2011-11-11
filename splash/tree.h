@@ -7,14 +7,12 @@
 #include "queue.h"
 
 void append_left(BNode *node, int value) {
-    BNode *left;
-    node_init(left);
+    BNode *left = BNode_init(value);
     node->left = left;
 }
 
 void append_right(BNode *node, int value) {
-    BNode *right;
-    node_init(right);
+    BNode *right = BNode_init(value);
     node->right= right;
 }
 
@@ -59,26 +57,25 @@ void postorder( BNode *node ) {
 
 /* 非递归中序遍历 */
 void iter_inorder( BNode *node ) {
-    LNode *stack[1024];
+    LNode *stack = stack_init();
     for(;;) {
         /* 在node为NULL时返回上一层 */
         for(; node; node = node->left) {
-            push(stack, node);
+            stack_push(stack, LNode_init(0, node));
         }
-        node = pop(stack);
+        node = stack_pop(stack)->bn;
         /* 在node为空时遍历完成 */
         if( !node ) {
             break;
         }
-        printf("%d", node->data);
+        printf("%d", node->value);
         node = node->right;
     }
 }
 
 /* 层序遍历 */
 void traverse(BNode *node) {
-    queue_init();
-
+    //queue_init();
 }
 
 /* 小根堆 */
@@ -88,11 +85,11 @@ void max_heapify(element *A, int i, int n) {
     int left = 2 * i;
     int right = left + 1;
     int largest;
-    largest = left < n ? (A[left] > A[i] ? left : i) : i;
-    largest = right < n ? (A[right] > A[small] ? right : small) : small;
+    largest = left < n ? (A[left].value > A[i].value ? left : i) : i;
+    largest = right < n ? (A[right].value > A[largest].value ? right : largest) : largest;
     if(largest != i) {
-        swap(A[small].value, A[i].value);
-        max_heapify(A, small, n);
+        swap(A[largest].value, A[i].value);
+        max_heapify(A, largest, n);
     }
 }
 void build_max_heap(element *heap, int n) {
@@ -103,8 +100,7 @@ void build_max_heap(element *heap, int n) {
 }
 
 void test_tree() {
-    BNode *root;
-    node_init(root);
+    BNode *root =  BNode_init(rand()%100);
     int i;
     for(i=0; i<4; i++) {
         append_left(root, rand()%100);

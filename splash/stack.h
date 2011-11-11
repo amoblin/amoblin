@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include "type.h"
 
-LNode *create_stack() {
+/* 链栈 */
+LNode *stack_init() {
     LNode* stack =(LNode *) malloc( sizeof( LNode ) );
     if( stack == NULL ) {
         printf("Error!");
@@ -14,18 +15,15 @@ LNode *create_stack() {
     return stack;
 }
 
-int stack_pop(LNode *stack) {
+LNode *stack_pop(LNode *stack) {
     LNode *target = stack->next;
     if( target == NULL) {
         printf("stack is empty.\n");
         exit(0);
     }
-    int value = target->value;
     stack->next = target->next;
-    free(target);
-    return value;
+    return target;
 }
-
 
 void stack_clear( LNode *stack ) {
     if( stack == NULL ) {
@@ -36,31 +34,24 @@ void stack_clear( LNode *stack ) {
     }
 }
 
-void stack_push( int value, LNode *stack ) {
-    LNode *node = (LNode *) malloc( sizeof( LNode) );
-    if( node == NULL ) {
-        printf("error!");
-        return;
-    }
-
-    node->value = value;
+void stack_push(LNode *stack , LNode *node) {
     node->next = stack->next;
     stack->next = node;
 }
 
 void test_stack() {
-    LNode *stack = create_stack();
-    stack_push(0, stack);
-    stack_push(2, stack);
-    stack_push(3, stack);
-    stack_push(7, stack);
-    stack_push(8, stack);
-    stack_push(9, stack);
-    printf("%d\t", stack_pop(stack));
-    printf("%d\t", stack_pop(stack));
-    printf("%d\t", stack_pop(stack));
-    printf("%d\t", stack_pop(stack));
-    printf("%d\t", stack_pop(stack));
+    LNode *stack = stack_init();
+    stack_push(stack, LNode_init(0, NULL));
+    stack_push(stack, LNode_init(2, NULL));
+    stack_push(stack, LNode_init(3, NULL));
+    stack_push(stack, LNode_init(7, NULL));
+    stack_push(stack, LNode_init(8, NULL));
+    stack_push(stack, LNode_init(9, NULL));
+    printf("%d\t", stack_pop(stack)->value);
+    printf("%d\t", stack_pop(stack)->value);
+    printf("%d\t", stack_pop(stack)->value);
+    printf("%d\t", stack_pop(stack)->value);
+    printf("%d\t", stack_pop(stack)->value);
     printf("\n");
 }
 

@@ -32,8 +32,7 @@ void queue_set_random(queue *q, int max) {
     int i=0;
     BNode *node;
     for(; i< q->capacity; i++) {
-        node = malloc( sizeof(BNode) );
-        node_init(node, rand() % max);
+        node = BNode_init(rand() % max);
         printf("%d ", node->value);
         queue_add(q, node);
     }

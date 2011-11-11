@@ -53,7 +53,7 @@ LNode *list_revert(LNode *node) {
     return head;
 }
 
-void list_test() {
+void test_list() {
     LNode *list = create_list();
 
     /* 随机数链表 */
