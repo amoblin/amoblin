@@ -48,4 +48,10 @@ BNode *BNode_init(int value) {
     return node;
 }
 
+typedef enum {
+    PREORDER,
+    INORDER,
+    POSTORDER
+} order_t;
+
 #endif

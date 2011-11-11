@@ -17,11 +17,9 @@ LNode *stack_init() {
 
 LNode *stack_pop(LNode *stack) {
     LNode *target = stack->next;
-    if( target == NULL) {
-        printf("stack is empty.\n");
-        exit(0);
+    if( target != NULL) {
+        stack->next = target->next;
     }
-    stack->next = target->next;
     return target;
 }
 

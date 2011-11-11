@@ -17,60 +17,101 @@ void append_right(BNode *node, int value) {
 }
 
 void process( BNode *node) {
-    printf("%d", node->value);
+    printf("%d ", node->value);
 }
 
-/* 前序遍历 */
-void preorder(BNode *node) {
+/* 前序 中序 后序 递归遍历 */
+void order(BNode *node, order_t type) {
     if( node == NULL ) {
         return;
     }
 
-    process( node );
-    preorder( node->left);
-    preorder( node->right);
-}
-
-/* 中序遍历 */
-void inorder( BNode *node) {
-    if( node == NULL ) {
-        return;
+    /* 前序遍历 */
+    if(type == PREORDER) {
+        process( node );
     }
 
-    inorder( node->left );
-    process( node );
-    inorder( node->right );
-}
+    order( node->left, type);
 
-/* 后序遍历 */
-void postorder( BNode *node ) {
-    if( node == NULL ) {
-        return;
+    /* 中序遍历 */
+    if(type == INORDER) {
+        process( node );
     }
 
-    postorder( node->left );
-    postorder( node->right );
-    process( node );
+    order( node->right, type);
+
+    /* 后序遍历 */
+    if(type == POSTORDER) {
+        process( node );
+    }
 }
 
 /* 用栈模拟递归，迭代实现 */
 
-/* 非递归中序遍历 */
-void iter_inorder( BNode *node ) {
-    LNode *stack = stack_init();
+/******************************************
+ * 数组栈 前序 中序
+ * 前序：((入根，处理，试左)，试出，试右)
+ * 中序：((入根，试左)，试出，处理，试右)
+ ******************************************/
+
+void iter_order( BNode *bnode, int type) {
+    BNode *stack[10];
+    int top=-1;
     for(;;) {
-        /* 在node为NULL时返回上一层 */
-        for(; node; node = node->left) {
-            stack_push(stack, LNode_init(0, node));
+        /* for循环，父节点和左子节点入栈 */
+        for(; bnode; bnode=bnode->left) {
+            top++;
+            stack[top] = bnode;
+            /* 前序 */
+            if(type == PREORDER) {
+                process(bnode);
+            }
         }
-        node = stack_pop(stack)->bn;
-        /* 在node为空时遍历完成 */
-        if( !node ) {
+        /* 左子树处理完毕，处理右子树 */
+        if(top<0) {
             break;
         }
-        printf("%d", node->value);
-        node = node->right;
+        bnode = stack[top];
+        top--;
+        /* 中序 */
+        if(type == INORDER) {
+            process(bnode);
+        }
+        if(type == POSTORDER) {
+            bnode = stack[top];
+            top++;
+            stack[top] = bnode->right;
+        } else {
+            bnode = bnode->right;
+        }
     }
+    printf("\n");
+}
+
+/* 链栈 中序遍历 */
+void iter_order_l( BNode *bnode) {
+    LNode *stack = stack_init();
+    LNode *lnode;
+    for(;;) {
+        /* 在bnode为NULL时停止下降 */
+        for(; bnode; bnode= bnode->left) {
+            stack_push(stack, LNode_init(0, bnode));
+        }
+
+        /* 处理节点 */
+        lnode = stack_pop(stack);
+        /* 在node为空时遍历完成 */
+        if( lnode == NULL ) {
+            break;
+        }
+        bnode = lnode->bn;
+
+        printf("%d ", bnode->value);
+
+        /* 处理右子树 */
+        bnode = bnode->right;
+    }
+    printf("\n");
 }
 
 /* 层序遍历 */
@@ -101,11 +142,17 @@ void build_max_heap(element *heap, int n) {
 
 void test_tree() {
     BNode *root =  BNode_init(rand()%100);
-    int i;
-    for(i=0; i<4; i++) {
-        append_left(root, rand()%100);
-        append_right(root, rand()%100);
-    }
-}
+    append_left(root, rand()%100);
+    append_right(root, rand()%100);
 
+    /* 前序 */
+    order(root, PREORDER);
+    printf("\n");
+    iter_order(root, PREORDER);
+
+    /* 中序 */
+    order(root, INORDER);
+    printf("\n");
+    iter_order(root, INORDER);
+}
 #endif
