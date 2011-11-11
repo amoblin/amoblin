@@ -1,3 +1,6 @@
+#ifndef stack_h
+#define stack_h
+
 #include <stdlib.h>
 #include "type.h"
 
@@ -60,3 +63,5 @@ void test_stack() {
     printf("%d\t", stack_pop(stack));
     printf("\n");
 }
+
+#endif

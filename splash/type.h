@@ -1,3 +1,5 @@
+#ifndef type_h
+#define type_h
 
 /* 数组元素 */
 typedef struct {
@@ -16,3 +18,12 @@ typedef struct binary_node {
     struct binary_node *left;
     struct binary_node *right;
 } BNode;
+
+void BNode_init(BNode *node, int value) {
+    node->left = NULL;
+    node->right = NULL;
+    node->value = value;
+}
+
+
+#endif

@@ -3,6 +3,9 @@
  * 2011-10-21 14:59 链表反转
  * *****************************/
 
+#ifndef list_h
+#define list_h
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -66,3 +69,5 @@ void list_test() {
     list->next = list_revert(list->next);
     list_print(list);
 }
+
+#endif

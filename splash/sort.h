@@ -1,3 +1,6 @@
+#ifndef sort_h
+#define sort_h
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -250,3 +253,5 @@ void test_sort() {
     sort(array, LEN, type);
     print_array(array, LEN);
 }
+
+#endif

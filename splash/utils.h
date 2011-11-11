@@ -1,3 +1,5 @@
+#ifndef utils_h
+#define utils_h
 #include <stdio.h>
 
 /* 不用额外存储空间，交换两个数, 这在两个变量为同一个变量时无效 */
@@ -19,3 +21,5 @@ void test_swap() {
     swap(x, x);
     printf("%d\n", x);
 }
+
+#endif

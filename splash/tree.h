@@ -1,13 +1,10 @@
+#ifndef tree_h
+#define tree_h
+
 #include <stdio.h>
 #include "stack.h"
 #include "type.h"
-
-void node_init(BNode *node, int value) {
-    node = (BNode *) malloc( sizeof(BNode) );
-    node->left = NULL;
-    node->right = NULL;
-    node->value = value;
-}
+#include "queue.h"
 
 void append_left(BNode *node, int value) {
     BNode *left;
@@ -114,3 +111,5 @@ void test_tree() {
         append_right(root, rand()%100);
     }
 }
+
+#endif
