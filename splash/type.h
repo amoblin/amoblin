@@ -1,6 +1,8 @@
 #ifndef type_h
 #define type_h
 
+#define MAX 10
+
 /* 数组元素 */
 typedef struct {
     int value;

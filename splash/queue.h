@@ -13,12 +13,14 @@ typedef struct {
     BNode **array;
 } queue;
 
-void queue_init(queue *q, int max) {
+queue *queue_init(int max) {
+    queue *q = malloc(sizeof(queue));
     q->capacity = max;
     q->size = 0;
     q->front = 0;
     q->rear = 0;
     q->array = (BNode **)malloc(sizeof(BNode *) * max);
+    return q;
 }
 
 void queue_add(queue *q, BNode *node) {
@@ -45,9 +47,7 @@ BNode *queue_del(queue *q) {
 
 void test_queue() 
 {
-    queue *q = malloc(sizeof(queue));
-
-    queue_init(q, 10);
+    queue *q = queue_init(10);
 
     queue_set_random(q, 100);
 

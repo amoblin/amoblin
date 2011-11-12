@@ -9,7 +9,6 @@
 
 /* 14寸屏显示32个,完美 */
 #define LEN 32
-#define MAX 99
 
 void set_random(element array[], int n, int max) {
     srand(time(NULL));

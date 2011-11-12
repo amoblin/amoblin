@@ -6,6 +6,28 @@
 #include "type.h"
 #include "queue.h"
 
+BNode *tree_create(int size) {
+    BNode *root = BNode_init( rand() % MAX );
+
+    queue *q = queue_init( (2 << size) - 1 );
+    BNode *node = root;
+    printf("%d ", node->value);
+    int i=0;
+    int half =( 2 << (size-2)) - 1;
+    for(i; i<half; i++) {
+        node->left = BNode_init( rand() % MAX );
+        node->right = BNode_init( rand() % MAX );
+        printf("%d %d ", node->left->value, node->right->value);
+
+        queue_add(q, node->left);
+        queue_add(q, node->right);
+
+        node = queue_del(q);
+    }
+    printf("\n");
+    return root;
+}
+
 void append_left(BNode *node, int value) {
     BNode *left = BNode_init(value);
     node->left = left;
@@ -54,7 +76,7 @@ void order(BNode *node, order_t type) {
  * 中序：((入根，试左)，试出，处理，试右)
  ******************************************/
 
-void iter_order( BNode *bnode, int type) {
+void iter_order( BNode *bnode, order_t type) {
     BNode *stack[10];
     int top=-1;
     for(;;) {
@@ -77,24 +99,22 @@ void iter_order( BNode *bnode, int type) {
         if(type == INORDER) {
             process(bnode);
         }
-        if(type == POSTORDER) {
-            bnode = stack[top];
-            top++;
-            stack[top] = bnode->right;
-        } else {
-            bnode = bnode->right;
-        }
+
+        bnode = bnode->right;
     }
     printf("\n");
 }
 
-/* 链栈 中序遍历 */
-void iter_order_l( BNode *bnode) {
+/* 链栈 前序 中序遍历 */
+void iter_order_l( BNode *bnode, order_t type) {
     LNode *stack = stack_init();
     LNode *lnode;
     for(;;) {
         /* 在bnode为NULL时停止下降 */
         for(; bnode; bnode= bnode->left) {
+            if(type == PREORDER) {
+                process(bnode);
+            }
             stack_push(stack, LNode_init(0, bnode));
         }
 
@@ -106,7 +126,10 @@ void iter_order_l( BNode *bnode) {
         }
         bnode = lnode->bn;
 
-        printf("%d ", bnode->value);
+        /* 中序 */
+        if(type == INORDER) {
+            process(bnode);
+        }
 
         /* 处理右子树 */
         bnode = bnode->right;
@@ -141,18 +164,29 @@ void build_max_heap(element *heap, int n) {
 }
 
 void test_tree() {
-    BNode *root =  BNode_init(rand()%100);
-    append_left(root, rand()%100);
-    append_right(root, rand()%100);
+
+    /* 构造一颗完全二叉树 */
+    BNode *root = tree_create(4);
 
     /* 前序 */
-    order(root, PREORDER);
+    printf("preorder retrieve:\n");
+    order_t order_type = PREORDER;
+    order(root, order_type);
     printf("\n");
-    iter_order(root, PREORDER);
+    iter_order(root, order_type);
 
     /* 中序 */
-    order(root, INORDER);
+    printf("inorder retrieve:\n");
+    order_type = INORDER;
+    order(root, order_type);
     printf("\n");
-    iter_order(root, INORDER);
+    iter_order(root, order_type);
+
+    /* 后序 */
+    printf("postorder retrieve:\n");
+    order_type = POSTORDER;
+    order(root, order_type);
+    printf("\n");
+    iter_order(root, order_type);
 }
 #endif
