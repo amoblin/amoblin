@@ -210,19 +210,15 @@ endf
 " set tags=tags;
 " 增强检索功能
 set tags=./tags,./../tags,./**/tags,../../tags
-" Sort by name
 let Tlist_Sort_Type = "name"
 
-" Use right window
-let Tlist_Use_Right_Window = 1
-
-" Enable auto update
+let Tlist_Use_Right_Window = 0
 let Tlist_Auto_Update = 1
+let Tlist_Auto_Open = 1
 
 " Set compart format
 let Tlist_Compart_Format = 1
 
-" Set exit by window
 let Tlist_Exit_OnlyWindow = 1
 
 " Disable auto close
@@ -230,6 +226,8 @@ let Tlist_File_Fold_Auto_Close = 0
 
 " Disable fold column
 let Tlist_Enable_Fold_Column = 0
+
+let Tlist_WinWidth = 15
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Cscope
