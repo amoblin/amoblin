@@ -215,6 +215,8 @@ let Tlist_Sort_Type = "name"
 let Tlist_Use_Right_Window = 0
 let Tlist_Auto_Update = 1
 let Tlist_Auto_Open = 0
+let Tlist_Close_On_Select = 1
+let Tlist_GainFocus_On_ToggleOpen = 1
 
 " Set compart format
 let Tlist_Compart_Format = 1

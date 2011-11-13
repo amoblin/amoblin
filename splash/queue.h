@@ -42,7 +42,11 @@ void queue_set_random(queue *q, int max) {
 }
 
 BNode *queue_del(queue *q) {
-    return q->array[ q->front++ ];
+    if(q->size>0) {
+        q->size--;
+        return q->array[ q->front++ ];
+    }
+    return NULL;
 }
 
 void test_queue() 

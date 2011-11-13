@@ -87,4 +87,18 @@ typedef enum {
     HEAP_SORT,
 } sort_t;
 
+void append_left(BNode *node, int value) {
+    BNode *left = BNode_init(value);
+    node->left = left;
+}
+
+void append_right(BNode *node, int value) {
+    BNode *right = BNode_init(value);
+    node->right= right;
+}
+
+void process( BNode *node) {
+    printf("%d ", node->value);
+}
+
 #endif

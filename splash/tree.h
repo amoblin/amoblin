@@ -6,40 +6,33 @@
 #include "type.h"
 #include "queue.h"
 
+/* 完全二叉树 链式实现 */
 BNode *tree_create(int size) {
     BNode *root = BNode_init( rand() % MAX );
 
-    queue *q = queue_init( (2 << size) - 1 );
-    BNode *node = root;
-    printf("%d ", node->value);
+    queue *q = queue_init(size);
+    queue_add(q, root);
+    process(root);
+    BNode *node= root;
     int i=0;
-    int half =( 2 << (size-2)) - 1;
-    for(i; i<half; i++) {
-        node->left = BNode_init( rand() % MAX );
-        node->right = BNode_init( rand() % MAX );
-        printf("%d %d ", node->left->value, node->right->value);
-
+    int flag = (size-1)/2;
+    for(i; i<flag; i++) {
+        node = queue_del(q);
+        append_left(node, rand() % MAX);
+        append_right(node, rand() % MAX);
         queue_add(q, node->left);
         queue_add(q, node->right);
 
+        process(node->left);
+        process(node->right);
+    }
+    if(size % 2 == 0) {
         node = queue_del(q);
+        append_left(node, rand() % MAX);
+        process(node->left);
     }
     printf("\n");
     return root;
-}
-
-void append_left(BNode *node, int value) {
-    BNode *left = BNode_init(value);
-    node->left = left;
-}
-
-void append_right(BNode *node, int value) {
-    BNode *right = BNode_init(value);
-    node->right= right;
-}
-
-void process( BNode *node) {
-    printf("%d ", node->value);
 }
 
 /* 前序 中序 后序 递归遍历 */
@@ -139,12 +132,28 @@ void iter_order_l( BNode *bnode, order_t type) {
 
 /* 层序遍历 */
 void traverse(BNode *node) {
-    //queue_init();
+    queue *q = queue_init(100);
+    while(node) {
+        process(node);
+        if(node->left) {
+            queue_add(q, node->left);
+        }
+        if(node->right) {
+            queue_add(q, node->right);
+        }
+        node = queue_del(q);
+    }
 }
 
 void order_test() {
     /* 构造一颗完全二叉树 */
-    BNode *root = tree_create(4);
+    printf("create a tree:\n");
+    BNode *root = tree_create(8);
+
+    /* 层序 */
+    printf("level order retrieve:\n");
+    traverse(root);
+    printf("\n");
 
     /* 前序 */
     printf("preorder retrieve:\n");
@@ -165,10 +174,11 @@ void order_test() {
     order_type = POSTORDER;
     order(root, order_type);
     printf("\n");
-    iter_order(root, order_type);
+    //iter_order(root, order_type);
+
 }
 
-/* 大根堆 */
+/* 大根堆 数组实现 */
 /* 调整当前节点 */
 void max_heapify(element *A, int i, int n) {
     /* 根从1开始，左孩子为2i，右孩子为2i+1 */
@@ -184,6 +194,7 @@ void max_heapify(element *A, int i, int n) {
         max_heapify(A, largest, n);
     }
 }
+
 void build_max_heap(element *heap, int n) {
     int i = n / 2;
     for(; i>=0; i--) {
@@ -201,8 +212,8 @@ void heap_test() {
 }
 
 void test_tree() {
-    //order_test();
-    heap_test();
+    order_test();
+    //heap_test();
 
 }
 #endif
