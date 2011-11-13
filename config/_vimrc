@@ -257,9 +257,11 @@ nnoremap gn :bn<cr>
 nnoremap gp :bp<cr>
 
 "编译
-nmap ,mk :make<cr>
+nmap ,m :make<cr>
 nmap ,mr :make run<cr>
-nmap ,l :TlistToggle<cr>
+
+" Taglist fav
+nmap ,, :TlistToggle<cr>
 nmap <F2> :TlistToggle<cr>
 
 "添加时间戳
