@@ -76,4 +76,15 @@ typedef enum {
     LEVELORDER
 } order_t;
 
+typedef enum {
+    BUBBLE_SORT,
+    INSERTION_SORT,
+    SELECTION_SORT,
+    GNOME_SORT,
+    SHELL_SORT,
+    MERGE_SORT,
+    QUICK_SORT,
+    HEAP_SORT,
+} sort_t;
+
 #endif

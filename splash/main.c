@@ -10,9 +10,9 @@ int main() {
     test_list();
     test_stack();
     test_queue();
-    test_sort();
-    */
     test_tree();
+    */
+    test_sort();
 
     return 0;
 }

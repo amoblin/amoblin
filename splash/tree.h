@@ -142,27 +142,6 @@ void traverse(BNode *node) {
     //queue_init();
 }
 
-/* 小根堆 */
-
-/* 调整当前节点 */
-void max_heapify(element *A, int i, int n) {
-    int left = 2 * i;
-    int right = left + 1;
-    int largest;
-    largest = left < n ? (A[left].value > A[i].value ? left : i) : i;
-    largest = right < n ? (A[right].value > A[largest].value ? right : largest) : largest;
-    if(largest != i) {
-        swap(A[largest].value, A[i].value);
-        max_heapify(A, largest, n);
-    }
-}
-void build_max_heap(element *heap, int n) {
-    int i = n / 2;
-    for(; i>=0; i--) {
-        max_heapify(heap, i, n);
-    }
-}
-
 void order_test() {
     /* 构造一颗完全二叉树 */
     BNode *root = tree_create(4);
@@ -189,13 +168,41 @@ void order_test() {
     iter_order(root, order_type);
 }
 
+/* 大根堆 */
+/* 调整当前节点 */
+void max_heapify(element *A, int i, int n) {
+    /* 根从1开始，左孩子为2i，右孩子为2i+1 */
+    int left = 2 * i;
+    int right = left + 1;
+    /* 父，左，右，三节点必有最大 */
+    int largest;
+    largest = left < n ? (A[left].value > A[i].value ? left : i) : i;
+    largest = right < n ? (A[right].value > A[largest].value ? right : largest) : largest;
+    /* 父不最大，最大易父 */
+    if(largest != i) {
+        swap(A[largest].value, A[i].value);
+        max_heapify(A, largest, n);
+    }
+}
+void build_max_heap(element *heap, int n) {
+    int i = n / 2;
+    for(; i>=0; i--) {
+        max_heapify(heap, i, n);
+    }
+}
+
+void heap_test() {
+    int size=10;
+    element *a = (element *) malloc( sizeof(element) * size);
+    array_set_random(a, size);
+    print_array(a, size);
+    build_max_heap(a, size);
+    print_array(a, size);
+}
+
 void test_tree() {
     //order_test();
-    element a[10];
-    array_set_random(a, 10);
-    print_array(a, 10);
-    build_max_heap(a, 10);
-    print_array(a, 10);
+    heap_test();
 
 }
 #endif

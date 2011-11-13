@@ -179,33 +179,37 @@ void gnome_sort(element array[], int n) {
 /* 堆排序 */
 #include "tree.h"
 void heap_sort(element array[], int n) {
-    build_max_heap(array, n);
-    int i = n-1;
+    int i = n;
+    do {
+        build_max_heap(array, i);
+        i--;
+        swap(array[0].value, array[i].value);
+    } while(i>0);
 }
 
-void sort(element array[], int n, int type) {
+void sort(element array[], int n, sort_t type) {
     switch(type) {
-        case 'b':
+        case BUBBLE_SORT:
             bubble_sort(array, LEN);
             break;
-        case 'g':
+        case GNOME_SORT:
             gnome_sort(array, LEN);
             break;
-        case 'h':
+        case HEAP_SORT:
             heap_sort(array, LEN);
             break;
-        case 'm':
+        case MERGE_SORT:
             merge_sort(array, LEN);
-        case 'i':
+        case INSERTION_SORT:
             insertion_sort(array, LEN);
             break;
-        case 'q':
+        case QUICK_SORT:
             quick_sort(array, 0, LEN-1);
             break;
-        case 's':
+        case SHELL_SORT:
             shell_sort(array, LEN);
             break;
-        case ('s'+1):
+        case SELECTION_SORT:
             selection_sort(array, LEN);
             break;
         default:
@@ -218,15 +222,7 @@ void test_sort() {
     array_set_random(array, LEN);
     print_array(array, LEN);
 
-    /*
-     * bubble sort: b
-     * quick sort: q
-     * shell sort: s
-     * selection sort: s+1
-     * gnome sort: g
-     * merge sort: m
-     * */
-    int type = 'm';
+    sort_t type = HEAP_SORT;
     sort(array, LEN, type);
     print_array(array, LEN);
 }
