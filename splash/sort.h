@@ -10,27 +10,6 @@
 /* 14寸屏显示32个,完美 */
 #define LEN 32
 
-void set_random(element array[], int n, int max) {
-    srand(time(NULL));
-    int i=0;
-    for(; i<n; i++) {
-        array[i].value = rand() % max;
-    }
-}
-
-/* 打印数组 */
-void print_array(element array[], int n) {
-    int i=0;
-    for(; i<n; i++) {
-        printf("%02d ", array[i].value);
-    }
-    printf("\n");
-}
-
-/* 交换元素 */
-//void swap(element a, element b) {
-//}
-
 /* 冒泡排序:先冒最小的 */
 void bubble_sort(element array[], int n) {
     int i=0;
@@ -236,7 +215,7 @@ void sort(element array[], int n, int type) {
 
 void test_sort() {
     element array[LEN];
-    set_random(array, LEN, MAX);
+    array_set_random(array, LEN);
     print_array(array, LEN);
 
     /*

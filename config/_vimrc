@@ -249,6 +249,7 @@ set cscopequickfix=s-,g-,d-,c-,t-,e-,f-,i-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
+" 原则：尽量少使用功能键，太远。使用","开始的二字母组合键
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <Up> gk
 map <Down> gj
@@ -259,9 +260,12 @@ nnoremap gp :bp<cr>
 
 "编译
 nmap ,mk :make<cr>
+nmap ,mr :make run<cr>
+nmap ,l :TlistToggle<cr>
+nmap <F2> :TlistToggle<cr>
 
 "添加时间戳
-map <F5> O<C-R>=strftime("%c")<CR><Esc>o
+map ,tm O<C-R>=strftime("%c")<CR><Esc>o
 
 map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 let OmniCpp_MayCompleteScope = 1

@@ -1,7 +1,7 @@
 #ifndef type_h
 #define type_h
 
-#define MAX 10
+#define MAX 100
 
 /* 数组元素 */
 typedef struct {
@@ -50,10 +50,30 @@ BNode *BNode_init(int value) {
     return node;
 }
 
+/* 数组随机初始化 */
+void array_set_random(element array[], int n) {
+    srand(time(NULL));
+    int i=0;
+    for(; i<n; i++) {
+        array[i].value = rand() % MAX;
+    }
+}
+
+/* 打印数组 */
+void print_array(element array[], int n) {
+    int i=0;
+    for(; i<n; i++) {
+        printf("%02d ", array[i].value);
+    }
+    printf("\n");
+}
+
+/* 遍历类型:前序，中序，后序，层序 */
 typedef enum {
     PREORDER,
     INORDER,
-    POSTORDER
+    POSTORDER,
+    LEVELORDER
 } order_t;
 
 #endif

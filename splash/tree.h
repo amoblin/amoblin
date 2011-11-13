@@ -163,8 +163,7 @@ void build_max_heap(element *heap, int n) {
     }
 }
 
-void test_tree() {
-
+void order_test() {
     /* 构造一颗完全二叉树 */
     BNode *root = tree_create(4);
 
@@ -188,5 +187,15 @@ void test_tree() {
     order(root, order_type);
     printf("\n");
     iter_order(root, order_type);
+}
+
+void test_tree() {
+    //order_test();
+    element a[10];
+    array_set_random(a, 10);
+    print_array(a, 10);
+    build_max_heap(a, 10);
+    print_array(a, 10);
+
 }
 #endif
