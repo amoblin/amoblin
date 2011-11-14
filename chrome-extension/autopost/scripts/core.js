@@ -49,9 +49,22 @@ function buildAccountItems() {
     if (localStorage["active"] != 0) {
         username = localStorage["active"];
         item = document.getElementById(username);
-        item.getElementsByClassName("icon")[0].style.visibility = "visible";
+        login_gui(username, item);
     }
     menu.style.display="block";
+}
+
+function login_gui(username, item) {
+    if (login(username) == 0 ) {
+        //notify("登陆成功！", 0.2);
+        localStorage["active"] = username;
+        item.getElementsByClassName("icon")[0].style.visibility = "visible";
+        item.title = "在线";
+        closePopup();
+        chrome.tabs.create({"url": "http://www.baidu.com"});
+    } else {
+        item.title = "未知错误";
+    }
 }
 
 function onlogin() {
@@ -66,16 +79,7 @@ function onlogin() {
     }
 
     /*登陆 */
-    if (login(username) == 0 ) {
-        //notify("登陆成功！", 0.2);
-        localStorage["active"] = username;
-        item.getElementsByClassName("icon")[0].style.visibility = "visible";
-        item.title = "在线";
-        closePopup();
-        chrome.tabs.create({"url": "http://www.baidu.com"});
-    } else {
-        item.title = "未知错误";
-    }
+    login_gui(username, item);
     return 0;
 }
 
