@@ -5,7 +5,7 @@ mkdir -p ~/.vim/backup
 
 ln _screenrc ~/.screenrc
 
-sudo ln gitconfig /etc
+sudo ln gitconfig /etc/
 
 sudo sh -c "cat _bashrc >> /etc/bashrc"
 
