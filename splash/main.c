@@ -12,7 +12,9 @@ int main() {
     test_queue();
     test_sort();
     */
-    test_tree();
+    //test_tree();
+
+    log_test();
 
     return 0;
 }
