@@ -1,4 +1,4 @@
 #!/bin/bash
 
-ln *.py ~/bin/
+cp -ru bin ~
 
