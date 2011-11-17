@@ -1,6 +1,8 @@
 gcc编译错误总结
 ===============
 
-..sourcecode: shell
+.. sourcecode:: console
 
     error: redundant redeclaration of ‘fscanf’
+
+

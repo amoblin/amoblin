@@ -4,14 +4,14 @@ MongoDB学习
 Ubuntu安装
 ------------
 
-.. sourcecode:: shell
+.. sourcecode:: console
 
     $ sudo apt-get install mongodb
 
 插入数据
 ---------
 
-.. sourcecode:: shell
+.. sourcecode:: console
 
     > post = { "title": "test", "content": "hello, world!", "date": new Date() }
     > db.blog.insert(post)
@@ -19,7 +19,7 @@ Ubuntu安装
 查找数据
 ----------
 
-.. sourcecode:: shell
+.. sourcecode:: console
 
     > db.blog.find()
     > db.blog.findOne()
@@ -29,7 +29,7 @@ Ubuntu安装
 更新数据
 ---------
 
-.. sourcecode:: shell
+.. sourcecode:: console
 
     > 
 

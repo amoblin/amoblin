@@ -10,8 +10,14 @@ import sys
 import docutils
 
 packages = []
+
+# egg包
 eggs = []
 
+# vim插件
+vim = []
+
+# docutils的pygments扩展配置，以便rst中使用sourcecode
 docutils_path = docutils.__path__
 
 #hg clone http://dev.pocoo.org/hg/pygments-main /tmp/pygments
@@ -21,6 +27,18 @@ docutils_path = docutils.__path__
 packages.append("python-setuptools")
 eggs.append("docutils")
 eggs.append("pygments")
+
+# ctags
+packages.append("ctags")
+# vim: taglist
+
+# vim插件管理
+packages.append("vim-addon-manager")
+
+vim.append("taglist")
+
+# taglist
+url = "http://www.vim.org/scripts/download_script.php?src_id=7701"
 
 # workrave
 packages.append("workrave")

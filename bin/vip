@@ -1,0 +1,8 @@
+#!/bin/bash
+# 2011年11月17日 星期四 09时50分29秒
+# vim plugin install script.
+
+cp $1 ~/.vim/
+cd ~/.vim
+unzip -o $1
+rm $1

@@ -267,10 +267,10 @@ nmap ,, :TlistToggle<cr>
 nmap <F2> :TlistToggle<cr>
 
 "添加时间戳
-nmap ,tm O<C-R>=strftime("%c")<CR><Esc>o
+nmap ,ti O<C-R>=strftime("%c")<CR><Esc>o
 
 " rst文档pygments插件
-nmap ,sc I.. sourcecode:: <cr><cr>    
+nmap ,sc I.. sourcecode:: <Esc>o<cr>    
 
 map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 let OmniCpp_MayCompleteScope = 1
