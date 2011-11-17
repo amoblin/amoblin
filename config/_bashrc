@@ -6,4 +6,4 @@ export LC_ALL=
 export LANG="en_US.UTF-8"
 export LC_CTYPE="zh_CN.UTF-8"
 
-PS1='\e[0;32m\u:\W\$ \e[0;0m'
+force_color_prompt=yes

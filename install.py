@@ -30,15 +30,16 @@ eggs.append("pygments")
 
 # ctags
 packages.append("ctags")
-# vim: taglist
 
 # vim插件管理
 packages.append("vim-addon-manager")
 
 vim.append("taglist")
 
-# taglist
+# vim: taglist
 url = "http://www.vim.org/scripts/download_script.php?src_id=7701"
+
+# vim: zencoding
 
 # workrave
 packages.append("workrave")

@@ -1,7 +1,7 @@
 html:
-	@rst2html blog.rst output/blog.html
+	@rst2html build/blog.rst build/blog.html
 open:
-	@open output/blog.html
+	@open build/blog.html
 
 test:
 	@echo "hello world"
