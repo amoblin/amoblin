@@ -1,3 +1,3 @@
 #!/bin/bash
 
-rm ~/.vim/plugin/blog.vim
+rm ~/.vimrc

@@ -19,5 +19,7 @@ altscreen on
 bind w windowlist -b
 caption always "%{= kw}%-Lw%{= BW}%n %t%{-}%+w %-= @%H - %Y/%m/%d, %C"
 
-#screen -t mutt mutt
-#screen -t irssi irssi 
+screen -t run
+screen -t edit
+screen -t compile
+screen -t blog

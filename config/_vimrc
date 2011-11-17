@@ -359,5 +359,3 @@ run macros/gdb_mappings.vim
 " wordpress
 """""""""""""""""""""""""""""""""""
 
-let blog_username = "amoblin"
-let blog_url = "http://amoblin.sinaapp.com"

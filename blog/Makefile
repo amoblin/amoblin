@@ -1,5 +1,6 @@
 html:
-	@rst2html build/blog.rst build/blog.html
+	rst2html ant.rst -o build/blog.html
+	#rst2html build/blog.rst > build/blog.html
 open:
 	@open build/blog.html
 
