@@ -1,0 +1,102 @@
+blogpost README
+===============
+:Author: Stuart Rackham
+
+
+*Published*: 2008-05-16 +
+*Updated*: 2010-02-17 +
+*Updated*: 2010-10-28
+
+'blogpost' is a Wordpress command-line weblog client.  It creates and
+updates weblog entries directly from
+http://www.methods.co.nz/asciidoc/[AsciiDoc] (or HTML) source
+documents. You can also delete and list weblog entries from the
+command-line.
+
+- Manages WordPress Posts and Pages.
+- Automatically uploads media files (images, video, audio).
+- Only posts new or modified media files.
+
+This 'blogpost' command creates a blogpost containing images from an
+AsciiDoc text file:
+
+---------------------------------------------------------------------
+$ blogpost.py post blogpost_media_processing.txt
+
+uploading: /home/srackham/doc/blogs/smallnew.png...
+url: http://srackham.files.wordpress.com/2008/05/smallnew.png
+uploading: /home/srackham/doc/blogs/tiger.png...
+url: http://srackham.files.wordpress.com/2008/05/tiger1.png
+creating published post 'blogpost media processing'...
+id: 93
+url: http://srackham.wordpress.com/2008/05/22/blogpost-media-processing/
+---------------------------------------------------------------------
+
+
+Status
+------
+Latest version in http://code.google.com/p/blogpost/[Mercurial
+repository at Google Code].
+
+See also the http://srackham.wordpress.com/blogpost1/[blogpost(1) man
+page].
+
+Current version tested under:
+
+- Xubuntu 10.04
+- Python 2.6.5
+
+'blogpost' uses Michele Ferretti’s
+http://www.blackbirdblog.it/programmazione/progetti/28[Python
+Wordpress library] and comes with a patched version of the
+`wordpreslib.py` library module (the patch added WordPress 'Page'
+XML-RPC methods).
+
+
+Prerequisites
+-------------
+- Python 2.5 or better (has not been tried with earlier versions).
+- http://www.methods.co.nz/asciidoc/[AsciiDoc] (unless you only plan
+  to source raw HTML documents).
+
+
+Installation
+------------
+- Clone the http://code.google.com/p/blogpost/[Mercurial repository at
+  Google Code] to your local machine.
+- Put `blogpost.py` in search path (optional).
+- Create `$HOME/.blogpost` configuration file (see example
+  `conf/blogpost_example.conf`).
+- Disable 'emoticons' from the Wordpress browser interface (optional):
+  1. Login.
+  2. Navigate to 'Settings->Writing->Writing Settings' page.
+  3. Uncheck 'Convert emoticons' in the 'Formatting' section (this
+     option stops the automatic conversion of text patterns to
+     emoticons).
+
+[IMPORTANT]
+=====================================================================
+As of AsciiDoc 8.3.0 the 'wordpress' backend conf file has been
+included in the AsciiDoc distribution. If you are using a verison of
+AsciiDoc prior to 8.3.0 you need to install and use the old conf file
+-- copy the `conf/wordpress-8.2.7.conf` to the AsciiDoc install,
+global configuration or user (`$HOME/.asciidoc`) directory and rename
+it `wordpress.conf`.
+
+=====================================================================
+
+
+Bugs
+----
+- Under some circumstances WordPress converts three periods to an
+  elipsis character and double dashes to the em dashes, there doesn't
+  seem to be a way to turn this off.
+- WordPress does not appear to recognise list numbering styles and all
+  numbered lists are rendered with decimal numbering (WordPress
+  default theme).
+- WordPress nested unordered lists all have the same bullet style
+  (WordPress default theme).
+- Large posts can result in blank WordPress pages (I experienced this
+  posting the AsciiDoc User Guide which is over five thousand lines
+  long). The problem seems to be with WordPress:
+  http://www.undermyhat.org/blog/2009/07/sudden-empty-blank-page-for-large-posts-with-wordpress/

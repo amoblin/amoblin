@@ -1,0 +1,7 @@
+#!/bin/bash
+# cscope ctags index
+
+find . -name "*.h" -o -name "*.c" -o -name "*.cc" > cscope.files
+cscope -bkq -i cscope.files
+rm cscope.files
+ctags -R
