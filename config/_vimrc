@@ -271,6 +271,8 @@ nmap ,ti O<C-R>=strftime("%c")<CR><Esc>o
 
 " rst文档pygments插件
 nmap ,sc I.. sourcecode:: <Esc>o<cr>    
+" 发布博客
+nmap ,bs :BlogSave publish<cr>
 
 map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 let OmniCpp_MayCompleteScope = 1
@@ -358,10 +360,4 @@ run macros/gdb_mappings.vim
 """""""""""""""""""""""""""""""""""
 " wordpress
 """""""""""""""""""""""""""""""""""
-let VIMPRESS = [{'username':'user', 
-                \'password':'pass', 
-                \'blog_url':'http://your-first-blog.com/' 
-                \}, 
-                \{'username':'user', 
-                \'blog_url':'http://your-second-blog.com/' 
-                \}] 
+let VIMPRESS=[ {'username':'user', 'password':'pass','blog_url':'http://amoblin.sinaapp.com'} ]
