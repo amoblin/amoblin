@@ -1,0 +1,36 @@
+源码分析工具比较
+================
+
+有：ctags, cscope, GNU global,
+
+
+
+函数调用图
+
+动态：gprof
+静态：cflow, doxygen.
+
+graphviz工具将
+
+ctags
+-----
+
+cscopt
+-------
+
+global
+-------
+
+支持 C++, Yacc, Java, PHP and Assembly 五种语言。
+
+.. sourcecode:: console
+
+    $ gtags
+    $ htags
+htags生成HTML文件夹，包含交叉索引的Web文件。
+
+但无函数调用关系。
+
+
+calltree
+--------
