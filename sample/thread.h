@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+/* 多进程 */
 void fork_test() {
     pid_t fpid;
     int count = 0;
@@ -23,7 +24,10 @@ void fork_test() {
     pid_t re = waitpid(fpid, &exitcode, 0);
 }
 
+/* 多线程 */
 #include <pthread.h>
 void thread_test() {
+    pthread_t pid;
+    pthread_create(&pid, );
 }
 

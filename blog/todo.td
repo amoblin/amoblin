@@ -7,3 +7,5 @@ TODO
 10:20 - 11:00   40分钟
 11:10 - 12:00   50分钟
 
+
+使用sqlite数据库保存blog索引：id，title，cates，tags等

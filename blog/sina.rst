@@ -4,6 +4,10 @@
 DONE
 -----
 寻找源码查阅工具。初步锁定cflow
+使用cflow查找函数调用脉络。
+
+锁定monitor_init函数。
+libmod.c中封装了每个module的初始化，其中包含monitor_init()，导致重复初始化monitor。
 
 参考 http://www.hzmangel.info/blog/archives/260 完成docutils的pygments配置：
 在directives目录下编辑__init__.py文件，加入注册：
