@@ -211,6 +211,10 @@ void heap_test() {
     print_array(a, size);
 }
 
+/* 线索二叉树 */
+
+/* 排序二叉树 */
+
 void test_tree() {
     order_test();
     //heap_test();

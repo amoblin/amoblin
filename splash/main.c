@@ -9,12 +9,11 @@ int main() {
     test_swap();
     test_list();
     test_stack();
-    test_queue();
     test_sort();
-    */
-    //test_tree();
-
     log_test();
+    test_tree();
+    */
+    test_queue();
 
     return 0;
 }
