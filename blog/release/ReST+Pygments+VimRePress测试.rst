@@ -1,5 +1,6 @@
 Docutils + Pygments + VimRePress测试
 ====================================
+.. id: 22
 
 本文使用rst2html生成，源代码使用pygments做语法高亮，使用vimrepress提交。
 
