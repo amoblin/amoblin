@@ -13,7 +13,9 @@ int main() {
     log_test();
     test_tree();
     */
-    test_queue();
+    //test_queue();
+    char test[] = "" "hello" "world";
+    printf("%s\n", test);
 
     return 0;
 }

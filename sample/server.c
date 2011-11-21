@@ -36,7 +36,7 @@ int main() {
     bzero(&servaddr, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    servaddr.sin_port = htons(13);
+    servaddr.sin_port = htons(80);
 
     if( bind(listenfd, (SA *) &servaddr, sizeof(servaddr)) < 0 ) {
         perror("bind error!\n");
@@ -55,7 +55,22 @@ int main() {
         }
 
         ticks = time(NULL);
-        snprintf(buff, sizeof(buff), "%.24s\r\n", ctime(&ticks));
+
+        char content[] = "<html>\n \
+                          <head>\n \
+                          <title>index page</title>\n\
+                          </head>\n\
+                          <body>现在时间<h1>\n ";
+
+        char html[MAXLINE];
+        snprintf(html, sizeof(html), "%s%.24s</h1>\n</body>\n</html>", content, ctime(&ticks));
+
+        char head[] =
+            "HTTP/1.1 200 OK\r\n"
+            "Content-Type: text/html\r\n"
+            "Content-Length: ";
+
+        snprintf( buff,sizeof(buff), "%s%d\r\n\r\n%s", head, strlen(html), html);
         if( write(connfd, buff, strlen(buff)) < 0) {
             printf("write error!\n");
         }

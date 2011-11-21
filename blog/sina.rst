@@ -1,3 +1,27 @@
+2011年11月21日 星期一 18时54分19秒
+===================================
+
+今天主要学习了管道编程，HTTP服务器的简单实现。
+
+DONE
+-----
+
+1. 新建www用户和组。csfd-worker运行正常，进入监听状态。
+2. 整理项目自带的测试文件，做客户端请求测试。错误日志显示：
+
+.. sourcecode:: console
+
+    pipeline error. -1\n"
+
+3. 学习管道编程，匿名管道和命名管道的使用。
+4. 实现简单的HTTP Server。
+
+TODO
+-----
+
+寻找错误的原因并修复错误。
+
+
 2011年11月18日 星期五 11时49分14秒
 ==================================
 
@@ -129,9 +153,12 @@ DONE
 ./csfd-worker: symbol lookup error: .//http_upload.so: undefined symbol: CSF_UNUSED_ARG
 
 查看日志为：
-Thu Nov 17 10:48:31 2011 shiroh-laptop csf_log[32474]: monitor_init[423]: "[monitor] Monitor OK. Now listen on port 22222."
-Thu Nov 17 10:48:31 2011 shiroh-laptop csf_log[32474]: unix_listen[708]: "[monitor] error occured when bind to port 22222."
-Thu Nov 17 10:48:31 2011 shiroh-laptop csf_log[32474]: monitor_init[418]: "[monitor] bind to port 22222 failed. "
+
+.. sourcecode:: console
+
+    Thu Nov 17 10:48:31 2011 shiroh-laptop csf_log[32474]: monitor_init[423]: "[monitor] Monitor OK. Now listen on port 22222."
+    Thu Nov 17 10:48:31 2011 shiroh-laptop csf_log[32474]: unix_listen[708]: "[monitor] error occured when bind to port 22222."
+    Thu Nov 17 10:48:31 2011 shiroh-laptop csf_log[32474]: monitor_init[418]: "[monitor] bind to port 22222 failed. "
 
 锁定monitor.c文件。需要了解多线程编程知识。
 

@@ -1,7 +1,9 @@
-#include "thread.h"
+#include "demo.h"
 #include "log.h"
-#include "socket.h"
 
 int main() {
-    fork_test();
+    //fork_test();
+    pipe_test();
+
+    return 0;
 }

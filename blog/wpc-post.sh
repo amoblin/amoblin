@@ -1,4 +1,4 @@
 #!/bin/bash
 
 title=`head -1 blog.rst`
-wpc.py -d html -t "$title" post post.html
+../../wpc/blogpost.py -d html -t "$title" post post.html

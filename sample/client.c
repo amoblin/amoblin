@@ -52,6 +52,7 @@ void main(int argc, char **argv) {
 
     while( (n = read(sockfd, recvline, MAXLINE)) > 0) {
         recvline[n] = 0;
+        fputs(recvline, stdout);
         if(fputs(recvline, stdout) == EOF) {
             printf("fputs error.\n");
         }
