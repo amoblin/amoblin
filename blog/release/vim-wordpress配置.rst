@@ -1,17 +1,18 @@
+========================
 使用vim发布wordpress博客
 ========================
 .. id: 80
 .. tags:
 
 总体流程：
-1. 使用vim编写ReST文档
-2. 使用rst2html.py将ReST文档转换为HTML文档
-3. 使用wordpress的XML-RPC接口发布博客
+#) 使用vim编写reST文档
+#) 使用rst2html.py将reST文档转换为HTML文档
+#) 使用wordpress的XML-RPC接口发布博客
 
-ReST语法
+reST语法
 ---------
 
-要做到第一步，需要学习ReST语法。这个很简单，我常用到的就2个，并且1个还不算ReST的～
+要做到第一步，需要学习reST语法。这个很简单，我常用到的就2个，并且1个还不算reST的～
 
 最常用的语法是：标题。
 
@@ -24,7 +25,7 @@ ReST语法
     使用vim发布wordpress博客
     ========================
         
-    ReST语法
+    reST语法
     ---------
 
 这样第一行就是一级标题，第四行就是二级标题。
@@ -43,9 +44,9 @@ ReST语法
         return 0;
     }
 
-实现上述效果的ReST代码为：
+实现上述效果的reST代码为：
 
-.. sourcecode:: text
+.. sourcecode:: rest
 
     .. sourcecode:: c
 
@@ -62,7 +63,7 @@ ReST语法
 生成HTML
 ---------
 
-由ReST文档生成HTML的命令是rst2html.py，这个由Docutils软件包提供。
+由reST文档生成HTML的命令是rst2html.py，这个由Docutils软件包提供。
 
 Ubuntu/Debian下安装如下：
 
@@ -82,29 +83,29 @@ Ubuntu/Debian下安装如下：
 
     $ rst2html.py blog.rst blog.html
 
-但如果文档里有sourcecode语法的话，会报错。这是因为sourcecode不是ReST提供的，而是由另一个叫做Pygmentize的软件包提供的：
+但如果文档里有sourcecode语法的话，会报错。这是因为sourcecode不是reST提供的，而是由另一个叫做Pygments的软件包提供的：
 
 Docutils语法高亮配置
 ---------------------
 
-Pygmentize是一个语法高亮的软件，能够将程序源代码生成彩色的HTML文件。
+Pygments是一个语法高亮的软件，能够将程序源代码生成彩色的HTML文件。
 
 .. sourcecode:: console
 
-    $ sudo apt-get install python-pygmentize
-    $ sudo easy_install pygmentize
+    $ sudo apt-get install python-pygments
+    $ sudo easy_install pygments
 
 请对号入座，执行安装。具体用法请--help。
 
 这里说说在Docutils中的配置。
 
-Docutils中的ReST不支持语法高亮，但提供了directive扩展，通过注册来自定义处理过程。自定义的关键字格式如下： 
+Docutils中的reST不支持语法高亮，但提供了directive扩展，通过注册来自定义处理过程。在reST中自定义的关键字格式如下： 
 
 .. sourcecode:: text
 
     .. keyword::
 
-刚才我们看到了，pygmentize在directive中注册的关键字是sourcecode。
+刚才我们看到了，Pygments在directive中注册的关键字是sourcecode。
 
 首先下载rst的directive处理文件：
 
@@ -135,54 +136,32 @@ Docutils中的ReST不支持语法高亮，但提供了directive扩展，通过�
 
 现在我要给大家隆重介绍的是blogpost.py！
 
-
-
-
-vim下发布博客，我用过两种：vimrepress，blogpost。
-
-vimrepress作为vim插件使用，需要在vim里发布。这一点我不喜欢。我只用vim编辑，完工后希望命令行发布。
-
-blogpost就是这样一个命令行工具。
-
 原作者是用asciidoc来写文档，然后用blogpost发布。
 
-但我使用ReST，这里就用不到blogpost自带的asciidoc接口了。但经过修改，基本可用。
-
-我使用vim + blogpost 发布博客的过程如下：
-
-1. 编写ReST文档
-2. 生成HTML文档
+但我们使用reST，这里就用不到blogpost自带的asciidoc接口了。但可以使用html格式发布：
 
 .. sourcecode:: console
 
-    $ rst2html.py --link-style --stylesheet=highlight.css blog.rst blog.html
-
-这里使用外部CSS文件，从而使生成的HTML文档更美观。
-
-3. 提取正文
-   使用blogpost发布时，需要提取正文。
-
-.. sourcecode:: console
-
-	$ sed -n '/<div /,/<\/body>/p' blog.html | sed -e '1,3d' -e '$d' -e '$d' > post.html
-
-这个脚本是乖乖上午查阅资料写出来的。
-
-4. 通过blogpost发布
-
-.. sourcecode:: console
-
-    $ blogpost.py -d html -t "vim wordpress配置" post post.html
+    $ blogpost.py -d html -t "vim wordpress配置" post blog.html
     blogpost.py: updating published post 'vim wordpress配置'...
     blogpost.py: id: 80
     blogpost.py: url: http://amoblin.sinaapp.com/?p=80
 
-上述信息告诉了本篇文章的id号，以后可以通过id号更新博客：
+上述信息告诉了本篇文章的id号，当修改了reST文档，生成新的post.html以后可以通过id号更新博客：
 
 .. sourcecode:: console
 
-    $ wpc.py -d html --post-id 80 update post.html
+    $ wpc.py -d html --post-id 80 update blog.html
     blogpost.py: updating published post 'vim wordpress配置'...
     blogpost.py: id: 80
     blogpost.py: url: http://amoblin.sinaapp.com/?p=80
+
+.. 3. 提取正文
+..   使用blogpost发布时，需要提取正文。
+
+.. .. sourcecode:: console
+
+..	$ sed -n '/<div /,/<\/body>/p' blog.html | sed -e '1,3d' -e '$d' -e '$d' > post.html
+
+.. 这个脚本是乖乖上午查阅资料写出来的。
 
