@@ -9,6 +9,14 @@ open: html
 # 使用wpc发布 wpc.py at http://github.com/amoblin/wpc
 post: html
 	./wpc-post.sh
+	@rm _post.blogpost
 
 update: html
 	./wpc-update.sh
+	@rm _post.blogpost
+
+arch:
+	cp _buildout.html archive/"`sed -n 2p blog.rst`".html
+
+oa:
+	@./open.sh "`sed -n 2p blog.rst`".html

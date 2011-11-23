@@ -11,3 +11,5 @@ post.*
 *.crx
 *.pem
 *.zip
+_*
+*.so

@@ -12,6 +12,8 @@ shell下有标准输入stdin，标准输出stdout，标准错误输出stderr，�
 
 重定向标准输入我不太常用，仅对输出重定向举例如下：
 
+.. more
+
 1. 将echo的标准输出重定向到/tmp/a.txt文件
 
 .. sourcecode:: console

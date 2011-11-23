@@ -4,7 +4,8 @@
 int main() {
     //fork_test();
     //pipe_test();
-    dll_test();
+    //dll_test();
+    test();
 
     return 0;
 }

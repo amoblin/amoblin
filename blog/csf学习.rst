@@ -14,7 +14,7 @@ csfd为主守护进程，由它创建csfd-worker进程。每当csfd-worker进程
 核心在csfd-worker程序。
 
 相关数据结构解析
-----------------
+================
 
 读取配置文件到如下结构体：
 
@@ -80,40 +80,43 @@ tcp类型的结构定义：
     57     .write_back = tcp_write
     58 };
 
-初始化模块
------------
+初始化模块 csf_init
+=====================
 
 csfd-worker根据配置文件进行模块参数的初始化，由函数csf_init负责。
 
 具体分为：初始化默认值，读取配置文件初始化。
 
 初始化默认值 csf_conf_init
-```````````````````````````
+---------------------------
 
   1. 将main_conf的各项初始化为默认值。
 
 读取配置文件初始化 config_init
-```````````````````````````````
+-------------------------------
 
   1. 根据配置文件中[server]段初始化相应数据成员。
 
   #. 根据服务的类型（tcp or udp）挂上对应类型的结构体。
 
 初始化内存池 mp_init
-`````````````````````
+---------------------
+
+红黑树内存池。
+
 
 初始化模块配置: mod_config_init @ module.c
-````````````````````````````````````````````
+-------------------------------------------
 
   1. 根据mod_dir动态加载模块。比如http.so，同时将动态库函数_protocol_init和静态全局变量_protocol_init对应起来。
 
   #. 加载其后各段。比如http_io.si, http_upload.so，同时_mod_init函数。
 
 初始化管道 pipeline_init @ pipeline.c
-``````````````````````````````````````
+--------------------------------------
 
 初始化协议模块 app_proto_init @ protocol.c
-```````````````````````````````````````````
+-------------------------------------------
 
 定义ppp是如下的结构体变量：
 
@@ -179,14 +182,14 @@ protocol_init 函数主要设置libprotocol中的全局变量g_pcp结构体：
 最终将http会话处理设置到全局变量pc中去。
 
 初始化协议服务
---------------
+==============
 
 初始化完毕后，开始启动服务。
 
 由server.c文件中server_init函数完成。根据初始化的内容，设置对应的协议服务。
 
 初始化Socket
-`````````````
+-------------
 
 使用proto_init指向的函数初始化Socket。比如HTTP的话是TCP套接字。
 
@@ -197,17 +200,22 @@ protocol_init 函数主要设置libprotocol中的全局变量g_pcp结构体：
     254 
 
 设置用户和组
-`````````````
+-------------
 
 (在配置文件中指定)
 
-事件句柄初始化
-```````````````
+事件句柄初始化 event_handler_init
+-----------------------------------
 
 初始化管道，阻塞和非阻塞的。
 
+设置事件库
+socket_event_handler，（之前应该已经绑定到tcp或upd上了）。
+
+如果绑定到tcp，则使用tcp_socket_event_handler处理。
+
 http事件处理
-`````````````
+-------------
 
 具体到HTTP事件处理，也就是http_session_entry函数。
 
@@ -242,7 +250,9 @@ http事件处理
 
     submit_request[186]: "pipeline_id -1283393984 超过PIPELINE_SIZE 16 !"
 
-pipeline并不是期望的小整数。一路回溯传入值，最终定位到protocol.c中如下函数
+pipeline并不是期望的小整数。
+
+定位到protocol.c中如下函数
 
 .. sourcecode:: c
 
@@ -259,5 +269,60 @@ pipeline并不是期望的小整数。一路回溯传入值，最终定位到pro
      54     }
      55 }
 
-其中csp是pipeline_id的原始值。
+其中50行的pc.protocol_session_entry是函数指针，指向上述http_session_entry函数.
+
+从而csp是函数http_session_entry 中形参pipeline_id的实参。
+
+do_protocol_session_entry由data.c中data_received函数调用，csf传入。
+
+.. sourcecode:: c
+
+     36 int
+     37 data_received(CONN_STATE* csp, void* data, int len)
+     38 {
+     39     if (data == NULL) {
+     40         WLOG_DEBUG("data is NULL!");
+     41         return (CSF_OK);
+     42     }
+     43 
+     44     ((char* )data)[len] = '\0';
+     45 
+     46     if (csp == NULL) {
+     47         return (do_protocol_session_entry(NULL, NULL, NULL, data, len));
+     48     } else {
+     49         printf("%d\n", csp); 
+     50         return (do_protocol_session_entry(csp, &(csp->ci),
+     51             csp->data, data, len));
+     52     }
+     53 }
+
+data_received函数由tcp.c中tcp_conn_handler函数调用，
+
+.. sourcecode:: c
+
+    622 static void
+    623 tcp_conn_handler(int fd, short event, void* arg)
+    624 {
+    625     ssize_t         len;
+    626     int             val;
+    627     int             rc;
+    628     CONN_STATE     * csp = (CONN_STATE* )arg;
+    629     struct timeval  tv;
+        ...
+    664         } else {
+    665             recv_data[len] = '\0';
+    666             rc = data_received(csp, recv_data, len);
+
+
+tcp_conn_handler在tcp_socket_event_handler中注册:
+
+.. sourcecode:: c
+
+    756     /* Add the new connection event to event loop \*/
+    757     event_set(&(csp->ev), connfd, EV_READ, tcp_conn_handler, csp);
+
+
+修改submit_request函数参数顺序，搞定！ support by terry.
+
+
 
