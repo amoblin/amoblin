@@ -6,3 +6,8 @@
 .DS_Store
 build/
 *.pyc
+blog.*
+post.*
+*.crx
+*.pem
+*.zip
