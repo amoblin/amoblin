@@ -1,7 +1,13 @@
 ===================
 列表：最喜欢的软件
 ===================
-.. id: 7
+.. id: 6
+
+.. contents:: 最喜欢的软件如下：
+
+.. |rst| replace:: :emphasis:`re`\ :strong:`Structured`\ :sup:`Text`
+
+.. more
 
 Dropbox
 -------
