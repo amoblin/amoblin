@@ -77,6 +77,11 @@ typedef enum {
 } order_t;
 
 typedef enum {
+    BNODE,
+    RBNODE,
+} node_t;
+
+typedef enum {
     BUBBLE_SORT,
     INSERTION_SORT,
     SELECTION_SORT,
@@ -86,6 +91,14 @@ typedef enum {
     QUICK_SORT,
     HEAP_SORT,
 } sort_t;
+
+void insert_bnode(BNode *node, int value) {
+    if (node->left !=NULL) {
+        append_left(node, value);
+    } else if(node->right != NULL) {
+        append_right(node, value);
+    }
+}
 
 void append_left(BNode *node, int value) {
     BNode *left = BNode_init(value);

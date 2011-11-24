@@ -9,7 +9,7 @@ typedef struct {
     int size;
     int front;
     int rear;
-    BNode **array;
+    void **array;
 } queue;
 
 queue *queue_init(int max) {
@@ -18,7 +18,7 @@ queue *queue_init(int max) {
     q->size = max+1;
     q->front = 0;
     q->rear = 0;
-    q->array = (BNode **)malloc(sizeof(BNode *) * (max+1));
+    q->array = (void **)malloc(sizeof(void *) * (max+1));
     return q;
 }
 
@@ -30,7 +30,7 @@ int queue_is_full(queue *q) {
     return (q->rear+1) % q->size == q->front;
 }
 
-int queue_add(queue *q, BNode *node) {
+int queue_add(queue *q, void *node) {
     /* 队满判断 */
     if( queue_is_full(q) ) {
         return 1;
@@ -47,17 +47,17 @@ void queue_set_random(queue *q, int max) {
     while( ! queue_is_full(q) ) {
         node = BNode_init(rand() % max);
         printf("%d ", node->value);
-        queue_add(q, node);
+        queue_add(q, (void *)node);
     }
     printf("\n");
 }
 
-BNode *queue_del(queue *q) {
+void *queue_del(queue *q) {
     /* 队空判断 */
     if( queue_is_empty(q) ) {
         return NULL;
     }
-    BNode *tmp = q->array[ q->front ];
+    void *tmp = q->array[ q->front ];
     q->front = (q->front+1) % q->size;
     return tmp;
 }
@@ -70,7 +70,7 @@ void test_queue()
 
     int i;
     while( ! queue_is_empty(q) ) {
-        printf("%d ", queue_del(q)->value);
+        printf("%d ", ((BNode *)queue_del(q))->value);
     }
     printf("\n");
 }

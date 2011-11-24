@@ -7,29 +7,29 @@
 #include "queue.h"
 
 /* 完全二叉树 链式实现 */
-BNode *tree_create(int size) {
-    BNode *root = BNode_init( rand() % MAX );
+void *tree_create(int size, void *node_init_p(int), void *insert_p(void, int)) {
+    void *root = node_init_p(rand() % MAX);
+    void *node = root;
 
     queue *q = queue_init(size);
-    queue_add(q, root);
-    process(root);
-    BNode *node= root;
+    queue_add(q, (void *)root);
+    process((BNode *)root);
     int i=0;
     int flag = (size-1)/2;
     for(i; i<flag; i++) {
         node = queue_del(q);
-        append_left(node, rand() % MAX);
-        append_right(node, rand() % MAX);
-        queue_add(q, node->left);
-        queue_add(q, node->right);
+        insert_p((BNode *)node, rand() % MAX);
+        insert_p((BNode *)node, rand() % MAX);
+        queue_add(q, ((BNode *)node)->left);
+        queue_add(q, ((BNode *)node)->right);
 
-        process(node->left);
-        process(node->right);
+        process(((BNode *)node)->left);
+        process(((BNode *)node)->right);
     }
     if(size % 2 == 0) {
         node = queue_del(q);
-        append_left(node, rand() % MAX);
-        process(node->left);
+        insert_p((BNode *)node, rand() % MAX);
+        process(((BNode *)node)->left);
     }
     printf("\n");
     return root;
@@ -148,7 +148,7 @@ void traverse(BNode *node) {
 void order_test() {
     /* 构造一颗完全二叉树 */
     printf("create a tree:\n");
-    BNode *root = tree_create(8);
+    BNode *root = (BNode *)tree_create(8, (void *)BNode_init, insert_bnode);
 
     /* 层序 */
     printf("level order retrieve:\n");

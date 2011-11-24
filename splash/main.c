@@ -3,6 +3,7 @@
 #include "sort.h"
 #include "queue.h"
 #include "tree.h"
+#include "rbtree.h"
 
 int main() {
     /*
@@ -12,10 +13,8 @@ int main() {
     test_sort();
     log_test();
     test_tree();
+    test_queue();
     */
-    //test_queue();
-    char test[] = "" "hello" "world";
-    printf("%s\n", test);
-
+    test_rbtree();
     return 0;
 }

@@ -16,6 +16,11 @@ void swap_f(int *a, int *b) {
 /* 求众数:出现次数最多的数 */
 /* 求中位数: 数据的中间位置数或中间两个数的均值. */
 
+
+//char test[] = "" "hello" "world";
+//printf("%s\n", test);
+
+
 void test_swap() {
     int x=2;
     swap(x, x);

@@ -35,11 +35,11 @@ void main(int argc, char **argv) {
 
     servaddr.sin_family = AF_INET;
     /* htons: host to network short int. 13*/
-    servaddr.sin_port = htons(13);
+    servaddr.sin_port = htons(80);
 
     /* inet_aton, inet_addr, inet_ntoa 在ipv4地址和32位二进制数之间转换 */
     /* inet_pton: present to number. 将ip地址转换成需要的数字，支持ipv6 */
-    if( inet_pton(AF_INET, "10.217.99.83", &servaddr.sin_addr) <= 0) {
+    if( inet_pton(AF_INET, "127.0.0.1", &servaddr.sin_addr) <= 0) {
         printf("inet_pton error for %s\n", "127.0.0.1");
         exit(0);
     }
