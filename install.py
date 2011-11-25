@@ -44,6 +44,9 @@ url = "http://www.vim.org/scripts/download_script.php?src_id=7701"
 # workrave
 packages.append("workrave")
 
+# pdflatex and cjk support
+packages.append("latex-cjk-chinese")
+
 def install():
     '''deb安装，rpm安装，python eggs安装等'''
     sys.
