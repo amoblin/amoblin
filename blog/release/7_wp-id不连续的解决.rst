@@ -1,7 +1,7 @@
 =============================
 wordpress blog id不连续的解决
 =============================
-.. id: 8
+.. id: 7
 
 wp两个特性：自动保存(auto save) 和 版本记录(revisions)。
 
@@ -72,8 +72,8 @@ false, 0: do not store any revisions (except the one autosave per post)
 
     delete from `wp_posts` where `post_status` = 'inherit' or `post_status` = 'auto-draft' or `post_status` = 'draft';
 
-插件
-====
+禁用自动保存的插件
+==================
 
 有老外写了这个禁用自动保存的插件， `文章在此`__
 
@@ -86,21 +86,9 @@ __ <http://samm.dreamhosters.com/wordpress/plugins/disable-autosave.php>
 删除版本历史，禁用版本保存的插件
 ================================
 
-wordpress官方插件：`disable revisions`_
+`disable revisions`__
 
 __ http://wordpress.org/extend/plugins/disable-revisions/
-
-
-参考自月光博客 http://www.williamlong.info/archives/1416.html
-
-这是由于WP自动保存版本修订历史引起的，禁用即可。但WP没有提供用户界面来设置是否禁用。
-
-有老外写了这个禁用自动保存的插件，`文章在此<http://www.untwistedvortex.com/2008/06/27/adjust-wordpress-autosave-or-disable-it-completely/>`_
-
-下载地址：<http://samm.dreamhosters.com/wordpress/plugins/disable-autosave.php>_
-
-复制到 wp-content/plugins目录下，在控制台启用这个插件即可。
-
 
 将id顺序排列
 ============
@@ -127,9 +115,7 @@ __ http://wordpress.org/extend/plugins/disable-revisions/
 
 3. 禁用自动保存和版本记录。
 
-参考:
-
-1. `月光博客`__
+参考自: `月光博客`__
 
 __ http://www.williamlong.info/archives/1416.html
 
