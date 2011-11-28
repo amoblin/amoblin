@@ -9,7 +9,7 @@ client: client.c
 server: server.c
 	gcc server.c -o server
 
-hs:
+hs: http_server.c
 	gcc http_server.c -o hs
 
 hc:

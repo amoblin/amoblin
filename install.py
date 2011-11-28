@@ -27,6 +27,9 @@ docutils_path = docutils.__path__
 packages.append("python-setuptools")
 eggs.append("docutils")
 eggs.append("pygments")
+eggs.append("sphinx")
+
+packages.append("dvipng")
 
 # ctags
 packages.append("ctags")
@@ -46,6 +49,15 @@ packages.append("workrave")
 
 # pdflatex and cjk support
 packages.append("latex-cjk-chinese")
+
+# rst2pdf
+packages.append("rst2pdf")
+
+#latex2png
+packages.append("latex2rtf")
+
+#sphinx
+packages.append("python-sphinx")
 
 def install():
     '''deb安装，rpm安装，python eggs安装等'''

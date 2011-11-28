@@ -1,9 +1,12 @@
+/*
 #include "list.h"
 #include "stack.h"
 #include "sort.h"
 #include "queue.h"
 #include "tree.h"
 #include "rbtree.h"
+*/
+#include "revert.h"
 
 int main() {
     /*
@@ -15,6 +18,8 @@ int main() {
     test_tree();
     test_queue();
     */
-    test_rbtree();
+ //   test_rbtree();
+ char *out;
+ revert("This is a sample", out);
     return 0;
 }
