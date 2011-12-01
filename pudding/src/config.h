@@ -1,4 +1,4 @@
-/* 分词语句最大长度*/
+/* 原始句子最大长度*/
 #define SEN_LEN 50
 
 /* 一个汉字占3个utf8字节 SEN_LEN*3 */
@@ -10,21 +10,21 @@
 /* 每个汉字2字节,用16个char保存每一位。SEN_LEN*16 */
 #define BIN_LEN 800
 
-/* 输出层节点数,汉字的个数 */
-#define OUT_NODES 10
+/* 子句长度，等于输出层节点数 */
+#define OUT_NODES 5
 
-/* 输入层节点数,一个汉字16位 OUT_NODES*2  */
-#define IN_NODES 20
+/* 输入层节点数,一个汉字16位 OUT_NODES*16  */
+#define IN_NODES 80
 
 /* 隐含层节点数 */
-#define HIDDEN_NODES 16
+#define HIDDEN_NODES 30
 
 #define DEBUG 1
 
 /* 最大循环次数 */
-#define LOOP_MAX 50000
+#define LOOP_MAX 20
 
-#define LOG_DEN 1000
+#define LOG_DEN 1
 #define LEARN_RATE  1.9
 #define PRECISION 0.05
 #define PLOT_DEN 100

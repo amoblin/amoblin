@@ -20,16 +20,16 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
     /* 初始化矩阵 \*/
     /* n1 = w1 . a0 \*/
     assert(w1->n == in->n);
-    double *n1 = malloc( sizeof(double) * w1->m);
+    double *n1 = (double *) malloc( sizeof(double) * w1->m);
 
     /* a1 = f(n1) \*/
-    double *a1 = malloc( sizeof(double) * w1->m);
+    double *a1 = (double *)malloc( sizeof(double) * w1->m);
 
     /* n2 = w2 . a1 \*/
-    double *n2 = malloc( sizeof(double) * w2->m);
+    double *n2 = (double *)malloc( sizeof(double) * w2->m);
 
     /* a2 = f(n2) \*/
-    double *a2 = malloc( sizeof(double) * w2->m);
+    double *a2 = (double *)malloc( sizeof(double) * w2->m);
 
     /* diff2 = out - a2 \*/
     assert( w2->m == OUT_NODES);
@@ -78,7 +78,7 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
     double old_e = 9999;
     double e = PRECISION + 1;
     int n;
-    printf("LOOP_MAX: %d\n", LOOP_MAX);
+    syslog(LOG_DEBUG, "LOOP_MAX: %d\n", LOOP_MAX);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
         int i;
@@ -120,7 +120,7 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
             matrix_copy(w2, w2_old);
             old_e = e;
         } else {
-            alpha = 0.99 * alpha;
+            //alpha = 0.99 * alpha;
             matrix_copy(w1_old, w1);
             matrix_copy(w2_old, w2);
         }
@@ -143,13 +143,15 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
         }
 
         /* 保存图像数据 */
-        if( n % PLOT_DEN== 0) {
-            fprintf(fp, "%d %f %f\n", n/PLOT_DEN, e, alpha);
+        if( n % PLOT_DEN == 0) {
+            //fprintf(fp, "%d %2.1f %2.1f\n", n/PLOT_DEN, e, alpha);
         }
     }
     /* 释放矩阵内存 */
-    free(n1);
+    //free(n1);
     free(a1);
+    printf("hello.\n");
+    return 0;
     free(n2);
     free(a2);
     free(diff2);
@@ -242,7 +244,7 @@ int main(int argc, char* argv[])
 
     vector_p = NULL;
     vector_p = fopen(out_file, "rb+");
-    if (NULL == vector_p) { //不存在，使用随机数初始化
+    if (vector_p == NULL) { //不存在，使用随机数初始化
         /* 初始化权值矩阵 */
         syslog(LOG_INFO, "初始化矩阵");
         matrix_set_random(w1);
@@ -254,6 +256,8 @@ int main(int argc, char* argv[])
         fread(w2->matrix, sizeof(double), w2->m * w2->n, vector_p);
     }
 
+    //matrix_print(w1);
+
     /* 保存数据点 */
     FILE *fp = NULL;
     fp = fopen(xy_file, "w");
@@ -263,7 +267,7 @@ int main(int argc, char* argv[])
     }
 
     /* 训练 */
-    printf("开始网络训练\n");
+    //syslog(LOG_INFO, "test");
     train_bp(w1, w2, in, out, vector_p, fp);             //训练bp神经网络
     fclose(vector_p);
     fclose(fp);

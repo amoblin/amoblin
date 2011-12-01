@@ -67,9 +67,7 @@ int matrix_set_random(Matrix *X)
     for (i = 0; i < X->m; i++) {
         for (j = 0; j < X->n; j++) {
             X->pos(i,j,X->n) = rand() / (double)(RAND_MAX);
-            d_printf(6, "%2.1f ", X->pos(i,j,X->n));
         }
-        d_printf(6, "\n");
     }
     return 0;
 }
@@ -172,10 +170,20 @@ int vector_dot_multiply(double* x, double* y, Matrix* A) {
     return 0;
 }
 
-int vector_printf(double* X, int m, int level) {
+int vector_print(double* X, int m, int level) {
     int i;
     for (i = 0; i < m; i++) {
         d_printf(level, "%f ", X[i]);
     }
     d_printf(level, "\n");
+}
+
+int matrix_print(Matrix* X) {
+    int i,j;
+    for( i=0; i< X->m; i++) {
+        for( j=0; j< X->n; j++) {
+            printf("%2.1f ", X->pos(i, j, X->n) );
+        }
+    }
+    printf("\n");
 }

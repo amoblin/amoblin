@@ -7,8 +7,8 @@ all: cmake
 
 make: convert nn pudding
 
-nn: ${SRC_DIR}/nn.c ${SRC_DIR}/config.h ${SRC_DIR}/nn.h
-	gcc -lm ${SRC_DIR}/nn.c -o ${BIN_DIR}/nn
+nn: ${SRC_DIR}/nn.c ${SRC_DIR}/config.h ${SRC_DIR}/utils.h ${SRC_DIR}/matrix.h
+	gcc ${SRC_DIR}/nn.c ${SRC_DIR}/matrix.c -o ${BIN_DIR}/nn -lm
 
 convert:${SRC_DIR}/convert.c ${SRC_DIR}/config.h ${SRC_DIR}/utils.h
 	gcc ${SRC_DIR}/convert.c -o ${BIN_DIR}/convert

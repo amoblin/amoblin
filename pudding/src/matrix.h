@@ -63,4 +63,6 @@ int matrix_multiply(double* A, double* B, double* C, int m);
 
 int matrix_fanshu(double* X, double* Y, int m, double *result);
 
-int vector_printf(double* X, int m, int level);
+int vector_print(double* X, int m, int level);
+
+int matrix_print(Matrix* X);

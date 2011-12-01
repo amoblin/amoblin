@@ -60,40 +60,43 @@ int main(int argc, char *argv[])
         return 0;
     }
     char sentence[UTF8_LEN];
-    int data_size = get_data_size(fp);
-    /* 保存规格化数据 */
-    unsigned char tmp_short[data_size][OUT_NODES * 3];
+    int data_size = get_subsentences_num(fp);
+
+    /* 子句集*/
+    char in[data_size][IN_NODES];
+    char out[data_size][OUT_NODES];
+
     int n = 0;  //向量数组游标
     while(fgets(sentence, UTF8_LEN, fp) != NULL)
     {
-        d_printf(5, "%s", sentence);
+        syslog(LOG_DEBUG, "处理句子：%s", sentence);
         /* 保存转换为unicode码的句子 */
-        unsigned char tmp_in[UNI_LEN] = {0};
+        char tmp_in[UNI_LEN] = {0};
         /* 保存转换为二进制码的句子 */
-        unsigned char binary_in[BIN_LEN] = {0};
+        char binary_in[BIN_LEN] = {0};
         /* 保存输出值 */
-        unsigned char tmp_out[SEN_LEN];//默认为0，不需清零先。
+        char tmp_out[SEN_LEN];//默认为0，不需清零先。
         int i;
         for(i=0; i< SEN_LEN; i++) {
             tmp_out[i] = 1;
         }
 
+        /* utf8转unicode，提取切分信息 */
         utf82unicode(sentence, tmp_in, tmp_out);
-        unicode4short(tmp_in, tmp_out, tmp_short, &n);
-        //unicode2binary(tmp_in, binary_in);
+
+        /* unicode转二进制 */
+        unicode2binary(tmp_in, binary_in);
+
+        /* 切分子句 */
+        split4short(binary_in, tmp_out, in, out, &n);
 
     }
     fclose(fp);
 
-    double in[data_size][IN_NODES];
-    double out[data_size][OUT_NODES];
     int i,j;
     for (i = 0; i < data_size; i++) {
-        for (j = 0; j < IN_NODES; j++) {
-            in[i][j] = tmp_short[i][j];
-        }
         for (j = 0; j < OUT_NODES; j++) {
-            out[i][j] = tmp_short[i][IN_NODES+j] ? 0.9:0.1;
+            out[i][j] = out[i][j] ? 0.9 : 0.1;
         }
     }
 
@@ -102,8 +105,21 @@ int main(int argc, char *argv[])
     vector_p = fopen(out_file, "wb");
 
     fwrite(&data_size, sizeof(int), 1, vector_p);
-    fwrite(in, sizeof(double), IN_NODES * data_size, vector_p);
-    fwrite(out, sizeof(double), OUT_NODES * data_size, vector_p);
+
+    double save_in[data_size][IN_NODES];
+    double save_out[data_size][OUT_NODES];
+
+    for (i = 0; i < data_size; i++) {
+        for (j = 0; j < IN_NODES; j++) {
+            save_in[i][j] = in[i][j];
+        }
+
+        for (j = 0; j < OUT_NODES; j++) {
+            save_out[i][j] = out[i][j] ? 0.9 : 0.1;
+        }
+    }
+    fwrite(save_in, sizeof(double), IN_NODES * data_size, vector_p);
+    fwrite(save_out, sizeof(double), OUT_NODES * data_size, vector_p);
     fclose(vector_p);
 
     return 0;
