@@ -113,8 +113,8 @@ int train_bp(Matrix* w1, Matrix* w2, double (*in)[IN_NODES], double (*out)[OUT_N
             matrix_copy(w2, w2_old);
             old_e = e;
         } else {
-            alpha = 0.99 * alpha;
-            syslog(LOG_INFO, "alpha change: %2.1f", alpha);
+            //alpha = 0.99 * alpha;
+            //syslog(LOG_INFO, "alpha change: %2.1f", alpha);
             matrix_copy(w1_old, w1);
             matrix_copy(w2_old, w2);
         }
@@ -233,7 +233,7 @@ int main(int argc, char* argv[])
             in[i][j] = char_in[i][j];
         }
         for( j=0; j<OUT_NODES; j++) {
-            out[i][j] = char_out[i][j];
+            out[i][j] = char_out[i][j] ? 0.9 : 0.1;
         }
     }
 

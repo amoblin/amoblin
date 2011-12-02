@@ -84,7 +84,7 @@ int matrix_dot_multiply(Matrix *W, double *X, double *Y, rtype type)
                 }
                 //d_printf(3, "%2.1f ", Y[i]);
             }
-            d_printf(3, "\n");
+            //d_printf(3, "\n");
             break;
         case REVERSE:
             //memset(Y, 0, sizeof(double) * W->m);

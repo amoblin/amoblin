@@ -42,7 +42,8 @@ int main(int argc, char *argv[])
         return -1;
     }
     close(STDERR_FILENO);
-    dup2(STDOUT_FILENO, STDERR_FILENO);
+    /* 重定向到logfd */
+    dup2(logfd, STDERR_FILENO);
     close(logfd);
     openlog(NULL, LOG_PERROR, LOG_DAEMON);
 
@@ -125,11 +126,47 @@ int main(int argc, char *argv[])
 
     use_nn(w1, w2, in, out, subsen_num);
 
-    for(i=0; i< subsen_num; i++) {
-        for(j=0; j< OUT_NODES; j++) {
-            printf("%2.1f ", out[i][j]);
+    /* 综合子句结果 */
+    double result[length];
+
+    /* 设定阈值 */
+    for(i=0; i< length; i++) {
+        result[i] = 0;
+
+        j = max(0, i - OUT_NODES);
+        int flag = min(i+1, subsen_num);
+        int nums = flag - j;
+
+        for(; j < flag; j++) {
+            result[i] += out[j][i-j];
         }
-        printf("\n");
+        result[i] = result[i] / nums;
+
+        //printf("%2.1f ", result[i]);
+
+        if( result[i] < 0.4) {
+            d_printf(1,"%2.1f", result[i]);
+            result[i] = 0;
+        } else if( result[i] > 0.6) {
+            d_printf(1,"%2.1f", result[i]);
+            result[i] = 1;
+        } else {
+            syslog(LOG_ERR, "can not split: %2.1f.\n", result[i]);
+        }
     }
+
+    i = 0;
+    j = 0;
+    while( i< strlen(sentence)) {
+        int len = get_utf8_bytes(sentence[i]);
+        print_u(sentence, i, len);
+        if( result[j] == 0 ) {
+            printf("/");
+        }
+        j++;
+        i = i + len;
+    }
+    printf("\n");
+
     return 0;
 }

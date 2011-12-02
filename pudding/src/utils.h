@@ -5,7 +5,10 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-int debug_level=3;
+#define max(a,b) ((a)>(b)?(a):(b))
+#define min(a,b) ((a)<(b)?(a):(b))
+
+int debug_level=5;
 
 void d_printf(unsigned int level, const char * format, ...)
 {
@@ -22,26 +25,27 @@ int print_u(char *ustring, int i, int n)
     int k;
     d_printf(1, "%d: ", i);
     for(k=0; k<n; k++) {
-        d_printf(1, "%c", ustring[i+k]);
+        printf("%c", ustring[i+k]);
     }
 }
 
-int get_utf8_bytes(char code, int *length)
+int get_utf8_bytes(char code)
 {
+    int length;
     if( code < 0xffffffc0) { //一位
-        *length = 1;
+        length = 1;
     } else if( code < 0xffffffe0 ) {  //2位
-        *length = 2;
+        length = 2;
     } else if ( code < 0xfffffff0 ) {  //3位
-        *length = 3;
+        length = 3;
     } else if ( code < 0xfffffff8 ) { //4位
-        *length = 4;
+        length = 4;
     } else if ( code < 0xfffffffc ) { //5位
-        *length = 5;
+        length = 5;
     } else {    //6位
-        *length = 6;
+        length = 6;
     }
-    return 0;
+    return length;
 }
 
 int utf82unicode(char* sentence, char* in, char* out)
@@ -50,9 +54,8 @@ int utf82unicode(char* sentence, char* in, char* out)
     int j = 1;  //输入向量游标；
     int k = 0;  //输出向量游标。
     while(i<strlen(sentence)) {
-        int length;
-        get_utf8_bytes(sentence[i], &length);
-        print_u(sentence, i, length);
+        int length =  get_utf8_bytes(sentence[i]);
+        //print_u(sentence, i, length);
         unsigned short dest;//2字节
         switch(length) {
             case 1:
