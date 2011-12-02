@@ -7,25 +7,24 @@ double fnet(double net) {
     return 1 / ( 1 + exp( -net ) );
 }
 
-int matrix_init(int m, int n, Matrix **X_p)
+Matrix *matrix_init(int m, int n)
 {
     Matrix *X = NULL;
     X = (Matrix *) malloc(sizeof(Matrix));
     if (NULL == X) {
-        return -1;
+        exit(0);
     }
     int i;
     X->matrix = NULL;
     X->matrix = (double *) malloc(sizeof(double) * m * n );
     if(NULL == X->matrix) {
-        return -1;
+        exit(0);
     }
     memset(X->matrix, 0, sizeof(double) * m * n);
     X->m = m;
     X->n = n;
 
-    *X_p = X;
-    return 0;
+    return X;
 }
 
 int matrix_copy( Matrix* X, Matrix* Y) {
@@ -74,12 +73,12 @@ int matrix_set_random(Matrix *X)
 
 int matrix_dot_multiply(Matrix *W, double *X, double *Y, rtype type)
 {
-
     int i, j;
     switch(type) {
         case NORMAL:
-            memset(Y, 0, sizeof(double) * W->n);
+            //memset(Y, 0, sizeof(double) * W->n);
             for(i=0; i < W->m; i++) {
+                Y[i] = 0;
                 for(j=0; j < W->n; j++) {
                     Y[i] += W->pos(i,j,W->n) * X[j];
                 }
@@ -88,8 +87,9 @@ int matrix_dot_multiply(Matrix *W, double *X, double *Y, rtype type)
             d_printf(3, "\n");
             break;
         case REVERSE:
-            memset(Y, 0, sizeof(double) * W->m);
+            //memset(Y, 0, sizeof(double) * W->m);
             for( i = 0; i < W->n; i++) {
+                Y[i] = 0;
                 for( j = 0; j < W->m; j++) {
                     Y[i] += W->pos(j,i,W->m) * X[j];
                 }

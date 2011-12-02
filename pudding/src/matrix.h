@@ -37,7 +37,7 @@ typedef struct
     double *matrix;
 } Matrix;
 
-int matrix_init(int m, int n, Matrix **X_p);
+Matrix *matrix_init(int m, int n);
 
 int matrix_copy( Matrix* X, Matrix* Y);
 

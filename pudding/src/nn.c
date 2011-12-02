@@ -16,7 +16,7 @@ int usage(char *argv[])
     return 0;
 }
 
-int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FILE* fp) {
+int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* matrix_fp, FILE* plot_fp) {
     /* 初始化矩阵 \*/
     /* n1 = w1 . a0 \*/
     assert(w1->n == in->n);
@@ -56,18 +56,14 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
     double* s1 = malloc( sizeof(double) * w1->m);
 
     /* delta1 = s1 . a0^T \*/
-    Matrix* delta1;
-    matrix_init(w1->m, w1->n, &delta1);
+    Matrix* delta1 = matrix_init(w1->m, w1->n);
 
     /* delta2 = s2 . a1^T \*/
-    Matrix* delta2;
-    matrix_init(w2->m, w2->n, &delta2);
+    Matrix* delta2 = matrix_init(w2->m, w2->n);
 
     /* 备份权值矩阵以便回退 \*/
-    Matrix* w1_old;
-    matrix_init(w1->m, w1->n, &w1_old);
-    Matrix* w2_old;
-    matrix_init(w2->m, w2->n, &w2_old);
+    Matrix* w1_old = matrix_init(w1->m, w1->n);
+    Matrix* w2_old = matrix_init(w2->m, w2->n);
 
     /* 计时器 */
     int time_s = time((time_t*)NULL);
@@ -135,23 +131,21 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* vector_p, FI
             int secs = mins % 60;
             syslog(LOG_DEBUG, "%02d:%02d:%02d %02dh%02dm%02ds %dw %2.1f %f\n", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, seconds/3600, mins/60, secs, n/LOG_DEN, alpha, e);
             /* 保存权值矩阵 */
-            fseek(vector_p, 0, SEEK_SET);
+            fseek(matrix_fp, 0, SEEK_SET);
             int i;
-            fwrite(w1->matrix, sizeof(double), w1->m * w1->n, vector_p);
-            fwrite(w2->matrix, sizeof(double), w2->m * w2->n, vector_p);
-            fflush(vector_p);
+            fwrite(w1->matrix, sizeof(double), w1->m * w1->n, matrix_fp);
+            fwrite(w2->matrix, sizeof(double), w2->m * w2->n, matrix_fp);
+            fflush(matrix_fp);
         }
 
         /* 保存图像数据 */
         if( n % PLOT_DEN == 0) {
-            //fprintf(fp, "%d %2.1f %2.1f\n", n/PLOT_DEN, e, alpha);
+            fprintf(plot_fp, "%d %2.1f %2.1f\n", n/PLOT_DEN, e, alpha);
         }
     }
     /* 释放矩阵内存 */
-    //free(n1);
+    free(n1);
     free(a1);
-    printf("hello.\n");
-    return 0;
     free(n2);
     free(a2);
     free(diff2);
@@ -172,7 +166,10 @@ int main(int argc, char* argv[])
 {
     char in_file[128];
     char out_file[128];
-    char xy_file[128];
+    char plot_file[128];
+    FILE *matrix_fp = NULL;
+    FILE *plot_fp = NULL;
+
     /* 记录日志 */
     int logfd = open( "nn.log", O_RDWR | O_CREAT | O_APPEND, 0644 );
     close(STDERR_FILENO);
@@ -195,7 +192,7 @@ int main(int argc, char* argv[])
                 flag++;
                 break;
             case 'g':
-                strncpy(xy_file, optarg, sizeof(xy_file) -1 );
+                strncpy(plot_file, optarg, sizeof(plot_file) -1 );
                 flag++;
                 break;
             case 'h':
@@ -212,65 +209,59 @@ int main(int argc, char* argv[])
     }
 
     /* 读取样本数据 */
-    FILE *vector_p = NULL;
-    vector_p = fopen(in_file, "rb");
-    if (vector_p == NULL) {
+    matrix_fp = fopen(in_file, "rb");
+    if (matrix_fp == NULL) {
         printf("Error! File %s does not exist.\n", in_file);
         exit(0);
     }
     /* 获取数据量 */
     int data_size;
-    fread(&data_size, sizeof(int), 1, vector_p);
+    fread(&data_size, sizeof(int), 1, matrix_fp);
     /* 输入输出矩阵分配内存 */
-    Matrix *in;
-    matrix_init(data_size, IN_NODES, &in);
-    Matrix *out;
-    matrix_init(data_size, OUT_NODES, &out);
+    Matrix *in =  matrix_init(data_size, IN_NODES);
+    Matrix *out = matrix_init(data_size, OUT_NODES);
 
     /* 读取输入输出矩阵 */
     int i,j;
-    fread(in->matrix, sizeof(double), data_size * IN_NODES, vector_p);
-    fread(out->matrix, sizeof(double), data_size * OUT_NODES, vector_p);
-    fclose(vector_p);
+    fread(in->matrix, sizeof(double), data_size * IN_NODES, matrix_fp);
+    fread(out->matrix, sizeof(double), data_size * OUT_NODES, matrix_fp);
+    fclose(matrix_fp);
 
 
    /* 初始化隐含层权值矩阵 */
-    Matrix *w1;
-    matrix_init(HIDDEN_NODES, IN_NODES, &w1);
+    Matrix *w1 = matrix_init(HIDDEN_NODES, IN_NODES);
 
    /* 初始化输出层权值矩阵 */
-    Matrix *w2;
-    matrix_init(OUT_NODES, HIDDEN_NODES, &w2);
+    Matrix *w2 = matrix_init(OUT_NODES, HIDDEN_NODES);
 
-    vector_p = NULL;
-    vector_p = fopen(out_file, "rb+");
-    if (vector_p == NULL) { //不存在，使用随机数初始化
+    matrix_fp = NULL;
+    matrix_fp = fopen(out_file, "rb+");
+    if (matrix_fp == NULL) { //不存在，使用随机数初始化
         /* 初始化权值矩阵 */
         syslog(LOG_INFO, "初始化矩阵");
         matrix_set_random(w1);
         matrix_set_random(w2);
-        vector_p = fopen(out_file, "wb");
+        matrix_fp = fopen(out_file, "wb");
     } else {    //使用上一次的矩阵
         syslog(LOG_INFO, "使用上次矩阵");
-        fread(w1->matrix, sizeof(double), w1->m * w1->n, vector_p);
-        fread(w2->matrix, sizeof(double), w2->m * w2->n, vector_p);
+        fread(w1->matrix, sizeof(double), w1->m * w1->n, matrix_fp);
+        fread(w2->matrix, sizeof(double), w2->m * w2->n, matrix_fp);
     }
 
     //matrix_print(w1);
 
     /* 保存数据点 */
-    FILE *fp = NULL;
-    fp = fopen(xy_file, "w");
-    if (NULL == fp) {
+    plot_fp = fopen(plot_file, "w");
+    if (plot_fp == NULL) {
         syslog(LOG_ERR, "创建坐标数据文件失败");
         exit(0);
     }
 
     /* 训练 */
     //syslog(LOG_INFO, "test");
-    train_bp(w1, w2, in, out, vector_p, fp);             //训练bp神经网络
-    fclose(vector_p);
-    fclose(fp);
+    train_bp(w1, w2, in, out, matrix_fp, plot_fp);             //训练bp神经网络
+    fclose(matrix_fp);
+    fclose(plot_fp);
 
     /* 释放内存 */
 
