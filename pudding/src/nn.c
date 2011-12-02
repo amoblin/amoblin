@@ -98,7 +98,7 @@ int train_bp(Matrix* w1, Matrix* w2, double (*in)[IN_NODES], double (*out)[OUT_N
 
             /* 计算输出误差 */
             double e_once;
-            matrix_fanshu(a2, out[i], w2->m, &e_once);
+            vector_norm(a2, out[i], w2->m, &e_once);
             e += e_once;
 
             /* 更新权值 */

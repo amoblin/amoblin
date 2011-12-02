@@ -9,14 +9,6 @@
 
 double fnet(double net);
 
-/* 矩阵类型 */
-typedef enum {
-    DOUBLE,
-    INT,
-    UNSIGNED_CHAR,
-
-} mtype;
-
 /* 转置类型 */
 typedef enum {
     NORMAL,
@@ -61,7 +53,7 @@ int vector_plus(double* x, double* y, double* z, int m, double alpha);
 
 int matrix_multiply(double* A, double* B, double* C, int m);
 
-int matrix_fanshu(double* X, double* Y, int m, double *result);
+int vector_norm(double* X, double* Y, int m, double *result);
 
 int vector_print(double* X, int m, int level);
 

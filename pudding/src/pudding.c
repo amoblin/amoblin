@@ -126,6 +126,13 @@ int main(int argc, char *argv[])
 
     use_nn(w1, w2, in, out, subsen_num);
 
+    for(i=0; i<subsen_num; i++) {
+        for(j=0; j<OUT_NODES; j++) {
+            printf("%2.1f ", out[i][j]);
+        }
+        printf("\n");
+    }
+
     /* 综合子句结果 */
     double result[length];
 
@@ -133,7 +140,7 @@ int main(int argc, char *argv[])
     for(i=0; i< length; i++) {
         result[i] = 0;
 
-        j = max(0, i - OUT_NODES);
+        j = max(0, i - OUT_NODES+1);
         int flag = min(i+1, subsen_num);
         int nums = flag - j;
 
@@ -142,7 +149,7 @@ int main(int argc, char *argv[])
         }
         result[i] = result[i] / nums;
 
-        //printf("%2.1f ", result[i]);
+        printf("%2.1f ", result[i]);
 
         if( result[i] < 0.4) {
             d_printf(1,"%2.1f", result[i]);
