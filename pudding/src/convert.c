@@ -83,43 +83,20 @@ int main(int argc, char *argv[])
 
         /* utf8转unicode，提取切分信息 */
         utf82unicode(sentence, tmp_in, tmp_out);
-
         /* unicode转二进制 */
         unicode2binary(tmp_in, binary_in);
-
         /* 切分子句 */
         split4short(binary_in, tmp_out, in, out, &n);
-
     }
     fclose(fp);
-
-    int i,j;
-    for (i = 0; i < data_size; i++) {
-        for (j = 0; j < OUT_NODES; j++) {
-            out[i][j] = out[i][j] ? 0.9 : 0.1;
-        }
-    }
 
     /* 保存矩阵 */
     FILE *vector_p = NULL;
     vector_p = fopen(out_file, "wb");
 
     fwrite(&data_size, sizeof(int), 1, vector_p);
-
-    double save_in[data_size][IN_NODES];
-    double save_out[data_size][OUT_NODES];
-
-    for (i = 0; i < data_size; i++) {
-        for (j = 0; j < IN_NODES; j++) {
-            save_in[i][j] = in[i][j];
-        }
-
-        for (j = 0; j < OUT_NODES; j++) {
-            save_out[i][j] = out[i][j] ? 0.9 : 0.1;
-        }
-    }
-    fwrite(save_in, sizeof(double), IN_NODES * data_size, vector_p);
-    fwrite(save_out, sizeof(double), OUT_NODES * data_size, vector_p);
+    fwrite(in, sizeof(char), IN_NODES * data_size, vector_p);
+    fwrite(out, sizeof(char), OUT_NODES * data_size, vector_p);
     fclose(vector_p);
 
     return 0;

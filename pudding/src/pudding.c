@@ -15,117 +15,59 @@ int usage(char *argv[])
     printf("usage: %s [network matrix] [sentence]\n", argv[0]);
 }
 
-int read_weight(double v[][HIDDEN_NODES], double w[][OUT_NODES], FILE *vector_p)
-{
-    fread(v, HIDDEN_NODES * sizeof(double), IN_NODES, vector_p);
-    fread(w, OUT_NODES * sizeof(double), HIDDEN_NODES, vector_p);
-    fclose(vector_p);
+void use_nn(Matrix *w1, Matrix *w2, double (*in)[IN_NODES], double (*out)[OUT_NODES], int num) {
 
-    int i,j;
-    d_printf(1, "matrix v is: \n");
-    for (i = 0; i < IN_NODES; i++) {
-        for (j = 0; j < HIDDEN_NODES; j++) {
-            d_printf(1, "%f ", v[i][j]);
-        }
-        d_printf(1, "\n ");
-    }
-    d_printf(1, "matrix w is: \n");
-    for (i = 0; i < HIDDEN_NODES; i++) {
-        for (j = 0; j < OUT_NODES; j++) {
-            d_printf(1, "%f ", w[i][j]);
-        }
-        d_printf(1, "\n ");
-    }
-    return 0;
-}
+    double *n1 = malloc( sizeof(double) * w1->m);
+    /* a1 = f(n1) \*/
+    double *a1 = (double *)malloc( sizeof(double) * w1->m);
+    /* n2 = w2 . a1 \*/
+    double *n2 = (double *)malloc( sizeof(double) * w2->m);
 
-int use_nn(double v[][HIDDEN_NODES], double w[][OUT_NODES], unsigned char *in, double *out) {
-    double O1[HIDDEN_NODES];
-    double sum;
-    int i,j;
-    for (i = 0; i < HIDDEN_NODES; i++) {
-        sum = 0;
-        for (j = 0; j < IN_NODES; j++) {
-            sum += in[j] * v[j][i];
-        }
-        O1[i] = fnet(sum/256);
-    }
-    for (i = 0; i < OUT_NODES; i++) {
-        sum = 0;
-        for (j = 0; j < HIDDEN_NODES; j++)
-            sum += O1[j] * w[j][i];
-        out[i] = fnet(sum/256);
-    }
-}
+    int i;
+    for(i=0; i<num; i++) {
+        int j;
+        matrix_dot_multiply(w1, in[i], n1, NORMAL);
+        matrix_fnet(n1, a1, w1->m);
 
-int pudding(unsigned char sentence[], double v[][HIDDEN_NODES], double w[][OUT_NODES])
-{
-    /* 整句utf8转unicode */
-    unsigned char tmp_in[UNI_LEN];
-    double tmp_out[SEN_LEN];
-    unsigned char binary_in[BIN_LEN];
-    utf82unicode(sentence, tmp_in, tmp_out);
-    unicode2binary(tmp_in, binary_in);
-    int length = strlen(tmp_in)/2;
-
-    /* 4字为一组输入，有out_size组 */
-    unsigned char in[IN_NODES];
-    int out_size = length - 3;
-    double** out = (double **) malloc(sizeof(double *) * out_size);
-
-    int i,j;
-    for(i=0;i<out_size;i++) {
-        out[i] = (double *) malloc(sizeof(double) * OUT_NODES);
-        memcpy(in, binary_in+i*16, sizeof(unsigned char) * IN_NODES);
-        use_nn(v, w, in, out[i]);
-        for(j=0; j<OUT_NODES; j++) {
-            d_printf(1, "%f ", out[i][j]);
-        }
-        d_printf(1, "\n");
+        matrix_dot_multiply(w2, a1, n2, NORMAL);
+        matrix_fnet(n2, out[i], w2->m);
     }
-    return 0;
-    /*
-    j = 0;
-    for( i=0; i< OUT_NODES; i++) {
-        if( out[i] <= LEFT_B ) {
-            printf("\n%f\n", out[i]);
-        } else if( out[i] >= RIGHT_B ) {
-            printf(" ");
-            int length;
-            get_utf8_bytes(sentence[j], &length);
-            printf("%f ", out[i]);
-            print_u(sentence, j, length);
-            j = j + length;
-        }
-        else {
-            printf("\n Error! %f can not be adjusted.\n", out[i]);
-        }
-    }
-    return 0;
-    */
 }
 
 int main(int argc, char *argv[])
 {
+    /* 日志输出 */
+    int logfd = open("pudding.log", O_RDWR|O_CREAT|O_APPEND, 0644);
+    if(-1 == logfd) {
+        return -1;
+    }
+    close(STDERR_FILENO);
+    dup2(STDOUT_FILENO, STDERR_FILENO);
+    close(logfd);
+    openlog(NULL, LOG_PERROR, LOG_DAEMON);
+
     /* 参数处理 */
     unsigned char sentence[UTF8_LEN];
-    char data_file[128];
+    char weight_file[128];
     char ch;
     int flag = 0;
     do {
         ch = getopt(argc, argv, "l:s:h");
         switch(ch) {
             case 'l':
-                strncpy(data_file, optarg, sizeof(data_file) - 1);
+                strncpy(weight_file, optarg, sizeof(weight_file) - 1);
+                syslog(LOG_INFO, "load weight matrix: %s", weight_file);
                 flag++;
                 break;
             case 's':
                 strncpy(sentence, optarg, sizeof(sentence) - 1);
+                syslog(LOG_INFO, "load sentence: %s", sentence);
                 flag++;
                 break;
             case 'h':
-            default:
                 usage(argv);
+                break;
+            default:
                 break;
         }
     } while(-1 != ch);
@@ -134,18 +76,60 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    double v[IN_NODES][HIDDEN_NODES];
-    double w[HIDDEN_NODES][OUT_NODES];
-    FILE *vector_p = NULL;
-    vector_p = fopen(data_file, "rb");
-    if (NULL == vector_p) {
-        printf("Error! %s does not exist.\n", data_file);
+   /* 初始化各层权值矩阵 */
+    Matrix *w1 = matrix_init(HIDDEN_NODES, IN_NODES);
+    Matrix *w2 = matrix_init(OUT_NODES, HIDDEN_NODES);
+
+    FILE *matrix_fp = NULL;
+    matrix_fp = fopen(weight_file, "rb");
+    if (NULL == matrix_fp) {
+        printf("Error! %s does not exist.\n", weight_file);
         exit(0);
     }
-    read_weight(v, w, vector_p);
+    fread(w1->matrix, sizeof(double), w1->m * w1->n, matrix_fp);
+    fread(w2->matrix, sizeof(double), w2->m * w2->n, matrix_fp);
+    fclose(matrix_fp);
 
-    pudding(sentence, v, w);
+    /* 整句utf8转unicode */
+    char tmp_in[UNI_LEN];
+    char tmp_out[SEN_LEN];
+    char binary_in[BIN_LEN];
 
-    printf("\n");
+    utf82unicode(sentence, tmp_in, tmp_out);
+    unicode2binary(tmp_in, binary_in);
+
+    int length = tmp_in[0];
+
+    /* 子句集 */
+    int subsen_num;
+    subsen_num = (length > OUT_NODES) ? length - OUT_NODES + 1 : 1;
+
+    double in[subsen_num][IN_NODES];
+    double out[subsen_num][OUT_NODES];
+
+    char char_in[subsen_num][IN_NODES];
+    char char_out[subsen_num][OUT_NODES];
+
+    int n=0;
+    split4short(binary_in, tmp_out, char_in, char_out, &n);
+
+    int i,j;
+    for(i=0; i< subsen_num; i++) {
+        for(j=0; j< IN_NODES; j++) {
+            in[i][j] = char_in[i][j];
+        }
+        for(j=0; j< OUT_NODES; j++) {
+            out[i][j] = char_out[i][j];
+        }
+    }
+
+    use_nn(w1, w2, in, out, subsen_num);
+
+    for(i=0; i< subsen_num; i++) {
+        for(j=0; j< OUT_NODES; j++) {
+            printf("%2.1f ", out[i][j]);
+        }
+        printf("\n");
+    }
     return 0;
 }

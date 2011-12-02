@@ -82,7 +82,7 @@ int matrix_dot_multiply(Matrix *W, double *X, double *Y, rtype type)
                 for(j=0; j < W->n; j++) {
                     Y[i] += W->pos(i,j,W->n) * X[j];
                 }
-                d_printf(3, "%2.1f ", Y[i]);
+                //d_printf(3, "%2.1f ", Y[i]);
             }
             d_printf(3, "\n");
             break;
@@ -104,10 +104,11 @@ int matrix_dot_multiply(Matrix *W, double *X, double *Y, rtype type)
 int matrix_fnet(double* X, double* Y, int m) {
     int i;
     for (i = 0; i < m; i++) {
-        Y[i] = fnet(X[i]);
-        //printf("%f ", Y[i]);
+        Y[i] = fnet(X[i]/10);
+        d_printf(1, "%2.1f ", X[i]);
+        d_printf(1, "%2.1f ", Y[i]);
     }
-    //printf("\n");
+    d_printf(1, "\n");
     return 0;
 }
 

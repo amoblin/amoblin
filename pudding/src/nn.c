@@ -16,10 +16,9 @@ int usage(char *argv[])
     return 0;
 }
 
-int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* matrix_fp, FILE* plot_fp) {
+int train_bp(Matrix* w1, Matrix* w2, double (*in)[IN_NODES], double (*out)[OUT_NODES], FILE* matrix_fp, FILE* plot_fp, int data_size) {
     /* 初始化矩阵 \*/
     /* n1 = w1 . a0 \*/
-    assert(w1->n == in->n);
     double *n1 = (double *) malloc( sizeof(double) * w1->m);
 
     /* a1 = f(n1) \*/
@@ -74,16 +73,14 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* matrix_fp, F
     double old_e = 9999;
     double e = PRECISION + 1;
     int n;
-    syslog(LOG_DEBUG, "LOOP_MAX: %d\n", LOOP_MAX);
+    syslog(LOG_DEBUG, "trainning times: %d\n", LOOP_MAX);
     for (n = 0; e > PRECISION && n < LOOP_MAX; n++) {
         e = 0;
         int i;
-        for (i = 0; i < in->m; i++) {
+        for (i = 0; i < data_size; i++) {
 
             /* 输入正传 */
-            double* in_vector = in->matrix + i * (in->n);
-            double* out_vector = out->matrix + i * (out->n);
-            matrix_dot_multiply(w1, in_vector, n1, NORMAL);
+            matrix_dot_multiply(w1, in[i], n1, NORMAL);
             matrix_fnet(n1, a1, w1->m);
 
             matrix_dot_multiply(w2, a1, n2, NORMAL);
@@ -92,7 +89,7 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* matrix_fp, F
             /* 误差反传 */
             matrix_fnet_dot(a2, h2, w2->m);
             vector_plus(zero, h2, h2, w2->m, -2);
-            vector_plus(out_vector, a2, diff2, w2->m, -1);
+            vector_plus(out[i], a2, diff2, w2->m, -1);
             matrix_multiply(h2, diff2, s2, w2->m);
 
             matrix_fnet_dot(a1, h1, w1->m);
@@ -101,11 +98,11 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* matrix_fp, F
 
             /* 计算输出误差 */
             double e_once;
-            matrix_fanshu(a2, out_vector, w2->m, &e_once);
+            matrix_fanshu(a2, out[i], w2->m, &e_once);
             e += e_once;
 
             /* 更新权值 */
-            vector_dot_multiply(s1, in_vector, delta1);
+            vector_dot_multiply(s1, in[i], delta1);
             matrix_plus(w1, delta1, w1, alpha * -1);
 
             vector_dot_multiply(s2, a1, delta2);
@@ -116,7 +113,8 @@ int train_bp(Matrix* w1, Matrix* w2, Matrix* in, Matrix* out, FILE* matrix_fp, F
             matrix_copy(w2, w2_old);
             old_e = e;
         } else {
-            //alpha = 0.99 * alpha;
+            alpha = 0.99 * alpha;
+            syslog(LOG_INFO, "alpha change: %2.1f", alpha);
             matrix_copy(w1_old, w1);
             matrix_copy(w2_old, w2);
         }
@@ -217,16 +215,27 @@ int main(int argc, char* argv[])
     /* 获取数据量 */
     int data_size;
     fread(&data_size, sizeof(int), 1, matrix_fp);
+
     /* 输入输出矩阵分配内存 */
-    Matrix *in =  matrix_init(data_size, IN_NODES);
-    Matrix *out = matrix_init(data_size, OUT_NODES);
+    double in[data_size][IN_NODES];
+    double out[data_size][OUT_NODES];
 
     /* 读取输入输出矩阵 */
+    char char_in[data_size][IN_NODES];
+    char char_out[data_size][OUT_NODES];
     int i,j;
-    fread(in->matrix, sizeof(double), data_size * IN_NODES, matrix_fp);
-    fread(out->matrix, sizeof(double), data_size * OUT_NODES, matrix_fp);
+    fread(char_in, sizeof(char), data_size * IN_NODES, matrix_fp);
+    fread(char_out, sizeof(char), data_size * OUT_NODES, matrix_fp);
     fclose(matrix_fp);
 
+    for( i=0; i<data_size; i++) {
+        for( j=0; j<IN_NODES; j++) {
+            in[i][j] = char_in[i][j];
+        }
+        for( j=0; j<OUT_NODES; j++) {
+            out[i][j] = char_out[i][j];
+        }
+    }
 
    /* 初始化隐含层权值矩阵 */
     Matrix *w1 = matrix_init(HIDDEN_NODES, IN_NODES);
@@ -248,7 +257,10 @@ int main(int argc, char* argv[])
         fread(w2->matrix, sizeof(double), w2->m * w2->n, matrix_fp);
     }
 
-    //matrix_print(w1);
+    /*
+    matrix_print(w1);
+    matrix_print(w2);
+    */
 
     /* 保存数据点 */
     plot_fp = fopen(plot_file, "w");
@@ -258,17 +270,15 @@ int main(int argc, char* argv[])
     }
 
     /* 训练 */
-    //syslog(LOG_INFO, "test");
-    train_bp(w1, w2, in, out, matrix_fp, plot_fp);             //训练bp神经网络
+    syslog(LOG_INFO, "Start tranning...");
+    train_bp(w1, w2, in, out, matrix_fp, plot_fp, data_size);
     fclose(matrix_fp);
     fclose(plot_fp);
+    closelog();
 
     /* 释放内存 */
-
-    matrix_free(in);
-    matrix_free(out);
     matrix_free(w1);
     matrix_free(w2);
-    closelog();
+
     return 0;
 }

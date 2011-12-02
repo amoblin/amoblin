@@ -5,7 +5,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-int debug_level=6;
+int debug_level=3;
 
 void d_printf(unsigned int level, const char * format, ...)
 {
@@ -44,7 +44,7 @@ int get_utf8_bytes(char code, int *length)
     return 0;
 }
 
-int utf82unicode(char *sentence, char in[], char out[])
+int utf82unicode(char* sentence, char* in, char* out)
 {
     int i = 0;    //utf8编码串游标；
     int j = 1;  //输入向量游标；
@@ -56,21 +56,7 @@ int utf82unicode(char *sentence, char in[], char out[])
         unsigned short dest;//2字节
         switch(length) {
             case 1:
-                if (sentence[i] == '\n') {
-                    /* 保存本句汉字长度 */
-                    in[0] = k;
-
-                    d_printf(4, "Unicode向量:");
-                    int s;
-                    for (s = 1; s < 2 * k + 1; s++) {
-                        d_printf(4, "%o ",(unsigned char)in[s]);
-                    }
-                    d_printf(4, "\n输出向量:");
-                    for(s=0; s<k; s++) {
-                        d_printf(4, "%d ",out[s]);
-                    }
-                    d_printf(4, "\n");
-                } else if (sentence[i] == 32) { //空格
+                if (sentence[i] == 32) { //空格
                     out[k-1] = 0; //分词点
                 }
                 break;
@@ -81,7 +67,7 @@ int utf82unicode(char *sentence, char in[], char out[])
 
                 in[j] = dest >> 8;  //高位
                 in[++j] = dest & 0xff;  //低位
-                d_printf(2, "%d %d\t", in[j-1], in[j]);
+                syslog(LOG_DEBUG, "%2x %2x\t", in[j-1], in[j]);
                 j++;
                 k++;    //输出向量游标增1
                 break;
@@ -96,7 +82,19 @@ int utf82unicode(char *sentence, char in[], char out[])
         }
         i = i + length;
     }
-    d_printf(1, "\n");
+    /* 保存本句汉字长度 */
+    in[0] = k;
+
+    d_printf(4, "Unicode向量:");
+    int s;
+    for (s = 1; s < 2 * k + 1; s++) {
+        d_printf(4, "%x ",(unsigned char)in[s]);
+    }
+    d_printf(4, "\n输出向量:");
+    for(s=0; s<k; s++) {
+        d_printf(4, "%d ",out[s]);
+    }
+    d_printf(4, "\n");
 }
 
 int split4short(char* binary_in, char* tmp_out, 
@@ -105,15 +103,17 @@ int split4short(char* binary_in, char* tmp_out,
     int stop_point = length - OUT_NODES + 1;
     int i;
     char* data_begin = binary_in + 1;
+    /* 忽略小于OUT_NODES个汉字的句子 */
     for (i = 0; i < stop_point; i++) {
+        int j;
         memcpy(in[*n], data_begin, IN_NODES);
         memcpy(out[*n], tmp_out + i, OUT_NODES);
-        int j;
         (*n)++;        //向量数组游标增1
 
         /* 下移一个汉字的举例 */
         data_begin += 16;
     }
+
 }
 
 int unicode2binary(char* unicode_str, char *binary_str)
@@ -127,35 +127,40 @@ int unicode2binary(char* unicode_str, char *binary_str)
 
     for (i = 0; i < length; i++) {
         reset_num = 128;
-        d_printf(2, "0%o: ", unicode_str[i+1]);
+        d_printf(4, "0%03o: ",(unsigned char) unicode_str[i+1]);
         for(j=1; j<9; j++) {
             binary_str[8*i+j] = (unicode_str[i+1] & reset_num) >> (8-j) ;
             reset_num >>= 1;
-            d_printf(2, "%d", binary_str[8*i+j]);
+            d_printf(4, "%d", binary_str[8*i+j]);
         }
-        d_printf(2, "\n");
+        d_printf(4, "\n");
     }
 }
+
+int get_sub_num(char *sentence) {
+    int i=0;
+    int sen_len = strlen(sentence);
+    int j;
+    for(j=0; j< sen_len;j++) {
+        /* 标点符号 */
+        if ((unsigned char)sentence[j] < 128) {
+            i++;
+        }
+    }
+    int sub_num = (sen_len - i)/3 - OUT_NODES;
+    sub_num = (sub_num > 0 ) ? sub_num + 1 : 1;
+    return sub_num;
+}
+
 
 int get_subsentences_num(FILE *fp)
 {
     char buffer[UTF8_LEN];
     int data_size=0;
     while( fgets(buffer, sizeof(buffer), fp) != NULL) {
-        int i=0;
-        int sen_len = strlen(buffer);
-        int j;
-        for(j=0; j< sen_len;j++) {
-            if (buffer[j] == 32) {
-                i++;
-            }
-        }
-        /* 除去空格和行末回车 */
-        int utf8_len = sen_len - i -1;
-
-        data_size += utf8_len/3 - 3;
-        //printf("%d\n",data_size);
+        data_size += get_sub_num(buffer);
     }
     fseek(fp, 0, SEEK_SET);
     return data_size;
 }
+
