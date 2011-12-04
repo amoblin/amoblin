@@ -70,7 +70,7 @@ int utf82unicode(char* sentence, char* in, char* out)
 
                 in[j] = dest >> 8;  //高位
                 in[++j] = dest & 0xff;  //低位
-                syslog(LOG_DEBUG, "%2x %2x\t", in[j-1], in[j]);
+                //syslog(LOG_DEBUG, "%2x %2x\t", in[j-1], in[j]);
                 j++;
                 k++;    //输出向量游标增1
                 break;

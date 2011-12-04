@@ -1,6 +1,7 @@
 SERVER=ubuntu-edu.unix-center.net
 SRC_DIR=src
 BIN_DIR=build/bin
+DATA_DIR=data/
 
 make: convert nn pudding
 
@@ -10,14 +11,14 @@ all: cmake
 nn: ${SRC_DIR}/nn.c ${SRC_DIR}/config.h ${SRC_DIR}/utils.h ${SRC_DIR}/matrix.h
 	gcc ${SRC_DIR}/nn.c ${SRC_DIR}/matrix.c -o ${BIN_DIR}/nn -lm
 
-convert:${SRC_DIR}/convert.c ${SRC_DIR}/config.h ${SRC_DIR}/utils.h
+convert: ${SRC_DIR}/convert.c ${SRC_DIR}/config.h ${SRC_DIR}/utils.h
 	gcc ${SRC_DIR}/convert.c -o ${BIN_DIR}/convert
 
 pudding: ${SRC_DIR}/pudding.c ${SRC_DIR}/config.h ${SRC_DIR}/utils.h
 	gcc ${SRC_DIR}/pudding.c ${SRC_DIR}/matrix.c -o ${BIN_DIR}/pudding -lm
 
 clean:
-	rm ${BIN_DIR}/nn
+	-@rm ${DATA_DIR}/wisdom.dat
 
 cmake:
 	-@mkdir build

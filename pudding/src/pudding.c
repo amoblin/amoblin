@@ -7,8 +7,8 @@
 #include "utils.h"
 #include "matrix.h"
 
-#define LEFT_B 0.3
-#define RIGHT_B 0.7
+#define LEFT_B 0.4
+#define RIGHT_B 0.6
 
 int usage(char *argv[])
 {
@@ -128,9 +128,9 @@ int main(int argc, char *argv[])
 
     for(i=0; i<subsen_num; i++) {
         for(j=0; j<OUT_NODES; j++) {
-            printf("%2.1f ", out[i][j]);
+            d_printf(1, "%2.1f ", out[i][j]);
         }
-        printf("\n");
+        d_printf(1, "\n");
     }
 
     /* 综合子句结果 */
@@ -149,13 +149,13 @@ int main(int argc, char *argv[])
         }
         result[i] = result[i] / nums;
 
-        printf("%2.1f ", result[i]);
+        syslog(LOG_INFO, "%2.1f ", result[i]);
 
-        if( result[i] < 0.4) {
-            d_printf(1,"%2.1f", result[i]);
+        if( result[i] < LEFT_B) {
+            d_printf(2,"%2.1f", result[i]);
             result[i] = 0;
-        } else if( result[i] > 0.6) {
-            d_printf(1,"%2.1f", result[i]);
+        } else if( result[i] > RIGHT_B) {
+            d_printf(2,"%2.1f", result[i]);
             result[i] = 1;
         } else {
             syslog(LOG_ERR, "can not split: %2.1f.\n", result[i]);

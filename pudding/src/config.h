@@ -26,6 +26,6 @@
 
 #define LOG_DEN 10
 #define LEARN_RATE  1.9
-#define PRECISION 0.05
+#define PRECISION 0.1
 #define PLOT_DEN 10
 

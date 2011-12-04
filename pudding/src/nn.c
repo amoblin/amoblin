@@ -108,15 +108,16 @@ int train_bp(Matrix* w1, Matrix* w2, double (*in)[IN_NODES], double (*out)[OUT_N
             vector_dot_multiply(s2, a1, delta2);
             matrix_plus(w2, delta2, w2, alpha * -1);
         }
-        if (e < old_e) {
+        if (e <= old_e) {
             matrix_copy(w1, w1_old);
             matrix_copy(w2, w2_old);
-            old_e = e;
+            old_e = e * 1.1;
         } else {
-            //alpha = 0.99 * alpha;
-            //syslog(LOG_INFO, "alpha change: %2.1f", alpha);
+            alpha = alpha - 0.01;
+            syslog(LOG_INFO, "alpha change: %f", alpha);
             matrix_copy(w1_old, w1);
             matrix_copy(w2_old, w2);
+            continue;
         }
 
         /* 写入日志 */
@@ -171,7 +172,8 @@ int main(int argc, char* argv[])
     /* 记录日志 */
     int logfd = open( "nn.log", O_RDWR | O_CREAT | O_APPEND, 0644 );
     close(STDERR_FILENO);
-    dup2(logfd, STDERR_FILENO);
+    //dup2(logfd, STDERR_FILENO);
+    dup2(STDOUT_FILENO, STDERR_FILENO);
     close(logfd);
     openlog(NULL, LOG_PERROR, LOG_DAEMON);
 
