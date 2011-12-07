@@ -66,7 +66,7 @@ void pipe_test() {
 #include <pthread.h>
 void thread_test() {
     pthread_t pid;
-    //pthread_create(&pid, );
+    pthread_create(&pid, NULL, (void *)pipe_test, NULL);
 }
 
 

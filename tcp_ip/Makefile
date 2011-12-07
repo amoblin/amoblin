@@ -1,5 +1,5 @@
 default:
-	gcc main.c -o a.out
+	gcc main.c -o a.out -lpthread
 
 cs: client server
 
