@@ -1,6 +1,0 @@
-cmake_minimum_required (VERSION 2.8)
-set (CMAKE_BUILD_TYPE Debug)
-project (pudding)
-add_subdirectory(src bin)
-message (STATUS "This is binary dir " ${PROJECT_BINARY_DIR})
-message (STATUS "This is source dir " ${PROJECT_SOURCE_DIR})
